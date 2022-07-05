@@ -5,13 +5,14 @@ import {
   ThemeProvider,
   useMediaQuery,
 } from '@mui/material'
-import React, { useMemo } from 'react'
+import { StrictMode, Suspense, useMemo } from 'react'
 import ReactDOM from 'react-dom/client'
 import { HelmetProvider } from 'react-helmet-async'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { Nav } from './components/Nav'
 import { darkPalette, lightPalette, typography } from './configs/custom-theme'
 import { routers } from './configs/routers'
+import { NotFoundPage } from './routers/404'
 
 const Router = () => (
   <Routes>
@@ -30,8 +31,13 @@ const Router = () => (
         ))}
       </Route>
     ))}
+    <Route path="*" element={<NotFoundPage />} />
   </Routes>
 )
+
+const Loading = () => {
+  return <Box sx={{ backgroundColor: 'background.default' }}>加载中</Box>
+}
 
 const App = () => {
   const darkMode = useMediaQuery('(prefers-color-scheme: dark)')
@@ -45,19 +51,21 @@ const App = () => {
   )
 
   return (
-    <React.StrictMode>
+    <StrictMode>
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <HelmetProvider>
-          <Box sx={{ backgroundColor: 'background.default' }}>
-            <BrowserRouter>
-              <Nav />
-              <Router />
-            </BrowserRouter>
-          </Box>
+          <Suspense fallback={<Loading />}>
+            <Box sx={{ backgroundColor: 'background.default' }}>
+              <BrowserRouter>
+                <Nav />
+                <Router />
+              </BrowserRouter>
+            </Box>
+          </Suspense>
         </HelmetProvider>
       </ThemeProvider>
-    </React.StrictMode>
+    </StrictMode>
   )
 }
 

@@ -6,6 +6,7 @@ import {
   Box,
   Button,
   Icon,
+  Stack,
   useMediaQuery,
   useTheme,
 } from '@mui/material'
@@ -14,6 +15,7 @@ import { useEffect, useState } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import LogoOutlined from '../assets/logo-outlined.svg'
 import { Routers, routers } from '../configs/routers'
+import { info } from '../configs/site-info'
 import { Tooltip } from './base/Tooltip'
 
 export const Nav = () => {
@@ -56,7 +58,7 @@ export const Nav = () => {
     >
       <Avatar
         variant="square"
-        alt="清廉街 Logo"
+        alt="网站 Logo"
         src={LogoOutlined}
         sx={{
           width: 36,
@@ -68,67 +70,84 @@ export const Nav = () => {
           transform: 'translateX(-50%)',
         }}
       />
-      {routers
-        .filter(r => r.group !== -1)
-        .map(r => (
-          <Tooltip
-            arrow
-            title={r.name}
-            placement={isMobile ? 'top' : 'right'}
-            key={r.name}
-          >
-            <BottomNavigationAction
-              component={Link}
-              icon={
-                <Icon
-                  component={r.icon[r.name === router?.name ? 1 : 0]}
-                  sx={{
-                    color:
-                      r.name === router?.name
-                        ? r.color[isDark ? 1 : 0]
-                        : 'text.disabled',
-                    fontSize: { xs: '1.5rem', md: '1.625rem' },
-                    transition: 'color 0.2s',
-                  }}
-                />
-              }
-              value={r.name}
-              to={r.href}
-              sx={{
-                minWidth: 'unset',
-                width: '100%',
-                height: '100%',
-                maxWidth: { xs: 72, md: 'unset' },
-                maxHeight: { xs: 'unset', md: 72 },
-                flex: 1,
-                '&:hover': { backgroundColor: 'action.hover' },
-                '&:hover svg': { color: r.color[isDark ? 1 : 0] },
-                transition: 'background-color 0.2s',
-              }}
-            />
-          </Tooltip>
-        ))}
+      <Stack
+        spacing={{ xs: 0, md: 1 }}
+        direction={{ xs: 'row', md: 'column' }}
+        sx={{
+          width: '100%',
+          height: '100%',
+          alignItems: 'center',
+          justifyContent: 'center',
+          flex: 1,
+        }}
+      >
+        {routers
+          .filter(r => r.group !== -1)
+          .map(r => (
+            <Tooltip
+              arrow
+              title={r.name}
+              placement={isMobile ? 'top' : 'right'}
+              key={r.name}
+            >
+              <BottomNavigationAction
+                component={Link}
+                icon={
+                  <Icon
+                    component={r.icon[r.name === router?.name ? 1 : 0]}
+                    sx={{
+                      color:
+                        r.name === router?.name
+                          ? r.color[isDark ? 1 : 0]
+                          : 'text.disabled',
+                      transition: 'color 0.2s',
+                    }}
+                  />
+                }
+                value={r.name}
+                to={r.href}
+                sx={{
+                  minWidth: 'unset',
+                  width: { xs: '100%', md: 56 },
+                  height: { xs: '100%', md: 56 },
+                  maxWidth: { xs: 72, md: 'unset' },
+                  maxHeight: { xs: 'unset', md: 56 },
+                  borderRadius: { xs: 'unset', md: 2 },
+                  flex: 1,
+                  '&:hover': {
+                    backgroundColor: isMobile ? 'unset' : 'action.hover',
+                  },
+                  '&:hover svg': { color: r.color[isDark ? 1 : 0] },
+                  transition: 'background-color 0.2s',
+                }}
+              />
+            </Tooltip>
+          ))}
+      </Stack>
+
       <Tooltip
         arrow
-        title="登录到「清廉街」"
+        title={`登录到「${info.title}」`}
         placement={isMobile ? 'top' : 'right'}
       >
         <Button
           sx={{
             position: 'absolute',
             bottom: 36,
-            left: 0,
+            left: '50%',
             display: { xs: 'none', md: 'flex' },
-            width: '100%',
-            height: 72,
-            borderRadius: 'unset',
-            '&:hover': { backgroundColor: 'action.hover' },
+            width: 56,
+            height: 56,
+            minWidth: 'unset',
+            borderRadius: 2,
+            transform: 'translateX(-50%)',
+            '&:hover': {
+              backgroundColor: isMobile ? 'unset' : 'action.hover',
+            },
             transition: 'background-color 0.2s',
           }}
         >
-          <LoginOutlined
-            sx={{ color: 'text.disabled', fontSize: '1.375rem' }}
-          />
+          <LoginOutlined sx={{ color: 'text.disabled' }} />
         </Button>
       </Tooltip>
     </BottomNavigation>

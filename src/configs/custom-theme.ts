@@ -22,7 +22,7 @@ export const darkPalette = {
 
 export const typography = {
   fontFamily: [
-    'Roboto',
+    'Inter',
     'HarmonyOS Sans SC',
     'MiSans',
     'Source Han Sans SC',
