@@ -17,7 +17,8 @@ import { Nav } from './components/Nav'
 import { darkPalette, lightPalette, typography } from './configs/custom-theme'
 import { routers } from './configs/routers'
 import { NotFoundPage } from './routers/404'
-import LogoColorful from './assets/logo-outlined.svg'
+import LogoOutlined from './assets/logo-outlined.svg'
+import { info } from './configs/site-info'
 
 const Router = () => (
   <Routes>
@@ -40,37 +41,39 @@ const Router = () => (
   </Routes>
 )
 
-const Loading = () => {
-  return (
-    <Stack
-      spacing={2}
-      sx={{
-        position: 'fixed',
-        zIndex: 2000,
-        top: 0,
-        right: 0,
-        left: 0,
-        width: '100vw',
-        height: '100vh',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: 'background.default',
-      }}
+const Loading = () => (
+  <Stack
+    spacing={2}
+    sx={{
+      position: 'fixed',
+      zIndex: 2000,
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      top: 0,
+      right: 0,
+      left: 0,
+      width: '100vw',
+      height: '100vh',
+      backgroundColor: 'background.default',
+    }}
+  >
+    <Avatar
+      variant="square"
+      alt="网站 Logo"
+      src={LogoOutlined}
+      sx={{ width: 96, height: 96, m: 2 }}
+    />
+    <Typography
+      variant="h6"
+      component="p"
+      sx={{ fontWeight: 700, userSelect: 'none' }}
     >
-      <Avatar
-        variant="square"
-        alt="网站 Logo"
-        src={LogoColorful}
-        sx={{ width: 96, height: 96, m: 2 }}
-      />
-      <Typography variant="h6" sx={{ fontWeight: 700, userSelect: 'none' }}>
-        正在进入清廉街
-      </Typography>
-      <CircularProgress size={24} thickness={6} />
-    </Stack>
-  )
-}
+      正在进入{info.name}
+    </Typography>
+    <CircularProgress size={24} thickness={6} />
+  </Stack>
+)
 
 const App = () => {
   const darkMode = useMediaQuery('(prefers-color-scheme: dark)')

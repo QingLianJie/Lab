@@ -1,3 +1,4 @@
+import { SettingsOutlined } from '@mui/icons-material'
 import { TabContext, TabList, TabPanel } from '@mui/lab'
 import {
   Box,
@@ -28,13 +29,13 @@ export const SettingsPage = () => {
     setParams({ tab: value })
 
   return (
-    <Layout title="设置" subtitle="调整网站的各项设置">
+    <Layout title="设置" subtitle="调整网站的各项设置" icon={SettingsOutlined}>
       <Card variant="outlined">
         <Stack direction="row" sx={{ width: '100%' }}>
           <TabContext value={currentTab}>
             <Box
               sx={{
-                width: { xs: 64, md: '20%' },
+                width: { xs: 72, md: '20%' },
                 minWidth: { xs: 48, md: 180 },
                 borderRightWidth: 1,
                 borderRightStyle: 'solid',
@@ -112,7 +113,15 @@ export const SettingsPage = () => {
                 key={tab.name}
                 sx={{ p: 0, width: '100%', overflow: 'hidden' }}
               >
-                <Box component={tab.component} />
+                <Stack
+                  sx={{
+                    height: '100%',
+                    display: 'flex',
+                    flexDirection: 'column',
+                  }}
+                >
+                  <Box component={tab.component} />
+                </Stack>
               </TabPanel>
             ))}
           </TabContext>

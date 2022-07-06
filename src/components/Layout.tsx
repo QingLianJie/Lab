@@ -1,11 +1,13 @@
-import { Container, Stack, Typography } from '@mui/material'
-import { Fragment, ReactNode } from 'react'
+import { type SvgIconComponent } from '@mui/icons-material'
+import { Container, Icon, Stack, Typography } from '@mui/material'
+import { Fragment, type ReactNode } from 'react'
 import { Helmet } from 'react-helmet-async'
 import { info } from '../configs/site-info'
 
 interface LayoutProps {
   title?: string
   description?: string
+  icon?: SvgIconComponent
   subtitle?: string
   children?: ReactNode
 }
@@ -13,6 +15,7 @@ interface LayoutProps {
 export const Layout = ({
   title,
   description,
+  icon,
   subtitle,
   children,
 }: LayoutProps) => {
@@ -30,7 +33,10 @@ export const Layout = ({
             minHeight: '100vh',
           }}
         >
-          <Stack spacing={1} sx={{ px: 2, py: { xs: 5, md: 5, lg: 6 } }}>
+          <Stack
+            spacing={1}
+            sx={{ position: 'relative', px: 2, py: { xs: 5, lg: 6 } }}
+          >
             <Typography
               variant="h1"
               sx={{ fontSize: 'h5.fontSize', fontWeight: 700 }}
@@ -41,6 +47,21 @@ export const Layout = ({
               <Typography variant="body1" sx={{ color: 'text.secondary' }}>
                 {subtitle}
               </Typography>
+            )}
+
+            {icon && (
+              <Icon
+                component={icon}
+                sx={{
+                  color: 'action.selected',
+                  width: 56,
+                  height: 56,
+                  position: 'absolute',
+                  top: { xs: 60, lg: 68 },
+                  right: 16,
+                  transform: 'translateY(-50%)',
+                }}
+              />
             )}
           </Stack>
 
@@ -58,7 +79,7 @@ export const Layout = ({
             }}
           >
             <Typography variant="body2" color="textSecondary">
-              清廉街 © 2022
+              {info.name} © {new Date().getFullYear()}
             </Typography>
             <Typography
               variant="body2"
@@ -69,7 +90,7 @@ export const Layout = ({
               color="textSecondary"
               sx={{ textDecoration: 'none' }}
             >
-              黑ICP备2021003925号-1
+              {info.icp}
             </Typography>
           </Stack>
         </Stack>

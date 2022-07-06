@@ -9,7 +9,6 @@ interface SettingsHeaderProps {
 
 export const SettingsHeader = ({ title, children }: SettingsHeaderProps) => (
   <Stack
-    component="article"
     spacing={2}
     direction="row"
     sx={{
@@ -17,11 +16,15 @@ export const SettingsHeader = ({ title, children }: SettingsHeaderProps) => (
       justifyContent: 'space-between',
       borderBottom: 1,
       borderColor: 'divider',
-      px: { xs: 2.5, md: 3 },
-      py: 2.5,
+      pl: { xs: 2.5, md: 3 },
+      pr: { xs: 1.5, md: 2 },
+      py: 1,
     }}
   >
-    <Typography variant="h1" sx={{ fontSize: '1.125rem', fontWeight: 700 }}>
+    <Typography
+      variant="h1"
+      sx={{ fontSize: '1.125rem', fontWeight: 700, py: 1.5 }}
+    >
       {title}
     </Typography>
     {children}

@@ -308,6 +308,7 @@
 }
 
 .markdown-body table {
+  margin: 16px 0 !important;
   border-spacing: 0;
   border-collapse: collapse;
   display: block;
@@ -324,6 +325,7 @@
 
 .markdown-body details summary {
   cursor: pointer;
+  font-weight: 700;
 }
 
 .markdown-body details:not([open]) > *:not(summary) {
