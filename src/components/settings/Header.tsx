@@ -1,13 +1,26 @@
-import { type SvgIconComponent } from '@mui/icons-material'
-import { Stack, Typography } from '@mui/material'
+import {
+  BookmarkBorderOutlined,
+  HelpOutlineOutlined,
+  type SvgIconComponent,
+} from '@mui/icons-material'
+import { IconButton, Stack, Typography } from '@mui/material'
 import { type ReactNode } from 'react'
+import { Link } from 'react-router-dom'
+import { Tooltip } from '../base/Tooltip'
 
 interface SettingsHeaderProps {
   title: string
   children?: ReactNode
+  href?: string
+  help?: string
 }
 
-export const SettingsHeader = ({ title, children }: SettingsHeaderProps) => (
+export const SettingsHeader = ({
+  title,
+  href,
+  help,
+  children,
+}: SettingsHeaderProps) => (
   <Stack
     spacing={2}
     direction="row"
@@ -28,5 +41,39 @@ export const SettingsHeader = ({ title, children }: SettingsHeaderProps) => (
       {title}
     </Typography>
     {children}
+    {href && (
+      <Tooltip title="了解更多" placement="top">
+        <IconButton
+          aria-label="了解更多"
+          href={href}
+          target="_blank"
+          rel="noopener noreferrer"
+          sx={{
+            color: 'text.disabled',
+            '&:hover': { color: 'text.primary' },
+            transition: 'all 0.2s',
+          }}
+        >
+          <BookmarkBorderOutlined />
+        </IconButton>
+      </Tooltip>
+    )}
+
+    {help && (
+      <Tooltip title="帮助" placement="top">
+        <IconButton
+          component={Link}
+          aria-label="帮助"
+          to={help}
+          sx={{
+            color: 'text.disabled',
+            '&:hover': { color: 'text.primary' },
+            transition: 'all 0.2s',
+          }}
+        >
+          <HelpOutlineOutlined />
+        </IconButton>
+      </Tooltip>
+    )}
   </Stack>
 )

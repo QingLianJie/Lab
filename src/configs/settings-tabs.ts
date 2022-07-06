@@ -1,12 +1,14 @@
 import {
   AccountCircleOutlined,
   AccountCircleRounded,
-  DnsOutlined,
-  DnsRounded,
+  AlternateEmailOutlined,
+  AlternateEmailRounded,
   CodeOutlined,
   CodeRounded,
-  ColorLensOutlined,
-  ColorLensRounded,
+  SdStorageOutlined,
+  SdStorageRounded,
+  DnsOutlined,
+  DnsRounded,
   ExtensionOutlined,
   ExtensionRounded,
   HelpOutlineOutlined,
@@ -16,18 +18,16 @@ import {
   SchoolOutlined,
   SchoolRounded,
   type SvgIconComponent,
-  AlternateEmailOutlined,
-  AlternateEmailRounded,
 } from '@mui/icons-material'
 import { type ElementType } from 'react'
 import { About } from '../components/settings/tabs/About'
-import { Appearance } from '../components/settings/tabs/Appearance'
 import { Apps } from '../components/settings/tabs/Apps'
-import { Contact } from '../components/settings/tabs/Contact'
 import { Developer } from '../components/settings/tabs/Developer'
+import { Feedback } from '../components/settings/tabs/Feedback'
 import { Help } from '../components/settings/tabs/Help'
 import { OpenSource } from '../components/settings/tabs/OpenSource'
 import { Qing } from '../components/settings/tabs/Qing'
+import { Storage } from '../components/settings/tabs/Storage'
 import { University } from '../components/settings/tabs/University'
 
 export type Tabs = {
@@ -51,21 +51,21 @@ export const tabs = [
     icon: [SchoolOutlined, SchoolRounded],
   },
   {
-    name: '外观',
-    id: 'appearance',
-    component: Appearance,
-    icon: [ColorLensOutlined, ColorLensRounded],
-  },
-  {
     name: '插件',
     id: 'apps',
     component: Apps,
     icon: [ExtensionOutlined, ExtensionRounded],
   },
   {
+    name: '数据',
+    id: 'storage',
+    component: Storage,
+    icon: [SdStorageOutlined, SdStorageRounded],
+  },
+  {
     name: '联系我们',
-    id: 'contact',
-    component: Contact,
+    id: 'feedback',
+    component: Feedback,
     icon: [AlternateEmailOutlined, AlternateEmailRounded],
   },
   {

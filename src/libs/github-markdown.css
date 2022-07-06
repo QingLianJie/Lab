@@ -226,9 +226,11 @@
   overflow: hidden;
   background: transparent;
   border-bottom: 1px solid var(--color-border-muted);
-  height: 0.25em;
+  /* height: 0.25em; */
+  height: 1px;
   padding: 0;
-  margin: 24px 0;
+  /* margin: 24px 0; */
+  margin: 16px 0;
   background-color: var(--color-border-default);
   border: 0;
 }
@@ -326,6 +328,34 @@
 .markdown-body details summary {
   cursor: pointer;
   font-weight: 700;
+  width: fit-content;
+  list-style: none;
+  display: flex;
+  align-items: flex-start;
+  flex-direction: row;
+  padding: 2px 0;
+}
+
+.markdown-body details summary::before {
+  content: '->';
+  display: flex;
+  white-space: nowrap;
+  margin-right: 8px;
+  transition: transform 0.2s;
+}
+
+.markdown-body details[open] summary::before {
+  content: '->';
+  transform: rotate(90deg);
+}
+
+.markdown-body details summary::marker,
+.markdown-body details summary::-webkit-details-marker {
+  display: none;
+}
+
+.markdown-body details[open] summary {
+  margin-bottom: 8px;
 }
 
 .markdown-body details:not([open]) > *:not(summary) {
@@ -401,9 +431,10 @@
 
 .markdown-body ul,
 .markdown-body ol {
-  margin-top: 0;
-  margin-bottom: 0;
-  padding-left: 2em;
+  /* margin-top: 0;
+  margin-bottom: 0; */
+  margin: 12px 0 !important;
+  padding-left: 1.25em;
 }
 
 .markdown-body ol ol,
@@ -739,6 +770,11 @@
 
 .markdown-body li > p {
   margin-top: 16px;
+}
+
+.markdown-body ol > li,
+.markdown-body ul > li {
+  padding-left: 4px;
 }
 
 .markdown-body li + li {

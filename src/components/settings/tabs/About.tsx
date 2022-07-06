@@ -4,10 +4,10 @@ import { info } from '../../../configs/site-info'
 import { SettingsHeader } from '../Header'
 import LogoOutlined from '../../../assets/logo-outlined.svg'
 import { Tooltip } from '../../base/Tooltip'
-import { EggOutlined } from '@mui/icons-material'
+import { ThumbDownAltOutlined } from '@mui/icons-material'
 
 export const About = () => {
-  const [eggs, setEggs] = useState('别点')
+  const [eggs, setEggs] = useState('你瞅啥')
   const [count, setCount] = useState(1)
 
   const handleEggs = () => {
@@ -27,7 +27,7 @@ export const About = () => {
       html.style.transform = ''
       html.style.overflow = ''
       setCount(1)
-      setEggs('说了别点，还点')
+      setEggs('你瞅啥')
     }
   }
 
@@ -39,12 +39,12 @@ export const About = () => {
             aria-label="彩蛋"
             onClick={handleEggs}
             sx={{
-              color: 'text.secondary',
+              color: 'text.disabled',
               '&:hover': { color: 'text.primary' },
               transition: 'all 0.2s',
             }}
           >
-            <EggOutlined />
+            <ThumbDownAltOutlined />
           </IconButton>
         </Tooltip>
       </SettingsHeader>
@@ -80,7 +80,7 @@ export const About = () => {
             target="_blank"
             rel="noopener noreferrer"
             sx={{
-              color: 'text.secondary',
+              color: 'text.disabled',
               '&:hover': { color: 'text.primary' },
               transition: 'all 0.2s',
             }}

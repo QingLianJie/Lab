@@ -6,7 +6,7 @@ import markdown from '../../../markdown/settings/开发者选项.md?raw'
 
 export const Developer = () => (
   <Fragment>
-    <SettingsHeader title="开发者选项" />
+    <SettingsHeader title="开发者选项" help="/settings?tab=help#developer" />
     <Stack sx={{ px: { xs: 2.5, md: 3 }, py: 2.5 }}>
       <Markdown>{markdown}</Markdown>
     </Stack>
