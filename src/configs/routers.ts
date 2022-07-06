@@ -3,7 +3,6 @@ import {
   BugReportRounded,
   ClassOutlined,
   ClassRounded,
-  EightMp,
   InboxOutlined,
   InboxRounded,
   InsertChartOutlined,

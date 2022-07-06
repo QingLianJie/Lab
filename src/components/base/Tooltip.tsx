@@ -3,10 +3,15 @@ import {
   tooltipClasses,
   TooltipProps,
   Tooltip as MuiTooltip,
+  Fade,
 } from '@mui/material'
 
 export const Tooltip = styled(({ className, ...props }: TooltipProps) => (
-  <MuiTooltip {...props} arrow classes={{ popper: className }} />
+  <MuiTooltip
+    {...props}
+    TransitionComponent={Fade}
+    classes={{ popper: className }}
+  />
 ))(({ theme }) => ({
   [`& .${tooltipClasses.arrow}`]: {
     color: theme.palette.common.black,

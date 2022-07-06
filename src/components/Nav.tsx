@@ -71,7 +71,7 @@ export const Nav = () => {
         }}
       />
       <Stack
-        spacing={{ xs: 0, md: 1 }}
+        spacing={{ xs: 0, md: 2 }}
         direction={{ xs: 'row', md: 'column' }}
         sx={{
           width: '100%',
@@ -108,11 +108,11 @@ export const Nav = () => {
                 to={r.href}
                 sx={{
                   minWidth: 'unset',
-                  width: { xs: '100%', md: 56 },
-                  height: { xs: '100%', md: 56 },
+                  width: { xs: '100%', md: 48 },
+                  height: { xs: '100%', md: 48 },
                   maxWidth: { xs: 72, md: 'unset' },
-                  maxHeight: { xs: 'unset', md: 56 },
-                  borderRadius: { xs: 'unset', md: 2 },
+                  maxHeight: { xs: 'unset', md: 48 },
+                  borderRadius: { xs: 'unset', md: 24 },
                   flex: 1,
                   '&:hover': {
                     backgroundColor: isMobile ? 'unset' : 'action.hover',
@@ -127,7 +127,7 @@ export const Nav = () => {
 
       <Tooltip
         arrow
-        title={`登录到「${info.title}」`}
+        title={`登录到${info.name}`}
         placement={isMobile ? 'top' : 'right'}
       >
         <Button
@@ -136,10 +136,10 @@ export const Nav = () => {
             bottom: 36,
             left: '50%',
             display: { xs: 'none', md: 'flex' },
-            width: 56,
-            height: 56,
+            width: 48,
+            height: 48,
             minWidth: 'unset',
-            borderRadius: 2,
+            borderRadius: 24,
             transform: 'translateX(-50%)',
             '&:hover': {
               backgroundColor: isMobile ? 'unset' : 'action.hover',

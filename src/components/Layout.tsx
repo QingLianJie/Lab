@@ -19,36 +19,60 @@ export const Layout = ({
   return (
     <Fragment>
       <Helmet>
-        <title>{title ? `${title} - ${info.title}` : info.title}</title>
+        <title>{title ? `${title} - ${info.name}` : info.name}</title>
         <meta name="description" content={description || info.description} />
       </Helmet>
       <Container>
         <Stack
-          spacing={1}
           sx={{
-            ml: { xs: 0, md: 10 },
-            mb: { xs: 9, md: 0 },
-            px: 2,
-            py: { xs: 4, lg: 6, xl: 8 },
+            pl: { xs: 0, md: 10 },
+            pb: { xs: 8, md: 0 },
+            minHeight: '100vh',
           }}
         >
-          <Typography
-            variant="h1"
+          <Stack spacing={1} sx={{ px: 2, py: { xs: 5, md: 5, lg: 6 } }}>
+            <Typography
+              variant="h1"
+              sx={{ fontSize: 'h5.fontSize', fontWeight: 700 }}
+            >
+              {title || info.name}
+            </Typography>
+            {subtitle && (
+              <Typography variant="body1" sx={{ color: 'text.secondary' }}>
+                {subtitle}
+              </Typography>
+            )}
+          </Stack>
+
+          {children}
+
+          <Stack
+            spacing={1}
+            direction="row"
             sx={{
-              fontSize: 'h5.fontSize',
-              fontWeight: 700,
+              px: 2,
+              py: { xs: 3, md: 4 },
+              flex: 1,
+              justifyContent: 'space-between',
+              alignItems: 'flex-end',
             }}
           >
-            {title || info.title}
-          </Typography>
-          {subtitle && (
-            <Typography variant="body1" sx={{ color: 'text.secondary' }}>
-              {subtitle}
+            <Typography variant="body2" color="textSecondary">
+              清廉街 © 2022
             </Typography>
-          )}
+            <Typography
+              variant="body2"
+              component="a"
+              href="https://beian.miit.gov.cn/"
+              target="_blank"
+              rel="noopener noreferrer"
+              color="textSecondary"
+              sx={{ textDecoration: 'none' }}
+            >
+              黑ICP备2021003925号-1
+            </Typography>
+          </Stack>
         </Stack>
-
-        {children}
       </Container>
     </Fragment>
   )

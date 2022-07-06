@@ -1,8 +1,12 @@
 import {
+  Avatar,
   Box,
+  CircularProgress,
   createTheme,
   CssBaseline,
+  Stack,
   ThemeProvider,
+  Typography,
   useMediaQuery,
 } from '@mui/material'
 import { StrictMode, Suspense, useMemo } from 'react'
@@ -13,6 +17,7 @@ import { Nav } from './components/Nav'
 import { darkPalette, lightPalette, typography } from './configs/custom-theme'
 import { routers } from './configs/routers'
 import { NotFoundPage } from './routers/404'
+import LogoColorful from './assets/logo-outlined.svg'
 
 const Router = () => (
   <Routes>
@@ -36,7 +41,35 @@ const Router = () => (
 )
 
 const Loading = () => {
-  return <Box sx={{ backgroundColor: 'background.default' }}>加载中</Box>
+  return (
+    <Stack
+      spacing={2}
+      sx={{
+        position: 'fixed',
+        zIndex: 2000,
+        top: 0,
+        right: 0,
+        left: 0,
+        width: '100vw',
+        height: '100vh',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'background.default',
+      }}
+    >
+      <Avatar
+        variant="square"
+        alt="网站 Logo"
+        src={LogoColorful}
+        sx={{ width: 96, height: 96, m: 2 }}
+      />
+      <Typography variant="h6" sx={{ fontWeight: 700, userSelect: 'none' }}>
+        正在进入清廉街
+      </Typography>
+      <CircularProgress size={24} thickness={6} />
+    </Stack>
+  )
 }
 
 const App = () => {

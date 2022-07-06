@@ -1,4 +1,123 @@
-import { Fragment } from 'react'
+import { TabContext, TabList, TabPanel } from '@mui/lab'
+import {
+  Box,
+  Card,
+  Icon,
+  Stack,
+  Tab,
+  Typography,
+  useMediaQuery,
+  useTheme,
+} from '@mui/material'
+import { amber } from '@mui/material/colors'
+import { SyntheticEvent, useEffect, useState } from 'react'
+import { useSearchParams } from 'react-router-dom'
 import { Layout } from '../components/Layout'
+import { tabs } from '../configs/settings-tabs'
 
-export const SettingsPage = () => <Layout title="设置"></Layout>
+export const SettingsPage = () => {
+  const { breakpoints, palette } = useTheme()
+  const isMobile = useMediaQuery(breakpoints.down('md'))
+  const isDark = palette.mode === 'dark'
+
+  const [params, setParams] = useSearchParams()
+  const [currentTab, setTab] = useState(params.get('tab') || 'qing')
+
+  useEffect(() => setTab(params.get('tab') || 'qing'), [params])
+  const handleChange = (_event: SyntheticEvent, value: string) =>
+    setParams({ tab: value })
+
+  return (
+    <Layout title="设置" subtitle="调整网站的各项设置">
+      <Card variant="outlined">
+        <Stack direction="row" sx={{ width: '100%' }}>
+          <TabContext value={currentTab}>
+            <Box
+              sx={{
+                width: { xs: 64, md: '20%' },
+                minWidth: { xs: 48, md: 180 },
+                borderRightWidth: 1,
+                borderRightStyle: 'solid',
+                borderColor: 'divider',
+              }}
+            >
+              <TabList
+                onChange={handleChange}
+                aria-label="lab API tabs example"
+                orientation="vertical"
+                sx={{
+                  py: 1,
+                  '& .MuiTabs-scrollButtons.Mui-disabled': { opacity: 0.3 },
+                  '& .MuiTabs-indicator': {
+                    left: 0,
+                    right: 'unset',
+                    backgroundColor: amber[isDark ? 500 : 600],
+                  },
+                }}
+              >
+                {tabs.map(tab => (
+                  <Tab
+                    aria-label={tab.name}
+                    label={
+                      <Typography
+                        sx={{
+                          pl: { xs: 0, md: 1 },
+                          display: { xs: 'none', md: 'flex' },
+                        }}
+                      >
+                        {tab.name}
+                      </Typography>
+                    }
+                    value={tab.id}
+                    icon={
+                      <Icon
+                        component={tab.icon[tab.id === currentTab ? 1 : 0]}
+                        sx={{
+                          ml: { xs: 1, md: 0.5 },
+                          fontSize: '1.375rem',
+                          color: 'text.disabled',
+                        }}
+                      />
+                    }
+                    iconPosition="start"
+                    key={tab.name}
+                    sx={{
+                      minHeight: 48,
+                      minWidth: 48,
+                      px: { xs: 1, md: 2 },
+                      justifyContent: { xs: 'center', md: 'flex-start' },
+                      fontSize: 'body1.fontSize',
+                      transition: 'background-color 0.2s',
+                      whiteSpace: 'nowrap',
+                      textOverflow: 'ellipsis',
+                      overflow: 'hidden',
+                      '&:hover': {
+                        backgroundColor: isMobile ? 'unset' : 'action.hover',
+                      },
+                      '&.Mui-selected svg': {
+                        color: amber[isDark ? 500 : 600],
+                      },
+                      '&.Mui-selected p': {
+                        color: 'text.primary',
+                        fontWeight: 700,
+                      },
+                    }}
+                  />
+                ))}
+              </TabList>
+            </Box>
+            {tabs.map(tab => (
+              <TabPanel
+                value={tab.id}
+                key={tab.name}
+                sx={{ p: 0, width: '100%', overflow: 'hidden' }}
+              >
+                <Box component={tab.component} />
+              </TabPanel>
+            ))}
+          </TabContext>
+        </Stack>
+      </Card>
+    </Layout>
+  )
+}
