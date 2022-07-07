@@ -58,7 +58,7 @@ export const Layout = ({
                   height: 56,
                   position: 'absolute',
                   top: { xs: 60, lg: 68 },
-                  right: 16,
+                  right: 8,
                   transform: 'translateY(-50%)',
                 }}
               />

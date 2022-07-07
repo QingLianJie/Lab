@@ -1,8 +1,9 @@
-import { Stack } from '@mui/material'
+import { Divider, Stack } from '@mui/material'
 import { Fragment } from 'react'
+import { faqs } from '../../../markdown/settings/帮助'
+import { Details } from '../../base/Details'
 import { Markdown } from '../../base/Markdown'
 import { SettingsHeader } from '../Header'
-import markdown from '../../../markdown/settings/帮助.md?raw'
 
 export const Help = () => (
   <Fragment>
@@ -10,15 +11,31 @@ export const Help = () => (
       title="帮助与常见问题"
       href="https://github.com/QingLianJie/Lab"
     />
+
     <Stack
-      sx={{
-        px: { xs: 2.5, md: 3 },
-        py: 2.5,
-        '& details': { maxWidth: 620 },
-        '& h6': { color: 'text.secondary' },
-      }}
+      direction={{ xs: 'column', md: 'row' }}
+      divider={
+        <Divider
+          orientation="vertical"
+          sx={{ display: { xs: 'none', md: 'flex' }, height: '100%' }}
+        />
+      }
+      sx={{ alignItems: 'flex-start', height: '100%' }}
     >
-      <Markdown>{markdown}</Markdown>
+      <Stack sx={{ flex: 1, width: '100%' }}>
+        {faqs.slice(0, Math.ceil(faqs.length / 2)).map(faq => (
+          <Details summary={faq.question} key={faq.question}>
+            <Markdown>{faq.answer}</Markdown>
+          </Details>
+        ))}
+      </Stack>
+      <Stack sx={{ flex: 1, width: '100%' }}>
+        {faqs.slice(Math.ceil(faqs.length / 2)).map(faq => (
+          <Details summary={faq.question} key={faq.question}>
+            <Markdown>{faq.answer}</Markdown>
+          </Details>
+        ))}
+      </Stack>
     </Stack>
   </Fragment>
 )

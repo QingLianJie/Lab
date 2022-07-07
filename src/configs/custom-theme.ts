@@ -37,4 +37,17 @@ export const typography = {
     'Noto Color Emoji',
   ].join(','),
   fontWeightRegular: 500,
+  code: {
+    fontSize: '1rem',
+    fontWeightRegular: 400,
+    fontFamily: [
+      'Cascadia Code',
+      'JetBrains Mono',
+      'Fira Mono',
+      'Source Code Pro',
+      'Consolas',
+      'Courier New',
+      'monospace',
+    ].join(','),
+  },
 }

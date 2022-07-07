@@ -6,7 +6,6 @@ import {
   Box,
   Button,
   Icon,
-  Stack,
   useMediaQuery,
   useTheme,
 } from '@mui/material'
@@ -34,26 +33,15 @@ export const Nav = () => {
   }, [pathname])
 
   return (
-    <BottomNavigation
-      value={router?.name}
+    <Box
       sx={{
         position: 'fixed',
         left: 0,
         bottom: 0,
         top: { xs: 'unset', md: 0 },
         right: { xs: 0, md: 'unset' },
-        width: { xs: '100%', md: 80 },
-        height: { xs: 64, md: '100%' },
+
         zIndex: 1000,
-        flexDirection: { xs: 'row', md: 'column' },
-        alignItems: 'center',
-        justifyContent: 'center',
-        borderTopWidth: { xs: 1, md: 0 },
-        borderRightWidth: { xs: 0, md: 1 },
-        borderTopStyle: 'solid',
-        borderRightStyle: 'solid',
-        borderColor: 'divider',
-        px: { xs: 2, md: 0 },
       }}
     >
       <Avatar
@@ -69,61 +57,73 @@ export const Nav = () => {
           left: '50%',
           transform: 'translateX(-50%)',
         }}
-      />
-      <Stack
-        spacing={{ xs: 0, md: 2 }}
-        direction={{ xs: 'row', md: 'column' }}
+      >
+        清
+      </Avatar>
+      <BottomNavigation
+        value={router?.name || '主页'}
+        showLabels={false}
         sx={{
-          width: '100%',
-          height: '100%',
+          width: { xs: '100%', md: 80 },
+          height: { xs: 64, md: '100%' },
+          flexDirection: { xs: 'row', md: 'column' },
           alignItems: 'center',
           justifyContent: 'center',
-          flex: 1,
+          borderTopWidth: { xs: 1, md: 0 },
+          borderRightWidth: { xs: 0, md: 1 },
+          borderTopStyle: 'solid',
+          borderRightStyle: 'solid',
+          borderColor: 'divider',
+          px: { xs: 2, md: 0 },
         }}
       >
         {routers
           .filter(r => r.group !== -1)
           .map(r => (
-            <Tooltip
-              arrow
-              title={r.name}
-              placement={isMobile ? 'top' : 'right'}
+            <BottomNavigationAction
               key={r.name}
-            >
-              <BottomNavigationAction
-                component={Link}
-                icon={
-                  <Icon
-                    component={r.icon[r.name === router?.name ? 1 : 0]}
-                    sx={{
-                      color:
-                        r.name === router?.name
-                          ? r.color[isDark ? 1 : 0]
-                          : 'text.disabled',
-                      transition: 'color 0.2s',
-                    }}
-                  />
-                }
-                value={r.name}
-                to={r.href}
-                sx={{
-                  minWidth: 'unset',
-                  width: { xs: '100%', md: 48 },
-                  height: { xs: '100%', md: 48 },
-                  maxWidth: { xs: 72, md: 'unset' },
-                  maxHeight: { xs: 'unset', md: 48 },
-                  borderRadius: { xs: 'unset', md: 24 },
-                  flex: 1,
-                  '&:hover': {
-                    backgroundColor: isMobile ? 'unset' : 'action.hover',
-                  },
-                  '&:hover svg': { color: r.color[isDark ? 1 : 0] },
-                  transition: 'background-color 0.2s',
-                }}
-              />
-            </Tooltip>
+              component={Link}
+              icon={
+                <Tooltip
+                  arrow
+                  title={r.name}
+                  placement={isMobile ? 'top' : 'right'}
+                >
+                  <Box sx={{ p: 1.5, display: 'flex', alignItems: 'center' }}>
+                    <Icon
+                      component={r.icon[r.name === router?.name ? 1 : 0]}
+                      sx={{
+                        color:
+                          r.name === router?.name
+                            ? r.color[isDark ? 1 : 0]
+                            : 'text.disabled',
+                        transition: 'color 0.2s',
+                      }}
+                    />
+                  </Box>
+                </Tooltip>
+              }
+              value={r.name}
+              showLabel={false}
+              to={r.href}
+              sx={{
+                minWidth: 'unset',
+                width: { xs: '100%', md: 48 },
+                height: { xs: '100%', md: 48 },
+                maxWidth: { xs: 72, md: 'unset' },
+                maxHeight: { xs: 'unset', md: 48 },
+                my: { xs: 0, md: 1 },
+                borderRadius: { xs: 'unset', md: 24 },
+                flex: 1,
+                '&:hover': {
+                  backgroundColor: isMobile ? 'unset' : 'action.hover',
+                },
+                '&:hover svg': { color: r.color[isDark ? 1 : 0] },
+                transition: 'background-color 0.2s',
+              }}
+            />
           ))}
-      </Stack>
+      </BottomNavigation>
 
       <Tooltip
         arrow
@@ -150,6 +150,6 @@ export const Nav = () => {
           <LoginOutlined sx={{ color: 'text.disabled' }} />
         </Button>
       </Tooltip>
-    </BottomNavigation>
+    </Box>
   )
 }
