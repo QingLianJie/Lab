@@ -1,4 +1,4 @@
-export const contacts = [
+export const links = [
   {
     name: 'QQ 群',
     description: ['群号是 498047164', 'QQ 群反馈更及时'],

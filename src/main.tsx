@@ -4,6 +4,7 @@ import {
   CircularProgress,
   createTheme,
   CssBaseline,
+  Grow,
   Stack,
   ThemeProvider,
   Typography,
@@ -19,6 +20,7 @@ import { routers } from './configs/routers'
 import { NotFoundPage } from './routers/404'
 import LogoOutlined from './assets/logo-outlined.svg'
 import { info } from './configs/site-info'
+import { SnackbarProvider } from 'notistack'
 
 const Router = () => (
   <Routes>
@@ -93,10 +95,15 @@ const App = () => {
         <HelmetProvider>
           <Suspense fallback={<Loading />}>
             <Box sx={{ backgroundColor: 'background.default' }}>
-              <BrowserRouter>
-                <Nav />
-                <Router />
-              </BrowserRouter>
+              <SnackbarProvider
+                anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+                autoHideDuration={2000}
+              >
+                <BrowserRouter>
+                  <Nav />
+                  <Router />
+                </BrowserRouter>
+              </SnackbarProvider>
             </Box>
           </Suspense>
         </HelmetProvider>

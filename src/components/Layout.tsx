@@ -65,7 +65,7 @@ export const Layout = ({
             )}
           </Stack>
 
-          {children}
+          <Stack sx={{ flex: 1 }}>{children}</Stack>
 
           <Stack
             spacing={1}
@@ -73,7 +73,6 @@ export const Layout = ({
             sx={{
               px: 2,
               py: { xs: 3, md: 4 },
-              flex: 1,
               justifyContent: 'space-between',
               alignItems: 'flex-end',
             }}
@@ -88,7 +87,7 @@ export const Layout = ({
               target="_blank"
               rel="noopener noreferrer"
               color="textSecondary"
-              sx={{ textDecoration: 'none' }}
+              sx={{ textDecoration: 'none', lineHeight: 1.5 }}
             >
               {info.icp}
             </Typography>

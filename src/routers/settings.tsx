@@ -12,12 +12,11 @@ import {
   useMediaQuery,
   useTheme,
 } from '@mui/material'
-import { amber, pink } from '@mui/material/colors'
-import { merge, set, update } from 'lodash'
+import { amber } from '@mui/material/colors'
 import { SyntheticEvent, useEffect, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { Layout } from '../components/Layout'
-import { tabs } from '../configs/settings-tabs'
+import { tabs } from '../configs/settings/settings-tabs'
 
 export const SettingsPage = () => {
   const theme = useTheme()
@@ -44,13 +43,26 @@ export const SettingsPage = () => {
         subtitle="调整网站的各项设置"
         icon={SettingsOutlined}
       >
-        <Card variant="outlined">
-          <Stack direction="row" sx={{ width: '100%' }}>
+        <Card
+          variant="outlined"
+          sx={{ flex: 1, display: 'flex', flexDirection: 'column' }}
+        >
+          <Stack
+            direction="row"
+            sx={{
+              width: '100%',
+              height: '100%',
+              flex: 1,
+              alignItems: 'stretch',
+            }}
+          >
             <TabContext value={currentTab}>
               <Box
                 sx={{
                   width: { xs: 72, md: '25%' },
                   minWidth: { xs: 48, md: 180 },
+                  height: 'auto',
+                  display: 'flex',
                   borderRightWidth: 1,
                   borderRightStyle: 'solid',
                   borderColor: 'divider',
@@ -62,6 +74,8 @@ export const SettingsPage = () => {
                   orientation="vertical"
                   sx={{
                     py: 1,
+                    width: '100%',
+                    height: '100%',
                     '& .MuiTabs-scrollButtons.Mui-disabled': { opacity: 0.3 },
                     '& .MuiTabs-indicator': {
                       left: 0,

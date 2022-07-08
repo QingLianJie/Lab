@@ -10,7 +10,7 @@ export const OpenSource = () => (
       title="开源软件与协议"
       help="/settings?tab=help#open-source"
     />
-    <Stack sx={{ px: { xs: 2.5, md: 3 }, py: 2.5 }}>
+    <Stack sx={{ px: { xs: 2.5, md: 3 }, py: { xs: 2, md: 2.5 } }}>
       <Markdown>{markdown}</Markdown>
     </Stack>
   </Fragment>

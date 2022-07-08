@@ -1,7 +1,6 @@
-import { atom } from 'jotai'
 import { atomLocal } from './atom'
 
-type Developer = {
+interface Developer {
   css: string
   api: string
 }

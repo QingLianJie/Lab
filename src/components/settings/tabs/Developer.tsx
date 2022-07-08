@@ -10,7 +10,7 @@ export const Developer = () => {
   return (
     <Fragment>
       <SettingsHeader title="开发者选项" help="/settings?tab=help#developer" />
-      <Stack sx={{ px: { xs: 2.5, md: 3 }, py: 2.5 }}>
+      <Stack sx={{ px: { xs: 2.5, md: 3 }, py: { xs: 2, md: 2.5 } }}>
         <TextField
           id="css"
           label="自定义 CSS"

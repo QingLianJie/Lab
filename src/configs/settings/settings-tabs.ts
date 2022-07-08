@@ -20,15 +20,15 @@ import {
   type SvgIconComponent,
 } from '@mui/icons-material'
 import { type ElementType } from 'react'
-import { About } from '../components/settings/tabs/About'
-import { Apps } from '../components/settings/tabs/Apps'
-import { Developer } from '../components/settings/tabs/Developer'
-import { Feedback } from '../components/settings/tabs/Feedback'
-import { Help } from '../components/settings/tabs/Help'
-import { OpenSource } from '../components/settings/tabs/OpenSource'
-import { Qing } from '../components/settings/tabs/Qing'
-import { Storage } from '../components/settings/tabs/Storage'
-import { University } from '../components/settings/tabs/University'
+import { About } from '../../components/settings/tabs/About'
+import { Apps } from '../../components/settings/tabs/Apps'
+import { Developer } from '../../components/settings/tabs/Developer'
+import { Contact } from '../../components/settings/tabs/Contact'
+import { Help } from '../../components/settings/tabs/Help'
+import { OpenSource } from '../../components/settings/tabs/OpenSource'
+import { Account } from '../../components/settings/tabs/Account'
+import { Storage } from '../../components/settings/tabs/Storage'
+import { University } from '../../components/settings/tabs/University'
 
 export type Tabs = {
   name: string
@@ -41,7 +41,7 @@ export const tabs = [
   {
     name: '清廉街',
     id: 'qing',
-    component: Qing,
+    component: Account,
     icon: [AccountCircleOutlined, AccountCircleRounded],
   },
   {
@@ -65,7 +65,7 @@ export const tabs = [
   {
     name: '联系我们',
     id: 'feedback',
-    component: Feedback,
+    component: Contact,
     icon: [AlternateEmailOutlined, AlternateEmailRounded],
   },
   {

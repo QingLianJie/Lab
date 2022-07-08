@@ -104,7 +104,7 @@
     sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji'; */
   color: inherit;
   font-family: inherit;
-  font-size: 16px;
+  font-size: inherit;
   line-height: 1.5;
   word-wrap: break-word;
 }
@@ -337,7 +337,7 @@
 }
 
 .markdown-body details summary::before {
-  content: '->';
+  content: '-->';
   display: flex;
   white-space: nowrap;
   margin-right: 8px;
@@ -345,7 +345,7 @@
 }
 
 .markdown-body details[open] summary::before {
-  content: '->';
+  content: '-->';
   transform: rotate(90deg);
 }
 

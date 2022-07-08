@@ -1,6 +1,6 @@
 import { Divider, Stack } from '@mui/material'
 import { Fragment } from 'react'
-import { faqs } from '../../../markdown/settings/帮助'
+import { faqs } from '../../../markdown/settings/faqs'
 import { Details } from '../../base/Details'
 import { Markdown } from '../../base/Markdown'
 import { SettingsHeader } from '../Header'
