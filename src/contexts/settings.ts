@@ -1,11 +1,26 @@
-import { atomLocal } from './atom'
+import { atom } from 'jotai'
+import { atomLocal } from './local'
 
-interface Developer {
-  css: string
-  api: string
+type Settings = {
+  developer: {
+    css: string
+    api: string
+  }
 }
 
-export const develpoerAtom = atomLocal<Developer>('settings', {
-  css: '',
-  api: '',
-})
+export const defaultSettings = {
+  developer: { css: '', api: '' },
+}
+
+export const settingsAtom = atomLocal<Settings>('settings', defaultSettings)
+
+type Account =
+  | false
+  | {
+      id: number
+      avatar: string
+      name: string
+      email: string
+    }
+
+export const accountAtom = atom<Account>(false)

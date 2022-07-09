@@ -3,9 +3,9 @@ import { Button, Stack, Typography } from '@mui/material'
 import { Fragment } from 'react'
 import { SettingsHeader } from '../Header'
 
-export const Apps = () => (
+export const Extension = () => (
   <Fragment>
-    <SettingsHeader title="插件与 App" help="/settings?tab=help#apps" />
+    <SettingsHeader title="插件与 App" help="/settings?tab=help#extension" />
     <Stack
       spacing={0.5}
       sx={{

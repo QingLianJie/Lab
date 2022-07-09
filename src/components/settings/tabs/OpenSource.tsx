@@ -1,6 +1,6 @@
 import { Stack } from '@mui/material'
 import { Fragment } from 'react'
-import markdown from '../../../markdown/settings/开源.md?raw'
+import markdown from '../../../markdown/settings/open-source.md?raw'
 import { Markdown } from '../../base/Markdown'
 import { SettingsHeader } from '../Header'
 

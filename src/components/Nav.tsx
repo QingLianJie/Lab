@@ -34,13 +34,14 @@ export const Nav = () => {
 
   return (
     <Box
+      component="nav"
+      id="nav-bar"
       sx={{
         position: 'fixed',
         left: 0,
         bottom: 0,
         top: { xs: 'unset', md: 0 },
         right: { xs: 0, md: 'unset' },
-
         zIndex: 1000,
       }}
     >

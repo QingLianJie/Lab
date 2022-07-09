@@ -2,7 +2,7 @@ import { CopyAllOutlined, LanguageOutlined } from '@mui/icons-material'
 import { Button, Divider, Stack, Typography } from '@mui/material'
 import { enqueueSnackbar } from 'notistack'
 import { Fragment } from 'react'
-import { links } from '../../../configs/settings/contact-links'
+import { links } from '../../../configs/settings/links'
 import { SettingsHeader } from '../Header'
 
 export const Contact = () => (
@@ -89,27 +89,31 @@ const ContactCard = ({ contact }: ContactCardProps) => (
       {contact.actions.map(action => (
         <Button
           component={action.type === 'link' ? 'a' : 'button'}
-          variant="text"
-          disableElevation
           href={action.type === 'link' ? action.href : undefined}
           target={action.type === 'link' ? '_blank' : undefined}
           rel={action.type === 'link' ? 'noopener noreferrer' : undefined}
-          color="info"
           startIcon={
             action.type === 'link' ? <LanguageOutlined /> : <CopyAllOutlined />
           }
           onClick={
             action.type === 'copy'
               ? () => {
-                  navigator.clipboard.writeText(action.content || '')
-                  enqueueSnackbar(`已复制 ${action.content}`, {
-                    variant: 'success',
-                  })
+                  if (!('clipboard' in navigator))
+                    enqueueSnackbar(`浏览器不支持复制`, {
+                      variant: 'error',
+                    })
+                  else
+                    navigator.clipboard
+                      .writeText(action.content || '')
+                      .then(() =>
+                        enqueueSnackbar(`已复制 ${action.content}`, {
+                          variant: 'success',
+                        })
+                      )
                 }
               : undefined
           }
           key={action.name}
-          sx={{ minWidth: 'unset', py: 0.75, px: 1.5, textTransform: 'none' }}
         >
           {action.name}
         </Button>

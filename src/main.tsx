@@ -1,26 +1,34 @@
+import { CloseOutlined } from '@mui/icons-material'
 import {
   Avatar,
   Box,
+  Button,
   CircularProgress,
   createTheme,
   CssBaseline,
   Grow,
+  IconButton,
   Stack,
   ThemeProvider,
   Typography,
   useMediaQuery,
 } from '@mui/material'
+import { closeSnackbar, SnackbarProvider } from 'notistack'
 import { StrictMode, Suspense, useMemo } from 'react'
 import ReactDOM from 'react-dom/client'
 import { HelmetProvider } from 'react-helmet-async'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
-import { Nav } from './components/Nav'
-import { darkPalette, lightPalette, typography } from './configs/custom-theme'
-import { routers } from './configs/routers'
-import { NotFoundPage } from './routers/404'
 import LogoOutlined from './assets/logo-outlined.svg'
+import { Nav } from './components/Nav'
+import {
+  components,
+  darkPalette,
+  lightPalette,
+  typography,
+} from './configs/custom-theme'
+import { routers } from './configs/routers'
 import { info } from './configs/site-info'
-import { SnackbarProvider } from 'notistack'
+import { NotFoundPage } from './routers/404'
 
 const Router = () => (
   <Routes>
@@ -84,6 +92,7 @@ const App = () => {
       createTheme({
         palette: darkMode ? darkPalette : lightPalette,
         typography,
+        components,
       }),
     [darkMode]
   )
@@ -97,7 +106,18 @@ const App = () => {
             <Box sx={{ backgroundColor: 'background.default' }}>
               <SnackbarProvider
                 anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-                autoHideDuration={2000}
+                autoHideDuration={3000}
+                style={{ fontSize: '1rem', paddingLeft: '1.25rem' }}
+                hideIconVariant
+                action={snackbarKey => (
+                  <IconButton
+                    aria-label="关闭"
+                    sx={{ color: 'inherit', fontSize: '0.925rem' }}
+                    onClick={() => closeSnackbar(snackbarKey)}
+                  >
+                    <CloseOutlined />
+                  </IconButton>
+                )}
               >
                 <BrowserRouter>
                   <Nav />

@@ -1,4 +1,5 @@
 import { blue, grey, pink } from '@mui/material/colors'
+import { experimental_sx as sx } from '@mui/material/styles'
 
 export const lightPalette = {
   mode: 'light' as const,
@@ -49,5 +50,22 @@ export const typography = {
       'Courier New',
       'monospace',
     ].join(','),
+  },
+}
+
+export const components = {
+  MuiButton: {
+    styleOverrides: {
+      root: {
+        minWidth: 'unset',
+        padding: '6px 12px',
+        textTransform: 'none' as const,
+      },
+    },
+    defaultProps: {
+      disableElevation: true,
+      variant: 'text' as const,
+      color: 'info' as const,
+    },
   },
 }

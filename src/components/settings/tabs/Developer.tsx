@@ -1,11 +1,21 @@
 import { Stack, TextareaAutosize, TextField } from '@mui/material'
 import { useAtom } from 'jotai'
 import { Fragment } from 'react'
-import { develpoerAtom } from '../../../contexts/settings'
+import { useDebounce } from 'react-use'
+import { settingsAtom } from '../../../contexts/settings'
 import { SettingsHeader } from '../Header'
 
 export const Developer = () => {
-  const [developer, setDeveloper] = useAtom(develpoerAtom)
+  const [settings, setSettings] = useAtom(settingsAtom)
+
+  useDebounce(
+    () => {
+      const style = document.querySelector('style#custom-css')
+      if (style) style.innerHTML = settings.developer.css
+    },
+    500,
+    [settings.developer.css]
+  )
 
   return (
     <Fragment>
@@ -16,7 +26,7 @@ export const Developer = () => {
           label="自定义 CSS"
           multiline
           minRows={4}
-          defaultValue={developer.css}
+          defaultValue={settings.developer.css}
           size="small"
           margin="dense"
           helperText="输入自定义 CSS 代码，修改网站样式"
@@ -24,18 +34,34 @@ export const Developer = () => {
             '& textarea': { fontFamily: 'code.fontFamily' },
             '&.MuiFormControl-root': { mt: 0.5 },
           }}
-          onChange={e => setDeveloper({ ...developer, css: e.target.value })}
+          onChange={e =>
+            setSettings(s => ({
+              ...s,
+              developer: {
+                ...s.developer,
+                css: e.target.value,
+              },
+            }))
+          }
           inputProps={{ component: TextareaAutosize }}
         />
 
         <TextField
           id="api"
           label="后端 API 地址"
-          defaultValue={developer.api}
+          defaultValue={settings.developer.api}
           size="small"
           margin="dense"
           sx={{ fontFamily: 'code.fontFamily' }}
-          onChange={e => setDeveloper({ ...developer, api: e.target.value })}
+          onChange={e =>
+            setSettings(s => ({
+              ...s,
+              developer: {
+                ...s.developer,
+                api: e.target.value,
+              },
+            }))
+          }
         />
       </Stack>
     </Fragment>

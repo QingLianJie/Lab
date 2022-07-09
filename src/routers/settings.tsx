@@ -16,7 +16,7 @@ import { amber } from '@mui/material/colors'
 import { SyntheticEvent, useEffect, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { Layout } from '../components/Layout'
-import { tabs } from '../configs/settings/settings-tabs'
+import { tabs } from '../configs/settings/tabs'
 
 export const SettingsPage = () => {
   const theme = useTheme()
@@ -30,9 +30,9 @@ export const SettingsPage = () => {
   const isDark = palette.mode === 'dark'
 
   const [params, setParams] = useSearchParams()
-  const [currentTab, setTab] = useState(params.get('tab') || 'qing')
+  const [currentTab, setTab] = useState(params.get('tab') || 'account')
 
-  useEffect(() => setTab(params.get('tab') || 'qing'), [params])
+  useEffect(() => setTab(params.get('tab') || 'account'), [params])
   const handleChange = (_event: SyntheticEvent, value: string) =>
     setParams({ tab: value })
 

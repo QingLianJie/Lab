@@ -3,15 +3,15 @@ import { Button, Stack, Typography } from '@mui/material'
 import { useAtom } from 'jotai'
 import { enqueueSnackbar } from 'notistack'
 import { Fragment } from 'react'
-import { modalsAtom } from '../../../contexts/modals-switch'
+import { modalsAtom } from '../../../contexts/states'
 import { SettingsHeader } from '../Header'
 
-export const University = () => {
+export const Bridge = () => {
   const [modals, setModals] = useAtom(modalsAtom)
 
   return (
     <Fragment>
-      <SettingsHeader title="HEU 账号" help="/settings?tab=help#university" />
+      <SettingsHeader title="HEU 账号" help="/settings?tab=help#bridge" />
       <Stack
         spacing={0.5}
         sx={{

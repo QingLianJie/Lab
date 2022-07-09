@@ -1,14 +1,15 @@
 import { atom } from 'jotai'
 
-interface Modals {
+type Modals = {
   login: boolean
+  bind: boolean
   register: boolean
   reset: boolean
-  bind: boolean
 }
+
 export const modalsAtom = atom<Modals>({
   login: false,
+  bind: false,
   register: false,
   reset: false,
-  bind: false,
 })

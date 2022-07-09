@@ -25,7 +25,7 @@ export const Layout = ({
         <title>{title ? `${title} - ${info.name}` : info.name}</title>
         <meta name="description" content={description || info.description} />
       </Helmet>
-      <Container>
+      <Container id="container">
         <Stack
           sx={{
             pl: { xs: 0, md: 10 },
@@ -34,6 +34,8 @@ export const Layout = ({
           }}
         >
           <Stack
+            component="header"
+            id="header"
             spacing={1}
             sx={{ position: 'relative', px: 2, py: { xs: 5, lg: 6 } }}
           >
@@ -65,9 +67,13 @@ export const Layout = ({
             )}
           </Stack>
 
-          <Stack sx={{ flex: 1 }}>{children}</Stack>
+          <Stack component="main" sx={{ flex: 1 }} id="content">
+            {children}
+          </Stack>
 
           <Stack
+            component="footer"
+            id="footer"
             spacing={1}
             direction="row"
             sx={{

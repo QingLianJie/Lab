@@ -29,7 +29,7 @@ export const Details = ({ summary, children }: FoldProps) => (
     <AccordionSummary
       expandIcon={<ExpandMoreOutlined sx={{ color: 'text.disabled' }} />}
       sx={{
-        '&.Mui-expanded p': { fontWeight: 'fontWeightBold' },
+        '&.Mui-expanded p': { fontWeight: 700 },
         '& .MuiAccordionSummary-content': { overflow: 'hidden' },
       }}
     >
