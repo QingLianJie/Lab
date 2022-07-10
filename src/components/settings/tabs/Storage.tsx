@@ -58,22 +58,23 @@ export const Storage = () => {
     setLoading(true)
     const input = e.target as HTMLInputElement
     const file = input.files?.[0]
-    try {
-      const reader = new FileReader()
-      reader.onload = () => {
+    const reader = new FileReader()
+    reader.onload = () => {
+      try {
         const data = JSON.parse(reader.result as string)
         setSettings(data.settings)
         setBridge(data.bridge)
         setSchedules(data.schedules)
         setScores(data.scores)
         setLoading(false)
+        enqueueSnackbar(`导入成功：${file?.name}`, { variant: 'success' })
+      } catch (error) {
+        console.error(error)
+        enqueueSnackbar(`导入失败：${file?.name}`, { variant: 'error' })
+        setLoading(false)
       }
-      reader.readAsText(file as Blob)
-      enqueueSnackbar(`导入成功：${file?.name}`, { variant: 'success' })
-    } catch (error) {
-      console.error(error)
-      enqueueSnackbar(`导入失败：${file?.name}`, { variant: 'error' })
     }
+    reader.readAsText(file as Blob)
   }
 
   const handleRemove = () => {
@@ -143,6 +144,7 @@ export const Storage = () => {
               <LoadingButton
                 startIcon={<FileUploadOutlined />}
                 loading={isLoading}
+                loadingPosition="start"
                 onClick={() => inputRef.current?.click()}
               >
                 导入

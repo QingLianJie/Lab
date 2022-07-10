@@ -1,15 +1,13 @@
 import { atom } from 'jotai'
 
+export type AuthModal = false | '登录' | '注册' | '重置密码'
+
 type Modals = {
-  login: boolean
+  auth: AuthModal
   bind: boolean
-  register: boolean
-  reset: boolean
 }
 
 export const modalsAtom = atom<Modals>({
-  login: false,
+  auth: false,
   bind: false,
-  register: false,
-  reset: false,
 })

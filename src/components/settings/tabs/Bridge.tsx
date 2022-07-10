@@ -1,9 +1,8 @@
 import { SchoolOutlined } from '@mui/icons-material'
 import { Button, Stack, Typography } from '@mui/material'
 import { useAtom } from 'jotai'
-import { enqueueSnackbar } from 'notistack'
 import { Fragment } from 'react'
-import { modalsAtom } from '../../../contexts/states'
+import { modalsAtom } from '../../../contexts/booleans'
 import { SettingsHeader } from '../Header'
 
 export const Bridge = () => {
@@ -44,10 +43,7 @@ export const Bridge = () => {
               px: 1.5,
               textTransform: 'none',
             }}
-            onClick={() => {
-              setModals({ ...modals, bind: true })
-              enqueueSnackbar('还没做')
-            }}
+            onClick={() => setModals({ ...modals, bind: true })}
           >
             添加 HEU 账号
           </Button>

@@ -85,7 +85,7 @@ export const routers = [
   },
   {
     name: '找不到页面',
-    href: '/404',
+    href: '*',
     component: NotFoundPage,
     icon: [BugReportOutlined, BugReportRounded],
     color: [pink[400], pink[300]],

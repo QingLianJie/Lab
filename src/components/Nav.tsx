@@ -1,20 +1,22 @@
-import { LoginOutlined } from '@mui/icons-material'
+import { AccountCircleOutlined } from '@mui/icons-material'
 import {
   Avatar,
   BottomNavigation,
   BottomNavigationAction,
   Box,
-  Button,
   Icon,
   useMediaQuery,
   useTheme,
 } from '@mui/material'
+import { useAtom, useAtomValue } from 'jotai'
 import { findLast } from 'lodash'
 import { useEffect, useState } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import LogoOutlined from '../assets/logo-outlined.svg'
 import { Routers, routers } from '../configs/routers'
 import { info } from '../configs/site-info'
+import { modalsAtom } from '../contexts/booleans'
+import { accountAtom } from '../contexts/settings'
 import { Tooltip } from './base/Tooltip'
 
 export const Nav = () => {
@@ -25,6 +27,9 @@ export const Nav = () => {
   const { pathname } = useLocation()
   const navigate = useNavigate()
   const [router, setRouter] = useState<Routers[number] | null>(null)
+
+  const [modals, setModals] = useAtom(modalsAtom)
+  const account = useAtomValue(accountAtom)
 
   useEffect(() => {
     const router = findLast(routers, r => pathname.startsWith(r.href))
@@ -81,76 +86,100 @@ export const Nav = () => {
         {routers
           .filter(r => r.group !== -1)
           .map(r => (
-            <BottomNavigationAction
+            <NavButton
+              currentRouter={router}
+              router={r}
+              isMobile={isMobile}
+              isDark={isDark}
               key={r.name}
-              component={Link}
-              icon={
-                <Tooltip
-                  arrow
-                  title={r.name}
-                  placement={isMobile ? 'top' : 'right'}
-                >
-                  <Box sx={{ p: 1.5, display: 'flex', alignItems: 'center' }}>
-                    <Icon
-                      component={r.icon[r.name === router?.name ? 1 : 0]}
-                      sx={{
-                        color:
-                          r.name === router?.name
-                            ? r.color[isDark ? 1 : 0]
-                            : 'text.disabled',
-                        transition: 'color 0.2s',
-                      }}
-                    />
-                  </Box>
-                </Tooltip>
-              }
-              value={r.name}
-              showLabel={false}
-              to={r.href}
-              sx={{
-                minWidth: 'unset',
-                width: { xs: '100%', md: 48 },
-                height: { xs: '100%', md: 48 },
-                maxWidth: { xs: 72, md: 'unset' },
-                maxHeight: { xs: 'unset', md: 48 },
-                my: { xs: 0, md: 1 },
-                borderRadius: { xs: 'unset', md: 24 },
-                flex: 1,
-                '&:hover': {
-                  backgroundColor: isMobile ? 'unset' : 'action.hover',
-                },
-                '&:hover svg': { color: r.color[isDark ? 1 : 0] },
-                transition: 'background-color 0.2s',
-              }}
             />
           ))}
       </BottomNavigation>
 
       <Tooltip
         arrow
-        title={`登录到${info.name}`}
+        title={account ? account.name : `登录到${info.name}`}
         placement={isMobile ? 'top' : 'right'}
       >
-        <Button
+        <Avatar
+          src={account ? account.avatar : ''}
+          alt={account ? account.name : '登录'}
           sx={{
             position: 'absolute',
             bottom: 36,
             left: '50%',
             display: { xs: 'none', md: 'flex' },
-            width: 48,
-            height: 48,
-            minWidth: 'unset',
-            borderRadius: 24,
+            width: 40,
+            height: 40,
             transform: 'translateX(-50%)',
+            backgroundColor: 'transparent',
             '&:hover': {
               backgroundColor: isMobile ? 'unset' : 'action.hover',
             },
+            cursor: 'pointer',
             transition: 'background-color 0.2s',
           }}
+          onClick={() => {
+            if (account) navigate('/settings')
+            else setModals({ ...modals, auth: '登录' })
+          }}
         >
-          <LoginOutlined sx={{ color: 'text.disabled' }} />
-        </Button>
+          <AccountCircleOutlined sx={{ color: 'text.disabled' }} />
+        </Avatar>
       </Tooltip>
     </Box>
   )
 }
+
+interface NavButtonProps {
+  currentRouter: Routers[number] | null
+  router: Routers[number]
+  isMobile: boolean
+  isDark: boolean
+}
+
+const NavButton = ({
+  currentRouter,
+  router,
+  isMobile,
+  isDark,
+}: NavButtonProps) => (
+  <BottomNavigationAction
+    key={router.name}
+    component={Link}
+    icon={
+      <Tooltip arrow title={router.name} placement={isMobile ? 'top' : 'right'}>
+        <Box sx={{ p: 1.5, display: 'flex', alignItems: 'center' }}>
+          <Icon
+            component={router.icon[router.name === currentRouter?.name ? 1 : 0]}
+            sx={{
+              color:
+                router.name === currentRouter?.name
+                  ? router.color[isDark ? 1 : 0]
+                  : 'text.disabled',
+              transition: 'color 0.2s',
+            }}
+          />
+        </Box>
+      </Tooltip>
+    }
+    value={router.name}
+    showLabel={false}
+    to={router.href}
+    sx={{
+      minWidth: 'unset',
+      width: { xs: '100%', md: 48 },
+      height: { xs: '100%', md: 48 },
+      maxWidth: { xs: 72, md: 'unset' },
+      maxHeight: { xs: 'unset', md: 48 },
+      my: { xs: 0, md: 1 },
+      borderRadius: { xs: 'unset', md: 24 },
+      flex: 1,
+      '&:hover': {
+        backgroundColor: isMobile ? 'unset' : 'action.hover',
+      },
+      '&:hover svg': { color: router.color[isDark ? 1 : 0] },
+      transition: 'background-color 0.2s',
+    }}
+  />
+)

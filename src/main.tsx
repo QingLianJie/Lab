@@ -2,11 +2,9 @@ import { CloseOutlined } from '@mui/icons-material'
 import {
   Avatar,
   Box,
-  Button,
   CircularProgress,
   createTheme,
   CssBaseline,
-  Grow,
   IconButton,
   Stack,
   ThemeProvider,
@@ -19,6 +17,7 @@ import ReactDOM from 'react-dom/client'
 import { HelmetProvider } from 'react-helmet-async'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import LogoOutlined from './assets/logo-outlined.svg'
+import { Modals } from './components/Modals'
 import { Nav } from './components/Nav'
 import {
   components,
@@ -28,7 +27,6 @@ import {
 } from './configs/custom-theme'
 import { routers } from './configs/routers'
 import { info } from './configs/site-info'
-import { NotFoundPage } from './routers/404'
 
 const Router = () => (
   <Routes>
@@ -47,7 +45,6 @@ const Router = () => (
         ))}
       </Route>
     ))}
-    <Route path="*" element={<NotFoundPage />} />
   </Routes>
 )
 
@@ -120,6 +117,7 @@ const App = () => {
                 )}
               >
                 <BrowserRouter>
+                  <Modals />
                   <Nav />
                   <Router />
                 </BrowserRouter>

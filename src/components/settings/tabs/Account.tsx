@@ -1,26 +1,10 @@
 import { AccountCircleOutlined } from '@mui/icons-material'
 import { Button, Stack, Typography } from '@mui/material'
 import { useAtom } from 'jotai'
-import { enqueueSnackbar } from 'notistack'
 import { Fragment } from 'react'
 import { info } from '../../../configs/site-info'
-import { modalsAtom } from '../../../contexts/states'
+import { AuthModal, modalsAtom } from '../../../contexts/booleans'
 import { SettingsHeader } from '../Header'
-
-const actions = [
-  {
-    name: '登录',
-    id: 'login',
-  },
-  {
-    name: '注册',
-    id: 'register',
-  },
-  {
-    name: '重置密码',
-    id: 'reset',
-  },
-]
 
 export const Account = () => {
   const [modals, setModals] = useAtom(modalsAtom)
@@ -54,7 +38,7 @@ export const Account = () => {
           当前没有登录{info.name}账号
         </Typography>
         <Stack direction="row" sx={{ pb: 1 }}>
-          {actions.map(action => (
+          {['登录', '注册', '重置密码'].map(action => (
             <Button
               variant="text"
               disableElevation
@@ -65,13 +49,12 @@ export const Account = () => {
                 px: 1.5,
                 textTransform: 'none',
               }}
-              onClick={() => {
-                setModals({ ...modals, [action.id]: true })
-                enqueueSnackbar('还没做')
-              }}
-              key={action.name}
+              onClick={() =>
+                setModals({ ...modals, auth: action as AuthModal })
+              }
+              key={action}
             >
-              {action.name}
+              {action}
             </Button>
           ))}
         </Stack>

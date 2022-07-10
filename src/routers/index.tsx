@@ -2,10 +2,10 @@ import { InboxOutlined } from '@mui/icons-material'
 import { Layout } from '../components/Layout'
 
 export const HomePage = () => {
-  const weekdays = ['周一', '周二', '周三', '周四', '周五', '周六', '周日']
+  const weekdays = ['周日', '周一', '周二', '周三', '周四', '周五', '周六']
+  const day = new Date().getDay()
   const month = new Date().getMonth() + 1
   const date = new Date().getDate()
-  const day = new Date().getDay() - 1
 
   return (
     <Layout

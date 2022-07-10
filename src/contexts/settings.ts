@@ -1,5 +1,5 @@
 import { atom } from 'jotai'
-import { atomLocal } from './local'
+import { atomLocal } from './atom'
 
 type Settings = {
   developer: {

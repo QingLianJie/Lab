@@ -1,4 +1,4 @@
-import { atomLocal } from './local'
+import { atomLocal } from './atom'
 
 type Bridge =
   | false
