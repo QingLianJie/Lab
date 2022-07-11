@@ -6,7 +6,7 @@ specifiers:
   '@mui/icons-material': ^5.8.4
   '@mui/lab': 5.0.0-alpha.89
   '@mui/material': ^5.8.7
-  '@qing-dev/bridge': ^0.1.5
+  '@qing-dev/bridge': 0.1.6
   '@types/lodash': ^4.14.182
   '@types/react': ^18.0.15
   '@types/react-dom': ^18.0.6
@@ -34,7 +34,7 @@ dependencies:
   '@mui/icons-material': 5.8.4_3qrniyd4fth4fdw4jngl7l7ure
   '@mui/lab': 5.0.0-alpha.89_rhte65vpbns5hpacw7slurftki
   '@mui/material': 5.8.7_bl6qrq6463ovzmqn4cmwv7vydq
-  '@qing-dev/bridge': 0.1.5
+  '@qing-dev/bridge': 0.1.6
   github-markdown-css: 5.1.0
   jotai: 1.7.4_2sb3a56iojvze2npkgcccbebf4
   lodash: 4.17.21
@@ -1730,8 +1730,8 @@ packages:
     resolution: {integrity: sha512-9X2obfABZuDVLCgPK9aX0a/x4jaOEweTTWE2+9sr0Qqqevj2Uv5XorvusThmc9XGYpS9yI+fhh8RTafBtGposw==}
     dev: false
 
-  /@qing-dev/bridge/0.1.5:
-    resolution: {integrity: sha512-t9ItbZRvg2FPBPLS8xHCq7PxXmFPUfUj/lsuZRSNGp6lkzaTF1xQL/L4dtnscKguU5cnHUAyEEDOYZh9CyQ2Cw==}
+  /@qing-dev/bridge/0.1.6:
+    resolution: {integrity: sha512-LiRMkLVE1ycUQAWorR+MP4g5Z2xu0GDDpKA8p4RJmnQ2lAF8kRgOTKFk/IOAs0rs9HZUwbPHS+fW/DTGLJj+Bw==}
     dev: false
 
   /@rollup/plugin-babel/5.3.1_fb3qe53zzddvqjqqltveoanfhe:

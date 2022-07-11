@@ -3,11 +3,23 @@ import { Button, Stack, Typography, useTheme } from '@mui/material'
 import { amber } from '@mui/material/colors'
 import { useAtomValue } from 'jotai'
 import { Fragment } from 'react'
-import { bridgeAtom } from '../../../contexts/bridge'
+import { bridgeAtom, fetcherAtom } from '../../../contexts/bridge'
 import { SettingsHeader } from '../Header'
 
+const fetcherMap = (name: string) => {
+  switch (name) {
+    case 'userscript':
+      return '用户脚本'
+    case 'android':
+      return 'Android'
+    default:
+      return '未知插件'
+  }
+}
 export const Extension = () => {
   const bridge = useAtomValue(bridgeAtom)
+  const fetcher = useAtomValue(fetcherAtom)
+
   const { palette } = useTheme()
   const isDark = palette.mode === 'dark'
 
@@ -34,17 +46,28 @@ export const Extension = () => {
           }}
         />
         {bridge ? (
-          <Typography
-            variant="h5"
-            component="span"
-            sx={{
-              color: 'text.primary',
-              textAlign: 'center',
-              fontWeight: 700,
-            }}
-          >
-            已连接到插件
-          </Typography>
+          <Fragment>
+            <Typography
+              variant="body1"
+              component="span"
+              sx={{ color: 'text.secondary', textAlign: 'center' }}
+            >
+              已连接到插件
+            </Typography>
+            <Typography
+              variant="h5"
+              component="span"
+              sx={{
+                color: 'text.primary',
+                textAlign: 'center',
+                fontWeight: 700,
+              }}
+            >
+              {fetcher
+                ? `${fetcherMap(fetcher.name)} ${fetcher.version}`
+                : '未知插件'}
+            </Typography>
+          </Fragment>
         ) : (
           <Typography
             variant="h6"
@@ -70,7 +93,7 @@ export const Extension = () => {
               textTransform: 'none',
             }}
           >
-            获取插件或 App
+            获取插件
           </Button>
         </Stack>
       </Stack>

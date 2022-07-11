@@ -13,7 +13,7 @@
     "@mui/icons-material": "^5.8.4",
     "@mui/lab": "5.0.0-alpha.89",
     "@mui/material": "^5.8.7",
-    "@qing-dev/bridge": "^0.1.5",
+    "@qing-dev/bridge": "0.1.6",
     "github-markdown-css": "^5.1.0",
     "jotai": "^1.7.4",
     "lodash": "^4.17.21",

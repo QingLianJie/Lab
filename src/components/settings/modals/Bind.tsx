@@ -24,6 +24,7 @@ import { studentAtom } from '../../../contexts/bridge'
 export const Bind = () => {
   const theme = useTheme()
   const { palette } = theme
+  const isDark = palette.mode === 'dark'
 
   const bindTheme = createTheme({
     ...theme,
@@ -142,6 +143,7 @@ export const Bind = () => {
             <Button
               type="submit"
               variant="contained"
+              color="primary"
               sx={{ width: '100%', mt: 1, color: '#fff' }}
             >
               {student ? '修改' : '添加'}账号
@@ -149,9 +151,9 @@ export const Bind = () => {
             {student && (
               <Button
                 type="button"
-                variant="outlined"
-                sx={{ width: '100%', mt: 1 }}
+                variant="contained"
                 color="error"
+                sx={{ width: '100%', mt: 1.5 }}
                 onClick={handleUnBind}
               >
                 移除当前账号

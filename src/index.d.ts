@@ -1,10 +1,16 @@
 declare global {
   interface Window {
     Fetcher: Fetcher
+    FetcherInfo: FetcherInfo
   }
 }
 
 export type Fetcher = (options: FetcherOptions) => Promise<string>
+
+export type FetcherInfo = {
+  name: string
+  version: string
+}
 
 interface FetcherOptions {
   url: string
