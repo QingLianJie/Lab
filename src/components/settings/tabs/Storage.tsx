@@ -15,12 +15,17 @@ import {
   ListItemText,
   Stack,
   Typography,
+  useTheme,
 } from '@mui/material'
 import { useAtom } from 'jotai'
 import { enqueueSnackbar } from 'notistack'
 import { ChangeEvent, Fragment, useRef, useState } from 'react'
 import { storages } from '../../../configs/settings/storages'
-import { bridgeAtom, schedulesAtom, scoresAtom } from '../../../contexts/bridge'
+import {
+  studentAtom,
+  schedulesAtom,
+  scoresAtom,
+} from '../../../contexts/bridge'
 import { defaultSettings, settingsAtom } from '../../../contexts/settings'
 import markdown from '../../../markdown/settings/storage.md?raw'
 import { byteFormat } from '../../../utils/format'
@@ -29,18 +34,21 @@ import { Markdown } from '../../base/Markdown'
 import { SettingsHeader } from '../Header'
 
 export const Storage = () => {
+  const { palette } = useTheme()
+  const isDark = palette.mode === 'dark'
+
   const [open, setOpen] = useState(false)
   const inputRef = useRef<HTMLInputElement>(null)
 
   const [settings, setSettings] = useAtom(settingsAtom)
-  const [bridge, setBridge] = useAtom(bridgeAtom)
+  const [student, setStudent] = useAtom(studentAtom)
   const [schedules, setSchedules] = useAtom(schedulesAtom)
   const [scores, setScores] = useAtom(scoresAtom)
 
   const [isLoading, setLoading] = useState(false)
 
   const handleExport = () => {
-    const data = { settings, bridge, schedules, scores }
+    const data = { settings, student, schedules, scores }
     const blob = new Blob([JSON.stringify(data, null, 2)], {
       type: 'text/json',
     })
@@ -63,7 +71,7 @@ export const Storage = () => {
       try {
         const data = JSON.parse(reader.result as string)
         setSettings(data.settings)
-        setBridge(data.bridge)
+        setStudent(data.student)
         setSchedules(data.schedules)
         setScores(data.scores)
         setLoading(false)
@@ -80,7 +88,7 @@ export const Storage = () => {
   const handleRemove = () => {
     setOpen(false)
     setSettings(defaultSettings)
-    setBridge(false)
+    setStudent(false)
     setSchedules(false)
     setScores(false)
   }
@@ -177,7 +185,7 @@ export const Storage = () => {
                   <ListItemIcon sx={{ minWidth: 'unset', mr: 2 }}>
                     <Icon
                       component={storage.icon}
-                      sx={{ color: 'text.disabled' }}
+                      sx={{ color: storage.color[isDark ? 1 : 0] }}
                     />
                   </ListItemIcon>
                   <ListItemText

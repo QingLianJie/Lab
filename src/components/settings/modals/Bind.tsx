@@ -19,7 +19,7 @@ import { useAtom } from 'jotai'
 import { enqueueSnackbar } from 'notistack'
 import { FormEvent, useEffect, useRef, useState } from 'react'
 import { modalsAtom } from '../../../contexts/booleans'
-import { bridgeAtom } from '../../../contexts/bridge'
+import { studentAtom } from '../../../contexts/bridge'
 
 export const Bind = () => {
   const theme = useTheme()
@@ -31,7 +31,7 @@ export const Bind = () => {
   })
 
   const [modals, setModals] = useAtom(modalsAtom)
-  const [bridge, setBridge] = useAtom(bridgeAtom)
+  const [student, setStudent] = useAtom(studentAtom)
   const [showPassword, setShowPassword] = useState(false)
   const inputRef = useRef<HTMLInputElement>()
 
@@ -42,18 +42,18 @@ export const Bind = () => {
 
   const handleCancel = () => setModals({ ...modals, bind: false })
 
-  const [id, setId] = useState(bridge ? bridge.id : '')
-  const [password, setPassword] = useState(bridge ? bridge.password : '')
+  const [id, setId] = useState(student ? student.id : '')
+  const [password, setPassword] = useState(student ? student.password : '')
 
   const handleBind = (e: FormEvent) => {
     e.preventDefault()
-    setBridge({ id, password })
+    setStudent({ id, password })
     handleCancel()
     enqueueSnackbar(`已添加 HEU 账号：${id}`, { variant: 'success' })
   }
 
   const handleUnBind = () => {
-    setBridge(false)
+    setStudent(false)
     setId('')
     setPassword('')
     handleCancel()
@@ -79,7 +79,7 @@ export const Bind = () => {
             variant="h6"
             sx={{ textAlign: 'center', pt: 3, pb: 0.5, fontWeight: 700 }}
           >
-            {bridge ? '修改' : '添加'} HEU 账号
+            {student ? '修改' : '添加'} HEU 账号
           </Typography>
           <Typography
             component="p"
@@ -144,12 +144,12 @@ export const Bind = () => {
               variant="contained"
               sx={{ width: '100%', mt: 1, color: '#fff' }}
             >
-              {bridge ? '修改' : '添加'}账号
+              {student ? '修改' : '添加'}账号
             </Button>
-            {bridge && (
+            {student && (
               <Button
                 type="button"
-                variant="contained"
+                variant="outlined"
                 sx={{ width: '100%', mt: 1 }}
                 color="error"
                 onClick={handleUnBind}

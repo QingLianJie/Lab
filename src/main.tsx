@@ -17,6 +17,7 @@ import ReactDOM from 'react-dom/client'
 import { HelmetProvider } from 'react-helmet-async'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import LogoOutlined from './assets/logo-outlined.svg'
+import { Load } from './components/Load'
 import { Modals } from './components/Modals'
 import { Nav } from './components/Nav'
 import {
@@ -120,6 +121,7 @@ const App = () => {
                   <Modals />
                   <Nav />
                   <Router />
+                  <Load />
                 </BrowserRouter>
               </SnackbarProvider>
             </Box>

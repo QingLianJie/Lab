@@ -86,12 +86,47 @@ export const Nav = () => {
         {routers
           .filter(r => r.group !== -1)
           .map(r => (
-            <NavButton
-              currentRouter={router}
-              router={r}
-              isMobile={isMobile}
-              isDark={isDark}
+            <BottomNavigationAction
               key={r.name}
+              component={Link}
+              icon={
+                <Tooltip
+                  arrow
+                  title={r.name}
+                  placement={isMobile ? 'top' : 'right'}
+                >
+                  <Box sx={{ p: 1.5, display: 'flex', alignItems: 'center' }}>
+                    <Icon
+                      component={r.icon[r.name === router?.name ? 1 : 0]}
+                      sx={{
+                        color:
+                          r.name === router?.name
+                            ? r.color[isDark ? 1 : 0]
+                            : 'text.disabled',
+                        transition: 'color 0.2s',
+                      }}
+                    />
+                  </Box>
+                </Tooltip>
+              }
+              value={r.name}
+              showLabel={false}
+              to={r.href}
+              sx={{
+                minWidth: 'unset',
+                width: { xs: '100%', md: 48 },
+                height: { xs: '100%', md: 48 },
+                maxWidth: { xs: 72, md: 'unset' },
+                maxHeight: { xs: 'unset', md: 48 },
+                my: { xs: 0, md: 1 },
+                borderRadius: { xs: 'unset', md: 24 },
+                flex: 1,
+                '&:hover': {
+                  backgroundColor: isMobile ? 'unset' : 'action.hover',
+                },
+                '&:hover svg': { color: r.color[isDark ? 1 : 0] },
+                transition: 'background-color 0.2s',
+              }}
             />
           ))}
       </BottomNavigation>
@@ -137,49 +172,3 @@ interface NavButtonProps {
   isMobile: boolean
   isDark: boolean
 }
-
-const NavButton = ({
-  currentRouter,
-  router,
-  isMobile,
-  isDark,
-}: NavButtonProps) => (
-  <BottomNavigationAction
-    key={router.name}
-    component={Link}
-    icon={
-      <Tooltip arrow title={router.name} placement={isMobile ? 'top' : 'right'}>
-        <Box sx={{ p: 1.5, display: 'flex', alignItems: 'center' }}>
-          <Icon
-            component={router.icon[router.name === currentRouter?.name ? 1 : 0]}
-            sx={{
-              color:
-                router.name === currentRouter?.name
-                  ? router.color[isDark ? 1 : 0]
-                  : 'text.disabled',
-              transition: 'color 0.2s',
-            }}
-          />
-        </Box>
-      </Tooltip>
-    }
-    value={router.name}
-    showLabel={false}
-    to={router.href}
-    sx={{
-      minWidth: 'unset',
-      width: { xs: '100%', md: 48 },
-      height: { xs: '100%', md: 48 },
-      maxWidth: { xs: 72, md: 'unset' },
-      maxHeight: { xs: 'unset', md: 48 },
-      my: { xs: 0, md: 1 },
-      borderRadius: { xs: 'unset', md: 24 },
-      flex: 1,
-      '&:hover': {
-        backgroundColor: isMobile ? 'unset' : 'action.hover',
-      },
-      '&:hover svg': { color: router.color[isDark ? 1 : 0] },
-      transition: 'background-color 0.2s',
-    }}
-  />
-)

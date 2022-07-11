@@ -1,12 +1,18 @@
 import { SchoolOutlined } from '@mui/icons-material'
-import { Button, Stack, Typography } from '@mui/material'
-import { useAtom } from 'jotai'
+import { Button, Stack, Typography, useTheme } from '@mui/material'
+import { amber } from '@mui/material/colors'
+import { useAtom, useAtomValue } from 'jotai'
 import { Fragment } from 'react'
 import { modalsAtom } from '../../../contexts/booleans'
+import { studentAtom } from '../../../contexts/bridge'
 import { SettingsHeader } from '../Header'
 
 export const Bridge = () => {
+  const { palette } = useTheme()
+  const isDark = palette.mode === 'dark'
+
   const [modals, setModals] = useAtom(modalsAtom)
+  const student = useAtomValue(studentAtom)
 
   return (
     <Fragment>
@@ -23,15 +29,45 @@ export const Bridge = () => {
         }}
       >
         <SchoolOutlined
-          sx={{ width: 108, height: 108, mb: 2, color: 'action.selected' }}
+          sx={{
+            width: 108,
+            height: 108,
+            mb: 2,
+            color: student ? amber[isDark ? 500 : 600] : 'action.selected',
+          }}
         />
-        <Typography
-          variant="h6"
-          component="span"
-          sx={{ color: 'text.disabled', textAlign: 'center' }}
-        >
-          当前没有添加 HEU 账号
-        </Typography>
+
+        {student ? (
+          <Fragment>
+            <Typography
+              variant="body1"
+              component="span"
+              sx={{ color: 'text.secondary', textAlign: 'center' }}
+            >
+              已添加 HEU 账号
+            </Typography>
+            <Typography
+              variant="h5"
+              component="span"
+              sx={{
+                color: 'text.primary',
+                textAlign: 'center',
+                fontWeight: 700,
+              }}
+            >
+              {student.id}
+            </Typography>
+          </Fragment>
+        ) : (
+          <Typography
+            variant="h6"
+            component="span"
+            sx={{ color: 'text.disabled', textAlign: 'center' }}
+          >
+            当前没有添加 HEU 账号
+          </Typography>
+        )}
+
         <Stack direction="row" sx={{ pb: 1 }}>
           <Button
             variant="text"
@@ -45,7 +81,7 @@ export const Bridge = () => {
             }}
             onClick={() => setModals({ ...modals, bind: true })}
           >
-            添加 HEU 账号
+            {student ? '修改' : '添加'} HEU 账号
           </Button>
         </Stack>
       </Stack>

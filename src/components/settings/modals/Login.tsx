@@ -3,6 +3,7 @@ import {
   DialogContent,
   DialogTitle,
   Divider,
+  Stack,
   Typography,
 } from '@mui/material'
 import { useAtom } from 'jotai'
@@ -45,6 +46,14 @@ export const Login = () => {
           欢迎来到清廉街
         </Typography>
       </DialogTitle>
+      <Divider />
+      <DialogContent>
+        <Stack sx={{ p: 2, alignItems: 'center' }}>
+          <Typography sx={{ color: 'text.secondary', fontWeight: 700 }}>
+            Work in Progress
+          </Typography>
+        </Stack>
+      </DialogContent>
     </Dialog>
   )
 }

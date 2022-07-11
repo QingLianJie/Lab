@@ -1,17 +1,17 @@
 export const links = [
   {
     name: 'QQ 群',
-    description: ['群号是 498047164', 'QQ 群反馈更及时'],
+    description: ['一群群号是 498047164（已满）', '二群群号是 759995415'],
     actions: [
       {
         type: 'link',
         name: '点击加群',
-        href: 'https://jq.qq.com/?_wv=1027&k=QlH7QdFx',
+        href: 'https://jq.qq.com/?_wv=1027&k=Q6oVsQ0f',
       },
       {
         type: 'copy',
         name: '复制群号',
-        content: '498047164',
+        content: '759995415',
       },
     ],
   },
