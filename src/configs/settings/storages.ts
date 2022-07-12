@@ -5,15 +5,12 @@ import {
   TableChartOutlined,
 } from '@mui/icons-material'
 import { amber, blue, green, red } from '@mui/material/colors'
-import { studentAtom, schedulesAtom, scoresAtom } from '../../contexts/bridge'
-import { settingsAtom } from '../../contexts/settings'
 
 export const storages = [
   {
     id: 'settings',
     name: '网站设置',
     description: '网站的设置选项',
-    atom: settingsAtom,
     icon: SettingsOutlined,
     color: [amber[600], amber[500]],
   },
@@ -21,7 +18,6 @@ export const storages = [
     id: 'bridge',
     name: 'HEU 账号',
     description: 'HEU 账号和密码',
-    atom: studentAtom,
     icon: SchoolOutlined,
     color: [red[400], red[300]],
   },
@@ -29,7 +25,6 @@ export const storages = [
     id: 'scores',
     name: '成绩数据',
     description: '获取的成绩数据',
-    atom: scoresAtom,
     icon: InsertChartOutlined,
     color: [green[500], green[400]],
   },
@@ -37,7 +32,6 @@ export const storages = [
     id: 'schedules',
     name: '课表数据',
     description: '获取的课表数据',
-    atom: schedulesAtom,
     icon: TableChartOutlined,
     color: [blue[500], blue[400]],
   },

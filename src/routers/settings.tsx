@@ -34,7 +34,10 @@ export const SettingsPage = () => {
   const [currentTab, setTab] = useState(params.get('tab') || 'account')
 
   useEffect(() => {
-    if (pathname === '/settings') setTab(params.get('tab') || 'account')
+    if (pathname === '/settings') {
+      const tab = params.get('tab') || 'account'
+      setTab(tab)
+    }
   }, [params])
 
   const handleChange = (_event: SyntheticEvent, value: string) =>

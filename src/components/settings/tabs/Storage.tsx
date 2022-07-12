@@ -21,11 +21,9 @@ import { useAtom } from 'jotai'
 import { enqueueSnackbar } from 'notistack'
 import { ChangeEvent, Fragment, useRef, useState } from 'react'
 import { storages } from '../../../configs/settings/storages'
-import {
-  studentAtom,
-  schedulesAtom,
-  scoresAtom,
-} from '../../../contexts/bridge'
+import { studentAtom } from '../../../contexts/bridge'
+import { schedulesAtom } from '../../../contexts/bridge/schedules'
+import { scoresAtom } from '../../../contexts/bridge/scores'
 import { defaultSettings, settingsAtom } from '../../../contexts/settings'
 import markdown from '../../../markdown/settings/storage.md?raw'
 import { byteFormat } from '../../../utils/format'
