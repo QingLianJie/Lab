@@ -6,10 +6,31 @@ import {
   useMediaQuery,
   useTheme,
 } from '@mui/material'
+import { useAtomValue } from 'jotai'
+import { scoresListAtom } from '../../contexts/bridge/scores'
+import { scoreMap } from '../../utils/calc'
 
 export const Stats = () => {
+  const scoresList = useAtomValue(scoresListAtom)
   const { breakpoints } = useTheme()
   const isMobile = useMediaQuery(breakpoints.down('sm'))
+
+  const calcCredits = () => scoresList.reduce((pre, cur) => pre + cur.credit, 0)
+  const calcAverage = () => {
+    const credits = calcCredits()
+    if (credits === 0) return 0
+    return (
+      scoresList.reduce(
+        (pre, cur) => pre + cur.credit * scoreMap(cur.score),
+        0
+      ) / credits
+    )
+  }
+
+  const calcExcellent = () =>
+    scoresList.filter(score => scoreMap(score.score) >= 90).length
+  const calcFailed = () =>
+    scoresList.filter(score => scoreMap(score.score) < 60).length
 
   return (
     <Card variant="outlined">
@@ -21,22 +42,27 @@ export const Stats = () => {
             sx={{ height: isMobile ? 'auto' : 'auto' }}
           />
         }
+        sx={{ overflowX: 'auto' }}
       >
         <Stack
           direction="row"
           divider={<Divider orientation="vertical" sx={{ height: 'auto' }} />}
-          sx={{ width: '100%', flex: { xs: 2, sm: 1 } }}
+          sx={{ width: '100%', flex: 1 }}
         >
-          <StatCard title="已选课程" content="24" />
-          <StatCard title="已选学分" content="34.5" />
+          <StatCard title="已选课程" content={scoresList.length} />
+          <StatCard title="已选学分" content={calcCredits()} />
         </Stack>
         <Stack
           direction="row"
           divider={<Divider orientation="vertical" sx={{ height: 'auto' }} />}
           sx={{ width: '100%', flex: 1 }}
         >
-          <StatCard title="加权平均分" content="85.23" />
-          {!isMobile && <StatCard title="优秀 / 挂科" content="12 / 0" />}
+          <StatCard title="加权平均分" content={calcAverage()} />
+
+          <StatCard
+            title="优秀 / 挂科"
+            content={`${calcExcellent()} / ${calcFailed()}`}
+          />
         </Stack>
       </Stack>
     </Card>
@@ -45,7 +71,7 @@ export const Stats = () => {
 
 interface StatCardProps {
   title: string
-  content: string
+  content: string | number
 }
 
 const StatCard = ({ title, content }: StatCardProps) => (
@@ -53,7 +79,7 @@ const StatCard = ({ title, content }: StatCardProps) => (
     <Typography
       variant="body2"
       component="span"
-      sx={{ color: 'text.secondary' }}
+      sx={{ color: 'text.secondary', whiteSpace: 'nowrap' }}
     >
       {title}
     </Typography>
@@ -63,10 +89,7 @@ const StatCard = ({ title, content }: StatCardProps) => (
       component="span"
       sx={{
         fontWeight: 700,
-        fontSize: {
-          xs: '1.25rem',
-          sm: '1.5rem',
-        },
+        fontSize: { xs: '1.25rem', sm: '1.5rem' },
       }}
     >
       {content}

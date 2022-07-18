@@ -1,4 +1,4 @@
-import { AccountCircleOutlined } from '@mui/icons-material'
+import { AccountCircleRounded } from '@mui/icons-material'
 import { Button, Stack, Typography } from '@mui/material'
 import { useAtom } from 'jotai'
 import { Fragment } from 'react'
@@ -27,18 +27,32 @@ export const Account = () => {
           justifyContent: 'center',
         }}
       >
-        <AccountCircleOutlined
-          sx={{ width: 108, height: 108, mb: 2, color: 'action.selected' }}
+        <AccountCircleRounded
+          sx={{
+            width: 120,
+            height: 120,
+            mb: 2,
+            color: false ? 'primary.main' : 'action.selected',
+            transition: 'color 0.2s',
+          }}
         />
         <Typography
           variant="h6"
           component="span"
-          sx={{ color: 'text.disabled', textAlign: 'center' }}
+          sx={{ color: 'text.primary', textAlign: 'center', fontWeight: 700 }}
         >
-          当前没有登录{info.name}账号
+          未登录{info.name}账号
         </Typography>
-        <Stack direction="row" sx={{ pb: 1 }}>
-          {['登录', '注册', '重置密码'].map(action => (
+
+        <Typography
+          variant="body1"
+          component="span"
+          sx={{ color: 'text.secondary', textAlign: 'center' }}
+        >
+          登录后可以上传成绩和发表评论
+        </Typography>
+        <Stack direction="row" sx={{ py: 1 }}>
+          {['登录', '注册'].map(action => (
             <Button
               variant="text"
               disableElevation

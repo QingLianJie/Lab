@@ -15,7 +15,7 @@ export const storages = [
     color: [amber[600], amber[500]],
   },
   {
-    id: 'bridge',
+    id: 'student',
     name: 'HEU 账号',
     description: 'HEU 账号和密码',
     icon: SchoolOutlined,

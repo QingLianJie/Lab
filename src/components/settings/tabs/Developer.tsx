@@ -20,7 +20,10 @@ export const Developer = () => {
   return (
     <Fragment>
       <SettingsHeader title="开发者选项" help="/settings?tab=help#developer" />
-      <Stack sx={{ px: { xs: 2.5, md: 3 }, py: { xs: 2, md: 2.5 } }}>
+      <Stack
+        spacing={1.5}
+        sx={{ px: { xs: 2.5, md: 3 }, py: { xs: 2, md: 2.5 } }}
+      >
         <TextField
           id="css"
           label="自定义 CSS"
@@ -28,7 +31,6 @@ export const Developer = () => {
           minRows={4}
           defaultValue={settings.developer.css}
           size="small"
-          margin="dense"
           helperText="输入自定义 CSS 代码，修改网站样式"
           sx={{
             '& textarea': { fontFamily: 'code.fontFamily' },
@@ -51,7 +53,6 @@ export const Developer = () => {
           label="后端 API 地址"
           defaultValue={settings.developer.api}
           size="small"
-          margin="dense"
           sx={{ fontFamily: 'code.fontFamily' }}
           onChange={e =>
             setSettings(s => ({

@@ -1,4 +1,4 @@
-import { ExtensionOutlined } from '@mui/icons-material'
+import { ExtensionRounded } from '@mui/icons-material'
 import { Button, Stack, Typography, useTheme } from '@mui/material'
 import { amber } from '@mui/material/colors'
 import { useAtomValue } from 'jotai'
@@ -20,9 +20,6 @@ export const Extension = () => {
   const bridge = useAtomValue(bridgeAtom)
   const fetcher = useAtomValue(fetcherAtom)
 
-  const { palette } = useTheme()
-  const isDark = palette.mode === 'dark'
-
   return (
     <Fragment>
       <SettingsHeader title="插件与 App" help="/settings?tab=help#extension" />
@@ -37,12 +34,13 @@ export const Extension = () => {
           justifyContent: 'center',
         }}
       >
-        <ExtensionOutlined
+        <ExtensionRounded
           sx={{
-            width: 108,
-            height: 108,
+            width: 120,
+            height: 120,
             mb: 2,
-            color: bridge ? amber[isDark ? 500 : 600] : 'action.selected',
+            color: bridge ? 'primary.main' : 'action.selected',
+            transition: 'color 0.2s',
           }}
         />
         {bridge ? (
@@ -69,16 +67,29 @@ export const Extension = () => {
             </Typography>
           </Fragment>
         ) : (
-          <Typography
-            variant="h6"
-            component="span"
-            sx={{ color: 'text.disabled', textAlign: 'center' }}
-          >
-            没有检测到插件或 App
-          </Typography>
+          <Fragment>
+            <Typography
+              variant="h6"
+              component="span"
+              sx={{
+                color: 'text.primary',
+                textAlign: 'center',
+                fontWeight: 700,
+              }}
+            >
+              未发现可用插件
+            </Typography>
+            <Typography
+              variant="body1"
+              component="span"
+              sx={{ color: 'text.secondary', textAlign: 'center' }}
+            >
+              通过插件来获取成绩和课表数据
+            </Typography>
+          </Fragment>
         )}
 
-        <Stack direction="row" sx={{ pb: 1 }}>
+        <Stack direction="row" sx={{ py: 1 }}>
           <Button
             variant="text"
             disableElevation

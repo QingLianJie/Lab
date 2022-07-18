@@ -1,5 +1,12 @@
 import { type SvgIconComponent } from '@mui/icons-material'
-import { Container, Icon, Stack, Typography } from '@mui/material'
+import {
+  Container,
+  Icon,
+  Stack,
+  Typography,
+  useMediaQuery,
+  useTheme,
+} from '@mui/material'
 import { Fragment, type ReactNode } from 'react'
 import { Helmet } from 'react-helmet-async'
 import { info } from '../configs/site-info'
@@ -19,6 +26,9 @@ export const Layout = ({
   subtitle,
   children,
 }: LayoutProps) => {
+  const { breakpoints } = useTheme()
+  const isMobile = useMediaQuery(breakpoints.down('sm'))
+
   return (
     <Fragment>
       <Helmet>
@@ -51,7 +61,7 @@ export const Layout = ({
               </Typography>
             )}
 
-            {icon && (
+            {icon && isMobile && (
               <Icon
                 component={icon}
                 sx={{

@@ -1,4 +1,4 @@
-import { InsertChartOutlined } from '@mui/icons-material'
+import { InsertChartRounded } from '@mui/icons-material'
 import {
   createTheme,
   Grid,
@@ -11,12 +11,14 @@ import { green } from '@mui/material/colors'
 import { Layout } from '../components/Layout'
 import { Filter } from '../components/scores/Filter'
 import { Stats } from '../components/scores/Stats'
-import { Prososal } from '../components/scores/Prososal'
+import { Proposal } from '../components/scores/Proposal'
 import { List } from '../components/scores/List'
 
 export const ScoresPage = () => {
   const theme = useTheme()
-  const { palette } = theme
+  const { palette, breakpoints } = theme
+  const isMobile = useMediaQuery(breakpoints.down('sm'))
+
   const scoresTheme = createTheme({
     ...theme,
     palette: { ...palette, primary: green },
@@ -27,7 +29,7 @@ export const ScoresPage = () => {
       <Layout
         title="成绩"
         subtitle="查看自己的课程成绩"
-        icon={InsertChartOutlined}
+        icon={InsertChartRounded}
       >
         <Grid container spacing={2}>
           <Grid item xs={12} sm={5} md={4} lg={3}>
@@ -39,7 +41,7 @@ export const ScoresPage = () => {
           <Grid item xs={12} sm={7} md={8} lg={9}>
             <Stack spacing={2}>
               <List />
-              <Prososal />
+              <Proposal />
             </Stack>
           </Grid>
         </Grid>

@@ -1,4 +1,4 @@
-import { InboxOutlined } from '@mui/icons-material'
+import { InboxRounded } from '@mui/icons-material'
 import { Layout } from '../components/Layout'
 
 export const HomePage = () => {
@@ -10,7 +10,7 @@ export const HomePage = () => {
   return (
     <Layout
       subtitle={`今天是 ${month} 月 ${date} 日，${weekdays[day]}`}
-      icon={InboxOutlined}
+      icon={InboxRounded}
     ></Layout>
   )
 }

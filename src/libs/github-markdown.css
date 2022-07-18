@@ -337,15 +337,16 @@
 }
 
 .markdown-body details summary::before {
-  content: '-->';
+  content: '▶️';
   display: flex;
   white-space: nowrap;
   margin-right: 8px;
+  font-family: Apple Color Emoji, Segoe UI Emoji, Noto Color Emoji;
   transition: transform 0.2s;
 }
 
 .markdown-body details[open] summary::before {
-  content: '-->';
+  content: '▶️';
   transform: rotate(90deg);
 }
 

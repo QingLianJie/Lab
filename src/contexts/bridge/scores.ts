@@ -1,5 +1,5 @@
 import { atom } from 'jotai'
-import { ScoresAtom } from '../../index.d'
+import { Score, Scores, ScoresAtom } from '../../index.d'
 import { atomLocal } from '../../utils/atom'
 
 export const scoresAtom = atomLocal<ScoresAtom | false>('scores', false)
@@ -11,3 +11,5 @@ type ScoresFilter = Partial<ScoresAtom> & {
 }
 
 export const scoresFilterAtom = atom<ScoresFilter>({})
+
+export const scoresListAtom = atom<Scores>([])

@@ -1,4 +1,4 @@
-import { SettingsOutlined } from '@mui/icons-material'
+import { SettingsRounded } from '@mui/icons-material'
 import { TabContext, TabList, TabPanel } from '@mui/lab'
 import {
   Box,
@@ -45,11 +45,7 @@ export const SettingsPage = () => {
 
   return (
     <ThemeProvider theme={settingsTheme}>
-      <Layout
-        title="设置"
-        subtitle="调整网站的各项设置"
-        icon={SettingsOutlined}
-      >
+      <Layout title="设置" subtitle="调整网站的各项设置" icon={SettingsRounded}>
         <Card
           variant="outlined"
           sx={{ flex: 1, display: 'flex', flexDirection: 'column' }}

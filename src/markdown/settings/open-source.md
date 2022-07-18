@@ -6,10 +6,7 @@
 
 同时，清廉街项目的诞生也离不开众多开源软件的帮助。
 
-<details>
-  <summary>
-  前端项目中主要的开源软件
-  </summary>
+##### ❤️ 前端项目中主要的开源软件
 
 | 名称                | 开源协议   | 链接                                                |
 | :------------------ | :--------- | :-------------------------------------------------- |
@@ -25,7 +22,5 @@
 | Vite                | MIT        | https://github.com/vitejs/vite                      |
 | Vite Plugin PWA     | MIT        | https://github.com/antfu/vite-plugin-pwa            |
 | TypeScript          | Apache-2.0 | https://github.com/microsoft/TypeScript             |
-
-</details>
 
 清廉街其他开源项目的开源协议请前往 [GitHub](https://github.com/QingLianJie) 相关仓库查看。

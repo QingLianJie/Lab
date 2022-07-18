@@ -42,7 +42,7 @@ export const SettingsHeader = ({
     </Typography>
     {children}
     {href && (
-      <Tooltip title="了解更多" placement="top">
+      <Tooltip title="了解更多" arrow placement="top">
         <IconButton
           aria-label="了解更多"
           href={href}

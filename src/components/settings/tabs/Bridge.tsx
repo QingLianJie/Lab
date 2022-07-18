@@ -1,4 +1,4 @@
-import { SchoolOutlined } from '@mui/icons-material'
+import { SchoolRounded } from '@mui/icons-material'
 import { Button, Stack, Typography, useTheme } from '@mui/material'
 import { amber } from '@mui/material/colors'
 import { useAtom, useAtomValue } from 'jotai'
@@ -8,9 +8,6 @@ import { studentAtom } from '../../../contexts/bridge'
 import { SettingsHeader } from '../Header'
 
 export const Bridge = () => {
-  const { palette } = useTheme()
-  const isDark = palette.mode === 'dark'
-
   const [modals, setModals] = useAtom(modalsAtom)
   const student = useAtomValue(studentAtom)
 
@@ -28,12 +25,13 @@ export const Bridge = () => {
           justifyContent: 'center',
         }}
       >
-        <SchoolOutlined
+        <SchoolRounded
           sx={{
-            width: 108,
-            height: 108,
+            width: 120,
+            height: 120,
             mb: 2,
-            color: student ? amber[isDark ? 500 : 600] : 'action.selected',
+            color: student ? 'primary.main' : 'action.selected',
+            transition: 'color 0.2s',
           }}
         />
 
@@ -59,16 +57,29 @@ export const Bridge = () => {
             </Typography>
           </Fragment>
         ) : (
-          <Typography
-            variant="h6"
-            component="span"
-            sx={{ color: 'text.disabled', textAlign: 'center' }}
-          >
-            当前没有添加 HEU 账号
-          </Typography>
+          <Fragment>
+            <Typography
+              variant="h6"
+              component="span"
+              sx={{
+                color: 'text.primary',
+                textAlign: 'center',
+                fontWeight: 700,
+              }}
+            >
+              未添加 HEU 账号
+            </Typography>
+            <Typography
+              variant="body1"
+              component="span"
+              sx={{ color: 'text.secondary', textAlign: 'center' }}
+            >
+              保存 HEU 账号到本地浏览器
+            </Typography>
+          </Fragment>
         )}
 
-        <Stack direction="row" sx={{ pb: 1 }}>
+        <Stack direction="row" sx={{ py: 1 }}>
           <Button
             variant="text"
             disableElevation
@@ -81,7 +92,7 @@ export const Bridge = () => {
             }}
             onClick={() => setModals({ ...modals, bind: true })}
           >
-            {student ? '修改' : '添加'} HEU 账号
+            {student ? '修改账号' : '添加账号'}
           </Button>
         </Stack>
       </Stack>
