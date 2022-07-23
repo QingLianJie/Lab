@@ -95,6 +95,8 @@ const App = () => {
     [darkMode]
   )
 
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
+
   return (
     <StrictMode>
       <ThemeProvider theme={theme}>
@@ -103,7 +105,10 @@ const App = () => {
           <Suspense fallback={<Loading />}>
             <Box sx={{ backgroundColor: 'background.default' }}>
               <SnackbarProvider
-                anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+                anchorOrigin={{
+                  vertical: isMobile ? 'top' : 'bottom',
+                  horizontal: 'center',
+                }}
                 autoHideDuration={3000}
                 style={{ fontSize: '1rem', paddingLeft: '1.25rem' }}
                 hideIconVariant

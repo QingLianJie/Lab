@@ -1,9 +1,13 @@
 import {
-  AddCircleRounded,
-  LocalCafeOutlined,
+  ArrowForwardOutlined,
   type SvgIconComponent,
 } from '@mui/icons-material'
-import { Button, Icon, Stack, Typography } from '@mui/material'
+import { Button, Icon, IconButton, Stack, Typography } from '@mui/material'
+import { useAtom, useAtomValue } from 'jotai'
+import { enqueueSnackbar } from 'notistack'
+import { useNavigate } from 'react-router-dom'
+import { modalsAtom } from '../../contexts/booleans'
+import { bridgeAtom, studentAtom } from '../../contexts/bridge'
 
 interface FetchProps {
   name: '成绩' | '课表'
@@ -11,6 +15,40 @@ interface FetchProps {
 }
 
 export const Fetch = ({ name, icon }: FetchProps) => {
+  const navigate = useNavigate()
+
+  const [modals, setModals] = useAtom(modalsAtom)
+  const bridge = useAtomValue(bridgeAtom)
+  const student = useAtomValue(studentAtom)
+
+  const handleFetch = () => {
+    if (!bridge)
+      enqueueSnackbar('未安装插件，请前往设置页面安装', {
+        action: () => (
+          <IconButton
+            aria-label="前往"
+            sx={{ color: 'inherit', fontSize: '0.925rem' }}
+            onClick={() => navigate('/settings?tab=extension')}
+          >
+            <ArrowForwardOutlined />
+          </IconButton>
+        ),
+      })
+    else if (!student)
+      enqueueSnackbar('未添加 HEU 账号，请前往设置页面添加', {
+        action: () => (
+          <IconButton
+            aria-label="前往"
+            sx={{ color: 'inherit', fontSize: '0.925rem' }}
+            onClick={() => navigate('/settings?tab=bridge')}
+          >
+            <ArrowForwardOutlined />
+          </IconButton>
+        ),
+      })
+    else setModals({ ...modals, captcha: true })
+  }
+
   return (
     <Stack
       spacing={0.5}
@@ -57,6 +95,7 @@ export const Fetch = ({ name, icon }: FetchProps) => {
           variant="text"
           disableElevation
           color="info"
+          onClick={handleFetch}
           sx={{
             minWidth: 'unset',
             py: 0.75,

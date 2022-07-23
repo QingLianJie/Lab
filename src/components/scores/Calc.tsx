@@ -7,11 +7,13 @@ import {
   useTheme,
 } from '@mui/material'
 import { useAtomValue } from 'jotai'
-import { scoresListAtom } from '../../contexts/bridge/scores'
+import { scoresAtom, scoresListAtom } from '../../contexts/bridge/scores'
 import { scoreMap } from '../../utils/calc'
 
-export const Stats = () => {
+export const Calc = () => {
+  const scores = useAtomValue(scoresAtom)
   const scoresList = useAtomValue(scoresListAtom)
+
   const { breakpoints } = useTheme()
   const isMobile = useMediaQuery(breakpoints.down('sm'))
 
@@ -20,28 +22,22 @@ export const Stats = () => {
     const credits = calcCredits()
     if (credits === 0) return 0
     return (
-      scoresList.reduce(
-        (pre, cur) => pre + cur.credit * scoreMap(cur.score),
-        0
-      ) / credits
+      scoresList.reduce((pre, cur) => {
+        const best = Math.max(...cur.score.map(s => scoreMap(s)))
+        return pre + cur.credit * best
+      }, 0) / credits
     )
   }
 
   const calcExcellent = () =>
-    scoresList.filter(score => scoreMap(score.score) >= 90).length
+    scoresList.filter(score => score.score.some(s => scoreMap(s) >= 90)).length
   const calcFailed = () =>
-    scoresList.filter(score => scoreMap(score.score) < 60).length
+    scoresList.filter(score => score.score.some(s => scoreMap(s) < 60)).length
 
   return (
     <Card variant="outlined">
       <Stack
-        direction={{ xs: 'row', sm: 'column' }}
-        divider={
-          <Divider
-            orientation={isMobile ? 'vertical' : 'horizontal'}
-            sx={{ height: isMobile ? 'auto' : 'auto' }}
-          />
-        }
+        divider={<Divider orientation="horizontal" sx={{ height: 'auto' }} />}
         sx={{ overflowX: 'auto' }}
       >
         <Stack
@@ -49,17 +45,17 @@ export const Stats = () => {
           divider={<Divider orientation="vertical" sx={{ height: 'auto' }} />}
           sx={{ width: '100%', flex: 1 }}
         >
-          <StatCard title="已选课程" content={scoresList.length} />
-          <StatCard title="已选学分" content={calcCredits()} />
+          <CalcCard title="已选课程" content={scoresList.length} unit="个" />
+          <CalcCard title="已选学分" content={calcCredits()} unit="分" />
         </Stack>
         <Stack
           direction="row"
           divider={<Divider orientation="vertical" sx={{ height: 'auto' }} />}
           sx={{ width: '100%', flex: 1 }}
         >
-          <StatCard title="加权平均分" content={calcAverage()} />
+          <CalcCard title="加权平均分" content={calcAverage()} unit="分" />
 
-          <StatCard
+          <CalcCard
             title="优秀 / 挂科"
             content={`${calcExcellent()} / ${calcFailed()}`}
           />
@@ -69,12 +65,13 @@ export const Stats = () => {
   )
 }
 
-interface StatCardProps {
+interface CalcCardProps {
   title: string
   content: string | number
+  unit?: string
 }
 
-const StatCard = ({ title, content }: StatCardProps) => (
+const CalcCard = ({ title, content, unit }: CalcCardProps) => (
   <Stack spacing={1} sx={{ p: 2, flex: 1, width: '100%' }}>
     <Typography
       variant="body2"
@@ -83,16 +80,24 @@ const StatCard = ({ title, content }: StatCardProps) => (
     >
       {title}
     </Typography>
-
-    <Typography
-      variant="h5"
-      component="span"
-      sx={{
-        fontWeight: 700,
-        fontSize: { xs: '1.25rem', sm: '1.5rem' },
-      }}
-    >
-      {content}
-    </Typography>
+    <Stack direction="row" spacing={1} sx={{ alignItems: 'baseline' }}>
+      <Typography
+        variant="h5"
+        component="span"
+        sx={{
+          fontWeight: 700,
+          fontSize: { xs: '1.25rem', sm: '1.5rem' },
+        }}
+      >
+        {content}
+      </Typography>
+      <Typography
+        variant="body2"
+        component="span"
+        sx={{ color: 'text.secondary', whiteSpace: 'nowrap' }}
+      >
+        {unit}
+      </Typography>
+    </Stack>
   </Stack>
 )

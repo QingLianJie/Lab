@@ -5,11 +5,17 @@ import { atomLocal } from '../../utils/atom'
 export const scoresAtom = atomLocal<ScoresAtom | false>('scores', false)
 
 type ScoresFilter = Partial<ScoresAtom> & {
-  excellent?: boolean
-  failed?: boolean
-  deduplication?: boolean
+  search: string
+  excellent: boolean
+  failed: boolean
+  deduplication: boolean
 }
 
-export const scoresFilterAtom = atom<ScoresFilter>({})
+export const scoresFilterAtom = atom<ScoresFilter>({
+  search: '',
+  excellent: false,
+  failed: false,
+  deduplication: false,
+})
 
 export const scoresListAtom = atom<Scores>([])
