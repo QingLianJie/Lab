@@ -23,6 +23,7 @@ export const plan2014 = [
   {
     name: '选修',
     icon: CheckBoxOutlined,
+    rules: [{ key: 'type', value: ['公选'] }],
     children: [
       {
         name: '文化素养教育',
@@ -115,6 +116,7 @@ export const plan2019 = [
   {
     name: '选修',
     icon: CheckBoxOutlined,
+    rules: [{ key: 'type', value: ['公选'] }],
     children: [
       {
         name: 'A 人文素质与文化传承',

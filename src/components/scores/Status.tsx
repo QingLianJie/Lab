@@ -12,7 +12,7 @@ export const Status = () => {
 
   return (
     <Card variant="outlined">
-      <Stack spacing={0.5} sx={{ position: 'relative', p: 2 }}>
+      <Stack spacing={0.5} sx={{ position: 'relative', px: 2, py: 1.75 }}>
         <Typography variant="body2" sx={{ color: 'text.secondary' }}>
           数据更新于
         </Typography>

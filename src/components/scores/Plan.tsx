@@ -62,7 +62,14 @@ export const Plan = () => {
         </TabPanel>
       </TabContext>
       <Divider />
-      <Box sx={{ fontSize: 'body2.fontSize', p: 2, color: 'text.secondary' }}>
+      <Box
+        sx={{
+          fontSize: 'body2.fontSize',
+          px: 2,
+          py: 1.75,
+          color: 'text.secondary',
+        }}
+      >
         <Markdown>{calcTips}</Markdown>
       </Box>
     </Card>
@@ -86,21 +93,19 @@ const PlanList = ({ plan }: PlanListProps) => {
 
   const [collapse, setCollapse] = useState<string[]>([])
 
+  const filterScores = (rules: Rules) =>
+    passedScores.filter(score => {
+      for (const rule of rules) {
+        const target = score[rule.key as keyof typeof score]
+        if (target && typeof target === 'string' && rule.value.includes(target))
+          return true
+      }
+      return false
+    })
+
   const calcCredits = (rules: Rules) =>
-    passedScores
-      .filter(score => {
-        for (const rule of rules) {
-          const target = score[rule.key as keyof typeof score]
-          if (
-            target &&
-            typeof target === 'string' &&
-            rule.value.includes(target)
-          )
-            return true
-        }
-        return false
-      })
-      .reduce((pre, cur) => pre + cur.credit, 0)
+    filterScores(rules).reduce((pre, cur) => pre + cur.credit, 0)
+  const calcCounts = (rules: Rules) => filterScores(rules).length
 
   return (
     <Stack divider={<Divider />}>
@@ -117,13 +122,15 @@ const PlanList = ({ plan }: PlanListProps) => {
                     : setCollapse([...collapse, list.name])
                 }
               >
-                <ListItemIcon sx={{ minWidth: 36 }}>
+                <ListItemIcon sx={{ minWidth: 32 }}>
                   <Icon
                     component={list.icon}
                     sx={{ fontSize: 20, color: 'text.disabled' }}
                   />
                 </ListItemIcon>
-                <ListItemText primary={list.name} />
+                <ListItemText
+                  primary={`${list.name} (${calcCounts(list.rules)})`}
+                />
                 {collapse.includes(list.name) ? (
                   <ExpandLess sx={{ fontSize: 20 }} />
                 ) : (
@@ -161,7 +168,7 @@ const PlanList = ({ plan }: PlanListProps) => {
                               variant="body2"
                               sx={{ fontWeight: 700 }}
                             >
-                              {calcCredits(item.rules)}
+                              {calcCredits(item.rules)} 分
                             </Typography>
                           )}
                         </Stack>
@@ -188,7 +195,7 @@ const PlanList = ({ plan }: PlanListProps) => {
                                 </Typography>
 
                                 <Typography variant="body2">
-                                  {calcCredits(child.rules)}
+                                  {calcCredits(child.rules)} 分
                                 </Typography>
                               </ListItem>
                             ))}
@@ -202,15 +209,17 @@ const PlanList = ({ plan }: PlanListProps) => {
             </Fragment>
           ) : (
             <ListItemButton key={list.name} sx={{ py: 0.5, pr: 2.5 }}>
-              <ListItemIcon sx={{ minWidth: 36 }}>
+              <ListItemIcon sx={{ minWidth: 32 }}>
                 <Icon
                   component={list.icon}
                   sx={{ fontSize: 20, color: 'text.disabled' }}
                 />
               </ListItemIcon>
-              <ListItemText primary={list.name} />
+              <ListItemText
+                primary={`${list.name} (${calcCounts(list.rules)})`}
+              />
               <Typography sx={{ fontWeight: 700 }}>
-                {calcCredits(list.rules)}
+                {calcCredits(list.rules)} 分
               </Typography>
             </ListItemButton>
           )

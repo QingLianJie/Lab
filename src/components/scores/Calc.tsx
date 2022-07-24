@@ -85,7 +85,7 @@ interface CalcCardProps {
 }
 
 const CalcCard = ({ title, content, unit }: CalcCardProps) => (
-  <Stack spacing={1} sx={{ p: 2, flex: 1, width: '100%' }}>
+  <Stack spacing={1} sx={{ px: 2, py: 1.75, flex: 1, width: '100%' }}>
     <Typography
       variant="body2"
       component="span"
