@@ -165,10 +165,3 @@ export const Nav = () => {
     </Box>
   )
 }
-
-interface NavButtonProps {
-  currentRouter: Routers[number] | null
-  router: Routers[number]
-  isMobile: boolean
-  isDark: boolean
-}

@@ -54,8 +54,8 @@ export const ScoresPage = () => {
 
               {scores ? (
                 <Fragment>
-                  <Status />
                   <Plan />
+                  <Status />
                 </Fragment>
               ) : (
                 <Disabled />

@@ -14,25 +14,30 @@ export const Calc = () => {
   const scores = useAtomValue(scoresAtom)
   const scoresList = useAtomValue(scoresListAtom)
 
+  const isFilter = scoresList.length > 0
+  const filterScores = isFilter ? scoresList : scores ? scores.scores : []
+
   const { breakpoints } = useTheme()
   const isMobile = useMediaQuery(breakpoints.down('sm'))
 
-  const calcCredits = () => scoresList.reduce((pre, cur) => pre + cur.credit, 0)
+  const calcCredits = () =>
+    filterScores.reduce((pre, cur) => pre + cur.credit, 0)
   const calcAverage = () => {
     const credits = calcCredits()
     if (credits === 0) return 0
     return (
-      scoresList.reduce((pre, cur) => {
+      filterScores.reduce((pre, cur) => {
         const best = Math.max(...cur.score.map(s => scoreMap(s)))
         return pre + cur.credit * best
       }, 0) / credits
-    )
+    ).toFixed(2)
   }
 
   const calcExcellent = () =>
-    scoresList.filter(score => score.score.some(s => scoreMap(s) >= 90)).length
+    filterScores.filter(score => score.score.some(s => scoreMap(s) >= 90))
+      .length
   const calcFailed = () =>
-    scoresList.filter(score => score.score.some(s => scoreMap(s) < 60)).length
+    filterScores.filter(score => score.score.some(s => scoreMap(s) < 60)).length
 
   return (
     <Card variant="outlined">
@@ -45,8 +50,16 @@ export const Calc = () => {
           divider={<Divider orientation="vertical" sx={{ height: 'auto' }} />}
           sx={{ width: '100%', flex: 1 }}
         >
-          <CalcCard title="已选课程" content={scoresList.length} unit="个" />
-          <CalcCard title="已选学分" content={calcCredits()} unit="分" />
+          <CalcCard
+            title={isFilter ? '已选课程' : '全部课程'}
+            content={filterScores.length}
+            unit="个"
+          />
+          <CalcCard
+            title={isFilter ? '已选学分' : '全部学分'}
+            content={calcCredits()}
+            unit="分"
+          />
         </Stack>
         <Stack
           direction="row"

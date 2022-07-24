@@ -1,23 +1,46 @@
+import {
+  BookOutlined,
+  CheckBoxOutlined,
+  WorkOutlineOutlined,
+} from '@mui/icons-material'
+
 export const plan2014 = [
   {
-    children: [
-      { name: '必修', rules: [{ key: 'type', value: ['必修'] }] },
+    name: '必修',
+    icon: BookOutlined,
+    rules: [{ key: 'type', value: ['必修'] }],
+  },
+  {
+    name: '专选',
+    icon: WorkOutlineOutlined,
+    rules: [
       {
-        name: '专业选修',
-        rules: [
-          {
-            key: 'nature',
-            value: ['专业选修课程', '专业选修课', '19专业选修课程'],
-          },
-        ],
+        key: 'nature',
+        value: ['专业选修课程', '专业选修课', '19专业选修课程'],
       },
     ],
   },
   {
-    name: '通识教育选修',
+    name: '选修',
+    icon: CheckBoxOutlined,
     children: [
       {
         name: '文化素养教育',
+        rules: [
+          {
+            key: 'nature',
+            value: [
+              '中外历史与文化',
+              '语言与文学',
+              '哲学人生与社会科学',
+              '艺术修养与审美',
+              '自然科学与人类文明',
+              '国防文化与船海史话',
+              '中华传统文化',
+              '19中华传统文化类（A0）',
+            ],
+          },
+        ],
         children: [
           {
             name: 'A 中外历史与文化',
@@ -74,22 +97,24 @@ export const plan2014 = [
 
 export const plan2019 = [
   {
-    children: [
-      { name: '必修', rules: [{ key: 'type', value: ['必修'] }] },
+    name: '必修',
+    icon: BookOutlined,
+    rules: [{ key: 'type', value: ['必修'] }],
+  },
+  {
+    name: '专选',
+    icon: WorkOutlineOutlined,
+    rules: [
       {
-        name: '专业选修',
-        rules: [
-          {
-            key: 'nature',
-            value: ['专业选修课程', '专业选修课', '19专业选修课程'],
-          },
-          { key: 'category', value: ['19跨专业选修类（G）'] },
-        ],
+        key: 'nature',
+        value: ['专业选修课程', '专业选修课', '19专业选修课程'],
       },
+      { key: 'category', value: ['19跨专业选修类（G）'] },
     ],
   },
   {
-    name: '通识教育选修',
+    name: '选修',
+    icon: CheckBoxOutlined,
     children: [
       {
         name: 'A 人文素质与文化传承',
