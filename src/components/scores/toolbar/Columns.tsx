@@ -38,7 +38,13 @@ export const Columns = () => {
           sx={{ color: 'text.secondary' }}
           onClick={e => setAnchorEl(e.currentTarget)}
         >
-          <VisibilityOutlined />
+          <VisibilityOutlined
+            sx={{
+              color: 'text.disabled',
+              '&:hover': { color: 'text.primary' },
+              transition: 'all 0.2s',
+            }}
+          />
         </IconButton>
       </Tooltip>
       <Menu

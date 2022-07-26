@@ -13,6 +13,7 @@ import {
   Select,
   Stack,
   TextField,
+  Typography,
 } from '@mui/material'
 import { useAtom, useAtomValue } from 'jotai'
 import { Fragment } from 'react'
@@ -61,13 +62,6 @@ export const Filter = () => {
         </DialogTitle>
         <DialogContent sx={{ px: 2.5 }}>
           <Stack spacing={1.5}>
-            <TextField
-              id="score-search"
-              label="根据课程信息搜索 ..."
-              size="small"
-              helperText="可以搜索课程名、成绩等信息"
-            />
-
             <FormControl size="small">
               <InputLabel id="score-type-label" size="small">
                 课程类型
@@ -119,34 +113,37 @@ export const Filter = () => {
                   自然科学与技术基础必修课
                 </MenuItem>
               </Select>
+              <FormHelperText>选修分类，如中华传统文化等</FormHelperText>
             </FormControl>
 
-            <Stack direction="row">
-              <TextField
-                id="score-credit"
-                label="学时"
-                size="small"
-                type="number"
-                sx={{ mr: 1.5 }}
-              />
-              <TextField
-                id="score-period"
-                type="number"
-                label="学分"
-                size="small"
-              />
+            <Stack>
+              <Stack direction="row">
+                <TextField
+                  id="score-period"
+                  type="number"
+                  label="学分"
+                  size="small"
+                  sx={{ mr: 1.5 }}
+                />
+                <TextField
+                  id="score-credit"
+                  label="学时"
+                  size="small"
+                  type="number"
+                />
+              </Stack>
+              <Typography
+                variant="caption"
+                sx={{
+                  color: 'text.secondary',
+                  px: 1.5,
+                  py: 0.75,
+                  lineHeight: 1.5,
+                }}
+              >
+                提示：学时和学分可以使用 , 或 - 符号进行筛选，代表单个或连续范围
+              </Typography>
             </Stack>
-
-            <FormControl sx={{ px: 0.5 }}>
-              <FormControlLabel
-                control={<Checkbox size="small" />}
-                label="只看有效成绩"
-                sx={{ mt: -0.5 }}
-              />
-              <FormHelperText sx={{ my: -0.5, mx: 0 }}>
-                不看缺考成绩、补考课程的历史成绩
-              </FormHelperText>
-            </FormControl>
           </Stack>
         </DialogContent>
       </Dialog>

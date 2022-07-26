@@ -14,6 +14,7 @@ import {
   Stack,
   Tab,
   Typography,
+  useTheme,
 } from '@mui/material'
 import { useAtomValue } from 'jotai'
 import { Fragment, SyntheticEvent, useState } from 'react'
@@ -81,6 +82,9 @@ type Rules = {
 }[]
 
 const PlanList = ({ plan }: PlanListProps) => {
+  const { palette } = useTheme()
+  const isDark = palette.mode === 'dark'
+
   const scoresList = useAtomValue(scoresListAtom)
 
   const selectedScores = scoresList.filter(s => s.selected)
@@ -115,7 +119,11 @@ const PlanList = ({ plan }: PlanListProps) => {
             <Fragment key={list.name}>
               <ListItemButton
                 key={list.name}
-                sx={{ py: 0.5, pr: 2.25 }}
+                sx={{
+                  py: 0.5,
+                  pr: 2.25,
+                  '&:hover svg': { color: list.color[isDark ? 400 : 500] },
+                }}
                 onClick={() =>
                   collapse.includes(list.name)
                     ? setCollapse(collapse.filter(x => x !== list.name))
@@ -125,7 +133,11 @@ const PlanList = ({ plan }: PlanListProps) => {
                 <ListItemIcon sx={{ minWidth: 32 }}>
                   <Icon
                     component={list.icon}
-                    sx={{ fontSize: 20, color: 'text.disabled' }}
+                    sx={{
+                      fontSize: 20,
+                      color: 'text.disabled',
+                      transition: 'all 0.2s',
+                    }}
                   />
                 </ListItemIcon>
                 <ListItemText
@@ -207,11 +219,22 @@ const PlanList = ({ plan }: PlanListProps) => {
               </Collapse>
             </Fragment>
           ) : (
-            <ListItemButton key={list.name} sx={{ py: 0.5, pr: 2.5 }}>
+            <ListItemButton
+              key={list.name}
+              sx={{
+                py: 0.5,
+                pr: 2.5,
+                '&:hover svg': { color: list.color[isDark ? 400 : 500] },
+              }}
+            >
               <ListItemIcon sx={{ minWidth: 32 }}>
                 <Icon
                   component={list.icon}
-                  sx={{ fontSize: 20, color: 'text.disabled' }}
+                  sx={{
+                    fontSize: 20,
+                    color: 'text.disabled',
+                    transition: 'all 0.2s',
+                  }}
                 />
               </ListItemIcon>
               <ListItemText

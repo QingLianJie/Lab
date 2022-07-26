@@ -51,7 +51,14 @@ export const Status = () => {
         <Tooltip title="重新获取数据" arrow placement="top">
           <IconButton
             aria-label="重新获取数据"
-            sx={{ position: 'absolute', right: 8, top: 2 }}
+            sx={{
+              position: 'absolute',
+              right: 8,
+              top: 2,
+              color: 'text.disabled',
+              '&:hover': { color: 'text.primary' },
+              transition: 'all 0.2s',
+            }}
             onClick={handleFetch}
           >
             <RefreshOutlined />

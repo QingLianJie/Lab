@@ -142,9 +142,9 @@ export const Bind = () => {
           {student && (
             <Button
               type="button"
-              variant="contained"
+              variant="outlined"
               color="error"
-              sx={{ width: '100%', mt: 1.5 }}
+              sx={{ width: '100%', mt: 1.5, py: 0.625 }}
               onClick={handleUnBind}
             >
               移除当前账号

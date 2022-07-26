@@ -29,7 +29,11 @@ export const Groups = () => {
       <Tooltip title="分组" arrow placement="top">
         <IconButton
           aria-label="分组"
-          sx={{ color: 'text.secondary' }}
+          sx={{
+            color: 'text.disabled',
+            '&:hover': { color: 'text.primary' },
+            transition: 'all 0.2s',
+          }}
           onClick={e => setAnchorEl(e.currentTarget)}
         >
           <ViewStreamOutlined />

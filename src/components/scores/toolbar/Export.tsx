@@ -10,7 +10,11 @@ export const Export = () => {
     <Tooltip title="导出" arrow placement="top">
       <IconButton
         aria-label="导出"
-        sx={{ color: 'text.secondary' }}
+        sx={{
+          color: 'text.disabled',
+          '&:hover': { color: 'text.primary' },
+          transition: 'all 0.2s',
+        }}
         onClick={handleExport}
       >
         <FileDownloadOutlined />

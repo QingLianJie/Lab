@@ -1,14 +1,21 @@
-import { InsertChartRounded } from '@mui/icons-material'
 import {
+  CheckOutlined,
+  CloseOutlined,
+  InsertChartRounded,
+  RestartAltOutlined,
+} from '@mui/icons-material'
+import {
+  Alert,
   createTheme,
   Grid,
+  IconButton,
   Stack,
   ThemeProvider,
   useMediaQuery,
   useTheme,
 } from '@mui/material'
 import { green } from '@mui/material/colors'
-import { useAtomValue } from 'jotai'
+import { useAtom, useAtomValue } from 'jotai'
 import { Fragment, useState } from 'react'
 import { Layout } from '../components/Layout'
 import { Calc } from '../components/scores/Calc'
@@ -16,14 +23,21 @@ import { Disabled } from '../components/scores/Placeholder'
 import { Filter } from '../components/scores/Filter'
 import { List } from '../components/scores/List'
 import { Plan } from '../components/scores/Plan'
-import { scoresAtom } from '../contexts/bridge/scores'
+import { scoresAtom, scoresViewAtom } from '../contexts/bridge/scores'
 import { Status } from '../components/scores/Status'
+import { ColumnsType } from '../configs/scores/columns'
+import { useMount } from 'react-use'
 
 export const ScoresPage = () => {
   const scores = useAtomValue(scoresAtom)
+  const scoresView = useAtomValue(scoresViewAtom)
+  const [changed, setChanged] = useState(false)
+
+  useMount(() => window.localStorage.getItem('scores-view') && setChanged(true))
 
   const theme = useTheme()
-  const { palette } = theme
+  const { palette, breakpoints } = theme
+  const isMobile = useMediaQuery(breakpoints.down('md'))
 
   const scoresTheme = createTheme({
     ...theme,
@@ -64,11 +78,56 @@ export const ScoresPage = () => {
           </Grid>
           <Grid item xs={12} sm={7} md={8} lg={9}>
             <Stack spacing={2}>
+              {isMobile && (!changed || scoresView.simple) && <Tips />}
               <List />
             </Stack>
           </Grid>
         </Grid>
       </Layout>
     </ThemeProvider>
+  )
+}
+
+const Tips = () => {
+  const [scoresView, setScoresView] = useAtom(scoresViewAtom)
+  const [columns, setColumns] = useState<ColumnsType[]>([
+    'name',
+    'type',
+    'credit',
+    'nature',
+    'score',
+  ])
+
+  const handleClick = () => {
+    if (scoresView.simple) {
+      setScoresView({ ...scoresView, columns, simple: false })
+      setColumns([])
+    } else {
+      setColumns(scoresView.columns)
+      setScoresView({ ...scoresView, columns: ['name', 'score'], simple: true })
+    }
+  }
+
+  return (
+    <Alert
+      severity={scoresView.simple ? 'success' : 'info'}
+      variant="filled"
+      color="success"
+      action={
+        <IconButton
+          aria-label={scoresView.simple ? '还原' : '切换'}
+          size="small"
+          color="inherit"
+          onClick={handleClick}
+          sx={{ my: -0.5 }}
+        >
+          {scoresView.simple ? <RestartAltOutlined /> : <CheckOutlined />}
+        </IconButton>
+      }
+    >
+      {scoresView.simple
+        ? '已切换到精简模式，可以随时点击右侧按钮还原，或者点击下方小眼睛按钮自定义表格列。'
+        : '检测到你的屏幕比较小，查看成绩较为不便，是否切换到精简模式，只显示课程名称和成绩？'}
+    </Alert>
   )
 }

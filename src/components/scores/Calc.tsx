@@ -1,11 +1,12 @@
 import { Card, Divider, Stack, Typography } from '@mui/material'
 import { useAtomValue } from 'jotai'
+import { useEffect } from 'react'
 import { scoresListAtom } from '../../contexts/bridge/scores'
 import { scoreMap } from '../../utils/calc'
 
 export const Calc = () => {
   const scoresList = useAtomValue(scoresListAtom)
-  
+
   const selectedScores = scoresList.filter(s => s.selected)
   const isSelected = selectedScores.length > 0
   const calcScores = isSelected ? selectedScores : scoresList

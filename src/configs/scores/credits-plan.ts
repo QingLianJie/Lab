@@ -3,16 +3,19 @@ import {
   CheckBoxOutlined,
   WorkOutlineOutlined,
 } from '@mui/icons-material'
+import { blue, green, red } from '@mui/material/colors'
 
 export const plan2014 = [
   {
     name: '必修',
     icon: BookOutlined,
+    color: red,
     rules: [{ key: 'type', value: ['必修'] }],
   },
   {
     name: '专选',
     icon: WorkOutlineOutlined,
+    color: blue,
     rules: [
       {
         key: 'nature',
@@ -23,6 +26,7 @@ export const plan2014 = [
   {
     name: '选修',
     icon: CheckBoxOutlined,
+    color: green,
     rules: [{ key: 'type', value: ['公选'] }],
     children: [
       {
@@ -100,11 +104,13 @@ export const plan2019 = [
   {
     name: '必修',
     icon: BookOutlined,
+    color: red,
     rules: [{ key: 'type', value: ['必修'] }],
   },
   {
     name: '专选',
     icon: WorkOutlineOutlined,
+    color: blue,
     rules: [
       {
         key: 'nature',
@@ -116,6 +122,7 @@ export const plan2019 = [
   {
     name: '选修',
     icon: CheckBoxOutlined,
+    color: green,
     rules: [{ key: 'type', value: ['公选'] }],
     children: [
       {

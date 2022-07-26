@@ -1,3 +1,4 @@
+import { amber, green, red } from '@mui/material/colors'
 import { isNumber } from 'lodash'
 
 export const scoreMap = (score: number | string) => {
@@ -17,4 +18,11 @@ export const scoreMap = (score: number | string) => {
     default:
       return 0
   }
+}
+
+export const scoreColor = (score: number) => {
+  if (score >= 90) return green[400]
+  if (score >= 60) return 'text.primary'
+  if (score === 0) return amber[400]
+  return red[400]
 }
