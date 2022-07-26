@@ -18,16 +18,10 @@ import {
 import { useAtomValue } from 'jotai'
 import { Fragment, SyntheticEvent, useState } from 'react'
 import { plan2014, plan2019 } from '../../configs/scores/credits-plan'
-import { scoresAtom } from '../../contexts/bridge/scores'
+import { scoresAtom, scoresListAtom } from '../../contexts/bridge/scores'
 import { scoreMap } from '../../utils/calc'
-import { Markdown } from '../base/Markdown'
 
 type PlanVersion = '2014' | '2019'
-
-const calcTips = `
-- 培养方案计算仅供参考，可能会有计算错误，请认真核对！
-- 培养方案计算中仅包含成绩合格科目（等效成绩 >= 60 分）的学分统计。
-`
 
 export const Plan = () => {
   const scores = useAtomValue(scoresAtom)
@@ -62,7 +56,8 @@ export const Plan = () => {
         </TabPanel>
       </TabContext>
       <Divider />
-      <Box
+      <Typography
+        variant="body2"
         sx={{
           fontSize: 'body2.fontSize',
           px: 2,
@@ -70,8 +65,8 @@ export const Plan = () => {
           color: 'text.secondary',
         }}
       >
-        <Markdown>{calcTips}</Markdown>
-      </Box>
+        注：培养方案计算仅供参考，请认真核对，此处计算仅统计成绩合格科目的学分。
+      </Typography>
     </Card>
   )
 }
@@ -86,10 +81,15 @@ type Rules = {
 }[]
 
 const PlanList = ({ plan }: PlanListProps) => {
-  const scores = useAtomValue(scoresAtom)
-  const passedScores = scores
-    ? scores.scores.filter(score => score.score.some(s => scoreMap(s) >= 60))
-    : []
+  const scoresList = useAtomValue(scoresListAtom)
+
+  const selectedScores = scoresList.filter(s => s.selected)
+  const isSelected = selectedScores.length > 0
+  const calcScores = isSelected ? selectedScores : scoresList
+
+  const passedScores = calcScores.filter(score =>
+    score.score.some(s => scoreMap(s) >= 60)
+  )
 
   const [collapse, setCollapse] = useState<string[]>([])
 
@@ -132,14 +132,17 @@ const PlanList = ({ plan }: PlanListProps) => {
                   primary={`${list.name} (${calcCounts(list.rules)})`}
                 />
                 {collapse.includes(list.name) ? (
-                  <ExpandLess sx={{ fontSize: 20 }} />
+                  <ExpandLess sx={{ fontSize: 20, mr: 1 }} />
                 ) : (
-                  <ExpandMore sx={{ fontSize: 20 }} />
+                  <ExpandMore sx={{ fontSize: 20, mr: 1 }} />
                 )}
+                <Typography sx={{ fontWeight: 700 }}>
+                  {calcCredits(list.rules)} 分
+                </Typography>
               </ListItemButton>
               <Collapse in={collapse.includes(list.name)}>
                 <Divider sx={{ mt: 1 }} />
-                <List component="div" disablePadding sx={{ pt: 1 }}>
+                <List disablePadding sx={{ pt: 1 }}>
                   {list.children.map(item => (
                     <ListItem
                       key={item.name}
@@ -173,11 +176,7 @@ const PlanList = ({ plan }: PlanListProps) => {
                           )}
                         </Stack>
                         {item.children && (
-                          <List
-                            component="div"
-                            disablePadding
-                            sx={{ width: '100%' }}
-                          >
+                          <List disablePadding sx={{ width: '100%' }}>
                             {item.children.map(child => (
                               <ListItem
                                 key={child.name}

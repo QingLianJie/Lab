@@ -104,31 +104,31 @@ const App = () => {
         <HelmetProvider>
           <Suspense fallback={<Loading />}>
             <Box sx={{ backgroundColor: 'background.default' }}>
-              <SnackbarProvider
-                anchorOrigin={{
-                  vertical: isMobile ? 'top' : 'bottom',
-                  horizontal: 'center',
-                }}
-                autoHideDuration={3000}
-                style={{ fontSize: '1rem', paddingLeft: '1.25rem' }}
-                hideIconVariant
-                action={snackbarKey => (
-                  <IconButton
-                    aria-label="关闭"
-                    sx={{ color: 'inherit', fontSize: '0.925rem' }}
-                    onClick={() => closeSnackbar(snackbarKey)}
-                  >
-                    <CloseOutlined />
-                  </IconButton>
-                )}
-              >
-                <BrowserRouter>
+              <BrowserRouter>
+                <SnackbarProvider
+                  anchorOrigin={{
+                    vertical: isMobile ? 'top' : 'bottom',
+                    horizontal: 'center',
+                  }}
+                  autoHideDuration={3000}
+                  style={{ fontSize: '1rem', paddingLeft: '1.25rem' }}
+                  hideIconVariant
+                  action={snackbarKey => (
+                    <IconButton
+                      aria-label="关闭"
+                      sx={{ color: 'inherit', fontSize: '0.925rem' }}
+                      onClick={() => closeSnackbar(snackbarKey)}
+                    >
+                      <CloseOutlined />
+                    </IconButton>
+                  )}
+                >
                   <Modals />
                   <Nav />
                   <Router />
                   <Load />
-                </BrowserRouter>
-              </SnackbarProvider>
+                </SnackbarProvider>
+              </BrowserRouter>
             </Box>
           </Suspense>
         </HelmetProvider>

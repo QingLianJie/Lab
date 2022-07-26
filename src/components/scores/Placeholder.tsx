@@ -70,3 +70,35 @@ export const DisabledCard = ({
     </Stack>
   </Card>
 )
+
+export const NoScores = () => (
+  <Stack
+    spacing={0.5}
+    sx={{
+      flex: 1,
+      height: '100%',
+      px: 4,
+      py: { xs: 4, sm: 12 },
+      alignItems: 'center',
+    }}
+  >
+    <Typography
+      variant="h6"
+      component="span"
+      sx={{
+        color: 'text.disabled',
+        textAlign: 'center',
+        fontWeight: 700,
+      }}
+    >
+      暂无成绩数据
+    </Typography>
+    <Typography
+      variant="body1"
+      component="span"
+      sx={{ color: 'text.disabled', textAlign: 'center' }}
+    >
+      可能本来就没有成绩，或者程序出错了
+    </Typography>
+  </Stack>
+)

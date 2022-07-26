@@ -37,7 +37,7 @@ export const ScoresPage = () => {
         subtitle="查看自己的课程成绩"
         icon={InsertChartRounded}
       >
-        {scores && <Filter />}
+        {scores && scores.scores.length !== 0 && <Filter />}
         <Grid
           container
           spacing={2}
@@ -54,7 +54,7 @@ export const ScoresPage = () => {
 
               {scores ? (
                 <Fragment>
-                  <Plan />
+                  {scores.scores.length !== 0 && <Plan />}
                   <Status />
                 </Fragment>
               ) : (

@@ -6,10 +6,14 @@ type Modals = {
   auth: AuthModal
   captcha: boolean
   bind: boolean
+  scores: {
+    filter: boolean
+  }
 }
 
 export const modalsAtom = atom<Modals>({
   auth: false,
   captcha: false,
   bind: false,
+  scores: { filter: false },
 })

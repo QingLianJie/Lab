@@ -15,8 +15,6 @@ interface FetchProps {
 }
 
 export const Fetch = ({ name, icon }: FetchProps) => {
-  const navigate = useNavigate()
-
   const [modals, setModals] = useAtom(modalsAtom)
   const bridge = useAtomValue(bridgeAtom)
   const student = useAtomValue(studentAtom)
@@ -24,27 +22,11 @@ export const Fetch = ({ name, icon }: FetchProps) => {
   const handleFetch = () => {
     if (!bridge)
       enqueueSnackbar('未安装插件，请前往设置页面安装', {
-        action: () => (
-          <IconButton
-            aria-label="前往"
-            sx={{ color: 'inherit', fontSize: '0.925rem' }}
-            onClick={() => navigate('/settings?tab=extension')}
-          >
-            <ArrowForwardOutlined />
-          </IconButton>
-        ),
+        action: <GoAction name="extension" />,
       })
     else if (!student)
       enqueueSnackbar('未添加 HEU 账号，请前往设置页面添加', {
-        action: () => (
-          <IconButton
-            aria-label="前往"
-            sx={{ color: 'inherit', fontSize: '0.925rem' }}
-            onClick={() => navigate('/settings?tab=bridge')}
-          >
-            <ArrowForwardOutlined />
-          </IconButton>
-        ),
+        action: <GoAction name="bridge" />,
       })
     else setModals({ ...modals, captcha: true })
   }
@@ -107,5 +89,23 @@ export const Fetch = ({ name, icon }: FetchProps) => {
         </Button>
       </Stack>
     </Stack>
+  )
+}
+
+interface GoActionProps {
+  name: 'bridge' | 'extension'
+}
+
+export const GoAction = ({ name }: GoActionProps) => {
+  const navigate = useNavigate()
+
+  return (
+    <IconButton
+      aria-label="前往"
+      sx={{ color: 'inherit', fontSize: '0.925rem' }}
+      onClick={() => navigate(`/settings?tab=${name}`)}
+    >
+      <ArrowForwardOutlined />
+    </IconButton>
   )
 }

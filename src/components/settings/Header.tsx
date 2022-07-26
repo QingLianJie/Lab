@@ -60,7 +60,7 @@ export const SettingsHeader = ({
     )}
 
     {help && (
-      <Tooltip title="帮助" placement="top">
+      <Tooltip title="帮助" arrow placement="top">
         <IconButton
           component={Link}
           aria-label="帮助"

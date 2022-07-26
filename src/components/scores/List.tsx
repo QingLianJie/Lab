@@ -1,17 +1,27 @@
-import { InsertChartRounded } from '@mui/icons-material'
+import { FilterAltOutlined, InsertChartRounded } from '@mui/icons-material'
 import {
   Card,
-  createTheme,
+  Divider,
+  IconButton,
   Stack,
-  ThemeProvider,
+  Table,
+  TableBody,
+  TableContainer,
+  TableHead,
+  useMediaQuery,
   useTheme,
 } from '@mui/material'
-import { green } from '@mui/material/colors'
-import { DataGrid } from '@mui/x-data-grid'
 import { useAtom } from 'jotai'
+import { Fragment } from 'react'
+import { modalsAtom } from '../../contexts/booleans'
 import { scoresAtom } from '../../contexts/bridge/scores'
+import { Tooltip } from '../base/Tooltip'
 import { Fetch } from '../settings/Fetch'
-import { zhCN } from '@mui/x-data-grid'
+import { NoScores } from './Placeholder'
+import { Columns } from './toolbar/Columns'
+import { Export } from './toolbar/Export'
+import { Groups } from './toolbar/Groups'
+import { Search } from './toolbar/Search'
 
 const columns = [
   { field: 'id', headerName: 'ID' },
@@ -25,23 +35,66 @@ const columns = [
 ]
 
 export const List = () => {
+  const [modals, setModals] = useAtom(modalsAtom)
   const [scores, setScores] = useAtom(scoresAtom)
+
+  const { breakpoints } = useTheme()
+  const isMobile = useMediaQuery(breakpoints.down('sm'))
+
+  const handleFilter = () =>
+    setModals({
+      ...modals,
+      scores: { ...modals.scores, filter: true },
+    })
 
   return (
     <Card variant="outlined">
       {scores ? (
-        <Stack spacing={2}>
-          <DataGrid
-            autoHeight
-            rows={scores.scores}
-            columns={columns}
-            pageSize={10}
-            checkboxSelection
-            rowsPerPageOptions={[10, 20, 50, 100]}
-            localeText={zhCN.components.MuiDataGrid.defaultProps.localeText}
-            sx={{ border: 'none' }}
-          />
-        </Stack>
+        <Fragment>
+          {scores.scores.length === 0 ? (
+            <NoScores />
+          ) : (
+            <Fragment>
+              <Stack
+                direction="row"
+                spacing={2}
+                sx={{
+                  px: { xs: 1, md: 1.5 },
+                  py: 0.75,
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                }}
+              >
+                <Search />
+                <Stack spacing={0.5} direction="row">
+                  <Groups />
+                  <Columns />
+
+                  {!isMobile && (
+                    <Tooltip title="筛选" arrow placement="top">
+                      <IconButton
+                        aria-label="筛选"
+                        sx={{ color: 'text.secondary' }}
+                        onClick={handleFilter}
+                      >
+                        <FilterAltOutlined />
+                      </IconButton>
+                    </Tooltip>
+                  )}
+
+                  <Export />
+                </Stack>
+              </Stack>
+              <Divider />
+              <TableContainer>
+                <Table aria-label="成绩列表">
+                  <TableHead></TableHead>
+                  <TableBody></TableBody>
+                </Table>
+              </TableContainer>
+            </Fragment>
+          )}
+        </Fragment>
       ) : (
         <Fetch name="成绩" icon={InsertChartRounded} />
       )}

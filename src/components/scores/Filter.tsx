@@ -14,12 +14,13 @@ import {
   Stack,
   TextField,
 } from '@mui/material'
-import { useAtomValue } from 'jotai'
-import { Fragment, useState } from 'react'
+import { useAtom, useAtomValue } from 'jotai'
+import { Fragment } from 'react'
+import { modalsAtom } from '../../contexts/booleans'
 import { scoresAtom } from '../../contexts/bridge/scores'
 
 export const Filter = () => {
-  const [open, setOpen] = useState(false)
+  const [modals, setModals] = useAtom(modalsAtom)
   const scores = useAtomValue(scoresAtom)
 
   return (
@@ -33,7 +34,12 @@ export const Filter = () => {
           right: { xs: 24, md: 48 },
           bottom: { xs: 92, md: 48 },
         }}
-        onClick={() => setOpen(true)}
+        onClick={() =>
+          setModals({
+            ...modals,
+            scores: { ...modals.scores, filter: true },
+          })
+        }
       >
         <FilterAltOutlined />
       </Fab>
@@ -41,8 +47,13 @@ export const Filter = () => {
       <Dialog
         fullWidth
         maxWidth={false}
-        open={open}
-        onClose={() => setOpen(false)}
+        open={modals.scores.filter}
+        onClose={() =>
+          setModals({
+            ...modals,
+            scores: { ...modals.scores, filter: false },
+          })
+        }
         sx={{ '& .MuiPaper-root': { maxWidth: '18rem' } }}
       >
         <DialogTitle sx={{ fontSize: '1.125rem', fontWeight: 700 }}>

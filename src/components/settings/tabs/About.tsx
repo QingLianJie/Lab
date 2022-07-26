@@ -34,7 +34,7 @@ export const About = () => {
   return (
     <Fragment>
       <SettingsHeader title={`关于${info.name}`}>
-        <Tooltip title={eggs} placement="top">
+        <Tooltip title={eggs} arrow placement="top">
           <IconButton
             aria-label="彩蛋"
             onClick={handleEggs}
@@ -73,7 +73,7 @@ export const About = () => {
           {info.description.slice(0, -1)}
         </Typography>
 
-        <Tooltip arrow title="GitHub" placement="top">
+        <Tooltip title="GitHub" arrow placement="top">
           <IconButton
             aria-label="GitHub"
             href={info.github}

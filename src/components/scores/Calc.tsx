@@ -1,32 +1,21 @@
-import {
-  Card,
-  Divider,
-  Stack,
-  Typography,
-  useMediaQuery,
-  useTheme,
-} from '@mui/material'
+import { Card, Divider, Stack, Typography } from '@mui/material'
 import { useAtomValue } from 'jotai'
-import { scoresAtom, scoresListAtom } from '../../contexts/bridge/scores'
+import { scoresListAtom } from '../../contexts/bridge/scores'
 import { scoreMap } from '../../utils/calc'
 
 export const Calc = () => {
-  const scores = useAtomValue(scoresAtom)
   const scoresList = useAtomValue(scoresListAtom)
+  
+  const selectedScores = scoresList.filter(s => s.selected)
+  const isSelected = selectedScores.length > 0
+  const calcScores = isSelected ? selectedScores : scoresList
 
-  const isFilter = scoresList.length > 0
-  const filterScores = isFilter ? scoresList : scores ? scores.scores : []
-
-  const { breakpoints } = useTheme()
-  const isMobile = useMediaQuery(breakpoints.down('sm'))
-
-  const calcCredits = () =>
-    filterScores.reduce((pre, cur) => pre + cur.credit, 0)
+  const calcCredits = () => calcScores.reduce((pre, cur) => pre + cur.credit, 0)
   const calcAverage = () => {
     const credits = calcCredits()
     if (credits === 0) return 0
     return (
-      filterScores.reduce((pre, cur) => {
+      calcScores.reduce((pre, cur) => {
         const best = Math.max(...cur.score.map(s => scoreMap(s)))
         return pre + cur.credit * best
       }, 0) / credits
@@ -34,10 +23,9 @@ export const Calc = () => {
   }
 
   const calcExcellent = () =>
-    filterScores.filter(score => score.score.some(s => scoreMap(s) >= 90))
-      .length
+    calcScores.filter(score => score.score.some(s => scoreMap(s) >= 90)).length
   const calcFailed = () =>
-    filterScores.filter(score => score.score.some(s => scoreMap(s) < 60)).length
+    calcScores.filter(score => score.score.some(s => scoreMap(s) < 60)).length
 
   return (
     <Card variant="outlined">
@@ -51,12 +39,12 @@ export const Calc = () => {
           sx={{ width: '100%', flex: 1 }}
         >
           <CalcCard
-            title={isFilter ? '已选课程' : '全部课程'}
-            content={filterScores.length}
+            title={isSelected ? '已选课程' : '全部课程'}
+            content={calcScores.length}
             unit="个"
           />
           <CalcCard
-            title={isFilter ? '已选学分' : '全部学分'}
+            title={isSelected ? '已选学分' : '全部学分'}
             content={calcCredits()}
             unit="分"
           />
