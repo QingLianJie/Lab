@@ -143,11 +143,17 @@ const PlanList = ({ plan }: PlanListProps) => {
                 <ListItemText
                   primary={`${list.name} (${calcCounts(list.rules)})`}
                 />
-                {collapse.includes(list.name) ? (
-                  <ExpandLess sx={{ fontSize: 20, mr: 1 }} />
-                ) : (
-                  <ExpandMore sx={{ fontSize: 20, mr: 1 }} />
-                )}
+                <Icon
+                  component={
+                    collapse.includes(list.name) ? ExpandLess : ExpandMore
+                  }
+                  sx={{
+                    fontSize: 20,
+                    mr: 1,
+                    color: 'text.disabled',
+                    transition: 'all 0.2s',
+                  }}
+                />
                 <Typography sx={{ fontWeight: 700 }}>
                   {calcCredits(list.rules)} 分
                 </Typography>

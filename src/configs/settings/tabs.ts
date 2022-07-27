@@ -29,15 +29,18 @@ import { OpenSource } from '../../components/settings/tabs/OpenSource'
 import { Account } from '../../components/settings/tabs/Account'
 import { Storage } from '../../components/settings/tabs/Storage'
 import { Bridge } from '../../components/settings/tabs/Bridge'
+import { Login } from '../../components/settings/modals/auth/Login'
+import { Register } from '../../components/settings/modals/auth/Register'
+import { ResetPassword } from '../../components/settings/modals/auth/ResetPassword'
 
-export type Tabs = {
+export type SettingsTabs = {
   name: string
   id: string
   component: ElementType
   icon: SvgIconComponent[]
 }[]
 
-export const tabs = [
+export const settingsTabs = [
   {
     name: '清廉街',
     id: 'account',
@@ -92,4 +95,24 @@ export const tabs = [
     component: About,
     icon: [InfoOutlined, InfoRounded],
   },
-] as Tabs
+] as SettingsTabs
+
+export type AuthTabs = {
+  name: string
+  component: ElementType
+}[]
+
+export const authTabs = [
+  {
+    name: '登录',
+    component: Login,
+  },
+  {
+    name: '注册',
+    component: Register,
+  },
+  {
+    name: '重置密码',
+    component: ResetPassword,
+  },
+] as AuthTabs

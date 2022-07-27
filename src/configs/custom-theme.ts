@@ -1,5 +1,4 @@
 import { blue, grey, pink } from '@mui/material/colors'
-import { experimental_sx as sx } from '@mui/material/styles'
 
 export const lightPalette = {
   mode: 'light' as const,
@@ -13,7 +12,9 @@ export const lightPalette = {
 
 export const darkPalette = {
   mode: 'dark' as const,
-  primary: pink,
+  primary: {
+    main: '#f06292',
+  },
   secondary: blue,
   background: {
     default: grey[900],

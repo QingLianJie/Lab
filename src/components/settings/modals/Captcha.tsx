@@ -12,7 +12,7 @@ import {
 import { useAtom, useAtomValue, useSetAtom } from 'jotai'
 import { enqueueSnackbar } from 'notistack'
 import { type FormEvent, useEffect, useRef, useState } from 'react'
-import { Score, Scores } from '../../../index.d'
+import { Score, Scores } from '../../..'
 import { modalsAtom } from '../../../contexts/booleans'
 import { bridgeAtom, studentAtom } from '../../../contexts/bridge'
 import { schedulesAtom } from '../../../contexts/bridge/schedules'

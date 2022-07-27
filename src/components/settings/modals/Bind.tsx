@@ -143,7 +143,7 @@ export const Bind = () => {
             <Button
               type="button"
               variant="outlined"
-              color="error"
+              color="warning"
               sx={{ width: '100%', mt: 1.5, py: 0.625 }}
               onClick={handleUnBind}
             >

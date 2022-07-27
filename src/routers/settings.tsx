@@ -16,7 +16,7 @@ import { amber } from '@mui/material/colors'
 import { SyntheticEvent, useEffect, useState } from 'react'
 import { useLocation, useSearchParams } from 'react-router-dom'
 import { Layout } from '../components/Layout'
-import { tabs } from '../configs/settings/tabs'
+import { settingsTabs } from '../configs/settings/tabs'
 
 export const SettingsPage = () => {
   const theme = useTheme()
@@ -87,7 +87,7 @@ export const SettingsPage = () => {
                     },
                   }}
                 >
-                  {tabs.map(tab => (
+                  {settingsTabs.map(tab => (
                     <Tab
                       aria-label={tab.name}
                       label={
@@ -138,7 +138,7 @@ export const SettingsPage = () => {
                   ))}
                 </TabList>
               </Box>
-              {tabs.map(tab => (
+              {settingsTabs.map(tab => (
                 <TabPanel
                   value={tab.id}
                   key={tab.name}

@@ -1,23 +1,18 @@
-import { FilterAltOutlined, InsertChartRounded } from '@mui/icons-material'
+import { InsertChartRounded } from '@mui/icons-material'
 import {
   Card,
   Checkbox,
   Divider,
-  IconButton,
-  Stack,
   Table,
   TableBody,
   TableCell,
   TableContainer,
   TableHead,
   TableRow,
-  useMediaQuery,
-  useTheme,
 } from '@mui/material'
 import { useAtom, useAtomValue } from 'jotai'
 import { Fragment, useEffect } from 'react'
-import { columns, ColumnsType } from '../../configs/scores/columns'
-import { modalsAtom } from '../../contexts/booleans'
+import { columns } from '../../configs/scores/columns'
 import {
   scoresAtom,
   scoresFilterAtom,
@@ -25,30 +20,15 @@ import {
   scoresViewAtom,
 } from '../../contexts/bridge/scores'
 import { scoreColor, scoreMap } from '../../utils/calc'
-import { Tooltip } from '../base/Tooltip'
 import { Fetch } from '../settings/Fetch'
 import { NoScores } from './Placeholder'
-import { Columns } from './toolbar/Columns'
-import { Export } from './toolbar/Export'
-import { Groups } from './toolbar/Groups'
-import { Search } from './toolbar/Search'
+import { ToolBar } from './toolbar/ToolBar'
 
 export const List = () => {
-  const [modals, setModals] = useAtom(modalsAtom)
-  const scores = useAtomValue(scoresAtom)
   const [scoresList, setScoreList] = useAtom(scoresListAtom)
-
+  const scores = useAtomValue(scoresAtom)
   const scoresFilter = useAtomValue(scoresFilterAtom)
   const scoresView = useAtomValue(scoresViewAtom)
-
-  const { breakpoints } = useTheme()
-  const isMobile = useMediaQuery(breakpoints.down('sm'))
-
-  const handleFilter = () =>
-    setModals({
-      ...modals,
-      scores: { ...modals.scores, filter: true },
-    })
 
   useEffect(() => {
     if (!scores) return
@@ -58,7 +38,14 @@ export const List = () => {
       return
     }
     const result = scoresList.map(score => {
-      if (!JSON.stringify(score).includes(scoresFilter.search))
+      const target = Object.values(score)
+        .join(' ')
+        .replace(/true|false|null/g, '')
+        .trim()
+        .toLocaleLowerCase()
+      console.log(target)
+
+      if (!target.includes(scoresFilter.search))
         return { ...score, hidden: true }
       return { ...score, hidden: false }
     })
@@ -73,40 +60,7 @@ export const List = () => {
             <NoScores />
           ) : (
             <Fragment>
-              <Stack
-                direction="row"
-                spacing={2}
-                sx={{
-                  px: { xs: 1, md: 1.5 },
-                  py: 0.75,
-                  alignItems: 'center',
-                  justifyContent: 'space-between',
-                }}
-              >
-                <Search />
-                <Stack spacing={0.5} direction="row">
-                  <Groups />
-                  <Columns />
-
-                  {!isMobile && (
-                    <Tooltip title="筛选" arrow placement="top">
-                      <IconButton
-                        aria-label="筛选"
-                        sx={{
-                          color: 'text.disabled',
-                          '&:hover': { color: 'text.primary' },
-                          transition: 'all 0.2s',
-                        }}
-                        onClick={handleFilter}
-                      >
-                        <FilterAltOutlined />
-                      </IconButton>
-                    </Tooltip>
-                  )}
-
-                  <Export />
-                </Stack>
-              </Stack>
+              <ToolBar />
               <Divider />
               <TableContainer>
                 <Table aria-label="成绩列表">
@@ -151,7 +105,14 @@ export const List = () => {
                     {scoresList
                       .filter(item => !item.hidden)
                       .map(item => (
-                        <TableRow key={item.id}>
+                        <TableRow
+                          key={item.id}
+                          sx={{
+                            '&:hover': { backgroundColor: 'action.hover' },
+                            cursor: 'pointer',
+                            transition: 'all 0.2s',
+                          }}
+                        >
                           <TableCell sx={{ py: 1.5 }}>
                             <Checkbox
                               sx={{

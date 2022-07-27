@@ -9,7 +9,15 @@ export const Search = () => {
   const [scoresFilter, setScoresFilter] = useAtom(scoresFilterAtom)
   const [search, setSearch] = useState('')
 
-  useDebounce(() => setScoresFilter({ ...scoresFilter, search }), 100, [search])
+  useDebounce(
+    () =>
+      setScoresFilter({
+        ...scoresFilter,
+        search: search.trim().toLocaleLowerCase(),
+      }),
+    100,
+    [search]
+  )
 
   return (
     <Stack direction="row" sx={{ flex: 1 }}>
