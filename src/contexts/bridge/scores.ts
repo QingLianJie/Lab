@@ -1,4 +1,5 @@
 import { atom } from 'jotai'
+import { atomWithReset } from 'jotai/utils'
 import { type ColumnsType } from '../../configs/scores/columns'
 import { type GroupsType } from '../../configs/scores/groups'
 import { type Score, type ScoresAtom } from '../../index.d'
@@ -8,20 +9,24 @@ export const scoresAtom = atomLocal<ScoresAtom | false>('scores', false)
 
 type ScoresFilter = {
   search: string
-  type: string
-  credit: string
-  period: string
-  nature: string
-  category: string
+  filter: {
+    credit: number[]
+    period: number[]
+    nature: string
+    category: string
+    type: string
+  }
 }
 
-export const scoresFilterAtom = atom<ScoresFilter>({
+export const scoresFilterAtom = atomWithReset<ScoresFilter>({
   search: '',
-  type: '',
-  credit: '',
-  period: '',
-  nature: '',
-  category: '',
+  filter: {
+    credit: [],
+    period: [],
+    nature: '',
+    category: '',
+    type: '',
+  },
 })
 
 type ScoresView = {

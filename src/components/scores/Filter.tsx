@@ -1,39 +1,70 @@
 import { CloseOutlined, FilterAltOutlined } from '@mui/icons-material'
 import {
-  Checkbox,
+  Button,
   Dialog,
   DialogContent,
   DialogTitle,
   Fab,
   Fade,
   FormControl,
-  FormControlLabel,
-  FormHelperText,
   IconButton,
   InputLabel,
   MenuItem,
+  Paper,
+  PaperProps,
   Select,
-  SelectChangeEvent,
   Stack,
   TextField,
   Typography,
 } from '@mui/material'
 import { useAtom, useAtomValue } from 'jotai'
-import { groupBy } from 'lodash'
+import { useResetAtom } from 'jotai/utils'
+import { groupBy, range } from 'lodash'
 import { Fragment } from 'react'
 import { modalsAtom } from '../../contexts/booleans'
-import { scoresAtom, scoresListAtom } from '../../contexts/bridge/scores'
+import { scoresAtom, scoresFilterAtom } from '../../contexts/bridge/scores'
 
 export const Filter = () => {
   const [modals, setModals] = useAtom(modalsAtom)
-  const [scoresList, setScoresList] = useAtom(scoresListAtom)
+  const [scoresFilter, setScoresFilter] = useAtom(scoresFilterAtom)
   const scores = useAtomValue(scoresAtom)
+  const resetFilter = useResetAtom(scoresFilterAtom)
 
-  const handleType = (e: SelectChangeEvent) => {}
   const handleFilter = (name: string, value: string) => {
-    if (!scores) return
+    setScoresFilter(filter => ({
+      ...filter,
+      filter: { ...filter.filter, [name]: value },
+    }))
+  }
+
+  const handleNumberFilter = (name: string, value: string) => {
     if (!value) {
+      setScoresFilter(filter => ({
+        ...filter,
+        filter: { ...filter.filter, [name]: '' },
+      }))
+      return
     }
+
+    const parts = value.split(/,|，/)
+    const result = parts
+      .map(part => {
+        if (!isNaN(Number(part))) return Number(part)
+        const from = part.split('-')
+        if (
+          from.length !== 2 ||
+          isNaN(Number(from[0])) ||
+          isNaN(Number(from[1]))
+        )
+          return []
+        return range(Number(from[0]), Number(from[1]) + 0.5, 0.5)
+      })
+      .flat()
+
+    setScoresFilter(filter => ({
+      ...filter,
+      filter: { ...filter.filter, [name]: result },
+    }))
   }
 
   return (
@@ -61,6 +92,7 @@ export const Filter = () => {
         fullWidth
         maxWidth={false}
         open={modals.scores.filter}
+        keepMounted
         onClose={() =>
           setModals({
             ...modals,
@@ -100,9 +132,10 @@ export const Filter = () => {
               <Select
                 labelId="score-type-label"
                 id="score-type"
-                value=""
+                value={scoresFilter.filter.type}
                 label="课程类型"
                 MenuProps={{ TransitionComponent: Fade }}
+                onChange={e => handleFilter('type', e.target.value)}
               >
                 <MenuItem value="">不限</MenuItem>
                 {scores &&
@@ -123,9 +156,10 @@ export const Filter = () => {
               <Select
                 labelId="score-nature-label"
                 id="score-nature"
-                value=""
+                value={scoresFilter.filter.nature}
                 label="课程性质"
                 MenuProps={{ TransitionComponent: Fade }}
+                onChange={e => handleFilter('nature', e.target.value)}
               >
                 <MenuItem value="">不限</MenuItem>
                 {scores &&
@@ -146,8 +180,10 @@ export const Filter = () => {
               <Select
                 labelId="score-category-label"
                 id="score-category"
-                value=""
+                value={scoresFilter.filter.category}
                 label="课程分类"
+                MenuProps={{ TransitionComponent: Fade }}
+                onChange={e => handleFilter('category', e.target.value)}
               >
                 <MenuItem value="">不限</MenuItem>
                 {scores &&
@@ -164,12 +200,18 @@ export const Filter = () => {
 
             <Stack direction="row">
               <TextField
-                id="score-period"
+                id="score-credit"
                 label="学分"
                 size="small"
                 sx={{ mr: 1.5 }}
+                onChange={e => handleNumberFilter('credit', e.target.value)}
               />
-              <TextField id="score-credit" label="学时" size="small" />
+              <TextField
+                id="score-period"
+                label="学时"
+                size="small"
+                onChange={e => handleNumberFilter('period', e.target.value)}
+              />
             </Stack>
 
             <Typography
@@ -182,6 +224,16 @@ export const Filter = () => {
             >
               提示：学时和学分可以使用 , 或 - 符号进行筛选，代表单个或连续范围
             </Typography>
+
+            <Button
+              type="button"
+              variant="outlined"
+              color="warning"
+              sx={{ width: '100%', mt: 1.5, py: 0.625 }}
+              onClick={resetFilter}
+            >
+              重置筛选及搜索
+            </Button>
           </Stack>
         </DialogContent>
       </Dialog>

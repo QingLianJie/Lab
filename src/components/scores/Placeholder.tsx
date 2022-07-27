@@ -71,11 +71,17 @@ export const DisabledCard = ({
   </Card>
 )
 
-export const NoScores = () => (
+interface PlaceholderProps {
+  title: string
+  description: string
+}
+
+export const Placeholder = ({ title, description }: PlaceholderProps) => (
   <Stack
     spacing={0.5}
     sx={{
       flex: 1,
+      width: '100%',
       height: '100%',
       px: 4,
       py: { xs: 4, sm: 12 },
@@ -91,14 +97,14 @@ export const NoScores = () => (
         fontWeight: 700,
       }}
     >
-      暂无成绩数据
+      {title}
     </Typography>
     <Typography
       variant="body1"
       component="span"
       sx={{ color: 'text.disabled', textAlign: 'center' }}
     >
-      可能本来就没有成绩，或者程序出错了
+      {description}
     </Typography>
   </Stack>
 )

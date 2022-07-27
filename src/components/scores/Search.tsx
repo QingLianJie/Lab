@@ -1,35 +1,19 @@
 import { SearchOutlined } from '@mui/icons-material'
-import { Stack, InputBase, InputAdornment } from '@mui/material'
+import { InputAdornment, InputBase, Stack } from '@mui/material'
 import { useAtom, useAtomValue } from 'jotai'
+import { useUpdateAtom } from 'jotai/utils'
 import { useState } from 'react'
 import { useDebounce } from 'react-use'
-import { scoresAtom, scoresListAtom } from '../../contexts/bridge/scores'
+import { scoresAtom, scoresFilterAtom } from '../../contexts/bridge/scores'
 
 export const Search = () => {
   const scores = useAtomValue(scoresAtom)
-  const [scoresList, setScoreList] = useAtom(scoresListAtom)
+  const [scoresFilter, setScoresFilter] = useAtom(scoresFilterAtom)
   const [search, setSearch] = useState('')
 
   const handleSearch = () => {
     if (!scores) return
-    if (!search) {
-      const result = scoresList.map(score => ({ ...score, hidden: false }))
-      setScoreList(result)
-      return
-    }
-    const result = scoresList.map(score => {
-      const target = Object.values(score)
-        .join(' ')
-        .replace(/true|false|null/g, '')
-        .trim()
-        .toLocaleLowerCase()
-      console.log(target)
-
-      if (!target.includes(search)) return { ...score, hidden: true }
-      return { ...score, hidden: false }
-    })
-
-    setScoreList(result)
+    setScoresFilter(filter => ({ ...filter, search }))
   }
 
   useDebounce(handleSearch, 100, [search])
