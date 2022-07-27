@@ -1,11 +1,11 @@
 import { FilterAltOutlined } from '@mui/icons-material'
 import { Stack, IconButton, useMediaQuery, useTheme } from '@mui/material'
 import { useAtom } from 'jotai'
-import { modalsAtom } from '../../../contexts/booleans'
-import { Tooltip } from '../../base/Tooltip'
-import { Columns } from './Columns'
-import { Export } from './Export'
-import { Groups } from './Groups'
+import { modalsAtom } from '../../contexts/booleans'
+import { Tooltip } from '../base/Tooltip'
+import { Columns } from './actions/Columns'
+import { Export } from './actions/Export'
+import { Groups } from './actions/Groups'
 import { Search } from './Search'
 
 export const ToolBar = () => {

@@ -11,46 +11,22 @@ import {
   TableRow,
 } from '@mui/material'
 import { useAtom, useAtomValue } from 'jotai'
-import { Fragment, useEffect } from 'react'
+import { Fragment } from 'react'
 import { columns } from '../../configs/scores/columns'
 import {
   scoresAtom,
-  scoresFilterAtom,
   scoresListAtom,
   scoresViewAtom,
 } from '../../contexts/bridge/scores'
 import { scoreColor, scoreMap } from '../../utils/calc'
 import { Fetch } from '../settings/Fetch'
 import { NoScores } from './Placeholder'
-import { ToolBar } from './toolbar/ToolBar'
+import { ToolBar } from './ToolBar'
 
 export const List = () => {
   const [scoresList, setScoreList] = useAtom(scoresListAtom)
   const scores = useAtomValue(scoresAtom)
-  const scoresFilter = useAtomValue(scoresFilterAtom)
   const scoresView = useAtomValue(scoresViewAtom)
-
-  useEffect(() => {
-    if (!scores) return
-    if (!scoresFilter.search) {
-      const result = scoresList.map(score => ({ ...score, hidden: false }))
-      setScoreList(result)
-      return
-    }
-    const result = scoresList.map(score => {
-      const target = Object.values(score)
-        .join(' ')
-        .replace(/true|false|null/g, '')
-        .trim()
-        .toLocaleLowerCase()
-      console.log(target)
-
-      if (!target.includes(scoresFilter.search))
-        return { ...score, hidden: true }
-      return { ...score, hidden: false }
-    })
-    setScoreList(result)
-  }, [scoresFilter])
 
   return (
     <Card variant="outlined">

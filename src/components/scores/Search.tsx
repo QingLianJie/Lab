@@ -1,23 +1,38 @@
 import { SearchOutlined } from '@mui/icons-material'
 import { Stack, InputBase, InputAdornment } from '@mui/material'
-import { useAtom } from 'jotai'
+import { useAtom, useAtomValue } from 'jotai'
 import { useState } from 'react'
 import { useDebounce } from 'react-use'
-import { scoresFilterAtom } from '../../../contexts/bridge/scores'
+import { scoresAtom, scoresListAtom } from '../../contexts/bridge/scores'
 
 export const Search = () => {
-  const [scoresFilter, setScoresFilter] = useAtom(scoresFilterAtom)
+  const scores = useAtomValue(scoresAtom)
+  const [scoresList, setScoreList] = useAtom(scoresListAtom)
   const [search, setSearch] = useState('')
 
-  useDebounce(
-    () =>
-      setScoresFilter({
-        ...scoresFilter,
-        search: search.trim().toLocaleLowerCase(),
-      }),
-    100,
-    [search]
-  )
+  const handleSearch = () => {
+    if (!scores) return
+    if (!search) {
+      const result = scoresList.map(score => ({ ...score, hidden: false }))
+      setScoreList(result)
+      return
+    }
+    const result = scoresList.map(score => {
+      const target = Object.values(score)
+        .join(' ')
+        .replace(/true|false|null/g, '')
+        .trim()
+        .toLocaleLowerCase()
+      console.log(target)
+
+      if (!target.includes(search)) return { ...score, hidden: true }
+      return { ...score, hidden: false }
+    })
+
+    setScoreList(result)
+  }
+
+  useDebounce(handleSearch, 100, [search])
 
   return (
     <Stack direction="row" sx={{ flex: 1 }}>

@@ -1,28 +1,40 @@
-import { FilterAltOutlined } from '@mui/icons-material'
+import { CloseOutlined, FilterAltOutlined } from '@mui/icons-material'
 import {
   Checkbox,
   Dialog,
   DialogContent,
   DialogTitle,
   Fab,
+  Fade,
   FormControl,
   FormControlLabel,
   FormHelperText,
+  IconButton,
   InputLabel,
   MenuItem,
   Select,
+  SelectChangeEvent,
   Stack,
   TextField,
   Typography,
 } from '@mui/material'
 import { useAtom, useAtomValue } from 'jotai'
+import { groupBy } from 'lodash'
 import { Fragment } from 'react'
 import { modalsAtom } from '../../contexts/booleans'
-import { scoresAtom } from '../../contexts/bridge/scores'
+import { scoresAtom, scoresListAtom } from '../../contexts/bridge/scores'
 
 export const Filter = () => {
   const [modals, setModals] = useAtom(modalsAtom)
+  const [scoresList, setScoresList] = useAtom(scoresListAtom)
   const scores = useAtomValue(scoresAtom)
+
+  const handleType = (e: SelectChangeEvent) => {}
+  const handleFilter = (name: string, value: string) => {
+    if (!scores) return
+    if (!value) {
+    }
+  }
 
   return (
     <Fragment>
@@ -55,12 +67,31 @@ export const Filter = () => {
             scores: { ...modals.scores, filter: false },
           })
         }
-        sx={{ '& .MuiPaper-root': { maxWidth: '18rem' } }}
+        sx={{ '& .MuiPaper-root': { maxWidth: '16rem' } }}
       >
         <DialogTitle sx={{ fontSize: '1.125rem', fontWeight: 700 }}>
           筛选课程
+          <IconButton
+            aria-label="关闭"
+            title="关闭"
+            onClick={() =>
+              setModals({
+                ...modals,
+                scores: { ...modals.scores, filter: false },
+              })
+            }
+            sx={{ position: 'absolute', right: 12, top: 10 }}
+          >
+            <CloseOutlined
+              sx={{
+                color: 'text.disabled',
+                '&:hover': { color: 'text.primary' },
+                transition: 'all 0.2s',
+              }}
+            />
+          </IconButton>
         </DialogTitle>
-        <DialogContent sx={{ px: 2.5 }}>
+        <DialogContent sx={{ px: 2.5, pb: 2, overflowY: 'unset' }}>
           <Stack spacing={1.5}>
             <FormControl size="small">
               <InputLabel id="score-type-label" size="small">
@@ -71,11 +102,17 @@ export const Filter = () => {
                 id="score-type"
                 value=""
                 label="课程类型"
+                MenuProps={{ TransitionComponent: Fade }}
               >
                 <MenuItem value="">不限</MenuItem>
-                <MenuItem value="必修">必修</MenuItem>
-                <MenuItem value="公选">公选</MenuItem>
-                <MenuItem value="任选">任选</MenuItem>
+                {scores &&
+                  Object.entries(groupBy(scores.scores, 'type')).map(
+                    ([type, group]) => (
+                      <MenuItem value={type} key={type}>
+                        {type} ({group.length})
+                      </MenuItem>
+                    )
+                  )}
               </Select>
             </FormControl>
 
@@ -88,12 +125,17 @@ export const Filter = () => {
                 id="score-nature"
                 value=""
                 label="课程性质"
+                MenuProps={{ TransitionComponent: Fade }}
               >
                 <MenuItem value="">不限</MenuItem>
-                <MenuItem value="专业核心课程">专业核心课程</MenuItem>
-                <MenuItem value="自然科学与技术基础必修课">
-                  自然科学与技术基础必修课
-                </MenuItem>
+                {scores &&
+                  Object.entries(groupBy(scores.scores, 'nature')).map(
+                    ([nature, group]) => (
+                      <MenuItem value={nature} key={nature}>
+                        {nature} ({group.length})
+                      </MenuItem>
+                    )
+                  )}
               </Select>
             </FormControl>
 
@@ -108,42 +150,38 @@ export const Filter = () => {
                 label="课程分类"
               >
                 <MenuItem value="">不限</MenuItem>
-                <MenuItem value="专业核心课程">专业核心课程</MenuItem>
-                <MenuItem value="自然科学与技术基础必修课">
-                  自然科学与技术基础必修课
-                </MenuItem>
+                {scores &&
+                  Object.entries(groupBy(scores.scores, 'category')).map(
+                    ([category, group]) =>
+                      category !== 'undefined' && (
+                        <MenuItem value={category} key={category}>
+                          {category} ({group.length})
+                        </MenuItem>
+                      )
+                  )}
               </Select>
-              <FormHelperText>选修分类，如中华传统文化等</FormHelperText>
             </FormControl>
 
-            <Stack>
-              <Stack direction="row">
-                <TextField
-                  id="score-period"
-                  type="number"
-                  label="学分"
-                  size="small"
-                  sx={{ mr: 1.5 }}
-                />
-                <TextField
-                  id="score-credit"
-                  label="学时"
-                  size="small"
-                  type="number"
-                />
-              </Stack>
-              <Typography
-                variant="caption"
-                sx={{
-                  color: 'text.secondary',
-                  px: 1.5,
-                  py: 0.75,
-                  lineHeight: 1.5,
-                }}
-              >
-                提示：学时和学分可以使用 , 或 - 符号进行筛选，代表单个或连续范围
-              </Typography>
+            <Stack direction="row">
+              <TextField
+                id="score-period"
+                label="学分"
+                size="small"
+                sx={{ mr: 1.5 }}
+              />
+              <TextField id="score-credit" label="学时" size="small" />
             </Stack>
+
+            <Typography
+              variant="caption"
+              sx={{
+                color: 'text.secondary',
+                px: 0.5,
+                lineHeight: 1.5,
+              }}
+            >
+              提示：学时和学分可以使用 , 或 - 符号进行筛选，代表单个或连续范围
+            </Typography>
           </Stack>
         </DialogContent>
       </Dialog>

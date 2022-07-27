@@ -1,17 +1,27 @@
 import { atom } from 'jotai'
-import { ColumnsType } from '../../configs/scores/columns'
-import { GroupsType } from '../../configs/scores/groups'
-import { Score, Scores, ScoresAtom } from '../../index.d'
+import { type ColumnsType } from '../../configs/scores/columns'
+import { type GroupsType } from '../../configs/scores/groups'
+import { type Score, type ScoresAtom } from '../../index.d'
 import { atomLocal } from '../../utils/atom'
 
 export const scoresAtom = atomLocal<ScoresAtom | false>('scores', false)
 
-type ScoresFilter = Partial<Score> & {
+type ScoresFilter = {
   search: string
+  type: string
+  credit: string
+  period: string
+  nature: string
+  category: string
 }
 
 export const scoresFilterAtom = atom<ScoresFilter>({
   search: '',
+  type: '',
+  credit: '',
+  period: '',
+  nature: '',
+  category: '',
 })
 
 type ScoresView = {
