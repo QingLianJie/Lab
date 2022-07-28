@@ -1,14 +1,6 @@
-export const columns: {
-  name: string
-  id: ColumnsType
-  number?: boolean
-  score?: boolean
-  header?: string
-  bold?: boolean
-  width: number
-}[] = [
+export const columns: ScoreColumns = [
   { name: 'ID', id: 'id', width: 48 },
-  { name: '课程名称', id: 'name', header: '名称', bold: true, width: 120 },
+  { name: '课程名称', id: 'name', header: '名称', width: 120 },
   { name: '学期', id: 'term', width: 48 },
   { name: '课程类型', id: 'type', header: '类型', width: 24 },
   { name: '学分', id: 'credit', number: true, width: 24 },
@@ -19,7 +11,7 @@ export const columns: {
   { name: '分数', id: 'score', number: true, score: true, width: 48 },
 ]
 
-export type ColumnsType =
+export type ScoreColumnKey =
   | 'id'
   | 'name'
   | 'term'
@@ -30,3 +22,15 @@ export type ColumnsType =
   | 'nature'
   | 'score'
   | 'category'
+
+export type ScoreColumn = {
+  name: string
+  id: ScoreColumnKey
+  number?: boolean
+  score?: boolean
+  header?: string
+  bold?: boolean
+  width: number
+}
+
+export type ScoreColumns = ScoreColumn[]

@@ -123,7 +123,7 @@ export const Filter = () => {
             />
           </IconButton>
         </DialogTitle>
-        <DialogContent sx={{ px: 2.5, pb: 2, overflowY: 'unset' }}>
+        <DialogContent sx={{ px: 2.5, overflowY: 'unset' }}>
           <Stack spacing={1.5}>
             <FormControl size="small">
               <InputLabel id="score-type-label" size="small">

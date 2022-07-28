@@ -4,6 +4,7 @@ import {
   Card,
   Checkbox,
   Divider,
+  Stack,
   Table,
   TableBody,
   TableCell,
@@ -13,6 +14,7 @@ import {
   TableSortLabel,
 } from '@mui/material'
 import { useAtom, useAtomValue } from 'jotai'
+import { groupBy } from 'lodash'
 import { Fragment, useCallback, useEffect, useMemo } from 'react'
 import { columns } from '../../configs/scores/columns'
 import {
@@ -23,6 +25,9 @@ import {
 } from '../../contexts/bridge/scores'
 import { scoreColor, scoreMap } from '../../utils/calc'
 import { Fetch } from '../settings/Fetch'
+import { BodyCell, HeadCell } from './list/Cell'
+import { ScoresGroup } from './list/Group'
+import { ScoresRows } from './list/Rows'
 import { Placeholder } from './Placeholder'
 import { ToolBar } from './ToolBar'
 
@@ -92,138 +97,69 @@ export const List = () => {
     )
   }, [scoresFilter])
 
-  return (
-    <Card variant="outlined">
-      {scores ? (
-        <Fragment>
-          {scores.scores.length === 0 ? (
-            <Placeholder
-              title="暂无成绩数据"
-              description="可能本来就没有成绩，或者程序出错了"
-            />
-          ) : (
-            <Fragment>
-              <ToolBar />
-              <Divider />
-              <TableContainer>
-                <Table aria-label="成绩列表">
-                  <TableHead>
-                    <TableRow>
-                      <TableCell sx={{ py: 1.5, pr: 0.5, width: 12 }}>
-                        <Checkbox
-                          sx={{
-                            m: -1,
-                            color: 'text.disabled',
-                            '&:hover': { color: 'primary' },
-                            transition: 'all 0.2s',
-                          }}
-                        />
-                      </TableCell>
-                      {columns
-                        .filter(column =>
-                          scoresView.columns.includes(column.id)
-                        )
-                        .map(column => (
-                          <TableCell
-                            key={column.id}
-                            sx={{
-                              whiteSpace: 'nowrap',
-                              textOverflow: 'ellipsis',
-                              overflow: 'hidden',
-                              fontSize: 'body1.fontSize',
-                              fontWeight: 700,
-                              color: 'text.secondary',
-                              py: 1.5,
-                              px: { xs: 1, sm: 2 },
-                              textAlign: column.number ? 'right' : 'left',
-                              '&:last-of-type': { pr: 3 },
-                            }}
-                          >
-                            {column.header || column.name}
-                          </TableCell>
-                        ))}
-                    </TableRow>
-                  </TableHead>
-
-                  <TableBody>
-                    {scoresList
-                      .filter(item => !item.hidden)
-                      .map(item => (
-                        <TableRow
-                          key={item.id}
-                          sx={{
-                            '&:hover': { backgroundColor: 'action.hover' },
-                            cursor: 'pointer',
-                            transition: 'all 0.2s',
-                          }}
-                        >
-                          <TableCell sx={{ py: 1.5 }}>
-                            <Checkbox
-                              sx={{
-                                m: -1,
-                                color: 'text.disabled',
-                                '&:hover': { color: 'primary' },
-                                transition: 'all 0.2s',
-                              }}
-                              checked={item.selected}
-                            />
-                          </TableCell>
-                          {columns
-                            .filter(column =>
-                              scoresView.columns.includes(column.id)
-                            )
-                            .map(column => (
-                              <TableCell
-                                key={column.id}
-                                sx={{
-                                  maxWidth: { xs: 200, sm: 240 },
-                                  whiteSpace: 'nowrap',
-                                  textOverflow: 'ellipsis',
-                                  overflow: 'hidden',
-                                  fontSize: 'body1.fontSize',
-                                  py: 1.5,
-                                  px: { xs: 1, sm: 2 },
-                                  textAlign: column.number ? 'right' : 'left',
-                                  fontWeight:
-                                    column.score || column.bold ? 700 : 500,
-                                  color: column.score
-                                    ? scoreColor(
-                                        item['score'].map(s => scoreMap(s))[0]
-                                      )
-                                    : 'text.primary',
-                                  '&:last-of-type': { pr: 3 },
-                                }}
-                              >
-                                {column.score
-                                  ? item['score']
-                                      .map((s, i) =>
-                                        s === '---'
-                                          ? item?.['mark']?.[i] || ''
-                                          : s
-                                      )
-                                      .join(' / ')
-                                  : item[column.id]}
-                              </TableCell>
-                            ))}
-                        </TableRow>
-                      ))}
-                  </TableBody>
-                  {scoresList.every(item => item.hidden) && (
-                    <Box component="caption">
-                      <Placeholder
-                        title="暂无成绩数据"
-                        description="当前筛选结果下并没有找到成绩"
-                      />
-                    </Box>
-                  )}
-                </Table>
-              </TableContainer>
-            </Fragment>
-          )}
-        </Fragment>
+  return scores ? (
+    <Fragment>
+      {scores.scores.length === 0 ? (
+        <Card variant="outlined">
+          <Placeholder
+            title="暂无成绩数据"
+            description="可能本来就没有成绩，或者程序出错了"
+          />
+        </Card>
       ) : (
-        <Fetch name="成绩" icon={InsertChartRounded} />
+        <Stack spacing={2}>
+          <ToolBar />
+          <Card variant="outlined">
+            <TableContainer>
+              <Table aria-label="成绩列表" sx={{ border: 'none' }}>
+                <TableHead>
+                  <TableRow>
+                    <TableCell sx={{ py: 1.5, pr: 0.5, width: 12 }}>
+                      <Checkbox
+                        sx={{
+                          m: -1,
+                          color: 'text.disabled',
+                          '&:hover': { color: 'primary' },
+                          transition: 'all 0.2s',
+                        }}
+                      />
+                    </TableCell>
+                    {columns
+                      .filter(column => scoresView.columns.includes(column.id))
+                      .map(column => (
+                        <HeadCell column={column} key={column.id} />
+                      ))}
+                  </TableRow>
+                </TableHead>
+
+                <TableBody>
+                  {scoresView.groups === 'none' ? (
+                    <ScoresRows list={scoresList} />
+                  ) : (
+                    Object.entries(groupBy(scoresList, scoresView.groups)).map(
+                      ([name, scores]) => (
+                        <ScoresGroup name={name} scores={scores} key={name} />
+                      )
+                    )
+                  )}
+                </TableBody>
+                {scoresList.every(item => item.hidden) && (
+                  <Box component="caption">
+                    <Placeholder
+                      title="暂无成绩数据"
+                      description="当前筛选结果下并没有找到成绩"
+                    />
+                  </Box>
+                )}
+              </Table>
+            </TableContainer>
+          </Card>
+        </Stack>
       )}
+    </Fragment>
+  ) : (
+    <Card variant="outlined">
+      <Fetch name="成绩" icon={InsertChartRounded} />
     </Card>
   )
 }

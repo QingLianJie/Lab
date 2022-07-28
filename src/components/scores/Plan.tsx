@@ -1,4 +1,4 @@
-import { ExpandLess, ExpandMore } from '@mui/icons-material'
+import { ExpandLessOutlined, ExpandMoreOutlined } from '@mui/icons-material'
 import { TabContext, TabList, TabPanel } from '@mui/lab'
 import {
   Box,
@@ -145,7 +145,9 @@ const PlanList = ({ plan }: PlanListProps) => {
                 />
                 <Icon
                   component={
-                    collapse.includes(list.name) ? ExpandLess : ExpandMore
+                    collapse.includes(list.name)
+                      ? ExpandLessOutlined
+                      : ExpandMoreOutlined
                   }
                   sx={{
                     fontSize: 20,

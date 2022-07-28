@@ -1,16 +1,15 @@
-import { ViewStreamOutlined, CheckOutlined } from '@mui/icons-material'
+import { CheckOutlined, ViewStreamOutlined } from '@mui/icons-material'
 import {
-  IconButton,
-  Menu,
-  Grow,
-  MenuItem,
-  ListItemText,
-  ListItemIcon,
   Fade,
+  IconButton,
+  ListItemIcon,
+  ListItemText,
+  Menu,
+  MenuItem,
 } from '@mui/material'
 import { useAtom } from 'jotai'
-import { useState, Fragment } from 'react'
-import { type GroupsType, groups } from '../../../configs/scores/groups'
+import { Fragment, useState } from 'react'
+import { groups, type GroupsType } from '../../../configs/scores/groups'
 import { scoresViewAtom } from '../../../contexts/bridge/scores'
 import { Tooltip } from '../../base/Tooltip'
 
@@ -49,7 +48,7 @@ export const Groups = () => {
           <MenuItem
             onClick={() => handleGroups(item.id as GroupsType)}
             key={item.id}
-            sx={{ minWidth: 120 }}
+            sx={{ minWidth: 140 }}
           >
             <ListItemText sx={{ flex: 1 }}>{item.name}</ListItemText>
             {item.id === scoresView.groups && (

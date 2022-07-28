@@ -25,7 +25,7 @@ import { List } from '../components/scores/List'
 import { Plan } from '../components/scores/Plan'
 import { scoresAtom, scoresViewAtom } from '../contexts/bridge/scores'
 import { Status } from '../components/scores/Status'
-import { ColumnsType } from '../configs/scores/columns'
+import { ScoreColumnKey } from '../configs/scores/columns'
 import { useMount } from 'react-use'
 
 export const ScoresPage = () => {
@@ -90,7 +90,7 @@ export const ScoresPage = () => {
 
 const Tips = () => {
   const [scoresView, setScoresView] = useAtom(scoresViewAtom)
-  const [columns, setColumns] = useState<ColumnsType[]>([
+  const [columns, setColumns] = useState<ScoreColumnKey[]>([
     'name',
     'type',
     'credit',
