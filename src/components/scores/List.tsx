@@ -1,6 +1,7 @@
 import { InsertChartRounded } from '@mui/icons-material'
 import {
   Box,
+  Button,
   Card,
   Checkbox,
   Divider,
@@ -9,9 +10,11 @@ import {
   TableBody,
   TableCell,
   TableContainer,
+  TableFooter,
   TableHead,
   TableRow,
   TableSortLabel,
+  Typography,
 } from '@mui/material'
 import { useAtom, useAtomValue } from 'jotai'
 import { groupBy } from 'lodash'
@@ -37,6 +40,11 @@ export const List = () => {
   const scores = useAtomValue(scoresAtom)
   const scoresFilter = useAtomValue(scoresFilterAtom)
   const scoresView = useAtomValue(scoresViewAtom)
+
+  const groupedList =
+    scoresView.groups === 'term'
+      ? Object.entries(groupBy(scoresList, scoresView.groups)).reverse()
+      : Object.entries(groupBy(scoresList, scoresView.groups))
 
   useEffect(() => {
     if (!scores) return
@@ -113,46 +121,65 @@ export const List = () => {
             <TableContainer>
               <Table aria-label="成绩列表" sx={{ border: 'none' }}>
                 <TableHead>
-                  <TableRow>
-                    <TableCell sx={{ py: 1.5, pr: 0.5, width: 12 }}>
-                      <Checkbox
-                        sx={{
-                          m: -1,
-                          color: 'text.disabled',
-                          '&:hover': { color: 'primary' },
-                          transition: 'all 0.2s',
-                        }}
-                      />
-                    </TableCell>
-                    {columns
-                      .filter(column => scoresView.columns.includes(column.id))
-                      .map(column => (
-                        <HeadCell column={column} key={column.id} />
-                      ))}
-                  </TableRow>
+                  <TitleRow />
                 </TableHead>
 
-                <TableBody>
-                  {scoresView.groups === 'none' ? (
-                    <ScoresRows list={scoresList} />
-                  ) : (
-                    Object.entries(groupBy(scoresList, scoresView.groups)).map(
-                      ([name, scores]) => (
-                        <ScoresGroup name={name} scores={scores} key={name} />
-                      )
-                    )
-                  )}
-                </TableBody>
-                {scoresList.every(item => item.hidden) && (
+                {scoresList.every(item => item.hidden) ? (
                   <Box component="caption">
                     <Placeholder
                       title="暂无成绩数据"
                       description="当前筛选结果下并没有找到成绩"
                     />
                   </Box>
+                ) : (
+                  <TableBody>
+                    {scoresView.groups === 'none' ? (
+                      <ScoresRows list={scoresList} />
+                    ) : (
+                      groupedList.map(([name, scores]) => (
+                        <ScoresGroup name={name} scores={scores} key={name} />
+                      ))
+                    )}
+                  </TableBody>
                 )}
               </Table>
             </TableContainer>
+            <Stack
+              direction="row"
+              spacing={2}
+              sx={{
+                px: 1.5,
+                py: 0.75,
+                alignItems: 'center',
+                justifyContent: 'space-between',
+              }}
+            >
+              <Stack
+                direction="row"
+                spacing={2}
+                divider={
+                  <Divider orientation="vertical" sx={{ height: 'auto' }} />
+                }
+                sx={{ px: 1 }}
+              >
+                <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+                  {scoresList.filter(item => !item.hidden).length} 个课程
+                </Typography>
+
+                {scoresView.groups !== 'none' && (
+                  <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+                    {groupedList.length} 个分组
+                  </Typography>
+                )}
+              </Stack>
+              <Button
+                color="success"
+                sx={{ py: 0.5 }}
+                onClick={() => window.scrollTo(0, 0)}
+              >
+                回到顶部
+              </Button>
+            </Stack>
           </Card>
         </Stack>
       )}
@@ -161,5 +188,50 @@ export const List = () => {
     <Card variant="outlined">
       <Fetch name="成绩" icon={InsertChartRounded} />
     </Card>
+  )
+}
+
+const TitleRow = () => {
+  const [scoresList, setScoresList] = useAtom(scoresListAtom)
+  const scoresView = useAtomValue(scoresViewAtom)
+
+  const nothing = scoresList.every(item => item.hidden)
+  const some = scoresList
+    .filter(item => !item.hidden)
+    .some(item => item.selected)
+  const every = scoresList
+    .filter(item => !item.hidden)
+    .every(item => item.selected)
+
+  const handleSelect = () => {
+    setScoresList(list =>
+      list.map(item => {
+        if (!item.hidden) item.selected = !some
+        return item
+      })
+    )
+  }
+
+  return (
+    <TableRow>
+      <TableCell sx={{ py: 1.5, pr: 0.5, width: 12 }}>
+        <Checkbox
+          sx={{
+            m: -1,
+            color: 'text.disabled',
+            '&:hover': { color: 'primary' },
+            transition: 'all 0.2s',
+          }}
+          checked={!nothing && every}
+          indeterminate={!every && some}
+          onChange={handleSelect}
+        />
+      </TableCell>
+      {columns
+        .filter(column => scoresView.columns.includes(column.id))
+        .map(column => (
+          <HeadCell column={column} key={column.id} />
+        ))}
+    </TableRow>
   )
 }

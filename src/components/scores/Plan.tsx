@@ -39,12 +39,12 @@ export const Plan = () => {
             onChange={handleChange}
             aria-label="培养方案学分统计"
             variant="fullWidth"
-            sx={{ minHeight: 40 }}
+            sx={{ minHeight: 46 }}
           >
             <Tab
               label="2019 版培养方案"
               value="2019"
-              sx={{ minHeight: 40, flex: 3 }}
+              sx={{ minHeight: 42, flex: 3 }}
             />
             <Tab label="2014 版" value="2014" sx={{ minHeight: 40, flex: 2 }} />
           </TabList>
@@ -57,20 +57,24 @@ export const Plan = () => {
         </TabPanel>
       </TabContext>
       <Divider />
-      <Typography
-        variant="body2"
-        sx={{
-          fontSize: 'body2.fontSize',
-          px: 2,
-          py: 1.75,
-          color: 'text.secondary',
-        }}
-      >
-        注：培养方案计算仅供参考，请认真核对，此处计算仅统计成绩合格科目的学分。
-      </Typography>
+      <PlanTips />
     </Card>
   )
 }
+
+const PlanTips = () => (
+  <Typography
+    variant="body2"
+    sx={{
+      fontSize: 'body2.fontSize',
+      px: 2,
+      py: 1.75,
+      color: 'text.secondary',
+    }}
+  >
+    注：培养方案计算仅供参考，请认真核对，此处计算仅统计成绩合格科目的学分。
+  </Typography>
+)
 
 interface PlanListProps {
   plan: typeof plan2014 | typeof plan2019

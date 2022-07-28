@@ -1,6 +1,6 @@
 export const columns: ScoreColumns = [
   { name: 'ID', id: 'id', width: 48 },
-  { name: '课程名称', id: 'name', header: '名称', width: 120 },
+  { name: '课程名称', id: 'name', header: '名称', link: true, width: 120 },
   { name: '学期', id: 'term', width: 48 },
   { name: '课程类型', id: 'type', header: '类型', width: 24 },
   { name: '学分', id: 'credit', number: true, width: 24 },
@@ -27,9 +27,9 @@ export type ScoreColumn = {
   name: string
   id: ScoreColumnKey
   number?: boolean
+  link?: boolean
   score?: boolean
   header?: string
-  bold?: boolean
   width: number
 }
 

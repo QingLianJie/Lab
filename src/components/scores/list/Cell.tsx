@@ -1,4 +1,6 @@
-import { TableCell } from '@mui/material'
+import { Link, TableCell, Typography, useTheme } from '@mui/material'
+import { blue, indigo } from '@mui/material/colors'
+import { Link as RouterLink } from 'react-router-dom'
 import { type Score } from '../../..'
 import { type ScoreColumn } from '../../../configs/scores/columns'
 import { scoreColor, scoreMap } from '../../../utils/calc'
@@ -31,28 +33,52 @@ interface BodyCellProps {
   item: Score
 }
 
-export const BodyCell = ({ column, item }: BodyCellProps) => (
-  <TableCell
-    sx={{
-      maxWidth: { xs: 200, sm: 240 },
-      whiteSpace: 'nowrap',
-      textOverflow: 'ellipsis',
-      overflow: 'hidden',
-      fontSize: 'body1.fontSize',
-      py: 1.5,
-      px: { xs: 1, sm: 2 },
-      textAlign: column.number ? 'right' : 'left',
-      fontWeight: column.score || column.bold ? 700 : 500,
-      color: column.score
-        ? scoreColor(item['score'].map(s => scoreMap(s))[0])
-        : 'text.primary',
-      '&:last-of-type': { pr: 3 },
-    }}
-  >
-    {column.score
-      ? item['score']
-          .map((s, i) => (s === '---' ? item?.['mark']?.[i] || '' : s))
-          .join(' / ')
-      : item[column.id]}
-  </TableCell>
-)
+export const BodyCell = ({ column, item }: BodyCellProps) => {
+  const { palette } = useTheme()
+  const isDark = palette.mode === 'dark'
+
+  return (
+    <TableCell
+      sx={{
+        maxWidth: { xs: 200, sm: 240 },
+        whiteSpace: 'nowrap',
+        textOverflow: 'ellipsis',
+        overflow: 'hidden',
+        fontSize: 'body1.fontSize',
+        py: 1.5,
+        px: { xs: 1, sm: 2 },
+        textAlign: column.number ? 'right' : 'left',
+        color: 'text.primary',
+        '&:last-of-type': { pr: 3 },
+      }}
+    >
+      {column.score ? (
+        <Typography
+          sx={{
+            fontWeight: 700,
+            color: scoreColor(item['score'].map(s => scoreMap(s))[0]),
+          }}
+        >
+          {item['score']
+            .map((s, i) => (s === '---' ? item?.['mark']?.[i] || '' : s))
+            .join(' / ')}
+        </Typography>
+      ) : column.link ? (
+        <Link
+          component={RouterLink}
+          to={`/courses/${item['id']}`}
+          sx={{
+            textDecoration: 'none',
+            '&:hover': { textDecoration: 'underline' },
+            color: indigo[isDark ? 200 : 500],
+          }}
+          onClick={e => e.stopPropagation()}
+        >
+          {item[column.id]}
+        </Link>
+      ) : (
+        <Typography>{item[column.id]}</Typography>
+      )}
+    </TableCell>
+  )
+}

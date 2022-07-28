@@ -10,11 +10,12 @@ import {
   TableRow,
   Typography,
 } from '@mui/material'
-import { useAtomValue } from 'jotai'
+import { useAtom, useAtomValue } from 'jotai'
 import { Fragment, useState } from 'react'
 import { groups } from '../../../configs/scores/groups'
 import { studentAtom } from '../../../contexts/bridge'
 import {
+  scoresListAtom,
   scoresViewAtom,
   type ScoresList,
 } from '../../../contexts/bridge/scores'
@@ -29,17 +30,34 @@ interface ScoresGroupProps {
 export const ScoresGroup = ({ name, scores }: ScoresGroupProps) => {
   const student = useAtomValue(studentAtom)
   const scoresView = useAtomValue(scoresViewAtom)
+  const ids = scores.map(item => item.id)
+  const [scoresList, setScoresList] = useAtom(scoresListAtom)
+
   const [open, setOpen] = useState(false)
 
+  const nothing = scores.every(item => item.hidden)
+  const every = scores.filter(item => !item.hidden).every(item => item.selected)
+  const some = scores.filter(item => !item.hidden).some(item => item.selected)
+
   const calcAverage = () => {
-    const credits = scores.reduce((pre, cur) => pre + cur.credit, 0)
+    const filter = scores.filter(item => !item.hidden)
+    const credits = filter.reduce((pre, cur) => pre + cur.credit, 0)
     if (credits === 0) return 0
     return (
-      scores.reduce((pre, cur) => {
+      filter.reduce((pre, cur) => {
         const best = Math.max(...cur.score.map(s => scoreMap(s)))
         return pre + cur.credit * best
       }, 0) / credits
     ).toFixed(2)
+  }
+
+  const handleSelect = () => {
+    setScoresList(list =>
+      list.map(item => {
+        if (ids.includes(item.id) && !item.hidden) item.selected = !some
+        return item
+      })
+    )
   }
 
   return (
@@ -51,7 +69,7 @@ export const ScoresGroup = ({ name, scores }: ScoresGroupProps) => {
           transition: 'all 0.2s',
         }}
       >
-        <TableCell sx={{ py: 1.5 }} colSpan={1}>
+        <TableCell sx={{ py: 1.5, pr: 0 }} colSpan={1}>
           <Checkbox
             sx={{
               m: -1,
@@ -59,6 +77,9 @@ export const ScoresGroup = ({ name, scores }: ScoresGroupProps) => {
               '&:hover': { color: 'primary' },
               transition: 'all 0.2s',
             }}
+            checked={!nothing && every}
+            indeterminate={!every && some}
+            onChange={handleSelect}
           />
         </TableCell>
         <TableCell
@@ -82,14 +103,23 @@ export const ScoresGroup = ({ name, scores }: ScoresGroupProps) => {
                   : name}
               </Typography>
             </Stack>
-            <Stack direction="row" spacing={2} sx={{ alignItems: 'center' }}>
-              <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                {calcAverage()} 分 / {scores.length}
+            <Stack direction="row" spacing={1} sx={{ alignItems: 'center' }}>
+              <Typography
+                variant="body2"
+                sx={{ color: 'text.secondary', minWidth: 64 }}
+              >
+                {calcAverage()} 分
+              </Typography>
+              <Typography
+                variant="body2"
+                sx={{ color: 'text.secondary', minWidth: 12 }}
+              >
+                {scores.filter(item => !item.hidden).length}
               </Typography>
               <Icon
                 component={open ? ExpandLessOutlined : ExpandMoreOutlined}
                 aria-label="展开或折叠成绩分组"
-                sx={{ color: 'text.disabled', mx: 0.5 }}
+                sx={{ color: 'text.disabled', minWidth: 32 }}
               />
             </Stack>
           </Stack>

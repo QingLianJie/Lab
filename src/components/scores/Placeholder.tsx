@@ -84,7 +84,7 @@ export const Placeholder = ({ title, description }: PlaceholderProps) => (
       width: '100%',
       height: '100%',
       px: 4,
-      py: { xs: 4, sm: 12 },
+      py: { xs: 8, sm: 18 },
       alignItems: 'center',
     }}
   >
