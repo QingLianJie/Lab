@@ -1,5 +1,5 @@
 import { ExtensionRounded } from '@mui/icons-material'
-import { Button, Stack, Typography, useTheme } from '@mui/material'
+import { Button, Chip, Stack, Typography, useTheme } from '@mui/material'
 import { amber } from '@mui/material/colors'
 import { useAtomValue } from 'jotai'
 import { Fragment } from 'react'
@@ -59,11 +59,21 @@ export const Extension = () => {
                 color: 'text.primary',
                 textAlign: 'center',
                 fontWeight: 700,
+                display: 'flex',
+                alignItems: 'center',
               }}
             >
-              {fetcher
-                ? `${fetcherMap(fetcher.name)} ${fetcher.version}`
-                : '未知插件'}
+              {fetcher ? (
+                <Fragment>
+                  {fetcherMap(fetcher.name)}
+                  <Chip
+                    label={fetcher.version}
+                    sx={{ ml: 1, height: 30, fontSize: 'body1.fontSize' }}
+                  />
+                </Fragment>
+              ) : (
+                '未知插件'
+              )}
             </Typography>
           </Fragment>
         ) : (
