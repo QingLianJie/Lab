@@ -61,13 +61,13 @@ export const Layout = ({
               </Typography>
             )}
 
-            {icon && isMobile && (
+            {icon && (
               <Icon
                 component={icon}
                 sx={{
                   color: 'action.selected',
-                  width: 56,
-                  height: 56,
+                  width: { xs: 56, lg: 64 },
+                  height: { xs: 56, lg: 64 },
                   position: 'absolute',
                   top: { xs: 60, lg: 68 },
                   right: 8,

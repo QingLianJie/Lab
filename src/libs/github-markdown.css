@@ -1069,8 +1069,9 @@
   display: none;
 }
 
-.markdown-body .task-list-item-checkbox {
-  margin: 0 0.2em 0.25em -1.6em;
+.markdown-body .task-list-item-checkbox,
+.markdown-body .task-list-item input[type='checkbox'] {
+  margin: 0 0.5em 0.25em -1.25em;
   vertical-align: middle;
 }
 

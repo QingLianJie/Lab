@@ -21,3 +21,7 @@
 - [ ] React 缓存与性能优化
 - [ ] 界面配色调整
 - [ ] 路由切换动画 / 路由缓存 - 更换为 React Location
+
+### License
+
+MIT License

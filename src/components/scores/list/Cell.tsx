@@ -67,11 +67,7 @@ export const BodyCell = ({ column, item }: BodyCellProps) => {
         <Link
           component={RouterLink}
           to={`/courses/${item['id']}`}
-          sx={{
-            textDecoration: 'none',
-            '&:hover': { textDecoration: 'underline' },
-            color: indigo[isDark ? 200 : 500],
-          }}
+          sx={{ color: indigo[isDark ? 200 : 500] }}
           onClick={e => e.stopPropagation()}
         >
           {item[column.id]}

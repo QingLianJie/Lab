@@ -69,4 +69,14 @@ export const components = {
       color: 'info' as const,
     },
   },
+  MuiLink: {
+    styleOverrides: {
+      root: {
+        textDecoration: 'none',
+        '&:hover': {
+          textDecoration: 'underline',
+        },
+      },
+    },
+  },
 }

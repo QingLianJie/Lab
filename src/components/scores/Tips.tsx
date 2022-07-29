@@ -123,12 +123,7 @@ export const UploadTips = () => {
         sx={{ border: 1, borderColor: green[400] }}
       >
         清廉街改版后无法主动获得成绩和课程等数据，大家可以自行选择是否将自己的成绩匿名上传到清廉街，帮助清廉街完善课程数据库，非常感谢。
-        <Link
-          href=""
-          target="_blank"
-          rel="noopener noreferrer"
-          sx={{ textDecoration: 'none' }}
-        >
+        <Link href="" target="_blank" rel="noopener noreferrer">
           了解更多
         </Link>
       </Alert>

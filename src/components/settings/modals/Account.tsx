@@ -45,7 +45,7 @@ export const Account = () => {
           component="p"
           variant="body2"
           color="text.secondary"
-          sx={{ textAlign: 'center', pb: 1.5 }}
+          sx={{ textAlign: 'center' }}
         >
           欢迎来到清廉街
         </Typography>
@@ -56,8 +56,7 @@ export const Account = () => {
             <TabList
               onChange={(e, v) => setModals({ ...modals, auth: v })}
               aria-label="登录、注册和重置密码的页面"
-              centered
-              sx={{ mb: '-1px', minHeight: 'unset', px: 3 }}
+              sx={{ minHeight: 44, px: { xs: 2.5, sm: 3 } }}
             >
               {authTabs.map(tab => (
                 <Tab
@@ -67,7 +66,7 @@ export const Account = () => {
                   sx={{
                     ml: tab.name === '重置密码' ? 'auto' : 0,
                     minWidth: 'unset',
-                    minHeight: 'unset',
+                    minHeight: 42,
                   }}
                 />
               ))}

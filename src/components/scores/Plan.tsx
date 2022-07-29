@@ -39,7 +39,7 @@ export const Plan = () => {
             onChange={handleChange}
             aria-label="培养方案学分统计"
             variant="fullWidth"
-            sx={{ minHeight: 46 }}
+            sx={{ minHeight: 44 }}
           >
             <Tab
               label="2019 版培养方案"

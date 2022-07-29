@@ -43,7 +43,7 @@ export const Status = () => {
             href="https://edusys.wvpn.hrbeu.edu.cn/jsxsd/kscj/cjcx_list"
             target="_blank"
             rel="noopener noreferrer"
-            sx={{ pl: 1, textDecoration: 'none' }}
+            sx={{ pl: 1 }}
           >
             查看
           </Link>
