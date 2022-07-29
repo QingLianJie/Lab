@@ -1,14 +1,17 @@
 import {
   Link,
   TableCell,
+  TableSortLabel,
   Typography,
   useMediaQuery,
   useTheme,
 } from '@mui/material'
-import { blue, indigo } from '@mui/material/colors'
+import { indigo } from '@mui/material/colors'
+import { useAtom, useAtomValue } from 'jotai'
 import { Link as RouterLink } from 'react-router-dom'
 import { type Score } from '../../..'
 import { type ScoreColumn } from '../../../configs/scores/columns'
+import { scoresViewAtom } from '../../../contexts/bridge/scores'
 import { scoreColor, scoreMap } from '../../../utils/calc'
 
 interface HeadCellProps {
@@ -16,8 +19,25 @@ interface HeadCellProps {
 }
 
 export const HeadCell = ({ column }: HeadCellProps) => {
+  const [scoresView, setScoresView] = useAtom(scoresViewAtom)
   const { breakpoints } = useTheme()
   const isMobile = useMediaQuery(breakpoints.down('sm'))
+
+  const handleSort = () => {
+    if (scoresView.sort.column === column.id)
+      setScoresView(view => ({
+        ...view,
+        sort: {
+          order: scoresView.sort.order === 'asc' ? 'desc' : 'asc',
+          column: column.id,
+        },
+      }))
+    else
+      setScoresView(view => ({
+        ...view,
+        sort: { order: 'desc', column: column.id },
+      }))
+  }
 
   return (
     <TableCell
@@ -35,7 +55,14 @@ export const HeadCell = ({ column }: HeadCellProps) => {
         '&:last-of-type': { pr: 3 },
       }}
     >
-      {column.header || column.name}
+      <TableSortLabel
+        hideSortIcon={true}
+        active={scoresView.sort.column === column.id}
+        direction={scoresView.sort.order}
+        onClick={handleSort}
+      >
+        {column.header || column.name}
+      </TableSortLabel>
     </TableCell>
   )
 }
@@ -54,7 +81,7 @@ export const BodyCell = ({ column, item }: BodyCellProps) => {
     <TableCell
       sx={{
         width: column.width,
-        maxWidth: column.link && isMobile ? column.width * 0.75 : 'unset',
+        maxWidth: column.link && isMobile ? column.width * 0.65 : column.width,
         whiteSpace: 'nowrap',
         textOverflow: 'ellipsis',
         overflow: column.score ? 'visible' : 'hidden',

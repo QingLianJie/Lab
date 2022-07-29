@@ -1,6 +1,6 @@
 export const columns: ScoreColumns = [
   { name: 'ID', id: 'id', width: 108 },
-  { name: '课程名称', id: 'name', header: '名称', link: true, width: 240 },
+  { name: '课程名称', id: 'name', header: '名称', link: true, width: 280 },
   { name: '学期', id: 'term', width: 128 },
   { name: '课程类型', id: 'type', header: '类型', width: 64 },
   { name: '学分', id: 'credit', number: true, width: 64 },

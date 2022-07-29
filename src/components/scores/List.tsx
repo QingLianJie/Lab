@@ -113,7 +113,12 @@ export const List = () => {
             <TableContainer>
               <Table
                 aria-label="成绩列表"
-                sx={{ border: 'none', width: 'auto', tableLayout: 'fixed' }}
+                sx={{
+                  border: 'none',
+                  width: 'auto',
+                  minWidth: '100%',
+                  tableLayout: 'fixed',
+                }}
               >
                 <TableHead>
                   <TitleRow />

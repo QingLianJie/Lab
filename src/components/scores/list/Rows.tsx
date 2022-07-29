@@ -7,6 +7,7 @@ import {
   scoresViewAtom,
   type ScoresList,
 } from '../../../contexts/bridge/scores'
+import { scoreMap } from '../../../utils/calc'
 import { BodyCell, HeadCell, SpaceCell } from './Cell'
 
 interface ScoresRowsProps {
@@ -34,6 +35,17 @@ export const ScoresRows = ({ list }: ScoresRowsProps) => {
     <Fragment>
       {list
         .filter(item => !item.hidden)
+        .sort((a, b) => {
+          if (scoresView.sort.column === 'score') {
+            const x = Math.max(...a.score.map(s => scoreMap(s)))
+            const y = Math.max(...b.score.map(s => scoreMap(s)))
+            return scoresView.sort.order === 'asc' ? x - y : y - x
+          }
+          const x = a[scoresView.sort.column] || 0
+          const y = b[scoresView.sort.column] || 0
+          if (scoresView.sort.order === 'asc') return x > y ? 1 : -1
+          return y > x ? 1 : -1
+        })
         .map(item => (
           <TableRow
             key={item.id}
