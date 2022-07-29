@@ -1,5 +1,6 @@
-import { ExpandLessOutlined, ExpandMoreOutlined } from '@mui/icons-material'
+import { ExpandMoreOutlined } from '@mui/icons-material'
 import {
+  Box,
   Checkbox,
   Collapse,
   Icon,
@@ -129,12 +130,24 @@ export const ScoresGroup = ({ name, scores }: ScoresGroupProps) => {
                   </Typography>
                 </Fragment>
               )}
-
-              <Icon
-                component={open ? ExpandLessOutlined : ExpandMoreOutlined}
-                aria-label="展开或折叠成绩分组"
-                sx={{ color: 'text.disabled', minWidth: 32, pr: 1 }}
-              />
+              <Box
+                sx={{
+                  minWidth: 32,
+                  pr: 1,
+                  display: 'flex',
+                  alignItems: 'center',
+                }}
+              >
+                <Icon
+                  component={ExpandMoreOutlined}
+                  aria-label="展开或折叠成绩分组"
+                  sx={{
+                    color: 'text.disabled',
+                    transform: open ? 'rotate(180deg)' : 'rotate(0)',
+                    transition: 'transform 0.2s',
+                  }}
+                />
+              </Box>
             </Stack>
           </Stack>
         </TableCell>

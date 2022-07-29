@@ -44,8 +44,6 @@ export const HeadCell = ({ column }: HeadCellProps) => {
       sx={{
         width: column.link && isMobile ? column.width * 0.75 : column.width,
         whiteSpace: 'nowrap',
-        textOverflow: 'ellipsis',
-        overflow: 'hidden',
         fontSize: 'body1.fontSize',
         fontWeight: 700,
         color: 'text.secondary',
@@ -60,6 +58,14 @@ export const HeadCell = ({ column }: HeadCellProps) => {
         active={scoresView.sort.column === column.id}
         direction={scoresView.sort.order}
         onClick={handleSort}
+        sx={{
+          position: 'relative',
+          '& svg': {
+            position: 'absolute',
+            right: -24,
+            top: 2,
+          },
+        }}
       >
         {column.header || column.name}
       </TableSortLabel>

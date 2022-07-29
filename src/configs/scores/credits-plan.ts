@@ -27,7 +27,25 @@ export const plan2014 = [
     name: '选修',
     icon: CheckBoxOutlined,
     color: green,
-    rules: [{ key: 'type', value: ['公选'] }],
+    rules: [
+      {
+        key: 'nature',
+        value: [
+          '中外历史与文化',
+          '语言与文学',
+          '哲学人生与社会科学',
+          '艺术修养与审美',
+          '自然科学与人类文明',
+          '国防文化与船海史话',
+          '中华传统文化',
+          '19中华传统文化类（A0）',
+          '新生研讨类',
+          '专业拓展类',
+          '创新创业类',
+          '19创新创业综合实践课程',
+        ],
+      },
+    ],
     children: [
       {
         name: '文化素养教育',
@@ -123,7 +141,23 @@ export const plan2019 = [
     name: '选修',
     icon: CheckBoxOutlined,
     color: green,
-    rules: [{ key: 'type', value: ['公选'] }],
+    rules: [
+      {
+        key: 'kind',
+        value: [
+          '19人文素质与文化传承（A）',
+          '中华传统文化',
+          '19中华传统文化类（A0）',
+          '19艺术鉴赏与审美体验（B）',
+          '艺术修养与审美',
+          '19社会发展与公民责任（C）',
+          '19自然科学与工程技术（D）',
+          '19三海一核与国防建设（E）',
+          '19创新思维与创业实践（F）',
+          '创新创业类',
+        ],
+      },
+    ],
     children: [
       {
         name: 'A 人文素质与文化传承',
