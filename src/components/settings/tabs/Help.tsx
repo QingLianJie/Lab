@@ -5,7 +5,7 @@ import { Details } from '../../base/Details'
 import { Markdown } from '../../base/Markdown'
 import { SettingsHeader } from '../Header'
 
-export const Help = () => (
+export const SettingsHelp = () => (
   <Fragment>
     <SettingsHeader
       title="帮助与常见问题"

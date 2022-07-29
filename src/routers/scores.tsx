@@ -12,13 +12,13 @@ import { useAtomValue } from 'jotai'
 import { Fragment, useState } from 'react'
 import { useMount } from 'react-use'
 import { Layout } from '../components/Layout'
-import { Calc } from '../components/scores/Calc'
-import { Filter } from '../components/scores/Filter'
-import { List } from '../components/scores/List'
-import { Disabled } from '../components/scores/Placeholder'
-import { Plan } from '../components/scores/Plan'
-import { Status } from '../components/scores/Status'
-import { SimpleTips, UploadTips } from '../components/scores/Tips'
+import { ScoresCalc } from '../components/scores/Calc'
+import { ScoresFilter } from '../components/scores/Filter'
+import { ScoresList } from '../components/scores/List'
+import { ScoresDisabled } from '../components/scores/Placeholder'
+import { ScoresPlan } from '../components/scores/Plan'
+import { ScoresStatus } from '../components/scores/Status'
+import { ScoresSimpleTips, ScoresUploadTips } from '../components/scores/Tips'
 import { scoresAtom, scoresViewAtom } from '../contexts/bridge/scores'
 
 export const ScoresPage = () => {
@@ -46,7 +46,7 @@ export const ScoresPage = () => {
         icon={InsertChartRounded}
         color={green[400]}
       >
-        {scores && scores.scores.length !== 0 && <Filter />}
+        {scores && scores.scores.length !== 0 && <ScoresFilter />}
         <Grid
           container
           spacing={2}
@@ -59,26 +59,26 @@ export const ScoresPage = () => {
         >
           <Grid item xs={12} sm={5} md={4} lg={3}>
             <Stack spacing={2}>
-              <Calc />
+              <ScoresCalc />
 
               {scores ? (
                 <Fragment>
-                  {scores.scores.length !== 0 && <Plan />}
-                  <Status />
-                  {isMobile && <UploadTips />}
+                  {scores.scores.length !== 0 && <ScoresPlan />}
+                  <ScoresStatus />
+                  {isMobile && <ScoresUploadTips />}
                 </Fragment>
               ) : (
-                <Disabled />
+                <ScoresDisabled />
               )}
             </Stack>
           </Grid>
           <Grid item xs={12} sm={7} md={8} lg={9}>
             <Stack spacing={2}>
               {scores && isPad && (!changed || scoresView.simple) && (
-                <SimpleTips />
+                <ScoresSimpleTips />
               )}
-              <List />
-              {scores && !isMobile && <UploadTips />}
+              <ScoresList />
+              {scores && !isMobile && <ScoresUploadTips />}
             </Stack>
           </Grid>
         </Grid>

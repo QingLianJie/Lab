@@ -13,7 +13,7 @@ import { groups, type GroupsType } from '../../../configs/scores/groups'
 import { scoresViewAtom } from '../../../contexts/bridge/scores'
 import { Tooltip } from '../../base/Tooltip'
 
-export const Groups = () => {
+export const ScoresGroupsAction = () => {
   const [scoresView, setScoresView] = useAtom(scoresViewAtom)
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
   const open = Boolean(anchorEl)

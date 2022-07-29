@@ -9,12 +9,12 @@ import { useNavigate } from 'react-router-dom'
 import { modalsAtom } from '../../contexts/booleans'
 import { bridgeAtom, studentAtom } from '../../contexts/bridge'
 
-interface FetchProps {
+interface SettingsFetchProps {
   name: '成绩' | '课表'
   icon: SvgIconComponent
 }
 
-export const Fetch = ({ name, icon }: FetchProps) => {
+export const SettingsFetch = ({ name, icon }: SettingsFetchProps) => {
   const [modals, setModals] = useAtom(modalsAtom)
   const bridge = useAtomValue(bridgeAtom)
   const student = useAtomValue(studentAtom)
@@ -22,11 +22,11 @@ export const Fetch = ({ name, icon }: FetchProps) => {
   const handleFetch = () => {
     if (!bridge)
       enqueueSnackbar('未安装插件，请前往设置页面安装', {
-        action: <GoAction name="extension" />,
+        action: <SettingsGoAction name="extension" />,
       })
     else if (!student)
       enqueueSnackbar('未添加 HEU 账号，请前往设置页面添加', {
-        action: <GoAction name="bridge" />,
+        action: <SettingsGoAction name="bridge" />,
       })
     else setModals({ ...modals, captcha: true })
   }
@@ -92,11 +92,11 @@ export const Fetch = ({ name, icon }: FetchProps) => {
   )
 }
 
-interface GoActionProps {
+interface SettingsGoActionProps {
   name: 'bridge' | 'extension'
 }
 
-export const GoAction = ({ name }: GoActionProps) => {
+export const SettingsGoAction = ({ name }: SettingsGoActionProps) => {
   const navigate = useNavigate()
 
   return (

@@ -5,7 +5,7 @@ import { Fragment } from 'react'
 import { links } from '../../../configs/settings/links'
 import { SettingsHeader } from '../Header'
 
-export const Contact = () => (
+export const SettingsContact = () => (
   <Fragment>
     <SettingsHeader title="联系我们" help="/settings?tab=help#feedback" />
     <Stack

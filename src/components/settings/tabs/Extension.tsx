@@ -16,7 +16,7 @@ const fetcherMap = (name: string) => {
       return '未知插件'
   }
 }
-export const Extension = () => {
+export const SettingsExtension = () => {
   const bridge = useAtomValue(bridgeAtom)
   const fetcher = useAtomValue(fetcherAtom)
 

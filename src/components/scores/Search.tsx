@@ -1,12 +1,11 @@
 import { SearchOutlined } from '@mui/icons-material'
 import { InputAdornment, InputBase, Stack } from '@mui/material'
 import { useAtom, useAtomValue } from 'jotai'
-import { useUpdateAtom } from 'jotai/utils'
 import { useState } from 'react'
 import { useDebounce } from 'react-use'
 import { scoresAtom, scoresFilterAtom } from '../../contexts/bridge/scores'
 
-export const Search = () => {
+export const ScoresSearch = () => {
   const scores = useAtomValue(scoresAtom)
   const [scoresFilter, setScoresFilter] = useAtom(scoresFilterAtom)
   const [search, setSearch] = useState('')

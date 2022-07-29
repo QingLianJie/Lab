@@ -1,53 +1,57 @@
-import { CloseOutlined } from '@mui/icons-material'
 import {
   Avatar,
   Box,
   CircularProgress,
   createTheme,
   CssBaseline,
-  IconButton,
   Stack,
   ThemeProvider,
   Typography,
   useMediaQuery,
 } from '@mui/material'
-import { closeSnackbar, SnackbarProvider } from 'notistack'
-import { StrictMode, Suspense, useMemo } from 'react'
+import { lazy, StrictMode, Suspense, useMemo } from 'react'
 import ReactDOM from 'react-dom/client'
 import { HelmetProvider } from 'react-helmet-async'
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import LogoOutlined from './assets/logo-outlined.svg'
-import { Load } from './components/Load'
-import { Modals } from './components/Modals'
-import { Nav } from './components/Nav'
 import {
   components,
   darkPalette,
   lightPalette,
   typography,
 } from './configs/custom-theme'
-import { routers } from './configs/routers'
 import { info } from './configs/site-info'
 
-const Router = () => (
-  <Routes>
-    {routers.map(router => (
-      <Route
-        path={router.href}
-        element={<Box component={router.component} />}
-        key={router.name}
-      >
-        {router.children?.map(r => (
-          <Route
-            path={r.href}
-            element={<Box component={r.component} />}
-            key={r.name}
-          />
-        ))}
-      </Route>
-    ))}
-  </Routes>
-)
+const LazyApp = lazy(() => import('./app'))
+
+const Main = () => {
+  const darkMode = useMediaQuery('(prefers-color-scheme: dark)')
+  const theme = useMemo(
+    () =>
+      createTheme({
+        palette: darkMode ? darkPalette : lightPalette,
+        typography,
+        components,
+      }),
+    [darkMode]
+  )
+
+  return (
+    <StrictMode>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <HelmetProvider>
+          <Suspense fallback={<Loading />}>
+            <Box sx={{ backgroundColor: 'background.default' }}>
+              <LazyApp />
+            </Box>
+          </Suspense>
+        </HelmetProvider>
+      </ThemeProvider>
+    </StrictMode>
+  )
+}
+
+ReactDOM.createRoot(document.getElementById('root')!).render(<Main />)
 
 const Loading = () => (
   <Stack
@@ -70,7 +74,7 @@ const Loading = () => (
       variant="square"
       alt="网站 Logo"
       src={LogoOutlined}
-      sx={{ width: 96, height: 96, m: 2 }}
+      sx={{ width: 96, height: 96, mt: 6, mb: 2 }}
     />
     <Typography
       variant="h6"
@@ -82,59 +86,3 @@ const Loading = () => (
     <CircularProgress size={24} thickness={6} />
   </Stack>
 )
-
-const App = () => {
-  const darkMode = useMediaQuery('(prefers-color-scheme: dark)')
-  const theme = useMemo(
-    () =>
-      createTheme({
-        palette: darkMode ? darkPalette : lightPalette,
-        typography,
-        components,
-      }),
-    [darkMode]
-  )
-
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
-
-  return (
-    <StrictMode>
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
-        <HelmetProvider>
-          <Suspense fallback={<Loading />}>
-            <Box sx={{ backgroundColor: 'background.default' }}>
-              <BrowserRouter>
-                <SnackbarProvider
-                  anchorOrigin={{
-                    vertical: isMobile ? 'top' : 'bottom',
-                    horizontal: 'center',
-                  }}
-                  autoHideDuration={3000}
-                  style={{ fontSize: '1rem', paddingLeft: '1.25rem' }}
-                  hideIconVariant
-                  action={snackbarKey => (
-                    <IconButton
-                      aria-label="关闭"
-                      sx={{ color: 'inherit', fontSize: '0.925rem' }}
-                      onClick={() => closeSnackbar(snackbarKey)}
-                    >
-                      <CloseOutlined />
-                    </IconButton>
-                  )}
-                >
-                  <Modals />
-                  <Nav />
-                  <Router />
-                  <Load />
-                </SnackbarProvider>
-              </BrowserRouter>
-            </Box>
-          </Suspense>
-        </HelmetProvider>
-      </ThemeProvider>
-    </StrictMode>
-  )
-}
-
-ReactDOM.createRoot(document.getElementById('root')!).render(<App />)

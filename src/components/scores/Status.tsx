@@ -7,9 +7,9 @@ import { bridgeAtom, studentAtom } from '../../contexts/bridge'
 import { scoresAtom } from '../../contexts/bridge/scores'
 import { calendarTime } from '../../utils/format'
 import { Tooltip } from '../base/Tooltip'
-import { GoAction } from '../settings/Fetch'
+import { SettingsGoAction } from '../settings/Fetch'
 
-export const Status = () => {
+export const ScoresStatus = () => {
   const scores = useAtomValue(scoresAtom)
 
   const [modals, setModals] = useAtom(modalsAtom)
@@ -19,11 +19,11 @@ export const Status = () => {
   const handleFetch = () => {
     if (!bridge)
       enqueueSnackbar('未安装插件，请前往设置页面安装', {
-        action: <GoAction name="extension" />,
+        action: <SettingsGoAction name="extension" />,
       })
     else if (!student)
       enqueueSnackbar('未添加 HEU 账号，请前往设置页面添加', {
-        action: <GoAction name="bridge" />,
+        action: <SettingsGoAction name="bridge" />,
       })
     else setModals({ ...modals, captcha: true })
   }

@@ -17,16 +17,14 @@ import {
   useTheme,
 } from '@mui/material'
 import { useAtomValue } from 'jotai'
-import { Fragment, SyntheticEvent, useState } from 'react'
+import { Fragment, type SyntheticEvent, useState } from 'react'
 import { plan2014, plan2019 } from '../../configs/scores/credits-plan'
-import { scoresAtom, scoresListAtom } from '../../contexts/bridge/scores'
+import { scoresListAtom } from '../../contexts/bridge/scores'
 import { scoreMap } from '../../utils/calc'
 
 type PlanVersion = '2014' | '2019'
 
-export const Plan = () => {
-  const scores = useAtomValue(scoresAtom)
-
+export const ScoresPlan = () => {
   const [currentTab, setTab] = useState<PlanVersion>('2019')
   const handleChange = (_event: SyntheticEvent, value: PlanVersion) =>
     setTab(value)

@@ -4,8 +4,6 @@ import {
   Dialog,
   DialogContent,
   DialogTitle,
-  Divider,
-  Stack,
   Tab,
   Typography,
 } from '@mui/material'
@@ -14,7 +12,7 @@ import { useEffect, useState } from 'react'
 import { authTabs } from '../../../configs/settings/tabs'
 import { modalsAtom } from '../../../contexts/booleans'
 
-export const Account = () => {
+export const AccountModal = () => {
   const [modals, setModals] = useAtom(modalsAtom)
   const [title, setTitle] = useState('登录')
 

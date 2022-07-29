@@ -4,9 +4,12 @@ import {
   useMediaQuery,
   createTheme,
   ThemeProvider,
+  Stack,
 } from '@mui/material'
 import { blue } from '@mui/material/colors'
 import { Layout } from '../components/Layout'
+import { SchedulesTable } from '../components/schedules/Table'
+import { SchedulesToolBar } from '../components/schedules/ToolBar'
 
 export const SchedulesPage = () => {
   const theme = useTheme()
@@ -25,7 +28,12 @@ export const SchedulesPage = () => {
         subtitle="查看自己的学期课表"
         icon={TableChartRounded}
         color={blue[400]}
-      ></Layout>
+      >
+        <Stack spacing={2}>
+          <SchedulesToolBar />
+          <SchedulesTable />
+        </Stack>
+      </Layout>
     </ThemeProvider>
   )
 }

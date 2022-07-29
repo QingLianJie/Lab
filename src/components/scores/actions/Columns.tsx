@@ -15,7 +15,7 @@ import { columns, ScoreColumnKey } from '../../../configs/scores/columns'
 import { scoresViewAtom } from '../../../contexts/bridge/scores'
 import { Tooltip } from '../../base/Tooltip'
 
-export const Columns = () => {
+export const ScoresColumnsAction = () => {
   const [scoresView, setScoresView] = useAtom(scoresViewAtom)
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
   const open = Boolean(anchorEl)

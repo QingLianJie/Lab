@@ -4,7 +4,7 @@ import markdown from '../../../markdown/settings/open-source.md?raw'
 import { Markdown } from '../../base/Markdown'
 import { SettingsHeader } from '../Header'
 
-export const OpenSource = () => (
+export const SettingsOpenSource = () => (
   <Fragment>
     <SettingsHeader
       title="开源软件与协议"

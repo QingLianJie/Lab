@@ -18,7 +18,7 @@ import { bridgeAtom, studentAtom } from '../../../contexts/bridge'
 import { schedulesAtom } from '../../../contexts/bridge/schedules'
 import { scoresAtom } from '../../../contexts/bridge/scores'
 
-export const Captcha = () => {
+export const CaptchaModal = () => {
   const student = useAtomValue(studentAtom)
   const bridge = useAtomValue(bridgeAtom)
   const [modals, setModals] = useAtom(modalsAtom)

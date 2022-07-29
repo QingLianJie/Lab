@@ -20,18 +20,18 @@ import {
   type SvgIconComponent,
 } from '@mui/icons-material'
 import { type ElementType } from 'react'
-import { About } from '../../components/settings/tabs/About'
-import { Extension } from '../../components/settings/tabs/Extension'
-import { Developer } from '../../components/settings/tabs/Developer'
-import { Contact } from '../../components/settings/tabs/Contact'
-import { Help } from '../../components/settings/tabs/Help'
-import { OpenSource } from '../../components/settings/tabs/OpenSource'
-import { Account } from '../../components/settings/tabs/Account'
-import { Storage } from '../../components/settings/tabs/Storage'
-import { Bridge } from '../../components/settings/tabs/Bridge'
-import { Login } from '../../components/settings/modals/auth/Login'
-import { Register } from '../../components/settings/modals/auth/Register'
-import { ResetPassword } from '../../components/settings/modals/auth/ResetPassword'
+import { SettingsAbout } from '../../components/settings/tabs/About'
+import { SettingsExtension } from '../../components/settings/tabs/Extension'
+import { SettingsDeveloper } from '../../components/settings/tabs/Developer'
+import { SettingsContact } from '../../components/settings/tabs/Contact'
+import { SettingsHelp } from '../../components/settings/tabs/Help'
+import { SettingsOpenSource } from '../../components/settings/tabs/OpenSource'
+import { SettingsAccount } from '../../components/settings/tabs/Account'
+import { SettingsStorage } from '../../components/settings/tabs/Storage'
+import { SettingsBridge } from '../../components/settings/tabs/Bridge'
+import { AuthLogin } from '../../components/settings/modals/auth/Login'
+import { AuthRegister } from '../../components/settings/modals/auth/Register'
+import { AuthResetPassword } from '../../components/settings/modals/auth/ResetPassword'
 
 export type SettingsTabs = {
   name: string
@@ -44,55 +44,55 @@ export const settingsTabs = [
   {
     name: '清廉街',
     id: 'account',
-    component: Account,
+    component: SettingsAccount,
     icon: [AccountCircleOutlined, AccountCircleRounded],
   },
   {
     name: 'HEU 账号',
     id: 'bridge',
-    component: Bridge,
+    component: SettingsBridge,
     icon: [SchoolOutlined, SchoolRounded],
   },
   {
     name: '插件',
     id: 'extension',
-    component: Extension,
+    component: SettingsExtension,
     icon: [ExtensionOutlined, ExtensionRounded],
   },
   {
     name: '数据',
     id: 'storage',
-    component: Storage,
+    component: SettingsStorage,
     icon: [SdStorageOutlined, SdStorageRounded],
   },
   {
     name: '联系我们',
     id: 'contact',
-    component: Contact,
+    component: SettingsContact,
     icon: [AlternateEmailOutlined, AlternateEmailRounded],
   },
   {
     name: '帮助',
     id: 'help',
-    component: Help,
+    component: SettingsHelp,
     icon: [HelpOutlineOutlined, HelpRounded],
   },
   {
     name: '开源',
     id: 'open-source',
-    component: OpenSource,
+    component: SettingsOpenSource,
     icon: [CodeOutlined, CodeRounded],
   },
   {
     name: '开发者选项',
     id: 'developer',
-    component: Developer,
+    component: SettingsDeveloper,
     icon: [DnsOutlined, DnsRounded],
   },
   {
     name: '关于',
     id: 'about',
-    component: About,
+    component: SettingsAbout,
     icon: [InfoOutlined, InfoRounded],
   },
 ] as SettingsTabs
@@ -105,14 +105,14 @@ export type AuthTabs = {
 export const authTabs = [
   {
     name: '登录',
-    component: Login,
+    component: AuthLogin,
   },
   {
     name: '注册',
-    component: Register,
+    component: AuthRegister,
   },
   {
     name: '重置密码',
-    component: ResetPassword,
+    component: AuthResetPassword,
   },
 ] as AuthTabs

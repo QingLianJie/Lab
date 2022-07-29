@@ -1,7 +1,6 @@
 import { VisibilityOffOutlined, VisibilityOutlined } from '@mui/icons-material'
 import {
   Button,
-  createTheme,
   Dialog,
   DialogContent,
   DialogTitle,
@@ -10,18 +9,15 @@ import {
   InputAdornment,
   Stack,
   TextField,
-  ThemeProvider,
   Typography,
-  useTheme,
 } from '@mui/material'
-import { pink } from '@mui/material/colors'
 import { useAtom } from 'jotai'
 import { enqueueSnackbar } from 'notistack'
-import { FormEvent, useEffect, useRef, useState } from 'react'
+import { type FormEvent, useEffect, useRef, useState } from 'react'
 import { modalsAtom } from '../../../contexts/booleans'
 import { studentAtom } from '../../../contexts/bridge'
 
-export const Bind = () => {
+export const BindModal = () => {
   const [modals, setModals] = useAtom(modalsAtom)
   const [student, setStudent] = useAtom(studentAtom)
   const [showPassword, setShowPassword] = useState(false)

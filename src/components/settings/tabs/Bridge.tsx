@@ -7,7 +7,7 @@ import { modalsAtom } from '../../../contexts/booleans'
 import { studentAtom } from '../../../contexts/bridge'
 import { SettingsHeader } from '../Header'
 
-export const Bridge = () => {
+export const SettingsBridge = () => {
   const [modals, setModals] = useAtom(modalsAtom)
   const student = useAtomValue(studentAtom)
 

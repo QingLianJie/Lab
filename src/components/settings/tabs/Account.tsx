@@ -6,7 +6,7 @@ import { info } from '../../../configs/site-info'
 import { AuthModal, modalsAtom } from '../../../contexts/booleans'
 import { SettingsHeader } from '../Header'
 
-export const Account = () => {
+export const SettingsAccount = () => {
   const [modals, setModals] = useAtom(modalsAtom)
 
   return (

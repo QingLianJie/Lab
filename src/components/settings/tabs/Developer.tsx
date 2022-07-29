@@ -18,7 +18,7 @@ import { settingsAtom } from '../../../contexts/settings'
 import { Markdown } from '../../base/Markdown'
 import { SettingsHeader } from '../Header'
 
-export const Developer = () => {
+export const SettingsDeveloper = () => {
   const [settings, setSettings] = useAtom(settingsAtom)
   const { palette } = useTheme()
   const isDark = palette.mode === 'dark'

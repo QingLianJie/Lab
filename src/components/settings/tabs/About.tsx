@@ -6,7 +6,7 @@ import LogoOutlined from '../../../assets/logo-outlined.svg'
 import { Tooltip } from '../../base/Tooltip'
 import { ThumbDownAltOutlined } from '@mui/icons-material'
 
-export const About = () => {
+export const SettingsAbout = () => {
   const [eggs, setEggs] = useState('你瞅啥')
   const [count, setCount] = useState(1)
 
@@ -85,7 +85,7 @@ export const About = () => {
               transition: 'all 0.2s',
             }}
           >
-            <GitHub />
+            <GitHubIcon />
           </IconButton>
         </Tooltip>
       </Stack>
@@ -93,7 +93,7 @@ export const About = () => {
   )
 }
 
-const GitHub = () => (
+const GitHubIcon = () => (
   <svg
     width="24"
     height="24"

@@ -6,7 +6,7 @@ import { studentAtom } from '../../../contexts/bridge'
 import { scoresListAtom, scoresViewAtom } from '../../../contexts/bridge/scores'
 import { Tooltip } from '../../base/Tooltip'
 
-export const Export = () => {
+export const ScoresExportAction = () => {
   const student = useAtomValue(studentAtom)
   const scoresList = useAtomValue(scoresListAtom)
   const scoresView = useAtomValue(scoresViewAtom)

@@ -6,14 +6,14 @@ import {
 import { Card, Icon, Stack, Typography } from '@mui/material'
 import { Fragment } from 'react'
 
-export const Disabled = () => (
+export const ScoresDisabled = () => (
   <Fragment>
-    <DisabledCard
+    <ScoresDisabledCard
       icon={FilterAltRounded}
       title="成绩筛选"
       description="获取数据后进行筛选"
     />
-    <DisabledCard
+    <ScoresDisabledCard
       icon={CalculateRounded}
       title="学分统计"
       description="获取数据后查看统计"
@@ -21,17 +21,17 @@ export const Disabled = () => (
   </Fragment>
 )
 
-interface DisabledCardProps {
+interface ScoresDisabledCardProps {
   title: string
   description: string
   icon: SvgIconComponent
 }
 
-export const DisabledCard = ({
+export const ScoresDisabledCard = ({
   title,
   description,
   icon,
-}: DisabledCardProps) => (
+}: ScoresDisabledCardProps) => (
   <Card variant="outlined" sx={{ p: 2 }}>
     <Stack
       spacing={2}
@@ -71,12 +71,15 @@ export const DisabledCard = ({
   </Card>
 )
 
-interface PlaceholderProps {
+interface ScoresPlaceholderProps {
   title: string
   description: string
 }
 
-export const Placeholder = ({ title, description }: PlaceholderProps) => (
+export const ScoresPlaceholder = ({
+  title,
+  description,
+}: ScoresPlaceholderProps) => (
   <Stack
     spacing={0.5}
     sx={{

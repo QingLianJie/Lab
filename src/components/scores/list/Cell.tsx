@@ -7,18 +7,18 @@ import {
   useTheme,
 } from '@mui/material'
 import { indigo } from '@mui/material/colors'
-import { useAtom, useAtomValue } from 'jotai'
+import { useAtom } from 'jotai'
 import { Link as RouterLink } from 'react-router-dom'
 import { type Score } from '../../..'
 import { type ScoreColumn } from '../../../configs/scores/columns'
 import { scoresViewAtom } from '../../../contexts/bridge/scores'
 import { scoreColor, scoreMap } from '../../../utils/calc'
 
-interface HeadCellProps {
+interface ScoresHeadCellProps {
   column: ScoreColumn
 }
 
-export const HeadCell = ({ column }: HeadCellProps) => {
+export const ScoresHeadCell = ({ column }: ScoresHeadCellProps) => {
   const [scoresView, setScoresView] = useAtom(scoresViewAtom)
   const { breakpoints } = useTheme()
   const isMobile = useMediaQuery(breakpoints.down('sm'))
@@ -73,12 +73,12 @@ export const HeadCell = ({ column }: HeadCellProps) => {
   )
 }
 
-interface BodyCellProps {
+interface ScoresBodyCellProps {
   column: ScoreColumn
   item: Score
 }
 
-export const BodyCell = ({ column, item }: BodyCellProps) => {
+export const ScoresBodyCell = ({ column, item }: ScoresBodyCellProps) => {
   const { palette, breakpoints } = useTheme()
   const isDark = palette.mode === 'dark'
   const isMobile = useMediaQuery(breakpoints.down('sm'))
@@ -137,7 +137,7 @@ export const BodyCell = ({ column, item }: BodyCellProps) => {
   )
 }
 
-export const SpaceCell = () => (
+export const ScoresSpaceCell = () => (
   <TableCell
     sx={{
       width: { xs: 0, md: 'auto' },

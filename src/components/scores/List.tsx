@@ -20,13 +20,13 @@ import {
   scoresListAtom,
   scoresViewAtom,
 } from '../../contexts/bridge/scores'
-import { Fetch } from '../settings/Fetch'
+import { SettingsFetch } from '../settings/Fetch'
 import { ScoresGroup } from './list/Group'
-import { ScoresRows, TitleRow } from './list/Rows'
-import { Placeholder } from './Placeholder'
-import { ToolBar } from './ToolBar'
+import { ScoresRows, ScoresTitleRow } from './list/Rows'
+import { ScoresPlaceholder } from './Placeholder'
+import { ScoresToolBar } from './ToolBar'
 
-export const List = () => {
+export const ScoresList = () => {
   const [scoresList, setScoresList] = useAtom(scoresListAtom)
 
   const scores = useAtomValue(scoresAtom)
@@ -101,14 +101,14 @@ export const List = () => {
     <Fragment>
       {scores.scores.length === 0 ? (
         <Card variant="outlined">
-          <Placeholder
+          <ScoresPlaceholder
             title="暂无成绩数据"
             description="可能本来就没有成绩，或者程序出错了"
           />
         </Card>
       ) : (
         <Stack spacing={2}>
-          <ToolBar />
+          <ScoresToolBar />
           <Card variant="outlined">
             <TableContainer>
               <Table
@@ -121,12 +121,12 @@ export const List = () => {
                 }}
               >
                 <TableHead>
-                  <TitleRow />
+                  <ScoresTitleRow />
                 </TableHead>
 
                 {scoresList.every(item => item.hidden) ? (
                   <Box component="caption">
-                    <Placeholder
+                    <ScoresPlaceholder
                       title="暂无成绩数据"
                       description="当前筛选结果下并没有找到成绩"
                     />
@@ -186,7 +186,7 @@ export const List = () => {
     </Fragment>
   ) : (
     <Card variant="outlined">
-      <Fetch name="成绩" icon={InsertChartRounded} />
+      <SettingsFetch name="成绩" icon={InsertChartRounded} />
     </Card>
   )
 }

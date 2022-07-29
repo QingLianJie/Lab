@@ -31,7 +31,7 @@ import { Confirm } from '../../base/Confirm'
 import { Markdown } from '../../base/Markdown'
 import { SettingsHeader } from '../Header'
 
-export const Storage = () => {
+export const SettingsStorage = () => {
   const { palette } = useTheme()
   const isDark = palette.mode === 'dark'
 

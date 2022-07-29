@@ -8,7 +8,7 @@ import {
   type ScoresList,
 } from '../../../contexts/bridge/scores'
 import { scoreMap } from '../../../utils/calc'
-import { BodyCell, HeadCell, SpaceCell } from './Cell'
+import { ScoresBodyCell, ScoresHeadCell, ScoresSpaceCell } from './Cell'
 
 interface ScoresRowsProps {
   list: ScoresList
@@ -69,8 +69,8 @@ export const ScoresRows = ({ list }: ScoresRowsProps) => {
             </TableCell>
             {filteredColumns.map((column, index) => (
               <Fragment key={column.id}>
-                {index === filteredColumns.length - 1 && <SpaceCell />}
-                <BodyCell column={column} item={item} />
+                {index === filteredColumns.length - 1 && <ScoresSpaceCell />}
+                <ScoresBodyCell column={column} item={item} />
               </Fragment>
             ))}
           </TableRow>
@@ -79,7 +79,7 @@ export const ScoresRows = ({ list }: ScoresRowsProps) => {
   )
 }
 
-export const TitleRow = () => {
+export const ScoresTitleRow = () => {
   const [scoresList, setScoresList] = useAtom(scoresListAtom)
   const scoresView = useAtomValue(scoresViewAtom)
   const filteredColumns = columns.filter(column =>
@@ -120,8 +120,8 @@ export const TitleRow = () => {
       </TableCell>
       {filteredColumns.map((column, index) => (
         <Fragment key={column.id}>
-          {index === filteredColumns.length - 1 && <SpaceCell />}
-          <HeadCell column={column} />
+          {index === filteredColumns.length - 1 && <ScoresSpaceCell />}
+          <ScoresHeadCell column={column} />
         </Fragment>
       ))}
     </TableRow>

@@ -3,12 +3,12 @@ import { Stack, IconButton, useMediaQuery, useTheme, Card } from '@mui/material'
 import { useAtom } from 'jotai'
 import { modalsAtom } from '../../contexts/booleans'
 import { Tooltip } from '../base/Tooltip'
-import { Columns } from './actions/Columns'
-import { Export } from './actions/Export'
-import { Groups } from './actions/Groups'
-import { Search } from './Search'
+import { ScoresColumnsAction } from './actions/Columns'
+import { ScoresExportAction } from './actions/Export'
+import { ScoresGroupsAction } from './actions/Groups'
+import { ScoresSearch } from './Search'
 
-export const ToolBar = () => {
+export const ScoresToolBar = () => {
   const [modals, setModals] = useAtom(modalsAtom)
   const { breakpoints } = useTheme()
   const isMobile = useMediaQuery(breakpoints.down('sm'))
@@ -31,10 +31,10 @@ export const ToolBar = () => {
           justifyContent: 'space-between',
         }}
       >
-        <Search />
+        <ScoresSearch />
         <Stack spacing={0.5} direction="row">
-          <Groups />
-          <Columns />
+          <ScoresGroupsAction />
+          <ScoresColumnsAction />
 
           {!isMobile && (
             <Tooltip title="筛选" arrow placement="top">
@@ -52,7 +52,7 @@ export const ToolBar = () => {
             </Tooltip>
           )}
 
-          <Export />
+          <ScoresExportAction />
         </Stack>
       </Stack>
     </Card>

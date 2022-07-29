@@ -19,14 +19,14 @@ import confetti from 'canvas-confetti'
 import { useAtom } from 'jotai'
 import { enqueueSnackbar } from 'notistack'
 import { Fragment, useState } from 'react'
-import { ScoreColumnKey } from '../../configs/scores/columns'
+import { type ScoreColumnKey } from '../../configs/scores/columns'
 import { scoresViewAtom } from '../../contexts/bridge/scores'
 import { Confirm } from '../base/Confirm'
 import { Tooltip } from '../base/Tooltip'
 
 const defaultColumns = ['name', 'type', 'credit', 'nature', 'score']
 
-export const SimpleTips = () => {
+export const ScoresSimpleTips = () => {
   const [scoresView, setScoresView] = useAtom(scoresViewAtom)
   const [columns, setColumns] = useState<ScoreColumnKey[]>(
     defaultColumns as ScoreColumnKey[]
@@ -66,7 +66,7 @@ export const SimpleTips = () => {
   )
 }
 
-export const UploadTips = () => {
+export const ScoresUploadTips = () => {
   const [open, setOpen] = useState(false)
   const [thanks, setThanks] = useState(false)
   const { breakpoints } = useTheme()

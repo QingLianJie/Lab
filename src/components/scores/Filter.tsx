@@ -10,8 +10,6 @@ import {
   IconButton,
   InputLabel,
   MenuItem,
-  Paper,
-  PaperProps,
   Select,
   Stack,
   TextField,
@@ -24,7 +22,7 @@ import { Fragment } from 'react'
 import { modalsAtom } from '../../contexts/booleans'
 import { scoresAtom, scoresFilterAtom } from '../../contexts/bridge/scores'
 
-export const Filter = () => {
+export const ScoresFilter = () => {
   const [modals, setModals] = useAtom(modalsAtom)
   const [scoresFilter, setScoresFilter] = useAtom(scoresFilterAtom)
   const scores = useAtomValue(scoresAtom)
