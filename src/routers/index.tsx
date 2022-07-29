@@ -1,4 +1,5 @@
 import { InboxRounded } from '@mui/icons-material'
+import { pink } from '@mui/material/colors'
 import { Layout } from '../components/Layout'
 
 export const HomePage = () => {
@@ -11,6 +12,7 @@ export const HomePage = () => {
     <Layout
       subtitle={`今天是 ${month} 月 ${date} 日，${weekdays[day]}`}
       icon={InboxRounded}
+      color={pink[400]}
     ></Layout>
   )
 }

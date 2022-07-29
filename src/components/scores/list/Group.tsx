@@ -9,6 +9,8 @@ import {
   TableCell,
   TableRow,
   Typography,
+  useMediaQuery,
+  useTheme,
 } from '@mui/material'
 import { useAtom, useAtomValue } from 'jotai'
 import { Fragment, useState } from 'react'
@@ -28,6 +30,9 @@ interface ScoresGroupProps {
 }
 
 export const ScoresGroup = ({ name, scores }: ScoresGroupProps) => {
+  const { breakpoints } = useTheme()
+  const isMobile = useMediaQuery(breakpoints.down('md'))
+
   const student = useAtomValue(studentAtom)
   const scoresView = useAtomValue(scoresViewAtom)
   const ids = scores.map(item => item.id)
@@ -69,7 +74,7 @@ export const ScoresGroup = ({ name, scores }: ScoresGroupProps) => {
           transition: 'all 0.2s',
         }}
       >
-        <TableCell sx={{ py: 1.5, pr: 0 }} colSpan={1}>
+        <TableCell sx={{ py: 1.5, pr: 0, width: 48, minWidth: 48 }} colSpan={1}>
           <Checkbox
             sx={{
               m: -1,
@@ -83,16 +88,19 @@ export const ScoresGroup = ({ name, scores }: ScoresGroupProps) => {
           />
         </TableCell>
         <TableCell
-          sx={{ py: 1.5 }}
-          colSpan={scoresView.columns.length}
+          sx={{ py: 1.5, px: 1.25 }}
+          colSpan={scoresView.columns.length + 1}
           onClick={() => setOpen(v => !v)}
         >
           <Stack direction="row" sx={{ justifyContent: 'space-between' }}>
             <Stack direction="row" spacing={2} sx={{ alignItems: 'center' }}>
-              <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+              <Typography
+                variant="body2"
+                sx={{ color: 'text.secondary', minWidth: 32 }}
+              >
                 {groups.find(group => group.id === scoresView.groups)?.name}
               </Typography>
-              <Typography sx={{ fontWeight: 700 }}>
+              <Typography sx={{ fontWeight: 700, minWidth: 182 }}>
                 {scoresView.groups === 'term' && student
                   ? ` ${termName(
                       // 这个地方逻辑不严谨，不能从学号获取入学年份，
@@ -103,23 +111,29 @@ export const ScoresGroup = ({ name, scores }: ScoresGroupProps) => {
                   : name}
               </Typography>
             </Stack>
-            <Stack direction="row" spacing={1} sx={{ alignItems: 'center' }}>
-              <Typography
-                variant="body2"
-                sx={{ color: 'text.secondary', minWidth: 64 }}
-              >
-                {calcAverage()} 分
-              </Typography>
-              <Typography
-                variant="body2"
-                sx={{ color: 'text.secondary', minWidth: 12 }}
-              >
-                {scores.filter(item => !item.hidden).length}
-              </Typography>
+            <Stack direction="row" spacing={1.5} sx={{ alignItems: 'center' }}>
+              {!isMobile && (
+                <Fragment>
+                  <Typography
+                    variant="body2"
+                    sx={{ color: 'text.secondary', minWidth: 72 }}
+                  >
+                    均分 {calcAverage()}
+                  </Typography>
+
+                  <Typography
+                    variant="body2"
+                    sx={{ color: 'text.secondary', minWidth: 20 }}
+                  >
+                    {scores.filter(item => !item.hidden).length}
+                  </Typography>
+                </Fragment>
+              )}
+
               <Icon
                 component={open ? ExpandLessOutlined : ExpandMoreOutlined}
                 aria-label="展开或折叠成绩分组"
-                sx={{ color: 'text.disabled', minWidth: 32 }}
+                sx={{ color: 'text.disabled', minWidth: 32, pr: 1 }}
               />
             </Stack>
           </Stack>
@@ -127,11 +141,18 @@ export const ScoresGroup = ({ name, scores }: ScoresGroupProps) => {
       </TableRow>
       <TableRow>
         <TableCell
-          sx={{ p: 0, border: 'none' }}
-          colSpan={scoresView.columns.length + 1}
+          sx={{ p: 0, border: 'none', width: 'auto' }}
+          colSpan={scoresView.columns.length + 2}
         >
           <Collapse in={open}>
-            <Table sx={{ border: 'none' }}>
+            <Table
+              sx={{
+                border: 'none',
+                width: 'auto',
+                minWidth: '100%',
+                tableLayout: 'fixed',
+              }}
+            >
               <TableBody>
                 <ScoresRows list={scores} />
               </TableBody>

@@ -171,9 +171,9 @@ const PlanList = ({ plan }: PlanListProps) => {
                     <ListItem
                       key={item.name}
                       sx={{
-                        pt: 0.75,
+                        pt: 0.5,
                         px: 2.5,
-                        pb: item.children ? 0.25 : 0.75,
+                        pb: item.children ? 0.25 : 0.5,
                       }}
                     >
                       <Stack spacing={0.75} sx={{ width: '100%' }}>

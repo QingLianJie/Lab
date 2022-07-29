@@ -7,6 +7,7 @@ import {
   ListItemText,
   ListItemIcon,
   Fade,
+  Divider,
 } from '@mui/material'
 import { useAtom } from 'jotai'
 import { useState, Fragment } from 'react'
@@ -27,6 +28,24 @@ export const Columns = () => {
       })
     else
       setScoresView({ ...scoresView, columns: [...scoresView.columns, name] })
+    setAnchorEl(null)
+  }
+
+  const handleAllColumns = () => {
+    setScoresView({ ...scoresView, columns: columns.map(item => item.id) })
+    setAnchorEl(null)
+  }
+
+  const handleSimpleColumns = () => {
+    setScoresView({ ...scoresView, columns: ['name', 'score'] })
+    setAnchorEl(null)
+  }
+
+  const handleDefaultColumns = () => {
+    setScoresView({
+      ...scoresView,
+      columns: ['name', 'type', 'credit', 'nature', 'score'],
+    })
     setAnchorEl(null)
   }
 
@@ -57,7 +76,7 @@ export const Columns = () => {
           <MenuItem
             onClick={() => handleColumns(column.id as ScoreColumnKey)}
             key={column.id}
-            sx={{ minWidth: 140 }}
+            sx={{ minWidth: 140, minHeight: 'unset' }}
           >
             <ListItemText sx={{ flex: 1 }}>{column.name}</ListItemText>
             {scoresView.columns.includes(column.id as ScoreColumnKey) && (
@@ -67,6 +86,25 @@ export const Columns = () => {
             )}
           </MenuItem>
         ))}
+        <Divider />
+        <MenuItem
+          onClick={handleAllColumns}
+          sx={{ minWidth: 140, minHeight: 'unset' }}
+        >
+          <ListItemText sx={{ flex: 1 }}>全部列</ListItemText>
+        </MenuItem>
+        <MenuItem
+          onClick={handleSimpleColumns}
+          sx={{ minWidth: 140, minHeight: 'unset' }}
+        >
+          <ListItemText sx={{ flex: 1 }}>仅名称和成绩</ListItemText>
+        </MenuItem>
+        <MenuItem
+          onClick={handleDefaultColumns}
+          sx={{ minWidth: 140, minHeight: 'unset' }}
+        >
+          <ListItemText sx={{ flex: 1 }}>默认值</ListItemText>
+        </MenuItem>
       </Menu>
     </Fragment>
   )

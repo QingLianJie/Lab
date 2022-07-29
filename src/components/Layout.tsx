@@ -16,6 +16,7 @@ interface LayoutProps {
   description?: string
   icon?: SvgIconComponent
   subtitle?: string
+  color?: string
   children?: ReactNode
 }
 
@@ -24,6 +25,7 @@ export const Layout = ({
   description,
   icon,
   subtitle,
+  color,
   children,
 }: LayoutProps) => {
   const { breakpoints } = useTheme()
@@ -34,6 +36,7 @@ export const Layout = ({
       <Helmet>
         <title>{title ? `${title} - ${info.name}` : info.name}</title>
         <meta name="description" content={description || info.description} />
+        <meta name="theme-color" content={color || '#F687B3'} />
       </Helmet>
       <Container id="container">
         <Stack

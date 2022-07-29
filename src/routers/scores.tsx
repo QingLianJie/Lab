@@ -44,6 +44,7 @@ export const ScoresPage = () => {
         title="成绩"
         subtitle="查看自己的课程成绩"
         icon={InsertChartRounded}
+        color={green[400]}
       >
         {scores && scores.scores.length !== 0 && <Filter />}
         <Grid

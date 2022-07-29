@@ -48,7 +48,7 @@ export const Groups = () => {
           <MenuItem
             onClick={() => handleGroups(item.id as GroupsType)}
             key={item.id}
-            sx={{ minWidth: 140 }}
+            sx={{ minWidth: 140, minHeight: 'unset' }}
           >
             <ListItemText sx={{ flex: 1 }}>{item.name}</ListItemText>
             {item.id === scoresView.groups && (

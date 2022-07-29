@@ -153,7 +153,7 @@ const Thanks = ({ thanks, onClose }: ThanksProps) => {
       open={thanks}
       onClick={onClose}
     >
-      <Stack spacing={2}>
+      <Stack spacing={2} sx={{ mb: { xs: 4, sm: 0 } }}>
         <Typography
           variant="h1"
           component="span"

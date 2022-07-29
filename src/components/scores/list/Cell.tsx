@@ -1,4 +1,10 @@
-import { Link, TableCell, Typography, useTheme } from '@mui/material'
+import {
+  Link,
+  TableCell,
+  Typography,
+  useMediaQuery,
+  useTheme,
+} from '@mui/material'
 import { blue, indigo } from '@mui/material/colors'
 import { Link as RouterLink } from 'react-router-dom'
 import { type Score } from '../../..'
@@ -9,24 +15,30 @@ interface HeadCellProps {
   column: ScoreColumn
 }
 
-export const HeadCell = ({ column }: HeadCellProps) => (
-  <TableCell
-    sx={{
-      whiteSpace: 'nowrap',
-      textOverflow: 'ellipsis',
-      overflow: 'hidden',
-      fontSize: 'body1.fontSize',
-      fontWeight: 700,
-      color: 'text.secondary',
-      py: 1.5,
-      px: { xs: 1, sm: 2 },
-      textAlign: column.number ? 'right' : 'left',
-      '&:last-of-type': { pr: 3 },
-    }}
-  >
-    {column.header || column.name}
-  </TableCell>
-)
+export const HeadCell = ({ column }: HeadCellProps) => {
+  const { breakpoints } = useTheme()
+  const isMobile = useMediaQuery(breakpoints.down('sm'))
+
+  return (
+    <TableCell
+      sx={{
+        width: column.link && isMobile ? column.width * 0.75 : column.width,
+        whiteSpace: 'nowrap',
+        textOverflow: 'ellipsis',
+        overflow: 'hidden',
+        fontSize: 'body1.fontSize',
+        fontWeight: 700,
+        color: 'text.secondary',
+        py: 1.25,
+        px: { xs: 1, sm: 1.25 },
+        textAlign: column.number ? 'right' : 'left',
+        '&:last-of-type': { pr: 3 },
+      }}
+    >
+      {column.header || column.name}
+    </TableCell>
+  )
+}
 
 interface BodyCellProps {
   column: ScoreColumn
@@ -34,19 +46,21 @@ interface BodyCellProps {
 }
 
 export const BodyCell = ({ column, item }: BodyCellProps) => {
-  const { palette } = useTheme()
+  const { palette, breakpoints } = useTheme()
   const isDark = palette.mode === 'dark'
+  const isMobile = useMediaQuery(breakpoints.down('sm'))
 
   return (
     <TableCell
       sx={{
-        maxWidth: { xs: 200, sm: 240 },
+        width: column.width,
+        maxWidth: column.link && isMobile ? column.width * 0.75 : 'unset',
         whiteSpace: 'nowrap',
         textOverflow: 'ellipsis',
-        overflow: 'hidden',
+        overflow: column.score ? 'visible' : 'hidden',
         fontSize: 'body1.fontSize',
-        py: 1.5,
-        px: { xs: 1, sm: 2 },
+        py: 1.25,
+        px: { xs: 1, sm: 1.25 },
         textAlign: column.number ? 'right' : 'left',
         color: 'text.primary',
         '&:last-of-type': { pr: 3 },
@@ -57,6 +71,7 @@ export const BodyCell = ({ column, item }: BodyCellProps) => {
           sx={{
             fontWeight: 700,
             color: scoreColor(item['score'].map(s => scoreMap(s))[0]),
+            float: column.score ? 'right' : 'unset',
           }}
         >
           {item['score']
@@ -69,12 +84,33 @@ export const BodyCell = ({ column, item }: BodyCellProps) => {
           to={`/courses/${item['id']}`}
           sx={{ color: indigo[isDark ? 200 : 500] }}
           onClick={e => e.stopPropagation()}
+          title={item[column.id]?.toString()}
         >
           {item[column.id]}
         </Link>
       ) : (
-        <Typography>{item[column.id]}</Typography>
+        <Typography
+          title={item[column.id]?.toString()}
+          sx={{
+            whiteSpace: 'nowrap',
+            textOverflow: 'ellipsis',
+            overflow: 'hidden',
+          }}
+        >
+          {item[column.id]}
+        </Typography>
       )}
     </TableCell>
   )
 }
+
+export const SpaceCell = () => (
+  <TableCell
+    sx={{
+      width: { xs: 0, md: 'auto' },
+      minWidth: 0,
+      py: 1.25,
+      px: 0,
+    }}
+  />
+)

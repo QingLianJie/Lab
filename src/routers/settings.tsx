@@ -45,7 +45,12 @@ export const SettingsPage = () => {
 
   return (
     <ThemeProvider theme={settingsTheme}>
-      <Layout title="设置" subtitle="调整网站的各项设置" icon={SettingsRounded}>
+      <Layout
+        title="设置"
+        subtitle="调整网站的各项设置"
+        icon={SettingsRounded}
+        color={amber[400]}
+      >
         <Card
           variant="outlined"
           sx={{ flex: 1, display: 'flex', flexDirection: 'column' }}

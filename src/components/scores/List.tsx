@@ -3,34 +3,26 @@ import {
   Box,
   Button,
   Card,
-  Checkbox,
   Divider,
   Stack,
   Table,
   TableBody,
-  TableCell,
   TableContainer,
-  TableFooter,
   TableHead,
-  TableRow,
-  TableSortLabel,
   Typography,
 } from '@mui/material'
 import { useAtom, useAtomValue } from 'jotai'
 import { groupBy } from 'lodash'
-import { Fragment, useCallback, useEffect, useMemo } from 'react'
-import { columns } from '../../configs/scores/columns'
+import { Fragment, useEffect } from 'react'
 import {
   scoresAtom,
   scoresFilterAtom,
   scoresListAtom,
   scoresViewAtom,
 } from '../../contexts/bridge/scores'
-import { scoreColor, scoreMap } from '../../utils/calc'
 import { Fetch } from '../settings/Fetch'
-import { BodyCell, HeadCell } from './list/Cell'
 import { ScoresGroup } from './list/Group'
-import { ScoresRows } from './list/Rows'
+import { ScoresRows, TitleRow } from './list/Rows'
 import { Placeholder } from './Placeholder'
 import { ToolBar } from './ToolBar'
 
@@ -119,7 +111,10 @@ export const List = () => {
           <ToolBar />
           <Card variant="outlined">
             <TableContainer>
-              <Table aria-label="成绩列表" sx={{ border: 'none' }}>
+              <Table
+                aria-label="成绩列表"
+                sx={{ border: 'none', width: 'auto', tableLayout: 'fixed' }}
+              >
                 <TableHead>
                   <TitleRow />
                 </TableHead>
@@ -188,50 +183,5 @@ export const List = () => {
     <Card variant="outlined">
       <Fetch name="成绩" icon={InsertChartRounded} />
     </Card>
-  )
-}
-
-const TitleRow = () => {
-  const [scoresList, setScoresList] = useAtom(scoresListAtom)
-  const scoresView = useAtomValue(scoresViewAtom)
-
-  const nothing = scoresList.every(item => item.hidden)
-  const some = scoresList
-    .filter(item => !item.hidden)
-    .some(item => item.selected)
-  const every = scoresList
-    .filter(item => !item.hidden)
-    .every(item => item.selected)
-
-  const handleSelect = () => {
-    setScoresList(list =>
-      list.map(item => {
-        if (!item.hidden) item.selected = !some
-        return item
-      })
-    )
-  }
-
-  return (
-    <TableRow>
-      <TableCell sx={{ py: 1.5, pr: 0.5, width: 12 }}>
-        <Checkbox
-          sx={{
-            m: -1,
-            color: 'text.disabled',
-            '&:hover': { color: 'primary' },
-            transition: 'all 0.2s',
-          }}
-          checked={!nothing && every}
-          indeterminate={!every && some}
-          onChange={handleSelect}
-        />
-      </TableCell>
-      {columns
-        .filter(column => scoresView.columns.includes(column.id))
-        .map(column => (
-          <HeadCell column={column} key={column.id} />
-        ))}
-    </TableRow>
   )
 }

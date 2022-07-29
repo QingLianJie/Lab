@@ -24,7 +24,7 @@ export const Confirm = ({
   description,
   isDanger,
 }: ConfirmProps) => (
-  <Dialog open={open} onClose={onClose}>
+  <Dialog open={open} onClose={onClose} sx={{ mb: { xs: 6, sm: 2 } }}>
     <DialogTitle sx={{ pb: 1, fontSize: '1.125rem', fontWeight: 700 }}>
       {title}
     </DialogTitle>
