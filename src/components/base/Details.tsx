@@ -7,12 +7,12 @@ import {
 } from '@mui/material'
 import { ReactNode } from 'react'
 
-interface FoldProps {
+interface DetailsProps {
   summary: string
   children: ReactNode
 }
 
-export const Details = ({ summary, children }: FoldProps) => (
+export const Details = ({ summary, children }: DetailsProps) => (
   <Accordion
     sx={{
       breakInside: 'avoid',

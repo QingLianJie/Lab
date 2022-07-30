@@ -7,11 +7,15 @@ import {
   Stack,
 } from '@mui/material'
 import { blue } from '@mui/material/colors'
+import { useAtomValue } from 'jotai'
 import { Layout } from '../components/Layout'
 import { SchedulesTable } from '../components/schedules/Table'
 import { SchedulesToolBar } from '../components/schedules/ToolBar'
+import { schedulesAtom } from '../contexts/bridge/schedules'
 
 export const SchedulesPage = () => {
+  const schedules = useAtomValue(schedulesAtom)
+
   const theme = useTheme()
   const { palette, breakpoints } = theme
   const isMobile = useMediaQuery(breakpoints.down('sm'))
@@ -30,7 +34,7 @@ export const SchedulesPage = () => {
         color={blue[400]}
       >
         <Stack spacing={2}>
-          <SchedulesToolBar />
+          {schedules && <SchedulesToolBar />}
           <SchedulesTable />
         </Stack>
       </Layout>

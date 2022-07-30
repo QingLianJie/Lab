@@ -21,7 +21,7 @@ import { enqueueSnackbar } from 'notistack'
 import { Fragment, useState } from 'react'
 import { type ScoreColumnKey } from '../../configs/scores/columns'
 import { scoresViewAtom } from '../../contexts/bridge/scores'
-import { Confirm } from '../base/Confirm'
+import { Confirm } from '../base/Modal'
 import { Tooltip } from '../base/Tooltip'
 
 const defaultColumns = ['name', 'type', 'credit', 'nature', 'score']
@@ -122,7 +122,7 @@ export const ScoresUploadTips = () => {
         }
         sx={{ border: 1, borderColor: green[400] }}
       >
-        清廉街改版后无法主动获得成绩和课程等数据，大家可以自行选择是否将自己的成绩匿名上传到清廉街，帮助清廉街完善课程数据库，非常感谢。
+        由于新版清廉街修改了学校数据的获取方式，数据不再经过清廉街服务器，因此清廉街无法主动获取到成绩和课表数据，你可以通过点击右侧按钮，将自己的成绩以匿名的方式上传到清廉街，帮助清廉街完善课程和成绩数据库，非常感谢你的贡献。
         <Link href="" target="_blank" rel="noopener noreferrer">
           了解更多
         </Link>

@@ -103,7 +103,7 @@ export const ScoresGroup = ({ name, scores }: ScoresGroupProps) => {
               </Typography>
               <Typography sx={{ fontWeight: 700, minWidth: 182 }}>
                 {scoresView.groups === 'term' && student
-                  ? ` ${termName(
+                  ? `${termName(
                       // 这个地方逻辑不严谨，不能从学号获取入学年份，
                       // 因为没法适配研究生的学号，之后需要改
                       parseInt(student.id.slice(0, 4)),

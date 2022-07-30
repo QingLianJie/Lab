@@ -76,12 +76,15 @@ const Loading = () => (
       src={LogoOutlined}
       sx={{ width: 96, height: 96, mt: 6, mb: 2 }}
     />
-    <Typography
-      variant="h6"
-      component="p"
-      sx={{ fontWeight: 700, userSelect: 'none' }}
-    >
-      正在进入{info.name}
+    <Typography variant="h6" component="p" sx={{ userSelect: 'none' }}>
+      正在进入{' '}
+      <Typography
+        variant="h6"
+        component="span"
+        sx={{ fontWeight: 700, userSelect: 'none' }}
+      >
+        {info.name}
+      </Typography>
     </Typography>
     <CircularProgress size={24} thickness={6} />
   </Stack>

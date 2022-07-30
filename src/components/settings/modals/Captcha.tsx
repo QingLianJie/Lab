@@ -1,5 +1,6 @@
 import { LoadingButton } from '@mui/lab'
 import {
+  Autocomplete,
   Box,
   Dialog,
   DialogContent,
@@ -10,13 +11,19 @@ import {
   Typography,
 } from '@mui/material'
 import { useAtom, useAtomValue, useSetAtom } from 'jotai'
+import { range } from 'lodash'
 import { enqueueSnackbar } from 'notistack'
-import { type FormEvent, useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState, type FormEvent } from 'react'
 import { Score, Scores } from '../../..'
 import { modalsAtom } from '../../../contexts/booleans'
 import { bridgeAtom, studentAtom } from '../../../contexts/bridge'
 import { schedulesAtom } from '../../../contexts/bridge/schedules'
 import { scoresAtom } from '../../../contexts/bridge/scores'
+
+const terms = range(2001, new Date().getFullYear() + 1)
+  .map(year => [`${year}-${year + 1}-1`, `${year}-${year + 1}-2`])
+  .flat()
+  .reverse()
 
 export const CaptchaModal = () => {
   const student = useAtomValue(studentAtom)
@@ -30,6 +37,7 @@ export const CaptchaModal = () => {
   const [token, setToken] = useState('')
   const [isLoading, setLoading] = useState(false)
   const [status, setStatus] = useState('获取数据')
+  const [term, setTerm] = useState('')
 
   const inputRef = useRef<HTMLInputElement>()
   const imageRef = useRef<HTMLImageElement>()
@@ -107,7 +115,7 @@ export const CaptchaModal = () => {
       })
 
       setStatus('正在获取课表')
-      const timetable = await bridge.timetable()
+      const timetable = await bridge.timetable(term ? term : undefined)
       setSchedules({
         id: student.id,
         date: new Date().toISOString(),
@@ -196,6 +204,16 @@ export const CaptchaModal = () => {
               sx={{ flex: 1 }}
             />
           </Stack>
+          <Autocomplete
+            options={terms}
+            size="small"
+            sx={{ width: '100%' }}
+            inputValue={term}
+            onInputChange={(_e, v) => setTerm(v)}
+            renderInput={params => (
+              <TextField {...params} fullWidth label="课表学期，默认为最新" />
+            )}
+          />
           <LoadingButton
             type="submit"
             variant="contained"
