@@ -4,7 +4,7 @@ import { useAtom } from 'jotai'
 import { Fragment, useState } from 'react'
 import { schedulesViewAtom } from '../../../contexts/bridge/schedules'
 import { Modal } from '../../base/Modal'
-import { Tooltip } from '../../base/Tooltip'
+import { Tooltip } from '../../base/styled/Tooltip'
 
 export const SchedulesCalendarAction = () => {
   const [open, setOpen] = useState(false)

@@ -17,7 +17,7 @@ import { Routers, routers } from '../configs/routers'
 import { info } from '../configs/site-info'
 import { modalsAtom } from '../contexts/booleans'
 import { accountAtom } from '../contexts/settings'
-import { Tooltip } from './base/Tooltip'
+import { Tooltip } from './base/styled/Tooltip'
 
 export const Nav = () => {
   const { palette, breakpoints } = useTheme()

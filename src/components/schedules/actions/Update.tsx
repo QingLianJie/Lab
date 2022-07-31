@@ -4,7 +4,7 @@ import { useAtom, useAtomValue } from 'jotai'
 import { enqueueSnackbar } from 'notistack'
 import { modalsAtom } from '../../../contexts/booleans'
 import { bridgeAtom, studentAtom } from '../../../contexts/bridge'
-import { Tooltip } from '../../base/Tooltip'
+import { Tooltip } from '../../base/styled/Tooltip'
 import { SettingsGoAction } from '../../settings/Fetch'
 
 export const SchedulesUpdateAction = () => {

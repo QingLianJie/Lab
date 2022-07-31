@@ -4,7 +4,7 @@ import { useAtomValue } from 'jotai'
 import { pick } from 'lodash'
 import { studentAtom } from '../../../contexts/bridge'
 import { scoresListAtom, scoresViewAtom } from '../../../contexts/bridge/scores'
-import { Tooltip } from '../../base/Tooltip'
+import { Tooltip } from '../../base/styled/Tooltip'
 
 export const ScoresExportAction = () => {
   const student = useAtomValue(studentAtom)

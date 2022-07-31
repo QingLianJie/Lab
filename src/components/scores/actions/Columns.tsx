@@ -13,7 +13,7 @@ import { useAtom } from 'jotai'
 import { useState, Fragment } from 'react'
 import { columns, ScoreColumnKey } from '../../../configs/scores/columns'
 import { scoresViewAtom } from '../../../contexts/bridge/scores'
-import { Tooltip } from '../../base/Tooltip'
+import { Tooltip } from '../../base/styled/Tooltip'
 
 export const ScoresColumnsAction = () => {
   const [scoresView, setScoresView] = useAtom(scoresViewAtom)

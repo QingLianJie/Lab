@@ -6,7 +6,7 @@ import { modalsAtom } from '../../contexts/booleans'
 import { bridgeAtom, studentAtom } from '../../contexts/bridge'
 import { scoresAtom } from '../../contexts/bridge/scores'
 import { calendarTime } from '../../utils/format'
-import { Tooltip } from '../base/Tooltip'
+import { Tooltip } from '../base/styled/Tooltip'
 import { SettingsGoAction } from '../settings/Fetch'
 
 export const ScoresStatus = () => {

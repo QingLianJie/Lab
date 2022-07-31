@@ -4,22 +4,14 @@ export const lightPalette = {
   mode: 'light' as const,
   primary: pink,
   secondary: blue,
-  background: {
-    default: grey[50],
-    paper: 'white',
-  },
+  background: { default: grey[50], paper: 'white' },
 }
 
 export const darkPalette = {
   mode: 'dark' as const,
-  primary: {
-    main: '#f06292',
-  },
+  primary: { main: '#f06292' },
   secondary: blue,
-  background: {
-    default: grey[900],
-    paper: grey[800],
-  },
+  background: { default: grey[900], paper: grey[800] },
 }
 
 export const typography = {
@@ -69,13 +61,14 @@ export const components = {
       color: 'info' as const,
     },
   },
+  MuiButtonBase: {
+    styleOverrides: { root: { font: 'inherit' } },
+  },
   MuiLink: {
     styleOverrides: {
       root: {
         textDecoration: 'none',
-        '&:hover': {
-          textDecoration: 'underline',
-        },
+        '&:hover': { textDecoration: 'underline' },
       },
     },
   },

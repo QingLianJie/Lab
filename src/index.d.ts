@@ -56,6 +56,7 @@ export type ScoresAtom = {
 export interface Timetable {
   name: string | undefined // 学期
   weeks: TimetableWeek[]
+  courses: Summary
 }
 
 export interface TimetableWeek {
@@ -86,3 +87,32 @@ export type SchedulesAtom = {
   date: string
   timetable: Timetable
 }
+
+export type Summary = {
+  main: SummaryCourse[]
+  remark: SummaryCourse[]
+}
+
+export type SummaryCourse = {
+  name: string
+  week: number[]
+  day: number
+  teacher: string[]
+  location: string
+  section: number[]
+}
+
+export type SummaryRemarkCourse = {
+  name: string
+  week: number[]
+  teacher: string[]
+}
+
+export type TimeTableBlock = {
+  row: number
+  span: number
+  col: number
+  courses: SummaryCourse[]
+}
+
+export type TimeTableBlocks = TimeTableBlock[]

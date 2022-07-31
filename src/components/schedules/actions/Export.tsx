@@ -8,7 +8,7 @@ import {
 } from '@mui/material'
 import { Fragment, useState } from 'react'
 import { Modal } from '../../base/Modal'
-import { Tooltip } from '../../base/Tooltip'
+import { Tooltip } from '../../base/styled/Tooltip'
 
 export const SchedulesExportAction = () => {
   const [open, setOpen] = useState(false)

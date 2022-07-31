@@ -6,7 +6,7 @@ import {
 import { IconButton, Stack, Typography } from '@mui/material'
 import { type ReactNode } from 'react'
 import { Link } from 'react-router-dom'
-import { Tooltip } from '../base/Tooltip'
+import { Tooltip } from '../base/styled/Tooltip'
 
 interface SettingsHeaderProps {
   title: string

@@ -22,7 +22,7 @@ import { Fragment, useState } from 'react'
 import { type ScoreColumnKey } from '../../configs/scores/columns'
 import { scoresViewAtom } from '../../contexts/bridge/scores'
 import { Confirm } from '../base/Modal'
-import { Tooltip } from '../base/Tooltip'
+import { Tooltip } from '../base/styled/Tooltip'
 
 const defaultColumns = ['name', 'type', 'credit', 'nature', 'score']
 

@@ -3,7 +3,7 @@ import { Fragment, useState } from 'react'
 import { info } from '../../../configs/site-info'
 import { SettingsHeader } from '../Header'
 import LogoOutlined from '../../../assets/logo-outlined.svg'
-import { Tooltip } from '../../base/Tooltip'
+import { Tooltip } from '../../base/styled/Tooltip'
 import { ThumbDownAltOutlined } from '@mui/icons-material'
 
 export const SettingsAbout = () => {

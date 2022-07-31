@@ -11,7 +11,7 @@ import { useAtom } from 'jotai'
 import { Fragment, useState } from 'react'
 import { groups, type GroupsType } from '../../../configs/scores/groups'
 import { scoresViewAtom } from '../../../contexts/bridge/scores'
-import { Tooltip } from '../../base/Tooltip'
+import { Tooltip } from '../../base/styled/Tooltip'
 
 export const ScoresGroupsAction = () => {
   const [scoresView, setScoresView] = useAtom(scoresViewAtom)
