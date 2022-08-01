@@ -1,5 +1,5 @@
 import { atom } from 'jotai'
-import { type SummaryCourse } from '../index.d'
+import { SummaryRemarkCourse, type SummaryCourse } from '../index.d'
 
 export type AuthModal = false | '登录' | '注册' | '重置密码'
 
@@ -11,7 +11,7 @@ type Modals = {
     filter: boolean
   }
   schedules: {
-    details: false | SummaryCourse[]
+    details: false | SummaryCourse[] | SummaryRemarkCourse[]
   }
 }
 

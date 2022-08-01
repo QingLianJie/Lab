@@ -25,14 +25,16 @@ import { useAtom } from 'jotai'
 import { enqueueSnackbar } from 'notistack'
 import { ReactNode, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { SummaryCourse } from '../..'
+import { type SummaryCourse, type SummaryRemarkCourse } from '../../index.d'
 import { sections } from '../../configs/schedules/table'
 import { modalsAtom } from '../../contexts/booleans'
 import { formatNumbers } from '../../utils/format'
 
 export const SchedulesDetails = () => {
   const [modals, setModals] = useAtom(modalsAtom)
-  const [cache, setCache] = useState<SummaryCourse[]>([])
+  const [cache, setCache] = useState<SummaryCourse[] | SummaryRemarkCourse[]>(
+    []
+  )
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -100,26 +102,33 @@ export const SchedulesDetails = () => {
                       <CourseItem icon={CalendarMonthOutlined} color={red}>
                         {formatRange(course.week)} 周
                       </CourseItem>
-                      <CourseItem
-                        icon={ScheduleOutlined}
-                        color={amber}
-                        text={`${formatRange(course.section)} 节 ${formatTime(
-                          course.section
-                        )}`}
-                      >
-                        <Typography>
-                          {formatRange(course.section)} 节
-                        </Typography>
-                        <Typography variant="body2" color="text.secondary">
-                          {formatTime(course.section)}
-                        </Typography>
-                      </CourseItem>
+
+                      {'section' in course && (
+                        <CourseItem
+                          icon={ScheduleOutlined}
+                          color={amber}
+                          text={`${formatRange(course.section)} 节 ${formatTime(
+                            course.section
+                          )}`}
+                        >
+                          <Typography>
+                            {formatRange(course.section)} 节
+                          </Typography>
+                          <Typography variant="body2" color="text.secondary">
+                            {formatTime(course.section)}
+                          </Typography>
+                        </CourseItem>
+                      )}
+
                       <CourseItem icon={SchoolOutlined} color={blue}>
                         {course.teacher.join(', ')}
                       </CourseItem>
-                      <CourseItem icon={PlaceOutlined} color={green}>
-                        {course.location || '无地点'}
-                      </CourseItem>
+
+                      {'location' in course && (
+                        <CourseItem icon={PlaceOutlined} color={green}>
+                          {course.location || '无地点'}
+                        </CourseItem>
+                      )}
                     </List>
                     <Stack sx={{ px: 2 }}>
                       <Button
