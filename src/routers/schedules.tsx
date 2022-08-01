@@ -1,11 +1,5 @@
 import { TableChartRounded } from '@mui/icons-material'
-import {
-  useTheme,
-  useMediaQuery,
-  createTheme,
-  ThemeProvider,
-  Stack,
-} from '@mui/material'
+import { createTheme, Stack, ThemeProvider, useTheme } from '@mui/material'
 import { blue } from '@mui/material/colors'
 import { useAtomValue } from 'jotai'
 import { Layout } from '../components/Layout'
@@ -18,8 +12,7 @@ export const SchedulesPage = () => {
   const schedules = useAtomValue(schedulesAtom)
 
   const theme = useTheme()
-  const { palette, breakpoints } = theme
-  const isMobile = useMediaQuery(breakpoints.down('sm'))
+  const { palette } = theme
 
   const schedulesTheme = createTheme({
     ...theme,

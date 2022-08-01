@@ -125,10 +125,7 @@ export const ScoresUploadTips = () => {
         }
         sx={{ backgroundColor: 'background.paper' }}
       >
-        <AlertTitle sx={{ fontWeight: 700 }}>
-          欢迎上传成绩到清廉街数据库
-        </AlertTitle>
-        新版清廉街修改了学校数据的获取方式，数据不再经过清廉街服务器，因此清廉街无法主动获取到成绩和课表数据，你可以通过点击右侧按钮，将自己的成绩以匿名的方式上传到清廉街，帮助清廉街完善课程和成绩数据库，非常感谢你的贡献。
+        欢迎上传匿名的成绩数据，帮助清廉街完善课程和成绩数据库。
         <Link href="" target="_blank" rel="noopener noreferrer">
           了解更多
         </Link>

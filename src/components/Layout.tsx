@@ -1,5 +1,6 @@
-import { type SvgIconComponent } from '@mui/icons-material'
+import { HandymanRounded, type SvgIconComponent } from '@mui/icons-material'
 import {
+  Card,
   Container,
   Icon,
   Stack,
@@ -116,3 +117,48 @@ export const Layout = ({
     </Fragment>
   )
 }
+
+export const Working = () => (
+  <Card variant="outlined">
+    <Stack
+      spacing={0.5}
+      sx={{
+        flex: 1,
+        height: '100%',
+        px: { xs: 2.5, md: 3 },
+        py: { xs: 8, md: 18 },
+        alignItems: 'center',
+        justifyContent: 'center',
+      }}
+    >
+      <HandymanRounded
+        sx={{
+          width: 120,
+          height: 120,
+          mb: 2,
+          color: 'action.selected',
+          transition: 'color 0.2s',
+        }}
+      />
+
+      <Typography
+        variant="h6"
+        component="span"
+        sx={{
+          color: 'text.primary',
+          textAlign: 'center',
+          fontWeight: 700,
+        }}
+      >
+        页面开发中
+      </Typography>
+      <Typography
+        variant="body1"
+        component="span"
+        sx={{ color: 'text.secondary', textAlign: 'center' }}
+      >
+        这个页面还没做完，敬请期待
+      </Typography>
+    </Stack>
+  </Card>
+)
