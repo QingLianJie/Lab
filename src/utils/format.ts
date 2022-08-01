@@ -37,3 +37,16 @@ export const byteFormat = (bytes: number, decimals = 2) => {
   const i = Math.floor(Math.log(bytes) / Math.log(k))
   return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i]
 }
+
+export const formatNumbers = (nums: number[]) => {
+  const arrs: number[][] = []
+  nums.forEach((num, index) => {
+    if (index - 1 < 0) {
+      arrs.push([num])
+      return
+    }
+    if (num - 1 === nums[index - 1]) arrs[arrs.length - 1].push(num)
+    else arrs.push([num])
+  })
+  return arrs
+}

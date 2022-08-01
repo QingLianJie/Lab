@@ -1,4 +1,5 @@
 import { atom } from 'jotai'
+import { type SummaryCourse } from '../index.d'
 
 export type AuthModal = false | '登录' | '注册' | '重置密码'
 
@@ -9,6 +10,9 @@ type Modals = {
   scores: {
     filter: boolean
   }
+  schedules: {
+    details: false | SummaryCourse[]
+  }
 }
 
 export const modalsAtom = atom<Modals>({
@@ -16,4 +20,5 @@ export const modalsAtom = atom<Modals>({
   captcha: false,
   bind: false,
   scores: { filter: false },
+  schedules: { details: false },
 })

@@ -1,10 +1,11 @@
 import { TableChartRounded } from '@mui/icons-material'
 import { Box, Card, Grid, Stack, Typography, useTheme } from '@mui/material'
 import { lightBlue } from '@mui/material/colors'
-import { useAtomValue } from 'jotai'
+import { useAtom, useAtomValue } from 'jotai'
 import { useMemo } from 'react'
 import { colors } from '../../configs/schedules/colors'
 import { days, sections } from '../../configs/schedules/table'
+import { modalsAtom } from '../../contexts/booleans'
 import {
   schedulesAtom,
   schedulesViewAtom,
@@ -17,8 +18,7 @@ import { SchedulesTableSections } from './table/Sections'
 import { SchedulesTableSpaces } from './table/Spaces'
 
 export const SchedulesTable = () => {
-  const { palette } = useTheme()
-  const isDark = palette.mode === 'dark'
+  const [modals, setModals] = useAtom(modalsAtom)
   const schedules = useAtomValue(schedulesAtom)
   const schedulesView = useAtomValue(schedulesViewAtom)
 
@@ -112,7 +112,14 @@ export const SchedulesTable = () => {
             span={block.span}
             sx={{ p: 0.5 }}
           >
-            <SchedulesBlockAction>
+            <SchedulesBlockAction
+              onClick={() =>
+                setModals({
+                  ...modals,
+                  schedules: { ...modals.schedules, details: block.courses },
+                })
+              }
+            >
               <Stack
                 spacing={0.25}
                 sx={{ width: '100%', flex: 1, position: 'relative' }}
@@ -179,6 +186,12 @@ export const SchedulesTable = () => {
                 <SchedulesBlockAction
                   key={course.name}
                   sx={{ width: 'fit-content' }}
+                  onClick={() =>
+                    setModals({
+                      ...modals,
+                      schedules: { ...modals.schedules, details: [course] },
+                    })
+                  }
                 >
                   <Stack
                     spacing={1}
