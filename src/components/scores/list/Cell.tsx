@@ -109,7 +109,7 @@ export const ScoresBodyCell = ({ column, item }: ScoresBodyCellProps) => {
         >
           {item['score']
             .map((s, i) => (s === '---' ? item?.['mark']?.[i] || '' : s))
-            .join(' / ')}
+            .join('｜')}
         </Typography>
       ) : column.link ? (
         <Link

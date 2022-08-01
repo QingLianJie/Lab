@@ -1,23 +1,20 @@
 import { TableChartRounded } from '@mui/icons-material'
-import {
-  ButtonBase,
-  Card,
-  Divider,
-  Grid,
-  Stack,
-  Typography,
-  useTheme,
-} from '@mui/material'
+import { Box, Card, Grid, Stack, Typography, useTheme } from '@mui/material'
+import { lightBlue } from '@mui/material/colors'
 import { useAtomValue } from 'jotai'
 import { useMemo } from 'react'
-import { days, sections, spaces } from '../../configs/schedules/table'
+import { colors } from '../../configs/schedules/colors'
+import { days, sections } from '../../configs/schedules/table'
 import {
   schedulesAtom,
   schedulesViewAtom,
 } from '../../contexts/bridge/schedules'
 import { type TimeTableBlocks } from '../../index.d'
 import { SettingsFetch } from '../settings/Fetch'
-import { SchedulesBlock } from './Blocks'
+import { SchedulesBlock, SchedulesBlockAction } from './table/Blocks'
+import { SchedulesTableDays } from './table/Days'
+import { SchedulesTableSections } from './table/Sections'
+import { SchedulesTableSpaces } from './table/Spaces'
 
 export const SchedulesTable = () => {
   const { palette } = useTheme()
@@ -62,10 +59,17 @@ export const SchedulesTable = () => {
       }
     })
 
-    console.log([blocks, matrix])
-
     return [blocks, matrix]
   }, [schedulesView.week, schedules])
+
+  const getColor = (name: string) =>
+    schedules
+      ? colors.find(
+          color =>
+            color.name ===
+            schedules?.colors?.find(course => course.name === name)?.color
+        )?.color || lightBlue
+      : lightBlue
 
   return schedules ? (
     <Card variant="outlined" sx={{ overflow: 'auto' }}>
@@ -80,58 +84,9 @@ export const SchedulesTable = () => {
           },
         }}
       >
-        {days.map(day => (
-          <SchedulesBlock border="left" key={day.name} col={day.col} row={1}>
-            <Typography
-              sx={{
-                fontSize: { xs: 'caption.fontSize', sm: 'body2.fontSize' },
-                fontWeight: 700,
-                color: 'text.secondary',
-              }}
-            >
-              {day.name}
-            </Typography>
-          </SchedulesBlock>
-        ))}
-
-        {sections.map(section => (
-          <SchedulesBlock
-            key={section.id}
-            border="top"
-            col={1}
-            row={section.row}
-          >
-            <Typography
-              sx={{
-                fontSize: { xs: 'caption.fontSize', sm: 'body2.fontSize' },
-                fontWeight: 700,
-                color: 'text.secondary',
-              }}
-            >
-              {section.id}
-            </Typography>
-          </SchedulesBlock>
-        ))}
-
-        {spaces.map(space => (
-          <SchedulesBlock
-            key={space.name}
-            border="top"
-            col={1}
-            row={space.row}
-            sx={{ gridColumnEnd: 9 }}
-          >
-            <Typography
-              sx={{
-                fontSize: { xs: 'caption.fontSize', sm: 'body2.fontSize' },
-                fontWeight: 700,
-                color: 'text.secondary',
-              }}
-            >
-              {space.name}
-            </Typography>
-          </SchedulesBlock>
-        ))}
+        <SchedulesTableDays />
+        <SchedulesTableSections />
+        <SchedulesTableSpaces />
 
         {matrix.map((row, i) =>
           row.map(
@@ -157,30 +112,11 @@ export const SchedulesTable = () => {
             span={block.span}
             sx={{ p: 0.5 }}
           >
-            <Stack
-              component={ButtonBase}
-              spacing={{ xs: 0.75, sm: 1 }}
-              sx={{
-                px: { xs: 1, sm: 1.5 },
-                py: { xs: 0.75, sm: 1.25 },
-                width: '100%',
-                height: '100%',
-                alignItems: 'flex-start',
-                justifyContent: 'flex-start',
-                fontSize: { xs: 'caption.fontSize', sm: 'body2.fontSize' },
-                textAlign: 'left',
-                borderRadius: 2,
-                backgroundColor: 'action.hover',
-                border: 1,
-                borderColor: 'divider',
-                overflow: 'hidden',
-                '& .MuiTouchRipple-root': { mt: 0 },
-              }}
-              divider={
-                <Divider sx={{ borderColor: 'divider', width: '100%' }} />
-              }
-            >
-              <Stack spacing={0.25}>
+            <SchedulesBlockAction>
+              <Stack
+                spacing={0.25}
+                sx={{ width: '100%', flex: 1, position: 'relative' }}
+              >
                 <Typography sx={{ fontWeight: 700, fontSize: 'inherit' }}>
                   {block.courses[0].name}
                 </Typography>
@@ -188,9 +124,22 @@ export const SchedulesTable = () => {
                   {block.courses[0].location}
                 </Typography>
                 <Typography sx={{ fontSize: 'inherit' }}>
-                  {block.courses[0].teacher.join(' / ')}
+                  {block.courses[0].teacher.join('｜')}
                 </Typography>
+
+                <Box
+                  sx={{
+                    position: 'absolute',
+                    right: 0,
+                    bottom: 2,
+                    width: 12,
+                    height: 12,
+                    borderRadius: '50%',
+                    backgroundColor: getColor(block.courses[0].name)[400],
+                  }}
+                />
               </Stack>
+
               {block.courses.length > 1 && (
                 <Stack sx={{ width: '100%' }}>
                   {block.courses.slice(1).map((course, index) => (
@@ -199,7 +148,6 @@ export const SchedulesTable = () => {
                       variant="body2"
                       sx={{
                         width: '100%',
-                        fontWeight: 700,
                         whiteSpace: 'nowrap',
                         overflow: 'hidden',
                         textOverflow: 'ellipsis',
@@ -214,9 +162,50 @@ export const SchedulesTable = () => {
                   ))}
                 </Stack>
               )}
-            </Stack>
+            </SchedulesBlockAction>
           </SchedulesBlock>
         ))}
+
+        <SchedulesBlock
+          border="both"
+          col={2}
+          row={17}
+          sx={{ p: 0.5, gridColumnEnd: 9, justifyContent: 'flex-start' }}
+        >
+          <Stack direction="row" spacing={0.5}>
+            {schedules.timetable.courses.remark
+              .filter(course => course.week.includes(schedulesView.week))
+              .map(course => (
+                <SchedulesBlockAction
+                  key={course.name}
+                  sx={{ width: 'fit-content' }}
+                >
+                  <Stack
+                    spacing={1}
+                    direction="row"
+                    sx={{ alignItems: 'center' }}
+                  >
+                    <Typography sx={{ fontWeight: 700, fontSize: 'inherit' }}>
+                      {course.name}
+                    </Typography>
+
+                    <Typography sx={{ fontSize: 'inherit' }}>
+                      {course.teacher.join('｜')}
+                    </Typography>
+
+                    <Box
+                      sx={{
+                        width: 12,
+                        height: 12,
+                        borderRadius: '50%',
+                        backgroundColor: getColor(course.name)[400],
+                      }}
+                    />
+                  </Stack>
+                </SchedulesBlockAction>
+              ))}
+          </Stack>
+        </SchedulesBlock>
       </Grid>
     </Card>
   ) : (

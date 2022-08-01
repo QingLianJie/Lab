@@ -5,6 +5,7 @@ import {
 } from '@mui/icons-material'
 import {
   Alert,
+  AlertTitle,
   Backdrop,
   IconButton,
   Link,
@@ -46,6 +47,7 @@ export const ScoresSimpleTips = () => {
     <Alert
       severity={scoresView.simple ? 'success' : 'info'}
       color="success"
+      variant="outlined"
       action={
         <IconButton
           aria-label={scoresView.simple ? '还原' : '切换'}
@@ -57,7 +59,7 @@ export const ScoresSimpleTips = () => {
           {scoresView.simple ? <RestartAltOutlined /> : <CheckOutlined />}
         </IconButton>
       }
-      sx={{ border: 1, borderColor: green[400] }}
+      sx={{ backgroundColor: 'background.paper' }}
     >
       {scoresView.simple
         ? '已切换到精简模式，可以随时点击右侧按钮还原，或者点击下方小眼睛按钮自定义表格列。'
@@ -107,6 +109,7 @@ export const ScoresUploadTips = () => {
       <Alert
         severity="info"
         color="success"
+        variant="outlined"
         action={
           <Tooltip title="上传成绩" arrow placement="top">
             <IconButton
@@ -120,9 +123,12 @@ export const ScoresUploadTips = () => {
             </IconButton>
           </Tooltip>
         }
-        sx={{ border: 1, borderColor: green[400] }}
+        sx={{ backgroundColor: 'background.paper' }}
       >
-        由于新版清廉街修改了学校数据的获取方式，数据不再经过清廉街服务器，因此清廉街无法主动获取到成绩和课表数据，你可以通过点击右侧按钮，将自己的成绩以匿名的方式上传到清廉街，帮助清廉街完善课程和成绩数据库，非常感谢你的贡献。
+        <AlertTitle sx={{ fontWeight: 700 }}>
+          欢迎上传成绩到清廉街数据库
+        </AlertTitle>
+        新版清廉街修改了学校数据的获取方式，数据不再经过清廉街服务器，因此清廉街无法主动获取到成绩和课表数据，你可以通过点击右侧按钮，将自己的成绩以匿名的方式上传到清廉街，帮助清廉街完善课程和成绩数据库，非常感谢你的贡献。
         <Link href="" target="_blank" rel="noopener noreferrer">
           了解更多
         </Link>

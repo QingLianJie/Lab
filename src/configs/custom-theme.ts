@@ -4,14 +4,14 @@ export const lightPalette = {
   mode: 'light' as const,
   primary: pink,
   secondary: blue,
-  background: { default: grey[50], paper: 'white' },
+  background: { default: grey[50], paper: 'white', subtle: grey[50] },
 }
 
 export const darkPalette = {
   mode: 'dark' as const,
   primary: { main: '#f06292' },
   secondary: blue,
-  background: { default: grey[900], paper: grey[800] },
+  background: { default: grey[900], paper: grey[800], subtle: '#4a4a4a' },
 }
 
 export const typography = {

@@ -1,6 +1,8 @@
 import { BrowseGalleryOutlined } from '@mui/icons-material'
 import { Button, IconButton, Stack, TextField, Typography } from '@mui/material'
+import dayjs from 'dayjs'
 import { useAtom } from 'jotai'
+import { enqueueSnackbar } from 'notistack'
 import { Fragment, useState } from 'react'
 import { schedulesViewAtom } from '../../../contexts/bridge/schedules'
 import { Modal } from '../../base/Modal'
@@ -10,8 +12,14 @@ export const SchedulesCalendarAction = () => {
   const [open, setOpen] = useState(false)
   const [schedulesView, setSchedulesView] = useAtom(schedulesViewAtom)
 
-  const handleDate = (date: string) =>
-    setSchedulesView(view => ({ ...view, start: date }))
+  const handleDate = (date: string) => {
+    if (!date) {
+      setSchedulesView(view => ({ ...view, start: date }))
+      return
+    }
+    const monday = dayjs(date).day(1).format('YYYY-MM-DD')
+    setSchedulesView(view => ({ ...view, start: monday }))
+  }
 
   return (
     <Fragment>
@@ -47,6 +55,7 @@ export const SchedulesCalendarAction = () => {
             type="date"
             size="small"
             fullWidth
+            value={schedulesView.start}
             onChange={e => handleDate(e.target.value)}
             InputLabelProps={{ shrink: true }}
           />

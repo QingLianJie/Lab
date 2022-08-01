@@ -108,7 +108,7 @@ export const ScoresGroup = ({ name, scores }: ScoresGroupProps) => {
                       // 因为没法适配研究生的学号，之后需要改
                       parseInt(student.id.slice(0, 4)),
                       name
-                    )} / ${name}`
+                    )} ｜ ${name}`
                   : name}
               </Typography>
             </Stack>

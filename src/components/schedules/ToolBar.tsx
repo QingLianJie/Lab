@@ -126,7 +126,7 @@ export const SchedulesToolBar = () => {
                       // 因为没法适配研究生的学号，之后需要改
                       parseInt(student.id.slice(0, 4)),
                       schedules.timetable.name
-                    )} / ${schedules.timetable.name}`
+                    )} ｜ ${schedules.timetable.name}`
                   : '没有课表数据'}
               </Typography>
             </Stack>
@@ -140,6 +140,9 @@ export const SchedulesToolBar = () => {
                 page={schedulesView.week}
                 onChange={(_e, v) => handleChange(v)}
                 disabled={!schedules}
+                sx={{
+                  '& .MuiPaginationItem-root.Mui-selected': { fontWeight: 700 },
+                }}
               />
             </Stack>
           </Fragment>

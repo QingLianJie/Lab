@@ -56,10 +56,7 @@ export const SettingsDeveloper = () => {
           sx={{ flex: 1, px: { xs: 2.5, md: 3 }, py: { xs: 2, md: 2.5 } }}
         >
           <Stack spacing={1.5} sx={{ flex: 1 }}>
-            <Alert
-              severity="warning"
-              sx={{ mb: 1.5, border: 1, borderColor: amber[400] }}
-            >
+            <Alert severity="warning" variant="outlined" sx={{ mb: 1.5 }}>
               修改开发者选项可能会导致网页出现异常，请不要将未知的代码或者链接填入下方输入框！
             </Alert>
             <TextField
@@ -128,6 +125,8 @@ export const SettingsDeveloper = () => {
             px: { xs: 2.5, md: 3 },
             py: { xs: 2, md: 2.5 },
             fontSize: '0.925rem',
+            maxHeight: 420,
+            overflow: 'auto',
           }}
         >
           <Markdown>{markdown}</Markdown>

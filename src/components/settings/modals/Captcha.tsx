@@ -15,6 +15,7 @@ import { range } from 'lodash'
 import { enqueueSnackbar } from 'notistack'
 import { useEffect, useRef, useState, type FormEvent } from 'react'
 import { Score, Scores } from '../../..'
+import { colors } from '../../../configs/schedules/colors'
 import { modalsAtom } from '../../../contexts/booleans'
 import { bridgeAtom, studentAtom } from '../../../contexts/bridge'
 import { schedulesAtom } from '../../../contexts/bridge/schedules'
@@ -116,10 +117,23 @@ export const CaptchaModal = () => {
 
       setStatus('正在获取课表')
       const timetable = await bridge.timetable(term ? term : undefined)
+      const colorize = timetable.courses
+        ? [
+            ...new Set([
+              ...timetable.courses?.main.map(course => course.name),
+              ...timetable.courses?.remark.map(course => course.name),
+            ]),
+          ].map((name, index) => ({
+            name,
+            color: colors[index % colors.length].name,
+          }))
+        : []
+
       setSchedules({
         id: student.id,
         date: new Date().toISOString(),
         timetable,
+        colors: colorize,
       })
 
       setLoading(false)

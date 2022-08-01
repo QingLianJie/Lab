@@ -1,5 +1,6 @@
 import { FileDownloadOutlined } from '@mui/icons-material'
 import { IconButton } from '@mui/material'
+import dayjs from 'dayjs'
 import { useAtomValue } from 'jotai'
 import { pick } from 'lodash'
 import { studentAtom } from '../../../contexts/bridge'
@@ -22,9 +23,9 @@ export const ScoresExportAction = () => {
 
     const link = document.createElement('a')
     link.href = href
-    link.download = `${
-      student ? student.id : ''
-    } 导出的成绩 ${new Date().toISOString()}.json`.trim()
+    link.download = `${student ? student.id : ''} 导出的成绩 ${dayjs().format(
+      'YYYY-MM-DD HH-mm-ss'
+    )}.json`.trim()
     document.body.appendChild(link)
     link.click()
 

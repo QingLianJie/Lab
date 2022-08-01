@@ -82,12 +82,6 @@ export interface TimetableCourse {
   section?: number[]
 }
 
-export type SchedulesAtom = {
-  id: string
-  date: string
-  timetable: Timetable
-}
-
 export type Summary = {
   main: SummaryCourse[]
   remark: SummaryCourse[]
@@ -116,3 +110,13 @@ export type TimeTableBlock = {
 }
 
 export type TimeTableBlocks = TimeTableBlock[]
+
+export type SchedulesAtom = {
+  id: string
+  date: string
+  timetable: Timetable
+  colors: {
+    name: string
+    color: string
+  }[]
+}
