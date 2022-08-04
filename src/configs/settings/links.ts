@@ -1,17 +1,17 @@
 export const links = [
   {
     name: 'QQ 群',
-    description: ['一群群号是 498047164（已满）', '二群群号是 759995415'],
+    description: ['群号是 498047164', '回复比较及时'],
     actions: [
       {
         type: 'link',
         name: '点击加群',
-        href: 'https://jq.qq.com/?_wv=1027&k=Q6oVsQ0f',
+        href: 'https://jq.qq.com/?_wv=1027&k=7kmzMgZi',
       },
       {
         type: 'copy',
         name: '复制群号',
-        content: '759995415',
+        content: '498047164',
       },
     ],
   },
@@ -32,12 +32,17 @@ export const links = [
     ],
   },
   {
-    name: '腾讯问卷',
-    description: ['也可以填写匿名问卷反馈', '不过回复较慢'],
+    name: '兔小巢',
+    description: ['一个反馈互动社区', '由腾讯兔小巢提供服务'],
     actions: [
       {
         type: 'link',
         name: '链接',
+        href: 'https://support.qq.com/product/422023',
+      },
+      {
+        type: 'link',
+        name: '腾讯问卷',
         href: 'https://wj.qq.com/s2/9542270/79ad/',
       },
     ],

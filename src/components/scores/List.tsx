@@ -1,4 +1,3 @@
-import { InsertChartRounded } from '@mui/icons-material'
 import {
   Box,
   Button,
@@ -20,7 +19,6 @@ import {
   scoresListAtom,
   scoresViewAtom,
 } from '../../contexts/bridge/scores'
-import { SettingsFetch } from '../settings/Fetch'
 import { ScoresGroup } from './list/Group'
 import { ScoresRows, ScoresTitleRow } from './list/Rows'
 import { ScoresPlaceholder } from './Placeholder'
@@ -97,9 +95,9 @@ export const ScoresList = () => {
     )
   }, [scoresFilter])
 
-  return scores ? (
+  return (
     <Fragment>
-      {scores.scores.length === 0 ? (
+      {!scores || scores.scores.length === 0 ? (
         <Card variant="outlined">
           <ScoresPlaceholder
             title="暂无成绩数据"
@@ -184,9 +182,5 @@ export const ScoresList = () => {
         </Stack>
       )}
     </Fragment>
-  ) : (
-    <Card variant="outlined">
-      <SettingsFetch name="成绩" icon={InsertChartRounded} />
-    </Card>
   )
 }

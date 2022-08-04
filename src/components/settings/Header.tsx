@@ -36,7 +36,7 @@ export const SettingsHeader = ({
   >
     <Typography
       variant="h1"
-      sx={{ fontSize: '1.125rem', fontWeight: 700, py: 1.5 }}
+      sx={{ fontSize: '1.125rem', fontWeight: 700, py: 1.25 }}
     >
       {title}
     </Typography>

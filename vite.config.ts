@@ -11,4 +11,5 @@ export default defineConfig({
     react({ babel: { plugins: [jotaiDebugLabel, jotaiReactRefresh] } }),
     pwa(),
   ],
+  build: { assetsInlineLimit: 20480 },
 })

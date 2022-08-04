@@ -20,7 +20,7 @@ export const CoursesPage = () => {
         icon={ClassRounded}
         color={red[400]}
       >
-        <Stack spacing={2}>
+        <Stack spacing={2} sx={{ flex: 1 }}>
           <Working />
         </Stack>
       </Layout>

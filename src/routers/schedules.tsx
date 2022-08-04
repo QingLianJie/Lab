@@ -27,7 +27,7 @@ export const SchedulesPage = () => {
         icon={TableChartRounded}
         color={blue[400]}
       >
-        <Stack spacing={2}>
+        <Stack spacing={2} sx={{ flex: 1 }}>
           {schedules && <SchedulesToolBar />}
           <SchedulesTable />
         </Stack>

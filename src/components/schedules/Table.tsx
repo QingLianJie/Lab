@@ -222,7 +222,10 @@ export const SchedulesTable = () => {
       </Grid>
     </Card>
   ) : (
-    <Card variant="outlined">
+    <Card
+      variant="outlined"
+      sx={{ flex: 1, display: 'flex', alignItems: 'center' }}
+    >
       <SettingsFetch name="课表" icon={TableChartRounded} />
     </Card>
   )

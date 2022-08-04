@@ -1,5 +1,6 @@
 import { HandymanRounded, type SvgIconComponent } from '@mui/icons-material'
 import {
+  Button,
   Card,
   Container,
   Icon,
@@ -119,14 +120,17 @@ export const Layout = ({
 }
 
 export const Working = () => (
-  <Card variant="outlined">
+  <Card
+    variant="outlined"
+    sx={{ flex: 1, display: 'flex', alignItems: 'center', height: '100%' }}
+  >
     <Stack
       spacing={0.5}
       sx={{
         flex: 1,
         height: '100%',
         px: { xs: 2.5, md: 3 },
-        py: { xs: 8, md: 18 },
+        py: { xs: 8, md: 12 },
         alignItems: 'center',
         justifyContent: 'center',
       }}
@@ -135,7 +139,7 @@ export const Working = () => (
         sx={{
           width: 120,
           height: 120,
-          mb: 2,
+          my: 2,
           color: 'action.selected',
           transition: 'color 0.2s',
         }}
@@ -159,6 +163,23 @@ export const Working = () => (
       >
         这个页面还没做完，敬请期待
       </Typography>
+
+      <Stack direction="row" sx={{ py: 1 }}>
+        <Button
+          variant="text"
+          disableElevation
+          color="info"
+          sx={{
+            minWidth: 'unset',
+            py: 0.75,
+            px: 1.5,
+            textTransform: 'none',
+          }}
+          onClick={() => window.location.reload()}
+        >
+          重新加载
+        </Button>
+      </Stack>
     </Stack>
   </Card>
 )
