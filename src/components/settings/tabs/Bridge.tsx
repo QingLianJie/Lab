@@ -3,7 +3,7 @@ import { Button, Stack, Typography, useTheme } from '@mui/material'
 import { amber } from '@mui/material/colors'
 import { useAtom, useAtomValue } from 'jotai'
 import { Fragment } from 'react'
-import { modalsAtom } from '../../../contexts/booleans'
+import { modalsAtom } from '../../../contexts/modals'
 import { studentAtom } from '../../../contexts/bridge'
 import { SettingsHeader } from '../Header'
 

@@ -21,7 +21,7 @@ import { useAtom } from 'jotai'
 import { enqueueSnackbar } from 'notistack'
 import { Fragment, useState } from 'react'
 import { type ScoreColumnKey } from '../../configs/scores/columns'
-import { scoresViewAtom } from '../../contexts/bridge/scores'
+import { scoresViewAtom } from '../../contexts/scores'
 import { Confirm } from '../base/Modal'
 import { Tooltip } from '../base/styled/Tooltip'
 

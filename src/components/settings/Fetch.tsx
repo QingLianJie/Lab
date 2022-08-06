@@ -6,7 +6,7 @@ import { Button, Icon, IconButton, Stack, Typography } from '@mui/material'
 import { useAtom, useAtomValue } from 'jotai'
 import { enqueueSnackbar } from 'notistack'
 import { useNavigate } from 'react-router-dom'
-import { modalsAtom } from '../../contexts/booleans'
+import { modalsAtom } from '../../contexts/modals'
 import { bridgeAtom, studentAtom } from '../../contexts/bridge'
 
 interface SettingsFetchProps {

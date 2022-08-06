@@ -19,8 +19,8 @@ import { useAtom, useAtomValue } from 'jotai'
 import { useResetAtom } from 'jotai/utils'
 import { groupBy, range } from 'lodash'
 import { Fragment } from 'react'
-import { modalsAtom } from '../../contexts/booleans'
-import { scoresAtom, scoresFilterAtom } from '../../contexts/bridge/scores'
+import { modalsAtom } from '../../contexts/modals'
+import { scoresAtom, scoresFilterAtom } from '../../contexts/scores'
 import { Modal } from '../base/Modal'
 
 export const ScoresFilter = () => {

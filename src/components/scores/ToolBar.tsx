@@ -1,7 +1,7 @@
 import { FilterAltOutlined } from '@mui/icons-material'
 import { Stack, IconButton, useMediaQuery, useTheme, Card } from '@mui/material'
 import { useAtom } from 'jotai'
-import { modalsAtom } from '../../contexts/booleans'
+import { modalsAtom } from '../../contexts/modals'
 import { Tooltip } from '../base/styled/Tooltip'
 import { ScoresColumnsAction } from './actions/Columns'
 import { ScoresExportAction } from './actions/Export'

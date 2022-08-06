@@ -5,11 +5,11 @@ import { useAtom, useAtomValue } from 'jotai'
 import { useMemo } from 'react'
 import { colors } from '../../configs/schedules/colors'
 import { days, sections } from '../../configs/schedules/table'
-import { modalsAtom } from '../../contexts/booleans'
+import { modalsAtom } from '../../contexts/modals'
 import {
   schedulesAtom,
   schedulesViewAtom,
-} from '../../contexts/bridge/schedules'
+} from '../../contexts/schedules'
 import { type TimeTableBlocks } from '../../index.d'
 import { SettingsFetch } from '../settings/Fetch'
 import { SchedulesBlock, SchedulesBlockAction } from './table/Blocks'

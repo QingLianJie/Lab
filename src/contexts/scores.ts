@@ -1,9 +1,9 @@
 import { atom } from 'jotai'
 import { atomWithReset } from 'jotai/utils'
-import { type ScoreColumnKey } from '../../configs/scores/columns'
-import { type GroupsType } from '../../configs/scores/groups'
-import { type Score, type ScoresAtom } from '../../index.d'
-import { atomLocal } from '../../utils/atom'
+import { type ScoreColumnKey } from '../configs/scores/columns'
+import { type GroupsType } from '../configs/scores/groups'
+import { type Score, type ScoresAtom } from '..'
+import { atomLocal } from '../utils/atom'
 
 export const scoresAtom = atomLocal<ScoresAtom | false>('scores', false)
 

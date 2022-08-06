@@ -3,7 +3,7 @@ import dayjs from 'dayjs'
 import { useAtomValue } from 'jotai'
 import { Fragment } from 'react'
 import { days } from '../../../configs/schedules/table'
-import { schedulesViewAtom } from '../../../contexts/bridge/schedules'
+import { schedulesViewAtom } from '../../../contexts/schedules'
 import { SchedulesBlock } from './Blocks'
 
 export const SchedulesTableDays = () => {

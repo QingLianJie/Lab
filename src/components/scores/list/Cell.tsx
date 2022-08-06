@@ -11,7 +11,7 @@ import { useAtom } from 'jotai'
 import { Link as RouterLink } from 'react-router-dom'
 import { type Score } from '../../..'
 import { type ScoreColumn } from '../../../configs/scores/columns'
-import { scoresViewAtom } from '../../../contexts/bridge/scores'
+import { scoresViewAtom } from '../../../contexts/scores'
 import { scoreColor, scoreMap } from '../../../utils/calc'
 
 interface ScoresHeadCellProps {

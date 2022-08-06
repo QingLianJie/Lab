@@ -6,7 +6,7 @@ import { Layout } from '../components/Layout'
 import { SchedulesDetails } from '../components/schedules/Details'
 import { SchedulesTable } from '../components/schedules/Table'
 import { SchedulesToolBar } from '../components/schedules/ToolBar'
-import { schedulesAtom } from '../contexts/bridge/schedules'
+import { schedulesAtom } from '../contexts/schedules'
 
 export const SchedulesPage = () => {
   const schedules = useAtomValue(schedulesAtom)

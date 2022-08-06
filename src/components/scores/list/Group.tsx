@@ -21,7 +21,7 @@ import {
   scoresListAtom,
   scoresViewAtom,
   type ScoresList,
-} from '../../../contexts/bridge/scores'
+} from '../../../contexts/scores'
 import { scoreMap, termName } from '../../../utils/calc'
 import { ScoresRows } from './Rows'
 

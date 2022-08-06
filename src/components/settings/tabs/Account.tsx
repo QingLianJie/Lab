@@ -3,7 +3,7 @@ import { Button, Stack, Typography } from '@mui/material'
 import { useAtom } from 'jotai'
 import { Fragment } from 'react'
 import { info } from '../../../configs/site-info'
-import { AuthModal, modalsAtom } from '../../../contexts/booleans'
+import { AuthModal, modalsAtom } from '../../../contexts/modals'
 import { SettingsHeader } from '../Header'
 
 export const SettingsAccount = () => {

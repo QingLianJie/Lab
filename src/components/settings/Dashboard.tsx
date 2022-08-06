@@ -49,7 +49,7 @@ export const SettingsDashboard = () => {
             }}
           >
             <Stack
-              spacing={0.25}
+              spacing={0.5}
               direction={{ xs: 'row', sm: 'column' }}
               sx={{ alignItems: 'flex-start' }}
             >
@@ -90,7 +90,8 @@ export const SettingsDashboard = () => {
               variant="body1"
               sx={{
                 fontFamily: 'code.fontFamily',
-                color: 'text.disabled',
+                color: 'action.disabled',
+                userSelect: 'none',
                 mt: { xs: 0, sm: 3 },
               }}
             >

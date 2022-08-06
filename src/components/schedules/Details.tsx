@@ -27,7 +27,7 @@ import { ReactNode, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { type SummaryCourse, type SummaryRemarkCourse } from '../../index.d'
 import { sections } from '../../configs/schedules/table'
-import { modalsAtom } from '../../contexts/booleans'
+import { modalsAtom } from '../../contexts/modals'
 import { formatNumbers } from '../../utils/format'
 
 export const SchedulesDetails = () => {

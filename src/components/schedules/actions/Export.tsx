@@ -10,7 +10,7 @@ import dayjs from 'dayjs'
 import { useAtomValue } from 'jotai'
 import { Fragment, useState } from 'react'
 import { studentAtom } from '../../../contexts/bridge'
-import { schedulesAtom } from '../../../contexts/bridge/schedules'
+import { schedulesAtom } from '../../../contexts/schedules'
 import { Modal } from '../../base/Modal'
 import { Tooltip } from '../../base/styled/Tooltip'
 

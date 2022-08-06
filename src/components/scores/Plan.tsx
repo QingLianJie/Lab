@@ -19,7 +19,7 @@ import {
 import { useAtomValue } from 'jotai'
 import { Fragment, type SyntheticEvent, useState } from 'react'
 import { plan2014, plan2019 } from '../../configs/scores/credits-plan'
-import { scoresListAtom } from '../../contexts/bridge/scores'
+import { scoresListAtom } from '../../contexts/scores'
 import { scoreMap } from '../../utils/calc'
 
 type PlanVersion = '2014' | '2019'

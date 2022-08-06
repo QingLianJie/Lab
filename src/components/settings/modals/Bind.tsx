@@ -14,7 +14,7 @@ import {
 import { useAtom } from 'jotai'
 import { enqueueSnackbar } from 'notistack'
 import { type FormEvent, useEffect, useRef, useState } from 'react'
-import { modalsAtom } from '../../../contexts/booleans'
+import { modalsAtom } from '../../../contexts/modals'
 import { studentAtom } from '../../../contexts/bridge'
 
 export const BindModal = () => {

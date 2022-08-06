@@ -4,7 +4,7 @@ import dayjs from 'dayjs'
 import { useAtom } from 'jotai'
 import { enqueueSnackbar } from 'notistack'
 import { Fragment, useState } from 'react'
-import { schedulesViewAtom } from '../../../contexts/bridge/schedules'
+import { schedulesViewAtom } from '../../../contexts/schedules'
 import { Modal } from '../../base/Modal'
 import { Tooltip } from '../../base/styled/Tooltip'
 

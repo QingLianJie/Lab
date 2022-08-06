@@ -6,7 +6,7 @@ import {
   scoresListAtom,
   scoresViewAtom,
   type ScoresList,
-} from '../../../contexts/bridge/scores'
+} from '../../../contexts/scores'
 import { scoreMap } from '../../../utils/calc'
 import { ScoresBodyCell, ScoresHeadCell, ScoresSpaceCell } from './Cell'
 

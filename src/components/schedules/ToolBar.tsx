@@ -23,7 +23,7 @@ import { studentAtom } from '../../contexts/bridge'
 import {
   schedulesAtom,
   schedulesViewAtom,
-} from '../../contexts/bridge/schedules'
+} from '../../contexts/schedules'
 import { termName } from '../../utils/calc'
 import { Tooltip } from '../base/styled/Tooltip'
 import { SchedulesCalendarAction } from './actions/Calendar'

@@ -16,10 +16,10 @@ import { enqueueSnackbar } from 'notistack'
 import { useEffect, useRef, useState, type FormEvent } from 'react'
 import { Score, Scores } from '../../..'
 import { colors } from '../../../configs/schedules/colors'
-import { modalsAtom } from '../../../contexts/booleans'
+import { modalsAtom } from '../../../contexts/modals'
 import { bridgeAtom, studentAtom } from '../../../contexts/bridge'
-import { schedulesAtom } from '../../../contexts/bridge/schedules'
-import { scoresAtom } from '../../../contexts/bridge/scores'
+import { schedulesAtom } from '../../../contexts/schedules'
+import { scoresAtom } from '../../../contexts/scores'
 
 const terms = range(2001, new Date().getFullYear() + 1)
   .map(year => [`${year}-${year + 1}-1`, `${year}-${year + 1}-2`])

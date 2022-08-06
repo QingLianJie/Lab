@@ -3,7 +3,7 @@ import { useAtom, useAtomValue } from 'jotai'
 import { Fragment, useEffect } from 'react'
 import { useMount } from 'react-use'
 import { bridgeAtom, fetcherAtom } from '../contexts/bridge'
-import { scoresAtom, scoresListAtom } from '../contexts/bridge/scores'
+import { scoresAtom, scoresListAtom } from '../contexts/scores'
 
 export const Load = () => {
   const [bridge, setBridge] = useAtom(bridgeAtom)

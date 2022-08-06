@@ -1,6 +1,6 @@
 import { Card, Divider, Stack, Typography } from '@mui/material'
 import { useAtomValue } from 'jotai'
-import { scoresListAtom } from '../../contexts/bridge/scores'
+import { scoresListAtom } from '../../contexts/scores'
 import { scoreMap } from '../../utils/calc'
 
 export const ScoresCalc = () => {

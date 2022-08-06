@@ -10,7 +10,7 @@ import {
 import { useAtom } from 'jotai'
 import { useEffect, useState } from 'react'
 import { authTabs } from '../../../configs/settings/tabs'
-import { modalsAtom } from '../../../contexts/booleans'
+import { modalsAtom } from '../../../contexts/modals'
 
 export const AccountModal = () => {
   const [modals, setModals] = useAtom(modalsAtom)

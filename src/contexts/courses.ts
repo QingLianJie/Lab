@@ -1,5 +1,5 @@
 import { atom } from 'jotai'
-import { Course } from '../..'
+import { Course } from '..'
 
 type CourseFilter = Partial<Course> & {
   learned?: boolean

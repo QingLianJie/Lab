@@ -21,7 +21,7 @@ import { ScoresPlan } from '../components/scores/Plan'
 import { ScoresStatus } from '../components/scores/Status'
 import { ScoresSimpleTips, ScoresUploadTips } from '../components/scores/Tips'
 import { SettingsFetch } from '../components/settings/Fetch'
-import { scoresAtom, scoresViewAtom } from '../contexts/bridge/scores'
+import { scoresAtom, scoresViewAtom } from '../contexts/scores'
 
 export const ScoresPage = () => {
   const scores = useAtomValue(scoresAtom)

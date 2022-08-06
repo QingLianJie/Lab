@@ -15,7 +15,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom'
 import LogoOutlined from '../assets/logo-outlined.svg'
 import { Routers, routers } from '../configs/routers'
 import { info } from '../configs/site-info'
-import { modalsAtom } from '../contexts/booleans'
+import { modalsAtom } from '../contexts/modals'
 import { accountAtom } from '../contexts/settings'
 import { Tooltip } from './base/styled/Tooltip'
 

@@ -18,7 +18,7 @@ import {
   scoresFilterAtom,
   scoresListAtom,
   scoresViewAtom,
-} from '../../contexts/bridge/scores'
+} from '../../contexts/scores'
 import { ScoresGroup } from './list/Group'
 import { ScoresRows, ScoresTitleRow } from './list/Rows'
 import { ScoresPlaceholder } from './Placeholder'

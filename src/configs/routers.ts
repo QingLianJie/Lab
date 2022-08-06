@@ -92,3 +92,41 @@ export const routers = [
     group: -1,
   },
 ] as Routers
+
+export type Shortcuts = {
+  name: RouterName
+  href: string
+  icon: SvgIconComponent[]
+  color: string[]
+}[][]
+
+export const shortcuts = [
+  [
+    {
+      name: '课程',
+      href: '/courses',
+      icon: [ClassOutlined, ClassRounded],
+      color: [red[500], red[400]],
+    },
+    {
+      name: '设置',
+      href: '/settings',
+      icon: [SettingsOutlined, SettingsRounded],
+      color: [amber[600], amber[500]],
+    },
+  ],
+  [
+    {
+      name: '成绩',
+      href: '/scores',
+      icon: [InsertChartOutlined, InsertChartRounded],
+      color: [green[500], green[400]],
+    },
+    {
+      name: '课表',
+      href: '/schedules',
+      icon: [TableChartOutlined, TableChartRounded],
+      color: [blue[500], blue[400]],
+    },
+  ],
+] as Shortcuts

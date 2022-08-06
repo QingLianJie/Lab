@@ -1,5 +1,5 @@
 import { atom } from 'jotai'
-import { SummaryRemarkCourse, type SummaryCourse } from '../index.d'
+import { SummaryRemarkCourse, type SummaryCourse } from '..'
 
 export type AuthModal = false | '登录' | '注册' | '重置密码'
 

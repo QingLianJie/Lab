@@ -1,18 +1,20 @@
 import { InboxRounded } from '@mui/icons-material'
 import {
-  useTheme,
   createTheme,
-  ThemeProvider,
   Grid,
   Stack,
+  ThemeProvider,
+  useTheme,
 } from '@mui/material'
 import { pink } from '@mui/material/colors'
 import { HomeFavorites } from '../components/home/Favorites'
-import { HomePosts } from '../components/home/Posts'
+import { HomeSearchBar } from '../components/home/Search'
 import { HomeShortcuts } from '../components/home/Shortcuts'
 import { HomeTrends } from '../components/home/Trends'
-import { HomeWidgets } from '../components/home/Widgets'
-import { Layout, Working } from '../components/Layout'
+import { HomeProfileWidget } from '../components/home/widgets/Profile'
+import { HomeSchedulesWidget } from '../components/home/widgets/Schedules'
+import { HomeScoresWidget } from '../components/home/widgets/Scores'
+import { Layout } from '../components/Layout'
 
 export const HomePage = () => {
   const weekdays = ['周日', '周一', '周二', '周三', '周四', '周五', '周六']
@@ -35,7 +37,7 @@ export const HomePage = () => {
         icon={InboxRounded}
         color={pink[400]}
       >
-        <Grid container spacing={2}>
+        <Grid container spacing={2} sx={{ flex: 1, height: '100%' }}>
           <Grid item xs={12} sm={6} lg={3}>
             <Stack spacing={2}>
               <HomeShortcuts />
@@ -43,14 +45,16 @@ export const HomePage = () => {
             </Stack>
           </Grid>
           <Grid item xs={12} sm={12} lg={6}>
-            <Stack spacing={2}>
+            <Stack spacing={2} sx={{ flex: 1, height: '100%' }}>
+              <HomeSearchBar />
               <HomeTrends />
-              <HomePosts />
             </Stack>
           </Grid>
           <Grid item xs={12} sm={6} lg={3}>
             <Stack spacing={2}>
-              <HomeWidgets />
+              <HomeProfileWidget />
+              <HomeSchedulesWidget />
+              <HomeScoresWidget />
             </Stack>
           </Grid>
         </Grid>
