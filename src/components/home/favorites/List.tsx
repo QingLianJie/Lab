@@ -97,13 +97,16 @@ export const HomeFavoritesStarredList = () => {
           <Collapse>
             <Stack
               spacing={0.5}
-              sx={{ width: '100%', alignItems: 'center', py: 3 }}
+              sx={{ width: '100%', alignItems: 'center', py: 4 }}
             >
               <Typography variant="body1" sx={{ color: 'text.secondary' }}>
-                没有收藏的链接
+                没有收藏过的链接
               </Typography>
-              <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                点击链接右侧 ⭐ 添加
+              <Typography
+                variant="body2"
+                sx={{ color: 'text.secondary', textAlign: 'center' }}
+              >
+                点击链接右侧的 ⭐ 添加
               </Typography>
             </Stack>
           </Collapse>

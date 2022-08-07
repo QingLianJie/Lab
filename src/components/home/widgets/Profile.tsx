@@ -24,7 +24,7 @@ export const HomeProfileWidget = () => {
             登录到清廉街
           </Typography>
           <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-            登录清廉街账号后可以发表课程评论、同步收藏夹等。新版清廉街账号不再绑定
+            登录清廉街账号后，可以发表课程评论、同步收藏夹等。新版清廉街账号不再绑定
             HEU 账号。
           </Typography>
           <Stack

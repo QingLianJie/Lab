@@ -42,7 +42,7 @@ export const HomeShortcuts = () => {
                     width: '100%',
                   }}
                 >
-                  <Stack>
+                  <Stack spacing={0.25}>
                     <Typography
                       variant="body1"
                       sx={{ whiteSpace: 'nowrap', fontWeight: 700 }}
