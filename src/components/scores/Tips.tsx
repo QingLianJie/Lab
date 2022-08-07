@@ -54,9 +54,13 @@ export const ScoresSimpleTips = () => {
           size="small"
           color="inherit"
           onClick={handleClick}
-          sx={{ my: -0.5 }}
+          sx={{ my: -0.25 }}
         >
-          {scoresView.simple ? <RestartAltOutlined /> : <CheckOutlined />}
+          {scoresView.simple ? (
+            <RestartAltOutlined sx={{ width: 22, height: 22 }} />
+          ) : (
+            <CheckOutlined sx={{ width: 22, height: 22 }} />
+          )}
         </IconButton>
       }
       sx={{ backgroundColor: 'background.paper' }}
@@ -116,10 +120,10 @@ export const ScoresUploadTips = () => {
               aria-label="上传"
               size="small"
               color="inherit"
-              sx={{ my: -0.5, mx: 0.5 }}
+              sx={{ my: -0.25, mx: 0.5 }}
               onClick={() => setOpen(true)}
             >
-              <FileUploadOutlined />
+              <FileUploadOutlined sx={{ width: 22, height: 22 }} />
             </IconButton>
           </Tooltip>
         }

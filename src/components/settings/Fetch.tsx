@@ -93,7 +93,7 @@ export const SettingsFetch = ({ name, icon }: SettingsFetchProps) => {
 }
 
 interface SettingsGoActionProps {
-  name: 'bridge' | 'extension'
+  name: 'bridge' | 'extension' | 'contact'
 }
 
 export const SettingsGoAction = ({ name }: SettingsGoActionProps) => {

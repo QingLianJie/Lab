@@ -1,8 +1,10 @@
 import { Button, Card, Stack, Typography } from '@mui/material'
-import { useAtomValue } from 'jotai'
+import { useAtom, useAtomValue } from 'jotai'
+import { modalsAtom } from '../../../contexts/modals'
 import { accountAtom } from '../../../contexts/settings'
 
 export const HomeProfileWidget = () => {
+  const [modals, setModals] = useAtom(modalsAtom)
   const account = useAtomValue(accountAtom)
 
   return (
@@ -35,10 +37,25 @@ export const HomeProfileWidget = () => {
             }}
           >
             <Stack direction="row">
-              <Button sx={{ py: 0.5, px: 1.25 }}>登录</Button>
-              <Button sx={{ py: 0.5, px: 1.25 }}>注册</Button>
+              <Button
+                sx={{ py: 0.5, px: 1.25 }}
+                onClick={() => setModals({ ...modals, auth: '登录' })}
+              >
+                登录
+              </Button>
+              <Button
+                sx={{ py: 0.5, px: 1.25 }}
+                onClick={() => setModals({ ...modals, auth: '注册' })}
+              >
+                注册
+              </Button>
             </Stack>
-            <Button sx={{ py: 0.5, px: 1.25 }}>重置密码</Button>
+            <Button
+              sx={{ py: 0.5, px: 1.25 }}
+              onClick={() => setModals({ ...modals, auth: '重置密码' })}
+            >
+              重置密码
+            </Button>
           </Stack>
         </Stack>
       )}

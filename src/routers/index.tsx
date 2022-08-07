@@ -7,20 +7,29 @@ import {
   useTheme,
 } from '@mui/material'
 import { pink } from '@mui/material/colors'
+import { useAtomValue } from 'jotai'
+import { Fragment } from 'react'
 import { HomeFavorites } from '../components/home/Favorites'
+import { HomeNotes } from '../components/home/Notes'
 import { HomeSearchBar } from '../components/home/Search'
 import { HomeShortcuts } from '../components/home/Shortcuts'
 import { HomeTrends } from '../components/home/Trends'
+import { HomeWidgetPlaceholder } from '../components/home/widgets/Placeholder'
 import { HomeProfileWidget } from '../components/home/widgets/Profile'
 import { HomeSchedulesWidget } from '../components/home/widgets/Schedules'
 import { HomeScoresWidget } from '../components/home/widgets/Scores'
 import { Layout } from '../components/Layout'
+import { schedulesAtom } from '../contexts/schedules'
+import { scoresAtom } from '../contexts/scores'
 
 export const HomePage = () => {
   const weekdays = ['周日', '周一', '周二', '周三', '周四', '周五', '周六']
   const day = new Date().getDay()
   const month = new Date().getMonth() + 1
   const date = new Date().getDate()
+
+  const scores = useAtomValue(scoresAtom)
+  const schedules = useAtomValue(schedulesAtom)
 
   const theme = useTheme()
   const { palette } = theme
@@ -52,9 +61,15 @@ export const HomePage = () => {
           </Grid>
           <Grid item xs={12} sm={6} lg={3}>
             <Stack spacing={2}>
+              {scores && schedules ? (
+                <Fragment>
+                  <HomeSchedulesWidget />
+                  <HomeScoresWidget />
+                </Fragment>
+              ) : (
+                <HomeWidgetPlaceholder />
+              )}
               <HomeProfileWidget />
-              <HomeSchedulesWidget />
-              <HomeScoresWidget />
             </Stack>
           </Grid>
         </Grid>

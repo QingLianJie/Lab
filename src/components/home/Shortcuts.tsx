@@ -34,26 +34,42 @@ export const HomeShortcuts = () => {
                 <Stack
                   spacing={1.5}
                   direction="row"
-                  sx={{ px: 2, py: 1.75, flex: 1, width: '100%' }}
+                  sx={{
+                    position: 'relative',
+                    px: 2,
+                    py: 1.75,
+                    flex: 1,
+                    width: '100%',
+                  }}
                 >
+                  <Stack>
+                    <Typography
+                      variant="body1"
+                      sx={{ whiteSpace: 'nowrap', fontWeight: 700 }}
+                    >
+                      {item.name}
+                    </Typography>
+                    <Typography
+                      variant="body2"
+                      sx={{
+                        color: 'text.disabled',
+                        fontFamily: 'code.fontFamily',
+                      }}
+                    >
+                      {item.href.replace(/^\//, '')}
+                    </Typography>
+                  </Stack>
                   <Icon
                     component={item.icon[0]}
                     sx={{
+                      position: 'absolute',
+                      right: 14,
+                      top: 14,
                       color: item.color[isDark ? 1 : 0],
                       width: 24,
                       height: 24,
                     }}
                   />
-                  <Typography
-                    variant="body1"
-                    sx={{
-                      whiteSpace: 'nowrap',
-
-                      fontWeight: 700,
-                    }}
-                  >
-                    {item.name}
-                  </Typography>
                 </Stack>
               </CardActionArea>
             ))}

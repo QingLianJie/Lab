@@ -37,12 +37,12 @@ export const ScoresPlan = () => {
             onChange={handleChange}
             aria-label="培养方案学分统计"
             variant="fullWidth"
-            sx={{ minHeight: 44 }}
+            sx={{ minHeight: 42 }}
           >
             <Tab
               label="2019 版培养方案"
               value="2019"
-              sx={{ minHeight: 42, flex: 3 }}
+              sx={{ minHeight: 40, flex: 3 }}
             />
             <Tab label="2014 版" value="2014" sx={{ minHeight: 40, flex: 2 }} />
           </TabList>

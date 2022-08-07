@@ -18,13 +18,16 @@ export const SettingsPage = () => {
 
   const [params] = useSearchParams()
   const { pathname } = useLocation()
-  const [isDashboard, setDashboard] = useState(true)
+  const [dashboard, setDashboard] = useState<null | 'dashboard' | 'tab'>(null)
 
   useEffect(() => {
-    if (pathname !== '/settings') return
+    if (pathname !== '/settings') {
+      setDashboard(null)
+      return
+    }
     const tab = params.get('tab')
-    if (tab) setDashboard(false)
-    else setDashboard(true)
+    if (tab) setDashboard('tab')
+    else setDashboard('dashboard')
   }, [params])
 
   return (
@@ -39,7 +42,13 @@ export const SettingsPage = () => {
           variant="outlined"
           sx={{ flex: 1, display: 'flex', flexDirection: 'column' }}
         >
-          {isDashboard ? <SettingsDashboard /> : <SettingsTab />}
+          {dashboard ? (
+            dashboard === 'dashboard' ? (
+              <SettingsDashboard />
+            ) : (
+              <SettingsTab />
+            )
+          ) : null}
         </Card>
       </Layout>
     </ThemeProvider>

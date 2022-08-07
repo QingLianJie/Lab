@@ -9,13 +9,13 @@ export const favorites: Favorites = [
         id: 101,
         name: '学生个人中心',
         href: 'https://edusys.wvpn.hrbeu.edu.cn/jsxsd/framework/xsMain.jsp',
-        star: true,
+        star: false,
       },
       {
         id: 102,
         name: '网上办事中心',
         href: 'https://one.wvpn.hrbeu.edu.cn/',
-        star: true,
+        star: false,
       },
       {
         id: 103,

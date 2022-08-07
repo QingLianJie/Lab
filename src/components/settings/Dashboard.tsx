@@ -15,10 +15,10 @@ export const SettingsDashboard = () => {
   return (
     <Grid container sx={{ flex: 1 }}>
       {filterdTabs.map((tab, index) => (
-        <Grid item key={tab.id} xs={12} sm={6} md={4} lg={3}>
+        <Grid item key={tab.id} xs={6} sm={4} lg={3}>
           <Stack
             component={ButtonBase}
-            direction={{ xs: 'row', sm: 'column' }}
+            direction="column"
             onClick={() => handleParams(tab.id)}
             sx={{
               position: 'relative',
@@ -26,22 +26,20 @@ export const SettingsDashboard = () => {
               height: '100%',
               width: '100%',
               display: 'flex',
-              alignItems: { xs: 'center', sm: 'flex-start' },
+              alignItems: 'flex-start',
               justifyContent: 'space-between',
               px: { xs: 2, sm: 2.5 },
               py: { xs: 1.75, sm: 2 },
               borderColor: 'divider',
               borderStyle: 'solid',
               borderRightWidth: {
-                xs: 0,
-                sm: index % 2 === 1 ? 0 : 1,
-                md: index % 3 === 2 ? 0 : 1,
+                xs: index % 2 === 1 ? 0 : 1,
+                sm: index % 3 === 2 ? 0 : 1,
                 lg: index % 4 === 3 ? 0 : 1,
               },
               borderBottomWidth: {
-                xs: index === len - 1 ? 0 : 1,
-                sm: index >= len - (len % 2 || 2) ? 0 : 1,
-                md: index >= len - (len % 3 || 3) ? 0 : 1,
+                xs: index >= len - (len % 2 || 2) ? 0 : 1,
+                sm: index >= len - (len % 3 || 3) ? 0 : 1,
                 lg: index >= len - (len % 4 || 4) ? 0 : 1,
               },
               '&:hover': { backgroundColor: 'action.hover' },
@@ -50,27 +48,30 @@ export const SettingsDashboard = () => {
           >
             <Stack
               spacing={0.5}
-              direction={{ xs: 'row', sm: 'column' }}
-              sx={{ alignItems: 'flex-start' }}
+              direction="column"
+              sx={{
+                alignItems: 'flex-start',
+                width: '100%',
+                overflow: 'hidden',
+              }}
             >
               <Icon
                 component={tab.icon[0]}
                 sx={{
-                  position: { xs: 'relative', sm: 'absolute' },
-                  right: { xs: 'unset', sm: 20 },
-                  bottom: { xs: 'unset', sm: 16 },
-                  color: { xs: 'text.disabled', sm: 'action.selected' },
-                  width: { xs: 24, sm: 48 },
-                  height: { xs: 24, sm: 48 },
-                  mr: { xs: 1.5, sm: 0 },
+                  position: 'absolute',
+                  right: { xs: 14, md: 20 },
+                  bottom: { xs: 14, md: 16 },
+                  color: 'action.disabled',
+                  width: 24,
+                  height: 24,
                 }}
               />
 
               <Typography
                 variant="body1"
                 sx={{
-                  fontWeight: { xs: 500, sm: 700 },
-                  fontSize: { xs: 'body1.fontSize', sm: 'h6.fontSize' },
+                  fontWeight: 700,
+                  fontSize: { xs: 'body1.fontSize', md: '1.125rem' },
                 }}
               >
                 {tab.name}
@@ -79,8 +80,13 @@ export const SettingsDashboard = () => {
               <Typography
                 variant="body1"
                 sx={{
+                  width: '100%',
                   color: 'text.secondary',
-                  display: { xs: 'none', sm: 'flex' },
+                  fontSize: { xs: 'body2.fontSize', md: 'body1.fontSize' },
+                  textAlign: 'left',
+                  whiteSpace: 'nowrap',
+                  overflow: 'hidden',
+                  textOverflow: 'ellipsis',
                 }}
               >
                 {tab.description}
@@ -90,12 +96,13 @@ export const SettingsDashboard = () => {
               variant="body1"
               sx={{
                 fontFamily: 'code.fontFamily',
+                fontSize: { xs: 'body2.fontSize', md: 'body1.fontSize' },
                 color: 'action.disabled',
                 userSelect: 'none',
-                mt: { xs: 0, sm: 3 },
+                mt: { xs: 2, md: 3 },
               }}
             >
-              /{tab.id}
+              {tab.id}
             </Typography>
           </Stack>
         </Grid>

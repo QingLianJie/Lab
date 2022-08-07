@@ -9,7 +9,7 @@ export const HomeTrends = () => (
         flex: 1,
         height: '100%',
         px: { xs: 2.5, md: 3 },
-        py: { xs: 8, md: 12 },
+        py: { xs: 8, md: 8 },
         alignItems: 'center',
         justifyContent: 'center',
       }}
