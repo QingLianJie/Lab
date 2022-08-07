@@ -29,7 +29,7 @@ export const Confirm = ({
   isDanger,
 }: ConfirmProps) => (
   <Dialog open={open} onClose={onClose} sx={{ mb: { xs: 6, sm: 2 } }}>
-    <DialogTitle sx={{ pb: 1, fontSize: '1.125rem', fontWeight: 700 }}>
+    <DialogTitle sx={{ pb: 1, fontSize: '1rem', fontWeight: 700 }}>
       {title}
     </DialogTitle>
     {description && (
@@ -62,7 +62,7 @@ export const Modal = ({
   ...props
 }: ModalProps) => (
   <Dialog open={open} onClose={onClose} {...props}>
-    <DialogTitle sx={{ fontSize: '1.125rem', fontWeight: 700 }}>
+    <DialogTitle sx={{ fontSize: '1rem', fontWeight: 700 }}>
       {title}
       <IconButton
         aria-label="关闭"

@@ -1,8 +1,12 @@
 import {
+  AlternateEmailOutlined,
+  AlternateEmailRounded,
   BugReportOutlined,
   BugReportRounded,
   ClassOutlined,
   ClassRounded,
+  HelpOutlineOutlined,
+  HelpRounded,
   InboxOutlined,
   InboxRounded,
   InsertChartOutlined,
@@ -13,7 +17,15 @@ import {
   TableChartRounded,
   type SvgIconComponent,
 } from '@mui/icons-material'
-import { amber, blue, green, pink, red } from '@mui/material/colors'
+import {
+  amber,
+  blue,
+  green,
+  purple,
+  orange,
+  pink,
+  red,
+} from '@mui/material/colors'
 import { type ElementType } from 'react'
 import { HomePage } from '../routers'
 import { NotFoundPage } from '../routers/404'
@@ -93,40 +105,70 @@ export const routers = [
   },
 ] as Routers
 
-export type Shortcuts = {
-  name: RouterName
+export type Shortcut = {
+  name: string
   href: string
+  id: string
   icon: SvgIconComponent[]
   color: string[]
-}[][]
+}
 
-export const shortcuts = [
-  [
-    {
-      name: '课程',
-      href: '/courses',
-      icon: [ClassOutlined, ClassRounded],
-      color: [red[500], red[400]],
-    },
-    {
-      name: '设置',
-      href: '/settings',
-      icon: [SettingsOutlined, SettingsRounded],
-      color: [amber[600], amber[500]],
-    },
+export type Shortcuts = {
+  pinned: Shortcut[][]
+  others: Shortcut[][]
+}
+
+export const shortcuts = {
+  pinned: [
+    [
+      {
+        name: '课程',
+        href: '/courses',
+        id: 'courses',
+        icon: [ClassOutlined, ClassRounded],
+        color: [red[500], red[400]],
+      },
+      {
+        name: '设置',
+        href: '/settings',
+        id: 'settings',
+        icon: [SettingsOutlined, SettingsRounded],
+        color: [amber[600], amber[500]],
+      },
+    ],
+    [
+      {
+        name: '成绩',
+        href: '/scores',
+        id: 'scores',
+        icon: [InsertChartOutlined, InsertChartRounded],
+        color: [green[500], green[400]],
+      },
+      {
+        name: '课表',
+        href: '/schedules',
+        id: 'schedules',
+        icon: [TableChartOutlined, TableChartRounded],
+        color: [blue[500], blue[400]],
+      },
+    ],
   ],
-  [
-    {
-      name: '成绩',
-      href: '/scores',
-      icon: [InsertChartOutlined, InsertChartRounded],
-      color: [green[500], green[400]],
-    },
-    {
-      name: '课表',
-      href: '/schedules',
-      icon: [TableChartOutlined, TableChartRounded],
-      color: [blue[500], blue[400]],
-    },
+  others: [
+    [
+      {
+        name: '联系',
+        href: '/settings?tab=contact',
+        id: 'contact',
+        icon: [AlternateEmailOutlined, AlternateEmailRounded],
+        color: [orange[600], orange[500]],
+      },
+      {
+        name: '帮助',
+        href: '/settings?tab=help',
+        id: 'help',
+        icon: [HelpOutlineOutlined, HelpRounded],
+        color: [purple[400], purple[300]],
+      },
+    ],
   ],
-] as Shortcuts
+} as Shortcuts

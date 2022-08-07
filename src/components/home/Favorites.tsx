@@ -23,9 +23,21 @@ export const HomeFavorites = () => {
             <Tab
               label="收藏夹"
               value="starred"
-              sx={{ minHeight: 40, flex: 1 }}
+              sx={{
+                minHeight: 40,
+                flex: 1,
+                fontWeight: currentTab === 'starred' ? 700 : 500,
+              }}
             />
-            <Tab label="链接列表" value="all" sx={{ minHeight: 40, flex: 1 }} />
+            <Tab
+              label="链接列表"
+              value="all"
+              sx={{
+                minHeight: 40,
+                flex: 1,
+                fontWeight: currentTab === 'all' ? 700 : 500,
+              }}
+            />
           </TabList>
         </Box>
         <TabPanel value="starred" sx={{ p: 0 }}>

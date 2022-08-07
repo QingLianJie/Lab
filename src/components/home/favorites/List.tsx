@@ -116,19 +116,19 @@ export const HomeFavoritesList = () => {
 export const HomeFavoritesStarredList = () => {
   const favorites = useAtomValue(favoritesAtom)
 
-  const starrtedFavorites = useMemo(() => {
-    console.log(favorites)
-
-    return favorites.reduce((pre, cur) => {
-      if ('children' in cur) {
-        pre.push(...cur.children.filter(item => item.star))
-        return pre
-      } else {
-        if (cur.star) pre.push(cur)
-        return pre
-      }
-    }, [] as Favorite[])
-  }, [favorites])
+  const starrtedFavorites = useMemo(
+    () =>
+      favorites.reduce((pre, cur) => {
+        if ('children' in cur) {
+          pre.push(...cur.children.filter(item => item.star))
+          return pre
+        } else {
+          if (cur.star) pre.push(cur)
+          return pre
+        }
+      }, [] as Favorite[]),
+    [favorites]
+  )
 
   return (
     <List dense sx={{ width: '100%' }}>
@@ -137,7 +137,7 @@ export const HomeFavoritesStarredList = () => {
           <Collapse>
             <Stack
               spacing={0.5}
-              sx={{ width: '100%', alignItems: 'center', py: 4 }}
+              sx={{ width: '100%', alignItems: 'center', py: { xs: 6, sm: 4 } }}
             >
               <Typography variant="body1" sx={{ color: 'text.secondary' }}>
                 没有收藏过的链接
