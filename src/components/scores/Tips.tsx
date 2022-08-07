@@ -1,11 +1,10 @@
 import {
-  RestartAltOutlined,
-  FileUploadOutlined,
   CheckOutlined,
+  FileUploadOutlined,
+  RestartAltOutlined,
 } from '@mui/icons-material'
 import {
   Alert,
-  AlertTitle,
   Backdrop,
   IconButton,
   Link,
@@ -15,7 +14,6 @@ import {
   useMediaQuery,
   useTheme,
 } from '@mui/material'
-import { green } from '@mui/material/colors'
 import confetti from 'canvas-confetti'
 import { useAtom } from 'jotai'
 import { enqueueSnackbar } from 'notistack'
@@ -73,14 +71,14 @@ export const ScoresSimpleTips = () => {
 }
 
 export const ScoresUploadTips = () => {
-  const [open, setOpen] = useState(false)
   const [thanks, setThanks] = useState(false)
   const { breakpoints } = useTheme()
   const isMobile = useMediaQuery(breakpoints.down('md'))
 
   const handleUpload = () => {
+    const ans = confirm('确认将匿名成绩上传到清廉街？')
+    if (!ans) return
     enqueueSnackbar('这个功能还没做')
-    setOpen(false)
     createConfetti()
     setThanks(true)
   }
@@ -121,7 +119,7 @@ export const ScoresUploadTips = () => {
               size="small"
               color="inherit"
               sx={{ my: -0.25, mx: 0.5 }}
-              onClick={() => setOpen(true)}
+              onClick={handleUpload}
             >
               <FileUploadOutlined sx={{ width: 22, height: 22 }} />
             </IconButton>
@@ -134,13 +132,7 @@ export const ScoresUploadTips = () => {
           了解更多
         </Link>
       </Alert>
-      <Confirm
-        open={open}
-        onConfirm={handleUpload}
-        onClose={() => setOpen(false)}
-        title="上传成绩"
-        description="确认将匿名成绩上传到清廉街？"
-      />
+
       <Portal>
         <Thanks thanks={thanks} onClose={() => setThanks(false)} />
       </Portal>

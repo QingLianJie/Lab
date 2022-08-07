@@ -28,7 +28,7 @@ export const ScoresPage = () => {
   const scoresView = useAtomValue(scoresViewAtom)
   const [changed, setChanged] = useState(false)
 
-  useMount(() => window.localStorage.getItem('scores-view') && setChanged(true))
+  useMount(() => localStorage.getItem('scores-view') && setChanged(true))
 
   const theme = useTheme()
   const { palette, breakpoints } = theme

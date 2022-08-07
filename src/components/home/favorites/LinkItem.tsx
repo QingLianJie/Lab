@@ -1,20 +1,22 @@
 import {
-  StarRounded,
-  StarOutlineRounded,
-  VpnLockOutlined,
+  DeleteOutlined,
   PublicOutlined,
+  StarOutlineRounded,
+  StarRounded,
+  VpnLockOutlined,
 } from '@mui/icons-material'
 import {
-  ListItem,
-  IconButton,
   Icon,
+  IconButton,
+  ListItem,
   ListItemButton,
   ListItemIcon,
   ListItemText,
 } from '@mui/material'
-import { amber } from '@mui/material/colors'
-import { useAtom } from 'jotai'
+import { amber, red } from '@mui/material/colors'
+import { useAtom, useAtomValue } from 'jotai'
 import { Favorite, favoritesAtom } from '../../../contexts/links'
+import { modesAtom } from '../../../contexts/modes'
 import { Tooltip } from '../../base/styled/Tooltip'
 
 interface HomeFavoritesLinkItemProps {
@@ -25,6 +27,7 @@ export const HomeFavoritesLinkItem = ({
   favorite,
 }: HomeFavoritesLinkItemProps) => {
   const [favorites, setFavorites] = useAtom(favoritesAtom)
+  const modes = useAtomValue(modesAtom)
 
   const handleStar = () => {
     setFavorites(favorites =>
@@ -45,27 +48,58 @@ export const HomeFavoritesLinkItem = ({
     )
   }
 
+  const handleRemove = () => {
+    const ans = confirm(`确定要删除 ${favorite.name} 吗？`)
+    if (!ans) return
+    setFavorites(favorites =>
+      favorites
+        .map(group => {
+          if ('children' in group) {
+            return {
+              ...group,
+              children: group.children.filter(item => item.id !== favorite.id),
+            }
+          }
+          return group
+        })
+        .filter(item => item.id !== favorite.id)
+    )
+  }
+
   return (
     <ListItem
       disablePadding
       secondaryAction={
-        <IconButton
-          aria-label="收藏链接"
-          edge="end"
-          onClick={handleStar}
-          sx={{ right: '2.5px' }}
-        >
+        modes.favorites ? (
+          <Tooltip title="删除这个链接" arrow placement="top">
+            <IconButton
+              aria-label="删除这个链接"
+              edge="end"
+              onClick={handleRemove}
+              sx={{ right: '2.5px' }}
+            >
+              <DeleteOutlined sx={{ color: red[500] }} />
+            </IconButton>
+          </Tooltip>
+        ) : (
           <Tooltip
             title={favorite.star ? '取消收藏' : '收藏'}
             arrow
             placement="top"
           >
-            <Icon
-              component={favorite.star ? StarRounded : StarOutlineRounded}
-              sx={{ color: amber[500] }}
-            />
+            <IconButton
+              aria-label="收藏链接"
+              edge="end"
+              onClick={handleStar}
+              sx={{ right: '2.5px' }}
+            >
+              <Icon
+                component={favorite.star ? StarRounded : StarOutlineRounded}
+                sx={{ color: amber[500] }}
+              />
+            </IconButton>
           </Tooltip>
-        </IconButton>
+        )
       }
     >
       <ListItemButton

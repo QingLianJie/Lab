@@ -35,7 +35,6 @@ export const SettingsStorage = () => {
   const { palette } = useTheme()
   const isDark = palette.mode === 'dark'
 
-  const [open, setOpen] = useState(false)
   const inputRef = useRef<HTMLInputElement>(null)
 
   const [settings, setSettings] = useAtom(settingsAtom)
@@ -84,11 +83,16 @@ export const SettingsStorage = () => {
   }
 
   const handleRemove = () => {
-    setOpen(false)
+    const ans = confirm('确定要清空所有数据吗？这个操作不可恢复，请谨慎操作。')
+    if (!ans) return
+
     setSettings(defaultSettings)
     setStudent(false)
     setSchedules(false)
     setScores(false)
+    localStorage.clear()
+    alert('已清空数据，需要重新加载页面才能生效。')
+    location.reload()
   }
 
   const calcStorage = (id: string) => {
@@ -160,19 +164,10 @@ export const SettingsStorage = () => {
             <Button
               color="error"
               startIcon={<DeleteOutlineOutlined />}
-              onClick={() => setOpen(true)}
+              onClick={handleRemove}
             >
               清空数据
             </Button>
-
-            <Confirm
-              open={open}
-              onConfirm={handleRemove}
-              onClose={() => setOpen(false)}
-              title="确认清空数据吗？"
-              description="这个操作不可恢复，请谨慎操作。"
-              isDanger
-            />
           </Stack>
         </Stack>
         <Stack sx={{ flex: 1 }}>

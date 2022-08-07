@@ -1,7 +1,7 @@
 import { TabContext, TabList, TabPanel } from '@mui/lab'
 import { Box, Card, Divider, Tab } from '@mui/material'
 import { SyntheticEvent, useState } from 'react'
-import { HomeFavoritesEdit } from './favorites/Edit'
+import { HomeFavoritesEditMode, HomeFavoritesLinkEdit } from './favorites/Edit'
 import { HomeFavoritesList, HomeFavoritesStarredList } from './favorites/List'
 
 type TabType = 'starred' | 'all'
@@ -30,13 +30,15 @@ export const HomeFavorites = () => {
         </Box>
         <TabPanel value="starred" sx={{ p: 0 }}>
           <HomeFavoritesStarredList />
+          <Divider />
+          <HomeFavoritesLinkEdit />
         </TabPanel>
         <TabPanel value="all" sx={{ p: 0 }}>
           <HomeFavoritesList />
+          <Divider />
+          <HomeFavoritesEditMode />
         </TabPanel>
       </TabContext>
-      <Divider />
-      <HomeFavoritesEdit />
     </Card>
   )
 }

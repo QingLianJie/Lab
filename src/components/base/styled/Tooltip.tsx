@@ -10,6 +10,7 @@ export const Tooltip = styled(({ className, ...props }: TooltipProps) => (
   <MuiTooltip
     {...props}
     TransitionComponent={Fade}
+    disableInteractive
     classes={{ popper: className }}
   />
 ))(({ theme }) => ({

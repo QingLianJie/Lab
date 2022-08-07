@@ -54,7 +54,7 @@ export const HomeTrends = () => (
             px: 1.5,
             textTransform: 'none',
           }}
-          onClick={() => window.location.reload()}
+          onClick={() => location.reload()}
         >
           重新加载
         </Button>

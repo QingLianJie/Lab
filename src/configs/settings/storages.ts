@@ -2,11 +2,19 @@ import {
   InsertChartOutlined,
   SchoolOutlined,
   SettingsOutlined,
+  FavoriteBorderOutlined,
   TableChartOutlined,
 } from '@mui/icons-material'
-import { amber, blue, green, red } from '@mui/material/colors'
+import { amber, blue, green, pink, red } from '@mui/material/colors'
 
 export const storages = [
+  {
+    id: 'favorites',
+    name: '收藏夹',
+    description: '自定义链接和分组',
+    icon: FavoriteBorderOutlined,
+    color: [pink[600], pink[500]],
+  },
   {
     id: 'settings',
     name: '网站设置',
@@ -17,7 +25,7 @@ export const storages = [
   {
     id: 'student',
     name: 'HEU 账号',
-    description: 'HEU 账号和密码',
+    description: 'HEU 账号和密码数据',
     icon: SchoolOutlined,
     color: [red[400], red[300]],
   },
