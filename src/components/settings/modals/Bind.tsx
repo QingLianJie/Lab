@@ -38,7 +38,7 @@ export const BindModal = () => {
     e.preventDefault()
     setStudent({ id, password })
     handleCancel()
-    enqueueSnackbar(`已添加 HEU 账号：${id}`, { variant: 'success' })
+    enqueueSnackbar(`已添加 HEU 账号：${id}`)
   }
 
   const handleUnBind = () => {
@@ -46,7 +46,7 @@ export const BindModal = () => {
     setId('')
     setPassword('')
     handleCancel()
-    enqueueSnackbar(`已移除 HEU 账号：${id}`, { variant: 'success' })
+    enqueueSnackbar(`已移除 HEU 账号：${id}`)
   }
 
   return (

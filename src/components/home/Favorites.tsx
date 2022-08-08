@@ -43,8 +43,7 @@ export const HomeFavorites = () => {
           <TabList
             onChange={handleChange}
             aria-label="收藏的链接"
-            variant="fullWidth"
-            sx={{ minHeight: 42 }}
+            sx={{ minHeight: 44 }}
           >
             {tabs.map(tab => (
               <Tab
@@ -52,9 +51,10 @@ export const HomeFavorites = () => {
                 label={tab.name}
                 value={tab.id}
                 sx={{
-                  minHeight: 40,
+                  minHeight: 44,
                   minWidth: 'auto',
-                  flex: 1,
+                  ml: tab.name === '分享' ? 'auto' : 0,
+                  px: 2.25,
                   whiteSpace: 'nowrap',
                   fontWeight: currentTab === tab.id ? 700 : 500,
                 }}

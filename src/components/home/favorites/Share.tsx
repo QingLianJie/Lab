@@ -100,7 +100,7 @@ export const HomeFavoritesShare = () => {
       <Stack
         direction="row"
         spacing={1}
-        sx={{ pl: 2, pt: 2, pb: 1.25, pr: 1.5 }}
+        sx={{ pl: 2, pt: 2, pb: 1.25, pr: 1.25 }}
       >
         <FormControl fullWidth>
           <InputLabel size="small">选择分享分组</InputLabel>
@@ -141,7 +141,7 @@ export const HomeFavoritesShare = () => {
       <Stack
         direction="row"
         spacing={1}
-        sx={{ pl: 2, pt: 2, pb: 1.25, pr: 1.5 }}
+        sx={{ pl: 2, pt: 2, pb: 1.25, pr: 1.25 }}
       >
         <TextField
           label="粘贴分享代码"

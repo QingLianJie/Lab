@@ -90,7 +90,7 @@ export const HomeFavoritesLinkEdit = () => {
           spacing={1.5}
           direction="row"
           sx={{
-            pl: 2.5,
+            pl: 2.25,
             pr: 2,
             py: 1.5,
             alignItems: 'center',
@@ -187,7 +187,7 @@ export const HomeFavoritesEditMode = () => {
           spacing={1.5}
           direction="row"
           sx={{
-            pl: 2.5,
+            pl: 2.25,
             pr: 2,
             py: 1.5,
             alignItems: 'center',

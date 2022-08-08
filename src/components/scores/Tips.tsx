@@ -70,82 +70,12 @@ export const ScoresSimpleTips = () => {
   )
 }
 
-export const ScoresUploadTips = () => {
-  const [thanks, setThanks] = useState(false)
-  const { breakpoints } = useTheme()
-  const isMobile = useMediaQuery(breakpoints.down('md'))
-
-  const handleUpload = () => {
-    const ans = confirm('确认将匿名成绩上传到清廉街？')
-    if (!ans) return
-    enqueueSnackbar('这个功能还没做')
-    createConfetti()
-    setThanks(true)
-  }
-
-  const createConfetti = () => {
-    const end = Date.now() + 2 * 1000
-
-    ;(function frame() {
-      confetti({
-        particleCount: 5,
-        angle: isMobile ? 85 : 60,
-        spread: 72,
-        origin: { x: 0, y: isMobile ? 0.75 : 0.5 },
-        zIndex: 9999,
-      })
-      confetti({
-        particleCount: 5,
-        angle: isMobile ? 95 : 120,
-        spread: 72,
-        origin: { x: 1, y: isMobile ? 0.75 : 0.5 },
-        zIndex: 9999,
-      })
-
-      if (Date.now() < end) requestAnimationFrame(frame)
-    })()
-  }
-
-  return (
-    <Fragment>
-      <Alert
-        severity="info"
-        color="success"
-        variant="outlined"
-        action={
-          <Tooltip title="上传成绩" arrow placement="top">
-            <IconButton
-              aria-label="上传"
-              size="small"
-              color="inherit"
-              sx={{ my: -0.25, mx: 0.5 }}
-              onClick={handleUpload}
-            >
-              <FileUploadOutlined sx={{ width: 22, height: 22 }} />
-            </IconButton>
-          </Tooltip>
-        }
-        sx={{ backgroundColor: 'background.paper' }}
-      >
-        欢迎上传匿名的成绩数据，帮助清廉街完善课程和成绩数据库。
-        <Link href="" target="_blank" rel="noopener noreferrer">
-          了解更多
-        </Link>
-      </Alert>
-
-      <Portal>
-        <Thanks thanks={thanks} onClose={() => setThanks(false)} />
-      </Portal>
-    </Fragment>
-  )
-}
-
 interface ThanksProps {
   thanks: boolean
   onClose: () => void
 }
 
-const Thanks = ({ thanks, onClose }: ThanksProps) => {
+export const Thanks = ({ thanks, onClose }: ThanksProps) => {
   return (
     <Backdrop
       sx={{ color: '#fff', zIndex: 5000, mt: 0 }}

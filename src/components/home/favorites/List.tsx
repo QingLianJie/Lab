@@ -134,7 +134,7 @@ export const HomeFavoritesStarredList = ({
               sx={{
                 width: '100%',
                 alignItems: 'center',
-                py: { xs: 6, sm: 4 },
+                py: 4,
               }}
             >
               <Typography variant="body1" sx={{ color: 'text.secondary' }}>

@@ -17,15 +17,27 @@ import {
   useTheme,
 } from '@mui/material'
 import { useAtomValue } from 'jotai'
-import { Fragment, type SyntheticEvent, useState } from 'react'
+import { Fragment, useState, type SyntheticEvent } from 'react'
 import { plan2014, plan2019 } from '../../configs/scores/credits-plan'
+import { studentAtom } from '../../contexts/bridge'
 import { scoresListAtom } from '../../contexts/scores'
+import markdown from '../../markdown/scores/plan-tips.md?raw'
 import { scoreMap } from '../../utils/calc'
+import { Markdown } from '../base/Markdown'
 
-type PlanVersion = '2014' | '2019'
+type PlanVersion = 'tips' | '2014' | '2019'
+
+const plans = [
+  { name: '2019', id: '2019' },
+  { name: '2014', id: '2014' },
+  { name: '培养方案', id: 'tips' },
+]
 
 export const ScoresPlan = () => {
-  const [currentTab, setTab] = useState<PlanVersion>('2019')
+  const student = useAtomValue(studentAtom)
+  const is2014 = student && Number(student.id.slice(0, 4)) < 2019
+
+  const [currentTab, setTab] = useState<PlanVersion>(is2014 ? '2014' : '2019')
   const handleChange = (_event: SyntheticEvent, value: PlanVersion) =>
     setTab(value)
 
@@ -36,17 +48,29 @@ export const ScoresPlan = () => {
           <TabList
             onChange={handleChange}
             aria-label="培养方案学分统计"
-            variant="fullWidth"
-            sx={{ minHeight: 42 }}
+            sx={{ minHeight: 44 }}
           >
-            <Tab
-              label="2019 版培养方案"
-              value="2019"
-              sx={{ minHeight: 40, flex: 3 }}
-            />
-            <Tab label="2014 版" value="2014" sx={{ minHeight: 40, flex: 2 }} />
+            {plans.map(plan => (
+              <Tab
+                key={plan.id}
+                label={plan.name}
+                value={plan.id}
+                sx={{
+                  minHeight: 44,
+                  minWidth: 'auto',
+                  fontWeight: currentTab === plan.id ? 700 : 500,
+                  px: 2.25,
+                  ml: plan.id === 'tips' ? 'auto' : 0,
+                }}
+              />
+            ))}
           </TabList>
         </Box>
+        <TabPanel value="tips" sx={{ p: 0 }}>
+          <Stack sx={{ px: 2.25, py: 2, fontSize: 'body2.fontSize' }}>
+            <Markdown>{markdown}</Markdown>
+          </Stack>
+        </TabPanel>
         <TabPanel value="2019" sx={{ p: 0 }}>
           <PlanList plan={plan2019} />
         </TabPanel>
@@ -54,25 +78,9 @@ export const ScoresPlan = () => {
           <PlanList plan={plan2014} />
         </TabPanel>
       </TabContext>
-      <Divider />
-      <PlanTips />
     </Card>
   )
 }
-
-const PlanTips = () => (
-  <Typography
-    variant="body2"
-    sx={{
-      fontSize: 'body2.fontSize',
-      px: 2,
-      py: 1.75,
-      color: 'text.secondary',
-    }}
-  >
-    注：培养方案计算仅供参考，请认真核对，此处计算仅统计成绩合格科目的学分。
-  </Typography>
-)
 
 interface PlanListProps {
   plan: typeof plan2014 | typeof plan2019
@@ -121,11 +129,7 @@ const PlanList = ({ plan }: PlanListProps) => {
             <Fragment key={list.name}>
               <ListItemButton
                 key={list.name}
-                sx={{
-                  py: 0.5,
-                  pr: 2.25,
-                  '&:hover svg': { color: list.color[isDark ? 400 : 500] },
-                }}
+                sx={{ py: 0.5, pr: 2.25 }}
                 onClick={() =>
                   collapse.includes(list.name)
                     ? setCollapse(collapse.filter(x => x !== list.name))
@@ -144,6 +148,7 @@ const PlanList = ({ plan }: PlanListProps) => {
                 </ListItemIcon>
                 <ListItemText
                   primary={`${list.name} (${calcCounts(list.rules)})`}
+                  sx={{ fontVariantNumeric: 'tabular-nums' }}
                 />
                 <Icon
                   component={ExpandMoreOutlined}
@@ -157,9 +162,7 @@ const PlanList = ({ plan }: PlanListProps) => {
                     transition: 'all 0.2s',
                   }}
                 />
-                <Typography
-                  sx={{ fontWeight: 700, fontVariantNumeric: 'tabular-nums' }}
-                >
+                <Typography sx={{ fontWeight: 700 }}>
                   {calcCredits(list.rules)} 分
                 </Typography>
               </ListItemButton>
@@ -194,7 +197,6 @@ const PlanList = ({ plan }: PlanListProps) => {
                               variant="body2"
                               sx={{
                                 fontWeight: 700,
-                                fontVariantNumeric: 'tabular-nums',
                               }}
                             >
                               {calcCredits(item.rules)} 分
@@ -207,22 +209,19 @@ const PlanList = ({ plan }: PlanListProps) => {
                               <ListItem
                                 key={child.name}
                                 sx={{
-                                  py: 0.5,
+                                  py: 0.25,
                                   px: 0,
                                   justifyContent: 'space-between',
                                 }}
                               >
                                 <Typography
-                                  variant="body2"
+                                  variant="caption"
                                   sx={{ color: 'text.secondary' }}
                                 >
                                   {child.name}
                                 </Typography>
 
-                                <Typography
-                                  variant="body2"
-                                  sx={{ fontVariantNumeric: 'tabular-nums' }}
-                                >
+                                <Typography variant="caption">
                                   {calcCredits(child.rules)} 分
                                 </Typography>
                               </ListItem>
@@ -236,14 +235,7 @@ const PlanList = ({ plan }: PlanListProps) => {
               </Collapse>
             </Fragment>
           ) : (
-            <ListItemButton
-              key={list.name}
-              sx={{
-                py: 0.5,
-                pr: 2.5,
-                '&:hover svg': { color: list.color[isDark ? 400 : 500] },
-              }}
-            >
+            <ListItem key={list.name} sx={{ py: 0.5, pr: 2.5 }}>
               <ListItemIcon sx={{ minWidth: 32 }}>
                 <Icon
                   component={list.icon}
@@ -257,12 +249,10 @@ const PlanList = ({ plan }: PlanListProps) => {
               <ListItemText
                 primary={`${list.name} (${calcCounts(list.rules)})`}
               />
-              <Typography
-                sx={{ fontWeight: 700, fontVariantNumeric: 'tabular-nums' }}
-              >
+              <Typography sx={{ fontWeight: 700 }}>
                 {calcCredits(list.rules)} 分
               </Typography>
-            </ListItemButton>
+            </ListItem>
           )
         )}
       </List>

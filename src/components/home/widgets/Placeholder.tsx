@@ -40,7 +40,9 @@ export const HomeWidgetPlaceholder = () => {
   return (
     <Card variant="outlined">
       <Stack divider={<Divider />}>
-        <Stack sx={{ width: '100%', py: 2, px: 2.5, alignItems: 'flex-start' }}>
+        <Stack
+          sx={{ width: '100%', py: 2, px: 2.25, alignItems: 'flex-start' }}
+        >
           <Typography
             variant="body1"
             sx={{
@@ -66,7 +68,7 @@ export const HomeWidgetPlaceholder = () => {
           />
         </List>
 
-        <CardActionArea onClick={handleFetch} sx={{ pl: 2.5, pr: 2, py: 1.5 }}>
+        <CardActionArea onClick={handleFetch} sx={{ pl: 2.25, pr: 2, py: 1.5 }}>
           <Stack
             direction="row"
             spacing={2.5}
@@ -102,7 +104,7 @@ const TaskItem = ({ name, checked }: TaskItemProps) => (
         width: '100%',
         alignItems: 'center',
         justifyContent: 'space-between',
-        px: 2.5,
+        px: 2.25,
       }}
     >
       <ListItemText

@@ -15,6 +15,7 @@ import {
   ListItemText,
   Stack,
   Typography,
+  useMediaQuery,
   useTheme,
 } from '@mui/material'
 import { useAtom } from 'jotai'
@@ -32,8 +33,9 @@ import { Markdown } from '../../base/Markdown'
 import { SettingsHeader } from '../Header'
 
 export const SettingsStorage = () => {
-  const { palette } = useTheme()
+  const { palette, breakpoints } = useTheme()
   const isDark = palette.mode === 'dark'
+  const isMobile = useMediaQuery(breakpoints.down('sm'))
 
   const inputRef = useRef<HTMLInputElement>(null)
 
@@ -72,10 +74,10 @@ export const SettingsStorage = () => {
         setSchedules(data.schedules)
         setScores(data.scores)
         setLoading(false)
-        enqueueSnackbar(`导入成功：${file?.name}`, { variant: 'success' })
+        enqueueSnackbar(`导入成功：${file?.name}`)
       } catch (error) {
         console.error(error)
-        enqueueSnackbar(`导入失败：${file?.name}`, { variant: 'error' })
+        enqueueSnackbar(`导入失败：${file?.name}`)
         setLoading(false)
       }
     }
@@ -172,7 +174,7 @@ export const SettingsStorage = () => {
         </Stack>
         <Stack sx={{ flex: 1 }}>
           <List disablePadding>
-            {storages.map(storage => (
+            {storages.map((storage, index) => (
               <Fragment key={storage.id}>
                 <ListItem>
                   <ListItemIcon sx={{ minWidth: 'unset', ml: 0.5, mr: 2.5 }}>
@@ -204,7 +206,7 @@ export const SettingsStorage = () => {
                     </Typography>
                   )}
                 </ListItem>
-                <Divider />
+                {!(isMobile && index === storages.length - 1) && <Divider />}
               </Fragment>
             ))}
           </List>

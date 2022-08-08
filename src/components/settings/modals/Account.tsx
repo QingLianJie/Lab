@@ -54,6 +54,7 @@ export const AccountModal = () => {
             <TabList
               onChange={(e, v) => setModals({ ...modals, auth: v })}
               aria-label="登录、注册和重置密码的页面"
+              variant="fullWidth"
               sx={{ minHeight: 44, px: { xs: 2.5, sm: 3 } }}
             >
               {authTabs.map(tab => (
@@ -63,8 +64,11 @@ export const AccountModal = () => {
                   key={tab.name}
                   sx={{
                     ml: tab.name === '重置密码' ? 'auto' : 0,
+                    px: 2.5,
                     minWidth: 'unset',
-                    minHeight: 42,
+                    minHeight: 44,
+                    flex: 'auto',
+                    fontWeight: modals.auth === tab.name ? 700 : 500,
                   }}
                 />
               ))}

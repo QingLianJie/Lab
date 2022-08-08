@@ -99,17 +99,11 @@ const ContactCard = ({ contact }: ContactCardProps) => (
             action.type === 'copy'
               ? () => {
                   if (!('clipboard' in navigator))
-                    enqueueSnackbar(`浏览器不支持复制`, {
-                      variant: 'error',
-                    })
+                    enqueueSnackbar(`浏览器不支持复制`)
                   else
                     navigator.clipboard
                       .writeText(action.content || '')
-                      .then(() =>
-                        enqueueSnackbar(`已复制 ${action.content}`, {
-                          variant: 'success',
-                        })
-                      )
+                      .then(() => enqueueSnackbar(`已复制 ${action.content}`))
                 }
               : undefined
           }

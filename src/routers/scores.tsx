@@ -70,7 +70,6 @@ export const ScoresPage = () => {
                     <Fragment>
                       {scores.scores.length !== 0 && <ScoresPlan />}
                       <ScoresStatus />
-                      {isMobile && <ScoresUploadTips />}
                     </Fragment>
                   ) : (
                     <ScoresDisabled />
@@ -83,7 +82,6 @@ export const ScoresPage = () => {
                     <ScoresSimpleTips />
                   )}
                   <ScoresList />
-                  {scores && !isMobile && <ScoresUploadTips />}
                 </Stack>
               </Grid>
             </Grid>

@@ -63,7 +63,7 @@ export const CaptchaModal = () => {
       setToken(result.token)
     } catch (error) {
       console.error(error)
-      enqueueSnackbar('验证码获取失败', { variant: 'error' })
+      enqueueSnackbar('验证码获取失败')
     }
   }
 
@@ -87,9 +87,7 @@ export const CaptchaModal = () => {
       console.error(error)
       setLoading(false)
       setStatus('重新获取')
-      enqueueSnackbar('登录失败，请检查学号、密码以及验证码输入是否正确', {
-        variant: 'error',
-      })
+      enqueueSnackbar('登录失败，请检查学号、密码以及验证码输入是否正确')
     }
 
     try {
@@ -139,14 +137,12 @@ export const CaptchaModal = () => {
       setLoading(false)
       setStatus('获取数据')
       setModals({ ...modals, captcha: false })
-      enqueueSnackbar('成功获取成绩和课表数据', { variant: 'success' })
+      enqueueSnackbar('成功获取成绩和课表数据')
     } catch (error) {
       console.error(error)
       setLoading(false)
       setStatus('重新获取')
-      enqueueSnackbar('获取数据失败，请稍后再试，或给我们提供反馈', {
-        variant: 'error',
-      })
+      enqueueSnackbar('获取数据失败，请稍后再试，或给我们提供反馈')
     }
   }
 

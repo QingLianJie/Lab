@@ -73,7 +73,10 @@ interface CalcCardProps {
 }
 
 const CalcCard = ({ title, content, unit }: CalcCardProps) => (
-  <Stack spacing={1} sx={{ px: 2, py: 1.75, flex: 1, width: '100%' }}>
+  <Stack
+    spacing={1}
+    sx={{ px: 2.25, py: 2, flex: 1, width: '100%', overflow: 'hidden' }}
+  >
     <Typography
       variant="body2"
       component="span"
@@ -85,11 +88,7 @@ const CalcCard = ({ title, content, unit }: CalcCardProps) => (
       <Typography
         variant="h5"
         component="span"
-        sx={{
-          fontWeight: 700,
-          fontSize: { xs: '1.25rem', sm: '1.5rem' },
-          fontVariantNumeric: 'tabular-nums',
-        }}
+        sx={{ fontWeight: 700, fontSize: { xs: '1.25rem', sm: '1.5rem' } }}
       >
         {content}
       </Typography>

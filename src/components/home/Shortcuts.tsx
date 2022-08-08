@@ -136,8 +136,8 @@ const ShortcutItem = ({ shortcut, index, count }: ShortcutItemProps) => {
           sx={{
             position: 'relative',
             px: 2,
-            pt: { xs: 2.5, sm: 1.75 },
-            pb: { xs: 2, sm: 1.75 },
+            pt: { xs: 2.25, sm: 1.75 },
+            pb: { xs: 1.75, sm: 1.75 },
             flex: 1,
             width: '100%',
             alignItems: 'center',
@@ -150,8 +150,8 @@ const ShortcutItem = ({ shortcut, index, count }: ShortcutItemProps) => {
               right: { xs: 'unset', sm: 14 },
               top: { xs: 'unset', sm: 14 },
               color: shortcut.color[isDark ? 1 : 0],
-              width: { xs: 24, sm: 24 },
-              height: { xs: 24, sm: 24 },
+              width: 24,
+              height: 24,
             }}
           />
           <Stack spacing={{ xs: 0, sm: 0.25 }}>

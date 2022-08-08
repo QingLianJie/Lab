@@ -12,7 +12,7 @@ export const HomeProfileWidget = () => {
       {account ? (
         <Stack>HomeProfile</Stack>
       ) : (
-        <Stack sx={{ pt: 0.5, px: 0.5 }}>
+        <Stack sx={{ pt: 0.5, px: 0.25 }}>
           <Typography
             variant="body1"
             sx={{
@@ -32,7 +32,7 @@ export const HomeProfileWidget = () => {
             sx={{
               mx: -1.25,
               mt: 2.5,
-              mb: -0.25,
+              mb: -0.5,
               justifyContent: 'space-between',
             }}
           >

@@ -1,4 +1,9 @@
-import { CheckOutlined, SchoolOutlined } from '@mui/icons-material'
+import {
+  CheckOutlined,
+  ExpandLessOutlined,
+  ExpandMoreOutlined,
+  SchoolOutlined,
+} from '@mui/icons-material'
 import {
   ButtonGroup,
   Card,
@@ -68,17 +73,30 @@ export const SchedulesToolBar = () => {
             }}
           >
             <Button
-              sx={{
-                fontSize: 'body1.fontSize',
-                fontWeight: 700,
-                color: 'text.primary',
-                px: 1.5,
-                fontVariantNumeric: 'tabular-nums',
-              }}
+              sx={{ px: 1.75 }}
               onClick={e => setAnchorEl(e.currentTarget)}
             >
-              第 {schedulesView.week} 周
+              <Typography
+                sx={{
+                  fontSize: 'body1.fontSize',
+                  fontWeight: 700,
+                  color: 'text.primary',
+                  pr: 1,
+                }}
+              >
+                第 {schedulesView.week} 周
+              </Typography>
+              <ExpandMoreOutlined
+                sx={{
+                  color: 'text.disabled',
+                  width: 20,
+                  height: 20,
+                  transform: open ? 'rotate(180deg)' : 'rotate(0deg)',
+                  transition: 'transform 0.2s',
+                }}
+              />
             </Button>
+
             <Menu
               anchorEl={anchorEl}
               open={open}
@@ -96,11 +114,7 @@ export const SchedulesToolBar = () => {
                     key={item}
                     sx={{ minWidth: 140, minHeight: 'unset' }}
                   >
-                    <ListItemText
-                      sx={{ flex: 1, fontVariantNumeric: 'tabular-nums' }}
-                    >
-                      第 {item} 周
-                    </ListItemText>
+                    <ListItemText sx={{ flex: 1 }}>第 {item} 周</ListItemText>
                     {item === schedulesView.week && (
                       <ListItemIcon sx={{ pl: 2 }}>
                         <CheckOutlined sx={{ fontSize: 20 }} />
