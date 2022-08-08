@@ -41,6 +41,7 @@ export const HomeProfileWidget = () => {
                 <Button
                   sx={{ py: 0.5, px: 1.25 }}
                   onClick={() => setModals({ ...modals, auth: text })}
+                  key={text}
                 >
                   {text}
                 </Button>

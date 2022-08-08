@@ -20,6 +20,7 @@
     "@qing-dev/bridge": "0.2.3",
     "canvas-confetti": "^1.5.1",
     "dayjs": "^1.11.4",
+    "fflate": "^0.7.3",
     "github-markdown-css": "^5.1.0",
     "jotai": "^1.7.7",
     "lodash": "^4.17.21",

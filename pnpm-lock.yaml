@@ -18,6 +18,7 @@ specifiers:
   '@vitejs/plugin-react': ^2.0.0
   canvas-confetti: ^1.5.1
   dayjs: ^1.11.4
+  fflate: ^0.7.3
   github-markdown-css: ^5.1.0
   jotai: ^1.7.7
   lodash: ^4.17.21
@@ -50,6 +51,7 @@ dependencies:
   '@qing-dev/bridge': 0.2.3
   canvas-confetti: 1.5.1
   dayjs: 1.11.4
+  fflate: 0.7.3
   github-markdown-css: 5.1.0
   jotai: 1.7.7_2sb3a56iojvze2npkgcccbebf4
   lodash: 4.17.21
@@ -2777,6 +2779,10 @@ packages:
     dependencies:
       reusify: 1.0.4
     dev: true
+
+  /fflate/0.7.3:
+    resolution: {integrity: sha512-0Zz1jOzJWERhyhsimS54VTqOteCNwRtIlh8isdL0AXLo0g7xNTfTL7oWrkmCnPhZGocKIkWHBistBrrpoNH3aw==}
+    dev: false
 
   /filelist/1.0.4:
     resolution: {integrity: sha512-w1cEuf3S+DrLCQL7ET6kz+gmlJdbq9J7yXCSjK/OZCPA+qEN1WyF4ZAf0YYJa4/shHJra2t/d/r8SV4Ji+x+8Q==}
