@@ -72,7 +72,7 @@ export const SettingsTab = () => {
               sx={{
                 py: { xs: 0.5, md: 1 },
                 width: '100%',
-                height: '100%',
+                height: 'auto',
                 '& .MuiTabs-scrollButtons.Mui-disabled': { opacity: 0.3 },
                 '& .MuiTabs-indicator': {
                   left: 0,

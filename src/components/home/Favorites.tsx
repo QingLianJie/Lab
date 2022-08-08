@@ -1,13 +1,38 @@
 import { TabContext, TabList, TabPanel } from '@mui/lab'
 import { Box, Card, Divider, Tab } from '@mui/material'
-import { SyntheticEvent, useState } from 'react'
+import { useAtomValue } from 'jotai'
+import { SyntheticEvent, useMemo, useState } from 'react'
+import { favoritesAtom, Favorite } from '../../contexts/links'
 import { HomeFavoritesEditMode, HomeFavoritesLinkEdit } from './favorites/Edit'
 import { HomeFavoritesList, HomeFavoritesStarredList } from './favorites/List'
 
-type TabType = 'starred' | 'all'
+type TabType = 'star' | 'all' | 'share'
+
+const tabs = [
+  { name: '收藏', id: 'star' },
+  { name: '链接列表', id: 'all' },
+  { name: '分享', id: 'share' },
+]
 
 export const HomeFavorites = () => {
-  const [currentTab, setTab] = useState<TabType>('starred')
+  const favorites = useAtomValue(favoritesAtom)
+  const starrtedFavorites = useMemo(
+    () =>
+      favorites.reduce((pre, cur) => {
+        if ('children' in cur) {
+          pre.push(...cur.children.filter(item => item.star))
+          return pre
+        } else {
+          if (cur.star) pre.push(cur)
+          return pre
+        }
+      }, [] as Favorite[]),
+    [favorites]
+  )
+
+  const [currentTab, setTab] = useState<TabType>(
+    starrtedFavorites.length === 0 ? 'all' : 'star'
+  )
   const handleChange = (_event: SyntheticEvent, value: TabType) => setTab(value)
 
   return (
@@ -20,28 +45,24 @@ export const HomeFavorites = () => {
             variant="fullWidth"
             sx={{ minHeight: 42 }}
           >
-            <Tab
-              label="收藏夹"
-              value="starred"
-              sx={{
-                minHeight: 40,
-                flex: 1,
-                fontWeight: currentTab === 'starred' ? 700 : 500,
-              }}
-            />
-            <Tab
-              label="链接列表"
-              value="all"
-              sx={{
-                minHeight: 40,
-                flex: 1,
-                fontWeight: currentTab === 'all' ? 700 : 500,
-              }}
-            />
+            {tabs.map(tab => (
+              <Tab
+                key={tab.id}
+                label={tab.name}
+                value={tab.id}
+                sx={{
+                  minHeight: 40,
+                  minWidth: 'auto',
+                  flex: 1,
+                  whiteSpace: 'nowrap',
+                  fontWeight: currentTab === tab.id ? 700 : 500,
+                }}
+              />
+            ))}
           </TabList>
         </Box>
-        <TabPanel value="starred" sx={{ p: 0 }}>
-          <HomeFavoritesStarredList />
+        <TabPanel value="star" sx={{ p: 0 }}>
+          <HomeFavoritesStarredList list={starrtedFavorites} />
           <Divider />
           <HomeFavoritesLinkEdit />
         </TabPanel>

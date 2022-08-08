@@ -1,12 +1,20 @@
 import {
   AlternateEmailOutlined,
   AlternateEmailRounded,
+  ArticleOutlined,
+  ArticleRounded,
   BugReportOutlined,
   BugReportRounded,
   ClassOutlined,
   ClassRounded,
+  DataObjectOutlined,
+  DataObjectRounded,
+  ExtensionOutlined,
+  ExtensionRounded,
   HelpOutlineOutlined,
   HelpRounded,
+  HistoryOutlined,
+  HistoryRounded,
   InboxOutlined,
   InboxRounded,
   InsertChartOutlined,
@@ -21,10 +29,13 @@ import {
   amber,
   blue,
   green,
-  purple,
+  lightBlue,
   orange,
   pink,
+  purple,
   red,
+  teal,
+  yellow,
 } from '@mui/material/colors'
 import { type ElementType } from 'react'
 import { HomePage } from '../routers'
@@ -111,64 +122,91 @@ export type Shortcut = {
   id: string
   icon: SvgIconComponent[]
   color: string[]
+  external?: boolean
 }
 
 export type Shortcuts = {
-  pinned: Shortcut[][]
-  others: Shortcut[][]
+  pinned: Shortcut[]
+  others: Shortcut[]
 }
 
 export const shortcuts = {
   pinned: [
-    [
-      {
-        name: '课程',
-        href: '/courses',
-        id: 'courses',
-        icon: [ClassOutlined, ClassRounded],
-        color: [red[500], red[400]],
-      },
-      {
-        name: '设置',
-        href: '/settings',
-        id: 'settings',
-        icon: [SettingsOutlined, SettingsRounded],
-        color: [amber[600], amber[500]],
-      },
-    ],
-    [
-      {
-        name: '成绩',
-        href: '/scores',
-        id: 'scores',
-        icon: [InsertChartOutlined, InsertChartRounded],
-        color: [green[500], green[400]],
-      },
-      {
-        name: '课表',
-        href: '/schedules',
-        id: 'schedules',
-        icon: [TableChartOutlined, TableChartRounded],
-        color: [blue[500], blue[400]],
-      },
-    ],
+    {
+      name: '课程',
+      href: '/courses',
+      id: 'courses',
+      icon: [ClassOutlined, ClassRounded],
+      color: [red[500], red[400]],
+    },
+    {
+      name: '设置',
+      href: '/settings',
+      id: 'settings',
+      icon: [SettingsOutlined, SettingsRounded],
+      color: [amber[600], amber[500]],
+    },
+    {
+      name: '成绩',
+      href: '/scores',
+      id: 'scores',
+      icon: [InsertChartOutlined, InsertChartRounded],
+      color: [green[500], green[400]],
+    },
+    {
+      name: '课表',
+      href: '/schedules',
+      id: 'schedules',
+      icon: [TableChartOutlined, TableChartRounded],
+      color: [blue[500], blue[400]],
+    },
   ],
   others: [
-    [
-      {
-        name: '联系',
-        href: '/settings?tab=contact',
-        id: 'contact',
-        icon: [AlternateEmailOutlined, AlternateEmailRounded],
-        color: [orange[600], orange[500]],
-      },
-      {
-        name: '帮助',
-        href: '/settings?tab=help',
-        id: 'help',
-        icon: [HelpOutlineOutlined, HelpRounded],
-        color: [purple[400], purple[300]],
-      },
-    ],
+    {
+      name: '插件',
+      href: '/settings?tab=extension',
+      id: 'extension',
+      icon: [ExtensionOutlined, ExtensionRounded],
+      color: [yellow[600], yellow[500]],
+    },
+    {
+      name: '反馈',
+      href: '/settings?tab=contact',
+      id: 'contact',
+      icon: [AlternateEmailOutlined, AlternateEmailRounded],
+      color: [orange[600], orange[500]],
+    },
+    {
+      name: '帮助',
+      href: '/settings?tab=help',
+      id: 'help',
+      icon: [HelpOutlineOutlined, HelpRounded],
+      color: [purple[400], purple[300]],
+    },
+
+    {
+      name: '代码',
+      href: 'https://github.com/QingLianJie',
+      id: 'codes',
+      icon: [DataObjectOutlined, DataObjectRounded],
+      color: [teal[500], teal[400]],
+      external: true,
+    },
+    {
+      name: '文档',
+      href: 'https://docs.qing-dev.dist.run',
+      id: 'docs',
+      icon: [ArticleOutlined, ArticleRounded],
+      color: [pink[400], pink[300]],
+      external: true,
+    },
+    {
+      name: '旧版',
+      href: 'https://v1.qinglianjie.cn',
+      id: 'legacy',
+      icon: [HistoryOutlined, HistoryRounded],
+      color: [lightBlue[500], lightBlue[400]],
+      external: true,
+    },
   ],
 } as Shortcuts

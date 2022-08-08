@@ -157,7 +157,9 @@ const PlanList = ({ plan }: PlanListProps) => {
                     transition: 'all 0.2s',
                   }}
                 />
-                <Typography sx={{ fontWeight: 700 }}>
+                <Typography
+                  sx={{ fontWeight: 700, fontVariantNumeric: 'tabular-nums' }}
+                >
                   {calcCredits(list.rules)} 分
                 </Typography>
               </ListItemButton>
@@ -190,7 +192,10 @@ const PlanList = ({ plan }: PlanListProps) => {
                           {item.rules && (
                             <Typography
                               variant="body2"
-                              sx={{ fontWeight: 700 }}
+                              sx={{
+                                fontWeight: 700,
+                                fontVariantNumeric: 'tabular-nums',
+                              }}
                             >
                               {calcCredits(item.rules)} 分
                             </Typography>
@@ -214,7 +219,10 @@ const PlanList = ({ plan }: PlanListProps) => {
                                   {child.name}
                                 </Typography>
 
-                                <Typography variant="body2">
+                                <Typography
+                                  variant="body2"
+                                  sx={{ fontVariantNumeric: 'tabular-nums' }}
+                                >
                                   {calcCredits(child.rules)} 分
                                 </Typography>
                               </ListItem>
@@ -249,7 +257,9 @@ const PlanList = ({ plan }: PlanListProps) => {
               <ListItemText
                 primary={`${list.name} (${calcCounts(list.rules)})`}
               />
-              <Typography sx={{ fontWeight: 700 }}>
+              <Typography
+                sx={{ fontWeight: 700, fontVariantNumeric: 'tabular-nums' }}
+              >
                 {calcCredits(list.rules)} 分
               </Typography>
             </ListItemButton>

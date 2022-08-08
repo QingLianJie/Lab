@@ -58,7 +58,9 @@ export const HomeFavoritesList = () => {
                       onClick={() => handleRemove(favorite.name, favorite.id)}
                       sx={{ right: '2.5px' }}
                     >
-                      <FolderDeleteOutlined sx={{ color: red[500] }} />
+                      <FolderDeleteOutlined
+                        sx={{ color: red[500], width: 22, height: 22 }}
+                      />
                     </IconButton>
                   </Tooltip>
                 )
@@ -77,11 +79,13 @@ export const HomeFavoritesList = () => {
                   />
                 </ListItemIcon>
                 <ListItemText
-                  primary={favorite.name}
+                  primary={`${favorite.name} (${favorite.children.length})`}
                   sx={{
                     '& span': {
                       fontSize: 'body1.fontSize',
+                      whiteSpace: 'nowrap',
                       fontWeight: open.includes(favorite.id) ? 700 : 500,
+                      fontVariantNumeric: 'tabular-nums',
                     },
                   }}
                 />
@@ -113,36 +117,27 @@ export const HomeFavoritesList = () => {
   )
 }
 
-export const HomeFavoritesStarredList = () => {
-  const favorites = useAtomValue(favoritesAtom)
+interface HomeFavoritesStarredListProps {
+  list: Favorite[]
+}
 
-  const starrtedFavorites = useMemo(
-    () =>
-      favorites.reduce((pre, cur) => {
-        if ('children' in cur) {
-          pre.push(...cur.children.filter(item => item.star))
-          return pre
-        } else {
-          if (cur.star) pre.push(cur)
-          return pre
-        }
-      }, [] as Favorite[]),
-    [favorites]
-  )
-
+export const HomeFavoritesStarredList = ({
+  list,
+}: HomeFavoritesStarredListProps) => {
   return (
     <List dense sx={{ width: '100%' }}>
       <TransitionGroup>
-        {starrtedFavorites.length === 0 ? (
+        {list.length === 0 ? (
           <Collapse>
             <Stack
               spacing={0.5}
-              sx={{ width: '100%', alignItems: 'center', py: { xs: 6, sm: 4 } }}
+              sx={{
+                width: '100%',
+                alignItems: 'center',
+                py: { xs: 6, sm: 4 },
+              }}
             >
-              <Typography
-                variant="body1"
-                sx={{ fontWeight: 700, color: 'text.secondary' }}
-              >
+              <Typography variant="body1" sx={{ color: 'text.secondary' }}>
                 没有收藏过的链接
               </Typography>
               <Typography
@@ -154,7 +149,7 @@ export const HomeFavoritesStarredList = () => {
             </Stack>
           </Collapse>
         ) : (
-          starrtedFavorites.map(favorite => (
+          list.map(favorite => (
             <Collapse key={favorite.name}>
               <HomeFavoritesLinkItem favorite={favorite} />
             </Collapse>

@@ -78,7 +78,7 @@ export const HomeFavoritesLinkItem = ({
               onClick={handleRemove}
               sx={{ right: '2.5px' }}
             >
-              <DeleteOutlined sx={{ color: red[500] }} />
+              <DeleteOutlined sx={{ color: red[500], width: 22, height: 22 }} />
             </IconButton>
           </Tooltip>
         ) : (

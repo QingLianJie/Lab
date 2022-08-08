@@ -8,6 +8,9 @@ import {
   CardActionArea,
   Divider,
   Icon,
+  List,
+  ListItem,
+  ListItemText,
   Stack,
   Typography,
 } from '@mui/material'
@@ -37,27 +40,31 @@ export const HomeWidgetPlaceholder = () => {
   return (
     <Card variant="outlined">
       <Stack divider={<Divider />}>
-        <Stack
-          spacing={1}
-          sx={{ width: '100%', py: 2, px: 2.5, alignItems: 'flex-start' }}
-        >
-          <TaskItem name="1. 安装插件或 App" checked={!!bridge} />
-          <TaskItem name=" 2. 添加 HEU 账号" checked={!!student} />
-          <TaskItem
-            name="3. 获取成绩和课表数据"
-            checked={!!(scores && schedules)}
-          />
-        </Stack>
-
-        <Stack
-          spacing={0.5}
-          sx={{ alignItems: 'flex-start', py: 1.5, px: 2.5 }}
-        >
+        <Stack sx={{ width: '100%', py: 2, px: 2.5, alignItems: 'flex-start' }}>
+          <Typography
+            variant="body1"
+            sx={{
+              color: 'text.primary',
+              fontWeight: 700,
+              pb: 1.5,
+            }}
+          >
+            成绩和课表
+          </Typography>
           <Typography variant="body2" sx={{ color: 'text.secondary' }}>
             新版清廉街修改了数据获取方式，需要安装插件或者下载 App
             后获取成绩和课表数据。
           </Typography>
         </Stack>
+
+        <List dense sx={{ py: 1.5 }}>
+          <TaskItem name="1. 安装插件或 App" checked={!!bridge} />
+          <TaskItem name="2. 添加 HEU 账号" checked={!!student} />
+          <TaskItem
+            name="3. 获取成绩和课表数据"
+            checked={!!(scores && schedules)}
+          />
+        </List>
 
         <CardActionArea onClick={handleFetch} sx={{ pl: 2.5, pr: 2, py: 1.5 }}>
           <Stack
@@ -88,25 +95,38 @@ interface TaskItemProps {
 }
 
 const TaskItem = ({ name, checked }: TaskItemProps) => (
-  <Stack
-    direction="row"
-    sx={{
-      width: '100%',
-      alignItems: 'center',
-      justifyContent: 'space-between',
-    }}
-  >
-    <Typography variant="body1" sx={{ width: '100%', fontWeight: 700 }}>
-      {name}
-    </Typography>
-    <Icon
-      component={checked ? CheckOutlined : CloseOutlined}
+  <ListItem disablePadding sx={{ py: 0.125 }}>
+    <Stack
+      direction="row"
       sx={{
-        mr: -0.5,
-        color: checked ? green[400] : 'action.selected',
-        width: 20,
-        height: 20,
+        width: '100%',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        px: 2.5,
       }}
-    />
-  </Stack>
+    >
+      <ListItemText
+        primary={name}
+        sx={{
+          '& span': {
+            fontSize: 'body1.fontSize',
+            overflow: 'hidden',
+            textOverflow: 'ellipsis',
+            whiteSpace: 'nowrap',
+            fontVariantNumeric: 'tabular-nums',
+          },
+        }}
+      />
+
+      <Icon
+        component={checked ? CheckOutlined : CloseOutlined}
+        sx={{
+          mr: -0.5,
+          color: checked ? green[400] : 'action.disabled',
+          width: 20,
+          height: 20,
+        }}
+      />
+    </Stack>
+  </ListItem>
 )

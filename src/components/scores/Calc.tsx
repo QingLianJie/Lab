@@ -88,6 +88,7 @@ const CalcCard = ({ title, content, unit }: CalcCardProps) => (
         sx={{
           fontWeight: 700,
           fontSize: { xs: '1.25rem', sm: '1.5rem' },
+          fontVariantNumeric: 'tabular-nums',
         }}
       >
         {content}

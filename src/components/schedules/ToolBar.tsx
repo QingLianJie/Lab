@@ -20,10 +20,7 @@ import { range } from 'lodash'
 import { Fragment, useState } from 'react'
 import { groups, GroupsType } from '../../configs/scores/groups'
 import { studentAtom } from '../../contexts/bridge'
-import {
-  schedulesAtom,
-  schedulesViewAtom,
-} from '../../contexts/schedules'
+import { schedulesAtom, schedulesViewAtom } from '../../contexts/schedules'
 import { termName } from '../../utils/calc'
 import { Tooltip } from '../base/styled/Tooltip'
 import { SchedulesCalendarAction } from './actions/Calendar'
@@ -76,6 +73,7 @@ export const SchedulesToolBar = () => {
                 fontWeight: 700,
                 color: 'text.primary',
                 px: 1.5,
+                fontVariantNumeric: 'tabular-nums',
               }}
               onClick={e => setAnchorEl(e.currentTarget)}
             >
@@ -98,7 +96,11 @@ export const SchedulesToolBar = () => {
                     key={item}
                     sx={{ minWidth: 140, minHeight: 'unset' }}
                   >
-                    <ListItemText sx={{ flex: 1 }}>第 {item} 周</ListItemText>
+                    <ListItemText
+                      sx={{ flex: 1, fontVariantNumeric: 'tabular-nums' }}
+                    >
+                      第 {item} 周
+                    </ListItemText>
                     {item === schedulesView.week && (
                       <ListItemIcon sx={{ pl: 2 }}>
                         <CheckOutlined sx={{ fontSize: 20 }} />

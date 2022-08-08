@@ -42,7 +42,7 @@ export const SettingsHeader = ({
         borderColor: 'divider',
         pl: { xs: 1.5, sm: 2.5, md: 3 },
         pr: { xs: 1.5, md: 2 },
-        py: { xs: 0.75, sm: 1 },
+        py: 1,
       }}
     >
       {isMobile && (
@@ -65,7 +65,7 @@ export const SettingsHeader = ({
       <Typography
         variant="h1"
         sx={{
-          fontSize: { xs: 'body1.fontSize', sm: '1.125rem' },
+          fontSize: '1.125rem',
           fontWeight: 700,
           py: 1,
           flex: 1,

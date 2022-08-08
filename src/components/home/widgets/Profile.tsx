@@ -21,7 +21,7 @@ export const HomeProfileWidget = () => {
               pb: 1.5,
             }}
           >
-            登录到清廉街
+            加入清廉街
           </Typography>
           <Typography variant="body2" sx={{ color: 'text.secondary' }}>
             登录清廉街账号后，可以发表课程评论、同步收藏夹等。新版清廉街账号不再绑定
@@ -31,24 +31,20 @@ export const HomeProfileWidget = () => {
             direction="row"
             sx={{
               mx: -1.25,
-              mt: 1,
-              mb: -0.5,
+              mt: 2.5,
+              mb: -0.25,
               justifyContent: 'space-between',
             }}
           >
             <Stack direction="row">
-              <Button
-                sx={{ py: 0.5, px: 1.25 }}
-                onClick={() => setModals({ ...modals, auth: '登录' })}
-              >
-                登录
-              </Button>
-              <Button
-                sx={{ py: 0.5, px: 1.25 }}
-                onClick={() => setModals({ ...modals, auth: '注册' })}
-              >
-                注册
-              </Button>
+              {(['登录', '注册'] as const).map(text => (
+                <Button
+                  sx={{ py: 0.5, px: 1.25 }}
+                  onClick={() => setModals({ ...modals, auth: text })}
+                >
+                  {text}
+                </Button>
+              ))}
             </Stack>
             <Button
               sx={{ py: 0.5, px: 1.25 }}

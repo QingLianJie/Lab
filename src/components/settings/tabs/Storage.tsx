@@ -187,7 +187,12 @@ export const SettingsStorage = () => {
                   />
                   {calcStorage(storage.id) ? (
                     <Typography
-                      sx={{ px: 1, fontWeight: 700, fontSize: 'h6.fontSize' }}
+                      sx={{
+                        px: 1,
+                        fontWeight: 700,
+                        fontSize: 'h6.fontSize',
+                        fontVariantNumeric: 'tabular-nums',
+                      }}
                     >
                       {calcStorage(storage.id)}
                     </Typography>
