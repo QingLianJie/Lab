@@ -175,7 +175,7 @@ export const SettingsStorage = () => {
             {storages.map(storage => (
               <Fragment key={storage.id}>
                 <ListItem>
-                  <ListItemIcon sx={{ minWidth: 'unset', mr: 2 }}>
+                  <ListItemIcon sx={{ minWidth: 'unset', ml: 0.5, mr: 2.5 }}>
                     <Icon
                       component={storage.icon}
                       sx={{ color: storage.color[isDark ? 1 : 0] }}

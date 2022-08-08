@@ -29,7 +29,7 @@ export const SettingsExtension = () => {
           flex: 1,
           height: '100%',
           px: { xs: 2.5, md: 3 },
-          py: 4,
+          py: 8,
           alignItems: 'center',
           justifyContent: 'center',
         }}

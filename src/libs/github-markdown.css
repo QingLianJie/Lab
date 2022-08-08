@@ -421,7 +421,7 @@
 .markdown-body p {
   margin-top: 0;
   margin-bottom: 10px;
-  text-align: justify;
+  /* text-align: justify; */
 }
 
 .markdown-body blockquote {

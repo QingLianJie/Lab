@@ -139,7 +139,10 @@ export const HomeFavoritesStarredList = () => {
               spacing={0.5}
               sx={{ width: '100%', alignItems: 'center', py: { xs: 6, sm: 4 } }}
             >
-              <Typography variant="body1" sx={{ color: 'text.secondary' }}>
+              <Typography
+                variant="body1"
+                sx={{ fontWeight: 700, color: 'text.secondary' }}
+              >
                 没有收藏过的链接
               </Typography>
               <Typography

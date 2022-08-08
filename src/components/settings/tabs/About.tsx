@@ -54,8 +54,8 @@ export const SettingsAbout = () => {
           flex: 1,
           height: '100%',
           px: { xs: 2.5, md: 3 },
-          pt: 4,
-          pb: 6,
+          pt: 6,
+          pb: 8,
           alignItems: 'center',
           justifyContent: 'center',
         }}
@@ -69,7 +69,10 @@ export const SettingsAbout = () => {
         <Typography variant="h5" component="p" sx={{ fontWeight: 700 }}>
           {info.name}
         </Typography>
-        <Typography variant="body1" sx={{ color: 'text.secondary' }}>
+        <Typography
+          variant="body1"
+          sx={{ color: 'text.secondary', textAlign: 'center' }}
+        >
           {info.description.slice(0, -1)}
         </Typography>
 

@@ -22,7 +22,7 @@ export const SettingsHelp = () => (
       }
       sx={{ alignItems: 'flex-start', height: '100%' }}
     >
-      <Stack sx={{ flex: 1, width: '100%' }}>
+      <Stack sx={{ flex: { xs: 0, md: 1 }, width: '100%' }}>
         {faqs.slice(0, Math.ceil(faqs.length / 2)).map(faq => (
           <Details summary={faq.question} key={faq.question}>
             <Markdown>{faq.answer}</Markdown>

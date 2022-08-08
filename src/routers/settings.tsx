@@ -38,18 +38,18 @@ export const SettingsPage = () => {
         icon={SettingsRounded}
         color={amber[400]}
       >
-        <Card
-          variant="outlined"
-          sx={{ flex: 1, display: 'flex', flexDirection: 'column' }}
-        >
-          {dashboard ? (
-            dashboard === 'dashboard' ? (
+        {dashboard ? (
+          dashboard === 'dashboard' ? (
+            <Card
+              variant="outlined"
+              sx={{ flex: 1, display: 'flex', flexDirection: 'column' }}
+            >
               <SettingsDashboard />
-            ) : (
-              <SettingsTab />
-            )
-          ) : null}
-        </Card>
+            </Card>
+          ) : (
+            <SettingsTab />
+          )
+        ) : null}
       </Layout>
     </ThemeProvider>
   )

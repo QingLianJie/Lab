@@ -49,14 +49,18 @@ export const SettingsDeveloper = () => {
             }}
           />
         }
-        sx={{ height: '100%' }}
+        sx={{ flex: 1, height: '100%' }}
       >
         <Stack
           spacing={2}
-          sx={{ flex: 1, px: { xs: 2.5, md: 3 }, py: { xs: 2, md: 2.5 } }}
+          sx={{
+            flex: { xs: 0, md: 1 },
+            px: { xs: 2.5, md: 3 },
+            py: { xs: 2, md: 2.5 },
+          }}
         >
           <Stack spacing={1.5} sx={{ flex: 1 }}>
-            <Alert severity="warning" variant="outlined" sx={{ mb: 1.5 }}>
+            <Alert severity="warning" variant="outlined" sx={{ mb: 1 }}>
               修改开发者选项可能会导致网页出现异常，请不要将未知的代码或者链接填入下方输入框！
             </Alert>
             <TextField
@@ -82,13 +86,28 @@ export const SettingsDeveloper = () => {
               }
               inputProps={{ component: TextareaAutosize }}
             />
-
+            <Alert severity="info" variant="outlined">
+              未来清廉街会开放后端
+              API，你可以自己搭建后端服务器，实现清廉街的大部分功能。
+            </Alert>
+            <Alert severity="info" variant="outlined">
+              如果你对程序开发感兴趣，欢迎{' '}
+              <Link
+                component={RouterLink}
+                to="/settings?tab=contact"
+                sx={{ color: indigo[isDark ? 200 : 500] }}
+              >
+                加入我们
+              </Link>{' '}
+              。
+            </Alert>
             <TextField
               id="api"
               label="后端 API 地址"
               defaultValue={settings.developer.api}
               size="small"
               sx={{ fontFamily: 'code.fontFamily' }}
+              helperText="例如：https://api.qinglianjie.cn"
               onChange={e =>
                 setSettings(s => ({
                   ...s,
@@ -100,22 +119,6 @@ export const SettingsDeveloper = () => {
               }
             />
           </Stack>
-          <Stack
-            direction="row"
-            sx={{ justifyContent: 'space-between', alignItems: 'center' }}
-          >
-            <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-              如果你对程序开发感兴趣，欢迎{' '}
-              <Link
-                component={RouterLink}
-                to="/settings?tab=contact"
-                sx={{ color: indigo[isDark ? 200 : 500] }}
-              >
-                加入我们
-              </Link>
-              。
-            </Typography>
-          </Stack>
         </Stack>
 
         <Stack
@@ -125,7 +128,6 @@ export const SettingsDeveloper = () => {
             px: { xs: 2.5, md: 3 },
             py: { xs: 2, md: 2.5 },
             fontSize: '0.925rem',
-            maxHeight: 420,
             overflow: 'auto',
           }}
         >

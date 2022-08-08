@@ -74,7 +74,7 @@ const Loading = () => (
       variant="square"
       alt="网站 Logo"
       src={LogoOutlined}
-      sx={{ width: 96, height: 96, mt: 6, mb: 2 }}
+      sx={{ width: 96, height: 96, mt: { sx: 0, sm: 6 }, mb: 4 }}
     />
     <Typography variant="h6" component="p" sx={{ userSelect: 'none' }}>
       正在进入{' '}
