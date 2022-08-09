@@ -1,21 +1,17 @@
 import { VisibilityOffOutlined, VisibilityOutlined } from '@mui/icons-material'
 import {
   Button,
-  Dialog,
-  DialogContent,
-  DialogTitle,
-  Divider,
   IconButton,
   InputAdornment,
   Stack,
   TextField,
-  Typography,
 } from '@mui/material'
 import { useAtom } from 'jotai'
 import { enqueueSnackbar } from 'notistack'
-import { type FormEvent, useEffect, useRef, useState } from 'react'
-import { modalsAtom } from '../../../contexts/modals'
+import { useEffect, useRef, useState, type FormEvent } from 'react'
 import { studentAtom } from '../../../contexts/bridge'
+import { modalsAtom } from '../../../contexts/modals'
+import { Modal } from '../../base/Modal'
 
 export const BindModal = () => {
   const [modals, setModals] = useAtom(modalsAtom)
@@ -50,104 +46,82 @@ export const BindModal = () => {
   }
 
   return (
-    <Dialog
+    <Modal
+      title="HEU 账号"
+      subtitle="账号信息仅存于本地"
       fullWidth
       maxWidth={false}
       keepMounted
       open={modals.bind}
       onClose={handleCancel}
-      sx={{
-        '& .MuiPaper-root': { maxWidth: '18rem' },
-        '& .MuiDialogContent-root': { p: 0 },
-      }}
+      sx={{ '& .MuiPaper-root': { maxWidth: '16rem' } }}
     >
-      <DialogTitle>
-        <Typography
-          component="p"
-          variant="h6"
-          sx={{ textAlign: 'center', pt: 3, pb: 0.5, fontWeight: 700 }}
-        >
-          {student ? '修改' : '添加'} HEU 账号
-        </Typography>
-        <Typography
-          component="p"
-          variant="body2"
-          color="text.secondary"
-          sx={{ textAlign: 'center', pb: 2.5 }}
-        >
-          账号信息将储存在浏览器中
-        </Typography>
-      </DialogTitle>
-      <Divider />
-      <DialogContent>
-        <Stack
-          component="form"
-          onSubmit={handleBind}
-          sx={{ px: 3, pt: 2, pb: 3 }}
-        >
-          <TextField
-            inputRef={inputRef}
-            required
-            name="id"
-            label="学号"
-            size="small"
-            margin="dense"
-            fullWidth
-            autoFocus
-            value={id}
-            onChange={e => setId(e.target.value)}
-          />
+      <Stack
+        component="form"
+        spacing={1.5}
+        onSubmit={handleBind}
+        sx={{ px: 2.5, pb: 2.5 }}
+      >
+        <TextField
+          inputRef={inputRef}
+          required
+          name="id"
+          label="学号"
+          size="small"
+          fullWidth
+          autoFocus
+          value={id}
+          onChange={e => setId(e.target.value)}
+        />
 
-          <TextField
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position={'end'} sx={{ mr: -1 }}>
-                  <IconButton
-                    onClick={() => setShowPassword(!showPassword)}
-                    tabIndex={-1}
-                    sx={{ color: 'text.disabled' }}
-                  >
-                    {showPassword ? (
-                      <VisibilityOutlined fontSize="small" />
-                    ) : (
-                      <VisibilityOffOutlined fontSize="small" />
-                    )}
-                  </IconButton>
-                </InputAdornment>
-              ),
-            }}
-            type={showPassword ? 'text' : 'password'}
-            required
-            name="password"
-            label="密码"
-            size="small"
-            margin="dense"
-            fullWidth
-            value={password}
-            onChange={e => setPassword(e.target.value)}
-          />
+        <TextField
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position={'end'} sx={{ mr: -1 }}>
+                <IconButton
+                  onClick={() => setShowPassword(!showPassword)}
+                  tabIndex={-1}
+                  sx={{ color: 'text.disabled' }}
+                >
+                  {showPassword ? (
+                    <VisibilityOutlined fontSize="small" />
+                  ) : (
+                    <VisibilityOffOutlined fontSize="small" />
+                  )}
+                </IconButton>
+              </InputAdornment>
+            ),
+          }}
+          type={showPassword ? 'text' : 'password'}
+          required
+          name="password"
+          label="密码"
+          size="small"
+          fullWidth
+          value={password}
+          onChange={e => setPassword(e.target.value)}
+        />
 
+        <Button
+          type="submit"
+          variant="contained"
+          color="primary"
+          sx={{ width: '100%', mt: 1, py: 0.75 }}
+        >
+          {student ? '修改' : '添加'}账号
+        </Button>
+        {student && (
           <Button
-            type="submit"
-            variant="contained"
+            type="button"
+            variant="outlined"
             color="primary"
-            sx={{ width: '100%', mt: 1, py: 0.75 }}
+            sx={{ width: '100%', mt: 1.5, py: 0.625 }}
+            onClick={handleUnBind}
           >
-            {student ? '修改' : '添加'}账号
+            移除当前账号
           </Button>
-          {student && (
-            <Button
-              type="button"
-              variant="outlined"
-              color="warning"
-              sx={{ width: '100%', mt: 1.5, py: 0.625 }}
-              onClick={handleUnBind}
-            >
-              移除当前账号
-            </Button>
-          )}
-        </Stack>
-      </DialogContent>
-    </Dialog>
+        )}
+      </Stack>
+    </Modal>
   )
 }

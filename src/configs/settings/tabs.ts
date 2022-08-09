@@ -137,23 +137,3 @@ export const settingsTabs = [
     dashboard: true,
   },
 ] as SettingsTabs
-
-export type AuthTabs = {
-  name: string
-  component: ElementType
-}[]
-
-export const authTabs = [
-  {
-    name: '登录',
-    component: AuthLogin,
-  },
-  {
-    name: '注册',
-    component: AuthRegister,
-  },
-  {
-    name: '重置密码',
-    component: AuthResetPassword,
-  },
-] as AuthTabs

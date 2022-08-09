@@ -36,7 +36,7 @@ export const SettingsHeader = ({
 
   return (
     <Stack
-      spacing={{ xs: 1, sm: 1.75 }}
+      spacing={{ xs: 1, sm: 2 }}
       direction="row"
       sx={{
         alignItems: 'center',

@@ -111,14 +111,14 @@ export const HomeFavoritesShare = () => {
             size="small"
             onChange={e => setGroup(e.target.value)}
           >
-            <MenuItem value="">全部</MenuItem>
+            <MenuItem value="">所有链接和分组</MenuItem>
             {favoritesGroup.map(favorite => (
               <MenuItem value={favorite.name} key={favorite.id}>
                 {favorite.name}
               </MenuItem>
             ))}
           </Select>
-          <FormHelperText>默认分享全部链接和分组</FormHelperText>
+          <FormHelperText>默认分享所有链接和分组</FormHelperText>
         </FormControl>
         <Tooltip title="复制分享代码" arrow placement="top">
           <IconButton

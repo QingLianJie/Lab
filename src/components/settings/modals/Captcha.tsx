@@ -3,15 +3,11 @@ import {
   Autocomplete,
   Box,
   Checkbox,
-  Dialog,
-  DialogContent,
-  DialogTitle,
   Divider,
   FormControl,
   FormControlLabel,
   Stack,
   TextField,
-  Typography,
 } from '@mui/material'
 import { useAtom, useAtomValue, useSetAtom } from 'jotai'
 import { range } from 'lodash'
@@ -19,10 +15,11 @@ import { enqueueSnackbar } from 'notistack'
 import { useEffect, useRef, useState, type FormEvent } from 'react'
 import { Score, Scores } from '../../..'
 import { colors } from '../../../configs/schedules/colors'
-import { modalsAtom } from '../../../contexts/modals'
 import { bridgeAtom, studentAtom } from '../../../contexts/bridge'
+import { modalsAtom } from '../../../contexts/modals'
 import { schedulesAtom } from '../../../contexts/schedules'
 import { scoresAtom } from '../../../contexts/scores'
+import { Modal } from '../../base/Modal'
 
 const terms = range(2001, new Date().getFullYear() + 1)
   .map(year => [`${year}-${year + 1}-1`, `${year}-${year + 1}-2`])
@@ -160,127 +157,104 @@ export const CaptchaModal = () => {
   }
 
   return (
-    <Dialog
+    <Modal
+      title="获取数据"
+      subtitle="需要输入验证码继续"
       fullWidth
       maxWidth={false}
       keepMounted
       open={!!modals.captcha}
       onClose={() => setModals({ ...modals, captcha: false })}
-      sx={{
-        '& .MuiPaper-root': { maxWidth: '16rem' },
-        '& .MuiDialogContent-root': { p: 0 },
-      }}
+      sx={{ '& .MuiPaper-root': { maxWidth: '16rem' } }}
     >
-      <DialogTitle>
-        <Typography
-          component="p"
-          variant="h6"
-          sx={{ textAlign: 'center', pt: 3, pb: 0.5, fontWeight: 700 }}
+      <Stack
+        component="form"
+        onSubmit={handleFetch}
+        spacing={1.5}
+        sx={{ px: 2.5, pb: 2.5, alignItems: 'center' }}
+      >
+        <Stack direction="row" spacing={1.5}>
+          <Box
+            ref={imageRef}
+            component="img"
+            src=""
+            onClick={handleCaptcha}
+            title="点击更换验证码"
+            alt="验证码"
+            sx={{
+              flex: 1,
+              borderRadius: 1,
+              border: 1,
+              borderColor: 'divider',
+              backgroundColor: 'action.hover',
+              cursor: 'pointer',
+            }}
+          />
+          <TextField
+            inputRef={inputRef}
+            required
+            name="id"
+            label="验证码"
+            size="small"
+            fullWidth
+            autoFocus
+            value={captcha}
+            onChange={e => setCaptcha(e.target.value)}
+            sx={{ flex: 1 }}
+          />
+        </Stack>
+        <Autocomplete
+          options={terms}
+          size="small"
+          sx={{ width: '100%' }}
+          inputValue={term}
+          onInputChange={(_e, v) => setTerm(v)}
+          renderInput={params => (
+            <TextField {...params} fullWidth label="课表学期，默认为最新" />
+          )}
+        />
+
+        <LoadingButton
+          type="submit"
+          variant="contained"
+          color="primary"
+          loading={isLoading}
+          loadingIndicator={status}
+          sx={{ width: '100%', mt: 1, py: 0.75 }}
         >
           获取数据
-        </Typography>
-        <Typography
-          component="p"
-          variant="body2"
-          color="text.secondary"
-          sx={{ textAlign: 'center', pb: 2.5 }}
-        >
-          需要输入验证码继续
-        </Typography>
-      </DialogTitle>
-      <Divider />
-      <DialogContent>
-        <Stack
-          component="form"
-          onSubmit={handleFetch}
-          spacing={1.5}
-          sx={{ p: 2, alignItems: 'center' }}
-        >
-          <Stack direction="row" spacing={1.5}>
-            <Box
-              ref={imageRef}
-              component="img"
-              src=""
-              onClick={handleCaptcha}
-              title="点击更换验证码"
-              alt="验证码"
-              sx={{
-                flex: 1,
-                borderRadius: 1,
-                border: 1,
-                borderColor: 'divider',
-                backgroundColor: 'action.hover',
-                cursor: 'pointer',
-              }}
-            />
-            <TextField
-              inputRef={inputRef}
-              required
-              name="id"
-              label="验证码"
-              size="small"
-              margin="dense"
-              fullWidth
-              autoFocus
-              value={captcha}
-              onChange={e => setCaptcha(e.target.value)}
-              sx={{ flex: 1 }}
-            />
-          </Stack>
-          <Autocomplete
-            options={terms}
-            size="small"
-            sx={{ width: '100%' }}
-            inputValue={term}
-            onInputChange={(_e, v) => setTerm(v)}
-            renderInput={params => (
-              <TextField {...params} fullWidth label="课表学期，默认为最新" />
-            )}
-          />
+        </LoadingButton>
+      </Stack>
+      <Divider sx={{ width: '100%' }} />
 
-          <LoadingButton
-            type="submit"
-            variant="contained"
-            color="primary"
-            loading={isLoading}
-            loadingIndicator={status}
-            sx={{ width: '100%', mt: 1, py: 0.75 }}
-          >
-            获取数据
-          </LoadingButton>
-        </Stack>
-        <Divider sx={{ width: '100%' }} />
-
-        <Stack spacing={1.5} sx={{ px: 2, py: 1.5 }}>
-          <FormControl
+      <Stack spacing={1.5} sx={{ px: 2.75, py: 1.75 }}>
+        <FormControl
+          sx={{
+            width: '100%',
+            display: 'flex',
+            alignItems: 'flex-start',
+          }}
+        >
+          <FormControlLabel
+            control={
+              <Checkbox
+                sx={{ my: -1 }}
+                size="small"
+                checked={upload}
+                onChange={e => setUpload(e.target.checked)}
+              />
+            }
+            label="同时将数据匿名上传，帮助清廉街完善课程数据库"
             sx={{
               width: '100%',
-
-              display: 'flex',
+              ml: -1,
+              mr: 0,
               alignItems: 'flex-start',
+              '& span': { fontSize: 'body2.fontSize' },
             }}
-          >
-            <FormControlLabel
-              control={
-                <Checkbox
-                  sx={{ my: -1 }}
-                  size="small"
-                  checked={upload}
-                  onChange={e => setUpload(e.target.checked)}
-                />
-              }
-              label="同时将数据匿名上传，帮助清廉街完善课程数据库"
-              sx={{
-                width: '100%',
-                ml: -1,
-                mr: 0,
-                alignItems: 'flex-start',
-                '& span': { fontSize: 'body2.fontSize' },
-              }}
-            />
-          </FormControl>
-        </Stack>
-      </DialogContent>
-    </Dialog>
+          />
+        </FormControl>
+      </Stack>
+    </Modal>
   )
 }

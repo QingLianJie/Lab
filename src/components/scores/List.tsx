@@ -154,7 +154,7 @@ export const ScoresList = () => {
             >
               <Stack
                 direction="row"
-                spacing={2}
+                spacing={1.5}
                 divider={
                   <Divider orientation="vertical" sx={{ height: 'auto' }} />
                 }

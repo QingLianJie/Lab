@@ -90,7 +90,7 @@ export const HomeFavoritesLinkEdit = () => {
           spacing={1.5}
           direction="row"
           sx={{
-            pl: 2.25,
+            pl: 2.5,
             pr: 2,
             py: 1.5,
             alignItems: 'center',
@@ -132,6 +132,7 @@ export const HomeFavoritesLinkEdit = () => {
             id="link-href"
             label="地址"
             size="small"
+            type="url"
             required
             value={form.href}
             onChange={e => setForm({ ...form, href: e.target.value })}

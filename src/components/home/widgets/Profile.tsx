@@ -31,12 +31,12 @@ export const HomeProfileWidget = () => {
             direction="row"
             sx={{
               mx: -1.25,
-              mt: 1,
+              mt: 2,
               mb: -0.5,
               justifyContent: 'space-between',
             }}
           >
-            <Stack direction="row">
+            <Stack direction="row" spacing={0.25}>
               {(['登录', '注册'] as const).map(text => (
                 <Button
                   sx={{ py: 0.5, px: 1.25 }}

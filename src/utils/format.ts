@@ -50,3 +50,6 @@ export const formatNumbers = (nums: number[]) => {
   })
   return arrs
 }
+
+export const NameRegex = '^.{3,16}$'
+export const PasswordRegex = '^.*(?=.{8,24})(?=.*[A-Za-z!@#$%^&*?]).*$'

@@ -8,6 +8,8 @@ import {
   Button,
   type DialogProps,
   IconButton,
+  Typography,
+  Stack,
 } from '@mui/material'
 import { type ReactNode } from 'react'
 
@@ -51,6 +53,7 @@ interface ModalProps extends DialogProps {
   open: boolean
   onClose: () => void
   title: string
+  subtitle?: string
   children: ReactNode
 }
 
@@ -58,17 +61,32 @@ export const Modal = ({
   open,
   onClose,
   title,
+  subtitle,
   children,
   ...props
 }: ModalProps) => (
   <Dialog open={open} onClose={onClose} {...props}>
-    <DialogTitle sx={{ fontSize: '1rem', fontWeight: 700 }}>
-      {title}
+    <DialogTitle sx={{ py: 2.125 }}>
+      <Stack spacing={0.375}>
+        <Typography
+          sx={{
+            fontSize: subtitle ? '1.125rem' : 'body1.fontSize',
+            fontWeight: 700,
+          }}
+        >
+          {title}
+        </Typography>
+        {subtitle && (
+          <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+            {subtitle}
+          </Typography>
+        )}
+      </Stack>
       <IconButton
         aria-label="关闭"
         title="关闭"
         onClick={onClose}
-        sx={{ position: 'absolute', right: 12, top: 10 }}
+        sx={{ position: 'absolute', right: 12, top: subtitle ? 10 : 9 }}
       >
         <CloseOutlined
           sx={{

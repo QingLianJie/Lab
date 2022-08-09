@@ -94,11 +94,11 @@ export const SchedulesDetails = () => {
             <Stack spacing={2} direction={{ xs: 'column', sm: 'row' }}>
               {cache.map((course, index) => (
                 <Card key={index} sx={{ width: '16rem', boxShadow: 18 }}>
-                  <Stack spacing={1} sx={{ height: '100%', py: 2 }}>
-                    <Typography sx={{ fontWeight: 700, px: 2.5 }}>
+                  <Stack spacing={1} sx={{ height: '100%', py: 2.5 }}>
+                    <Typography sx={{ fontWeight: 700, px: 3 }}>
                       {course.name}
                     </Typography>
-                    <List sx={{ flex: 1 }}>
+                    <List sx={{ flex: 1, py: 0.5 }}>
                       <CourseItem icon={CalendarMonthOutlined} color={red}>
                         {formatRange(course.week)} 周
                       </CourseItem>
@@ -130,10 +130,11 @@ export const SchedulesDetails = () => {
                         </CourseItem>
                       )}
                     </List>
-                    <Stack sx={{ px: 2 }}>
+                    <Stack sx={{ px: 2.5 }}>
                       <Button
                         fullWidth
-                        variant="outlined"
+                        variant="contained"
+                        color="primary"
                         onClick={() => handleSearch(course.name)}
                         sx={{ py: 0.75 }}
                       >
@@ -167,7 +168,7 @@ const CourseItem = ({ icon, color, children, text }: CourseItemProps) => {
       <ListItemButton
         sx={{
           py: 0.5,
-          px: 2.5,
+          px: 2.75,
           alignItems: 'flex-start',
           '&:hover svg': { color: color[isDark ? 400 : 500] },
         }}

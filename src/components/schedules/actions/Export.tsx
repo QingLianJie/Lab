@@ -94,7 +94,7 @@ export const SchedulesExportAction = () => {
         onClose={() => setOpen(false)}
         sx={{ '& .MuiPaper-root': { maxWidth: '16rem' } }}
       >
-        <Stack spacing={1} sx={{ px: 3, pb: 2 }}>
+        <Stack spacing={1} sx={{ px: 3, pb: 2.5 }}>
           <Typography variant="body2">
             清廉街的课表系统做的不是很完善，如果你想要课程提醒之类的高级功能，可以使用
             WakeUp 课程表、小爱课程表、超级课程表等课表应用。

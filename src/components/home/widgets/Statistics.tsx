@@ -111,7 +111,10 @@ export const HomeStatisticsWidget = () => {
                   py: 0.1,
                 }}
               />
-              <Typography variant="body1" sx={{ fontWeight: 700 }}>
+              <Typography
+                variant="body2"
+                sx={{ fontSize: '0.925rem', fontWeight: 700 }}
+              >
                 {student ? student.id : '未知 ID'}
               </Typography>
             </Stack>
@@ -192,8 +195,8 @@ const StatsCard = ({ title, content, unit }: StatsCardProps) => (
     spacing={0.5}
     sx={{
       px: 2.25,
-      pt: 2,
-      pb: 1.75,
+      pt: 1.75,
+      pb: 1.5,
       flex: 1,
       width: '100%',
       overflow: 'hidden',
