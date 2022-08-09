@@ -1,4 +1,4 @@
-import { CopyAllOutlined, LanguageOutlined } from '@mui/icons-material'
+import { AlternateEmailOutlined, CopyAllOutlined, LanguageOutlined } from '@mui/icons-material'
 import { Button, Divider, Stack, Typography } from '@mui/material'
 import { enqueueSnackbar } from 'notistack'
 import { Fragment } from 'react'
@@ -7,7 +7,11 @@ import { SettingsHeader } from '../Header'
 
 export const SettingsContact = () => (
   <Fragment>
-    <SettingsHeader title="联系我们" help="/settings?tab=help#feedback" />
+    <SettingsHeader
+      title="联系我们"
+      help="/settings?tab=help#feedback"
+      icon={AlternateEmailOutlined}
+    />
     <Stack
       direction={{ xs: 'column', sm: 'row' }}
       divider={

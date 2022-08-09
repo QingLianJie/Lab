@@ -73,7 +73,7 @@ export const SchedulesToolBar = () => {
             }}
           >
             <Button
-              sx={{ px: 1.75 }}
+              sx={{ px: 1.75, py: 1 }}
               onClick={e => setAnchorEl(e.currentTarget)}
             >
               <Typography

@@ -20,6 +20,7 @@ specifiers:
   dayjs: ^1.11.4
   fflate: ^0.7.3
   github-markdown-css: ^5.1.0
+  html-to-image: ^1.9.0
   jotai: ^1.7.7
   lodash: ^4.17.21
   notistack: 3.0.0-alpha.7
@@ -53,6 +54,7 @@ dependencies:
   dayjs: 1.11.4
   fflate: 0.7.3
   github-markdown-css: 5.1.0
+  html-to-image: 1.9.0
   jotai: 1.7.7_2sb3a56iojvze2npkgcccbebf4
   lodash: 4.17.21
   notistack: 3.0.0-alpha.7_vt6aeitzauirmcdhimiad2yjxy
@@ -3021,6 +3023,10 @@ packages:
     resolution: {integrity: sha512-/gGivxi8JPKWNm/W0jSmzcMPpfpPLc3dY/6GxhX2hQ9iGj3aDfklV4ET7NjKpSinLpJ5vafa9iiGIEZg10SfBw==}
     dependencies:
       react-is: 16.13.1
+    dev: false
+
+  /html-to-image/1.9.0:
+    resolution: {integrity: sha512-9gaDCIYg62Ek07F2pBk76AHgYZ2gxq2YALU7rK3gNCqXuhu6cWzsOQqM7qGbjZiOzxGzrU1deDqZpAod2NEwbA==}
     dev: false
 
   /html-void-elements/2.0.1:

@@ -2,6 +2,7 @@ import {
   DeleteOutlineOutlined,
   FileDownloadOutlined,
   FileUploadOutlined,
+  SdStorageOutlined,
 } from '@mui/icons-material'
 import { LoadingButton } from '@mui/lab'
 import {
@@ -105,7 +106,11 @@ export const SettingsStorage = () => {
 
   return (
     <Fragment>
-      <SettingsHeader title="数据存储管理" help="/settings?tab=help#storage" />
+      <SettingsHeader
+        title="数据存储管理"
+        help="/settings?tab=help#storage"
+        icon={SdStorageOutlined}
+      />
       <Stack
         direction={{ xs: 'column', sm: 'row' }}
         divider={
@@ -124,13 +129,13 @@ export const SettingsStorage = () => {
         <Stack
           sx={{
             flex: 1,
-            px: { xs: 1.5, md: 2 },
+            px: { xs: 1.25, md: 1.75 },
             pt: { xs: 2, md: 2.5 },
             pb: { xs: 1, md: 1.5 },
             fontSize: '0.925rem',
           }}
         >
-          <Box sx={{ px: 1 }}>
+          <Box sx={{ px: 1.25 }}>
             <Markdown>{markdown}</Markdown>
           </Box>
 

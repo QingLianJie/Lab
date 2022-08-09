@@ -10,7 +10,6 @@ import { schedulesAtom } from '../contexts/schedules'
 
 export const SchedulesPage = () => {
   const schedules = useAtomValue(schedulesAtom)
-
   const theme = useTheme()
   const { palette } = theme
 

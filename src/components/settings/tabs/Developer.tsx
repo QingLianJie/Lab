@@ -1,3 +1,4 @@
+import { DnsOutlined } from '@mui/icons-material'
 import {
   Alert,
   Divider,
@@ -5,10 +6,9 @@ import {
   Stack,
   TextareaAutosize,
   TextField,
-  Typography,
   useTheme,
 } from '@mui/material'
-import { amber, indigo } from '@mui/material/colors'
+import { indigo } from '@mui/material/colors'
 import { useAtom } from 'jotai'
 import { Fragment } from 'react'
 import { Link as RouterLink } from 'react-router-dom'
@@ -34,7 +34,11 @@ export const SettingsDeveloper = () => {
 
   return (
     <Fragment>
-      <SettingsHeader title="开发者选项" help="/settings?tab=help#developer" />
+      <SettingsHeader
+        title="开发者选项"
+        help="/settings?tab=help#developer"
+        icon={DnsOutlined}
+      />
 
       <Stack
         direction={{ xs: 'column', sm: 'row' }}

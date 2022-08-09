@@ -17,8 +17,7 @@ import { HomeShortcuts } from '../components/home/Shortcuts'
 import { HomeTrends } from '../components/home/Trends'
 import { HomeWidgetPlaceholder } from '../components/home/widgets/Placeholder'
 import { HomeProfileWidget } from '../components/home/widgets/Profile'
-import { HomeSchedulesWidget } from '../components/home/widgets/Schedules'
-import { HomeScoresWidget } from '../components/home/widgets/Scores'
+import { HomeStatisticsWidget } from '../components/home/widgets/Statistics'
 import { Layout } from '../components/Layout'
 import { schedulesAtom } from '../contexts/schedules'
 import { scoresAtom } from '../contexts/scores'
@@ -59,10 +58,7 @@ export const HomePage = () => {
               {isPad && (
                 <Fragment>
                   {scores && schedules ? (
-                    <Fragment>
-                      <HomeSchedulesWidget />
-                      <HomeScoresWidget />
-                    </Fragment>
+                    <HomeStatisticsWidget />
                   ) : (
                     <HomeWidgetPlaceholder />
                   )}
@@ -84,10 +80,7 @@ export const HomePage = () => {
             <Grid item xs={12} sm={5} md={4} lg={3}>
               <Stack spacing={2}>
                 {scores && schedules ? (
-                  <Fragment>
-                    <HomeSchedulesWidget />
-                    <HomeScoresWidget />
-                  </Fragment>
+                  <HomeStatisticsWidget />
                 ) : (
                   <HomeWidgetPlaceholder />
                 )}

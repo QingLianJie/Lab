@@ -148,7 +148,7 @@ const PlanList = ({ plan }: PlanListProps) => {
                 </ListItemIcon>
                 <ListItemText
                   primary={`${list.name} (${calcCounts(list.rules)})`}
-                  sx={{ fontVariantNumeric: 'tabular-nums' }}
+                  sx={{ fontVariantNumeric: 'tabular-nums', my: 0.375 }}
                 />
                 <Icon
                   component={ExpandMoreOutlined}
@@ -174,7 +174,7 @@ const PlanList = ({ plan }: PlanListProps) => {
                       key={item.name}
                       sx={{
                         pt: 0.5,
-                        px: 2.5,
+                        px: 2.25,
                         pb: item.children ? 0.25 : 0.5,
                       }}
                     >
@@ -235,7 +235,7 @@ const PlanList = ({ plan }: PlanListProps) => {
               </Collapse>
             </Fragment>
           ) : (
-            <ListItem key={list.name} sx={{ py: 0.5, pr: 2.5 }}>
+            <ListItem key={list.name} sx={{ py: 0.5, pr: 2.25 }}>
               <ListItemIcon sx={{ minWidth: 32 }}>
                 <Icon
                   component={list.icon}

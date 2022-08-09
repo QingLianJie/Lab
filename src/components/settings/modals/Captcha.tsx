@@ -2,10 +2,13 @@ import { LoadingButton } from '@mui/lab'
 import {
   Autocomplete,
   Box,
+  Checkbox,
   Dialog,
   DialogContent,
   DialogTitle,
   Divider,
+  FormControl,
+  FormControlLabel,
   Stack,
   TextField,
   Typography,
@@ -39,6 +42,7 @@ export const CaptchaModal = () => {
   const [isLoading, setLoading] = useState(false)
   const [status, setStatus] = useState('获取数据')
   const [term, setTerm] = useState('')
+  const [upload, setUpload] = useState(false)
 
   const inputRef = useRef<HTMLInputElement>()
   const imageRef = useRef<HTMLImageElement>()
@@ -136,8 +140,17 @@ export const CaptchaModal = () => {
 
       setLoading(false)
       setStatus('获取数据')
+      setTerm('')
+      setCaptcha('')
+      setToken('')
       setModals({ ...modals, captcha: false })
       enqueueSnackbar('成功获取成绩和课表数据')
+
+      if (upload) {
+        setUpload(false)
+        enqueueSnackbar('上传成绩还没做')
+        setModals({ ...modals, thanks: true })
+      }
     } catch (error) {
       console.error(error)
       setLoading(false)
@@ -224,16 +237,48 @@ export const CaptchaModal = () => {
               <TextField {...params} fullWidth label="课表学期，默认为最新" />
             )}
           />
+
           <LoadingButton
             type="submit"
             variant="contained"
             color="primary"
             loading={isLoading}
             loadingIndicator={status}
-            sx={{ width: '100%', mt: 1 }}
+            sx={{ width: '100%', mt: 1, py: 0.75 }}
           >
             获取数据
           </LoadingButton>
+        </Stack>
+        <Divider sx={{ width: '100%' }} />
+
+        <Stack spacing={1.5} sx={{ px: 2, py: 1.5 }}>
+          <FormControl
+            sx={{
+              width: '100%',
+
+              display: 'flex',
+              alignItems: 'flex-start',
+            }}
+          >
+            <FormControlLabel
+              control={
+                <Checkbox
+                  sx={{ my: -1 }}
+                  size="small"
+                  checked={upload}
+                  onChange={e => setUpload(e.target.checked)}
+                />
+              }
+              label="同时将数据匿名上传，帮助清廉街完善课程数据库"
+              sx={{
+                width: '100%',
+                ml: -1,
+                mr: 0,
+                alignItems: 'flex-start',
+                '& span': { fontSize: 'body2.fontSize' },
+              }}
+            />
+          </FormControl>
         </Stack>
       </DialogContent>
     </Dialog>

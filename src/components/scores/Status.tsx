@@ -1,31 +1,13 @@
-import {
-  AddOutlined,
-  FileUploadOutlined,
-  RefreshOutlined,
-} from '@mui/icons-material'
-import {
-  Card,
-  CardActionArea,
-  Divider,
-  IconButton,
-  Link,
-  Portal,
-  Stack,
-  Typography,
-  useMediaQuery,
-  useTheme,
-} from '@mui/material'
+import { RefreshOutlined } from '@mui/icons-material'
+import { Card, IconButton, Link, Stack, Typography } from '@mui/material'
 import { useAtom, useAtomValue } from 'jotai'
 import { enqueueSnackbar } from 'notistack'
-import { modalsAtom } from '../../contexts/modals'
 import { bridgeAtom, studentAtom } from '../../contexts/bridge'
+import { modalsAtom } from '../../contexts/modals'
 import { scoresAtom } from '../../contexts/scores'
 import { calendarTime } from '../../utils/format'
 import { Tooltip } from '../base/styled/Tooltip'
 import { SettingsGoAction } from '../settings/Fetch'
-import confetti from 'canvas-confetti'
-import { useState } from 'react'
-import { Thanks } from './Tips'
 
 export const ScoresStatus = () => {
   const scores = useAtomValue(scoresAtom)
@@ -44,43 +26,6 @@ export const ScoresStatus = () => {
         action: <SettingsGoAction name="bridge" />,
       })
     else setModals({ ...modals, captcha: true })
-  }
-
-  const [thanks, setThanks] = useState(false)
-  const { breakpoints } = useTheme()
-  const isMobile = useMediaQuery(breakpoints.down('md'))
-
-  const handleUpload = () => {
-    const ans = confirm(
-      '上传匿名成绩，可以帮助清廉街完善课程数据库，确认将匿名成绩上传到清廉街？'
-    )
-    if (!ans) return
-    enqueueSnackbar('这个功能还没做')
-    createConfetti()
-    setThanks(true)
-  }
-
-  const createConfetti = () => {
-    const end = Date.now() + 2 * 1000
-
-    ;(function frame() {
-      confetti({
-        particleCount: 5,
-        angle: isMobile ? 85 : 60,
-        spread: 72,
-        origin: { x: 0, y: isMobile ? 0.75 : 0.5 },
-        zIndex: 9999,
-      })
-      confetti({
-        particleCount: 5,
-        angle: isMobile ? 95 : 120,
-        spread: 72,
-        origin: { x: 1, y: isMobile ? 0.75 : 0.5 },
-        zIndex: 9999,
-      })
-
-      if (Date.now() < end) requestAnimationFrame(frame)
-    })()
   }
 
   return (
@@ -123,31 +68,6 @@ export const ScoresStatus = () => {
           </IconButton>
         </Tooltip>
       </Stack>
-      <Divider />
-      <CardActionArea onClick={handleUpload}>
-        <Stack
-          spacing={1.5}
-          direction="row"
-          sx={{
-            pl: 2.25,
-            pr: 2,
-            py: 1.5,
-            alignItems: 'center',
-            justifyContent: 'space-between',
-          }}
-        >
-          <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-            上传匿名成绩
-          </Typography>
-          <FileUploadOutlined
-            sx={{ color: 'text.disabled', width: 20, height: 20 }}
-          />
-        </Stack>
-      </CardActionArea>
-
-      <Portal>
-        <Thanks thanks={thanks} onClose={() => setThanks(false)} />
-      </Portal>
     </Card>
   )
 }

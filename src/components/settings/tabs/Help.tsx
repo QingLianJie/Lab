@@ -1,3 +1,4 @@
+import { HelpOutlineOutlined } from '@mui/icons-material'
 import { Divider, Stack } from '@mui/material'
 import { Fragment } from 'react'
 import { faqs } from '../../../markdown/settings/faqs'
@@ -10,6 +11,7 @@ export const SettingsHelp = () => (
     <SettingsHeader
       title="帮助与常见问题"
       href="https://github.com/QingLianJie/Lab"
+      icon={HelpOutlineOutlined}
     />
 
     <Stack

@@ -4,7 +4,7 @@ import { info } from '../../../configs/site-info'
 import { SettingsHeader } from '../Header'
 import LogoOutlined from '../../../assets/logo-outlined.svg'
 import { Tooltip } from '../../base/styled/Tooltip'
-import { ThumbDownAltOutlined } from '@mui/icons-material'
+import { InfoOutlined, ThumbDownAltOutlined } from '@mui/icons-material'
 
 export const SettingsAbout = () => {
   const [eggs, setEggs] = useState('你瞅啥')
@@ -33,7 +33,7 @@ export const SettingsAbout = () => {
 
   return (
     <Fragment>
-      <SettingsHeader title={`关于${info.name}`}>
+      <SettingsHeader title={`关于${info.name}`} icon={InfoOutlined}>
         <Tooltip title={eggs} arrow placement="top">
           <IconButton
             aria-label="彩蛋"

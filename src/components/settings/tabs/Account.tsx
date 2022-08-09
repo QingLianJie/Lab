@@ -1,4 +1,7 @@
-import { AccountCircleRounded } from '@mui/icons-material'
+import {
+  AccountCircleOutlined,
+  AccountCircleRounded,
+} from '@mui/icons-material'
 import { Button, Stack, Typography } from '@mui/material'
 import { useAtom } from 'jotai'
 import { Fragment } from 'react'
@@ -14,6 +17,7 @@ export const SettingsAccount = () => {
       <SettingsHeader
         title={`${info.name}账号`}
         help="/settings?tab=help#account"
+        icon={AccountCircleOutlined}
       />
 
       <Stack

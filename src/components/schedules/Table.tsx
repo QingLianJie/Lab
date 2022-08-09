@@ -1,15 +1,20 @@
 import { TableChartRounded } from '@mui/icons-material'
-import { Box, Card, Grid, Stack, Typography, useTheme } from '@mui/material'
+import {
+  Box,
+  Card,
+  Grid,
+  Stack,
+  Typography,
+  useMediaQuery,
+  useTheme,
+} from '@mui/material'
 import { lightBlue } from '@mui/material/colors'
 import { useAtom, useAtomValue } from 'jotai'
 import { useMemo } from 'react'
 import { colors } from '../../configs/schedules/colors'
 import { days, sections } from '../../configs/schedules/table'
 import { modalsAtom } from '../../contexts/modals'
-import {
-  schedulesAtom,
-  schedulesViewAtom,
-} from '../../contexts/schedules'
+import { schedulesAtom, schedulesViewAtom } from '../../contexts/schedules'
 import { type TimeTableBlocks } from '../../index.d'
 import { SettingsFetch } from '../settings/Fetch'
 import { SchedulesBlock, SchedulesBlockAction } from './table/Blocks'
@@ -18,6 +23,9 @@ import { SchedulesTableSections } from './table/Sections'
 import { SchedulesTableSpaces } from './table/Spaces'
 
 export const SchedulesTable = () => {
+  const { breakpoints } = useTheme()
+  const isMobile = useMediaQuery(breakpoints.down('sm'))
+
   const [modals, setModals] = useAtom(modalsAtom)
   const schedules = useAtomValue(schedulesAtom)
   const schedulesView = useAtomValue(schedulesViewAtom)
@@ -73,153 +81,175 @@ export const SchedulesTable = () => {
 
   return schedules ? (
     <Card variant="outlined" sx={{ overflow: 'auto' }}>
-      <Grid
-        container
+      <Stack
+        id="timetable"
         sx={{
-          width: { xs: '135%', sm: '100%' },
-          display: 'grid',
-          gridTemplateColumns: {
-            xs: '2rem repeat(7, 1fr)',
-            sm: '3rem repeat(7, 1fr)',
-          },
+          borderRadius: 1,
+          backgroundColor: 'inherit',
+          width: '100%',
+          minWidth: '480px',
         }}
       >
-        <SchedulesTableDays />
-        <SchedulesTableSections />
-        <SchedulesTableSpaces />
-
-        {matrix.map((row, i) =>
-          row.map(
-            (col, j) =>
-              col === 0 && (
-                <SchedulesBlock
-                  key={`${i}-${j}`}
-                  border="both"
-                  col={j + 1}
-                  row={i + 1}
-                  span={col}
-                />
-              )
-          )
-        )}
-
-        {blocks.map(block => (
-          <SchedulesBlock
-            key={`${block.row}-${block.col}`}
-            border="both"
-            col={block.col + 1}
-            row={block.row + 1}
-            span={block.span}
-            sx={{ p: 0.5 }}
-          >
-            <SchedulesBlockAction
-              onClick={() =>
-                setModals({
-                  ...modals,
-                  schedules: { ...modals.schedules, details: block.courses },
-                })
-              }
-            >
-              <Stack
-                spacing={0.25}
-                sx={{ width: '100%', flex: 1, position: 'relative' }}
-              >
-                <Typography sx={{ fontWeight: 700, fontSize: 'inherit' }}>
-                  {block.courses[0].name}
-                </Typography>
-                <Typography sx={{ fontSize: 'inherit' }}>
-                  {block.courses[0].location}
-                </Typography>
-                <Typography sx={{ fontSize: 'inherit' }}>
-                  {block.courses[0].teacher.join('｜')}
-                </Typography>
-
-                <Box
-                  sx={{
-                    position: 'absolute',
-                    right: 0,
-                    bottom: 2,
-                    width: 12,
-                    height: 12,
-                    borderRadius: '50%',
-                    backgroundColor: getColor(block.courses[0].name)[400],
-                  }}
-                />
-              </Stack>
-
-              {block.courses.length > 1 && (
-                <Stack sx={{ width: '100%' }}>
-                  {block.courses.slice(1).map((course, index) => (
-                    <Typography
-                      key={index}
-                      variant="body2"
-                      sx={{
-                        width: '100%',
-                        whiteSpace: 'nowrap',
-                        overflow: 'hidden',
-                        textOverflow: 'ellipsis',
-                        fontSize: {
-                          xs: 'caption.fontSize',
-                          sm: 'body2.fontSize',
-                        },
-                      }}
-                    >
-                      + {course.name}
-                    </Typography>
-                  ))}
-                </Stack>
-              )}
-            </SchedulesBlockAction>
-          </SchedulesBlock>
-        ))}
-
-        <SchedulesBlock
-          border="both"
-          col={2}
-          row={17}
-          sx={{ p: 0.5, gridColumnEnd: 9, justifyContent: 'flex-start' }}
+        <Grid
+          container
+          sx={{
+            width: '100%',
+            display: 'grid',
+            gridTemplateColumns: {
+              xs: '2rem repeat(7, 1fr)',
+              sm: '3rem repeat(7, 1fr)',
+            },
+          }}
         >
-          <Stack direction="row" spacing={0.5}>
-            {schedules.timetable.courses.remark
-              .filter(course => course.week.includes(schedulesView.week))
-              .map(course => (
-                <SchedulesBlockAction
-                  key={course.name}
-                  sx={{ width: 'fit-content' }}
-                  onClick={() =>
-                    setModals({
-                      ...modals,
-                      schedules: { ...modals.schedules, details: [course] },
-                    })
-                  }
+          <SchedulesBlock border="none" col={1} row={1}>
+            <Typography variant="body1" sx={{ fontWeight: 700 }}>
+              {schedulesView.week}
+            </Typography>
+          </SchedulesBlock>
+
+          <SchedulesTableDays />
+          <SchedulesTableSections />
+          <SchedulesTableSpaces />
+
+          {matrix.map((row, i) =>
+            row.map(
+              (col, j) =>
+                col === 0 && (
+                  <SchedulesBlock
+                    key={`${i}-${j}`}
+                    border="both"
+                    col={j + 1}
+                    row={i + 1}
+                    span={col}
+                  />
+                )
+            )
+          )}
+
+          {blocks.map(block => (
+            <SchedulesBlock
+              key={`${block.row}-${block.col}`}
+              border="both"
+              col={block.col + 1}
+              row={block.row + 1}
+              span={block.span}
+              sx={{ p: 0.5 }}
+            >
+              <SchedulesBlockAction
+                onClick={() =>
+                  setModals({
+                    ...modals,
+                    schedules: { ...modals.schedules, details: block.courses },
+                  })
+                }
+              >
+                <Stack
+                  spacing={0.25}
+                  sx={{
+                    width: '100%',
+                    flex: 1,
+                    position: 'relative',
+                    pb: { xs: 2.5, sm: 0 },
+                  }}
                 >
-                  <Stack
-                    spacing={1}
-                    direction="row"
-                    sx={{ alignItems: 'center' }}
-                  >
-                    <Typography sx={{ fontWeight: 700, fontSize: 'inherit' }}>
-                      {course.name}
-                    </Typography>
+                  <Typography sx={{ fontWeight: 700, fontSize: 'inherit' }}>
+                    {block.courses[0].name}
+                  </Typography>
+                  <Typography sx={{ fontSize: 'inherit' }}>
+                    {block.courses[0].location}
+                  </Typography>
+                  <Typography sx={{ fontSize: 'inherit' }}>
+                    {block.courses[0].teacher.join('｜')}
+                  </Typography>
 
-                    <Typography sx={{ fontSize: 'inherit' }}>
-                      {course.teacher.join('｜')}
-                    </Typography>
+                  <Box
+                    sx={{
+                      position: 'absolute',
+                      right: { xs: 'unset', sm: 0 },
+                      left: { xs: 0, sm: 'unset' },
+                      bottom: 2,
+                      width: 12,
+                      height: 12,
+                      borderRadius: '50%',
+                      backgroundColor: getColor(block.courses[0].name)[400],
+                    }}
+                  />
+                </Stack>
 
-                    <Box
-                      sx={{
-                        width: 12,
-                        height: 12,
-                        borderRadius: '50%',
-                        backgroundColor: getColor(course.name)[400],
-                      }}
-                    />
+                {block.courses.length > 1 && (
+                  <Stack sx={{ width: '100%' }}>
+                    {block.courses.slice(1).map((course, index) => (
+                      <Typography
+                        key={index}
+                        variant="body2"
+                        sx={{
+                          width: '100%',
+                          whiteSpace: 'nowrap',
+                          overflow: 'hidden',
+                          textOverflow: 'ellipsis',
+                          fontSize: {
+                            xs: 'caption.fontSize',
+                            sm: 'body2.fontSize',
+                          },
+                        }}
+                      >
+                        + {course.name}
+                      </Typography>
+                    ))}
                   </Stack>
-                </SchedulesBlockAction>
-              ))}
-          </Stack>
-        </SchedulesBlock>
-      </Grid>
+                )}
+              </SchedulesBlockAction>
+            </SchedulesBlock>
+          ))}
+
+          <SchedulesBlock
+            border="both"
+            col={2}
+            row={17}
+            sx={{ p: 0.5, gridColumnEnd: 9, justifyContent: 'flex-start' }}
+          >
+            <Stack direction="row" spacing={0.5}>
+              {schedules.timetable.courses.remark
+                .filter(course => course.week.includes(schedulesView.week))
+                .map(course => (
+                  <SchedulesBlockAction
+                    key={course.name}
+                    sx={{ width: 'fit-content' }}
+                    onClick={() =>
+                      setModals({
+                        ...modals,
+                        schedules: { ...modals.schedules, details: [course] },
+                      })
+                    }
+                  >
+                    <Stack
+                      spacing={1}
+                      direction="row"
+                      sx={{ alignItems: 'center' }}
+                    >
+                      <Typography sx={{ fontWeight: 700, fontSize: 'inherit' }}>
+                        {course.name}
+                      </Typography>
+
+                      <Typography sx={{ fontSize: 'inherit' }}>
+                        {course.teacher.join('｜')}
+                      </Typography>
+
+                      <Box
+                        sx={{
+                          width: 12,
+                          height: 12,
+                          borderRadius: '50%',
+                          backgroundColor: getColor(course.name)[400],
+                        }}
+                      />
+                    </Stack>
+                  </SchedulesBlockAction>
+                ))}
+            </Stack>
+          </SchedulesBlock>
+        </Grid>
+      </Stack>
     </Card>
   ) : (
     <Card

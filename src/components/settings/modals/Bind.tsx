@@ -131,7 +131,7 @@ export const BindModal = () => {
             type="submit"
             variant="contained"
             color="primary"
-            sx={{ width: '100%', mt: 1 }}
+            sx={{ width: '100%', mt: 1, py: 0.75 }}
           >
             {student ? '修改' : '添加'}账号
           </Button>

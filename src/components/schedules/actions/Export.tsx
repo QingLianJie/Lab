@@ -1,4 +1,5 @@
 import { FileDownloadOutlined } from '@mui/icons-material'
+import { LoadingButton } from '@mui/lab'
 import {
   Button,
   ButtonGroup,
@@ -7,17 +8,45 @@ import {
   Typography,
 } from '@mui/material'
 import dayjs from 'dayjs'
+import { toPng } from 'html-to-image'
 import { useAtomValue } from 'jotai'
 import { Fragment, useState } from 'react'
 import { studentAtom } from '../../../contexts/bridge'
-import { schedulesAtom } from '../../../contexts/schedules'
+import { schedulesAtom, schedulesViewAtom } from '../../../contexts/schedules'
 import { Modal } from '../../base/Modal'
 import { Tooltip } from '../../base/styled/Tooltip'
 
 export const SchedulesExportAction = () => {
   const [open, setOpen] = useState(false)
+  const [loading, setLoading] = useState(false)
+
   const schedules = useAtomValue(schedulesAtom)
+  const schedulesView = useAtomValue(schedulesViewAtom)
   const student = useAtomValue(studentAtom)
+
+  const handleExportImage = () => {
+    const timetable = document.querySelector('#timetable') as HTMLElement
+    if (!timetable) return
+    setLoading(true)
+    toPng(timetable, {
+      cacheBust: true,
+      pixelRatio: 2,
+      style: { minWidth: '640px' },
+    })
+      .then(data => {
+        const link = document.createElement('a')
+        link.download = `${student ? student.id : ''} 的第 ${
+          schedulesView.week
+        } 周课表.jpg`
+        link.href = data
+        link.click()
+        setLoading(false)
+      })
+      .catch(error => {
+        console.error(error)
+        setLoading(false)
+      })
+  }
 
   const handleExportJSON = () => {
     const data = schedules ? schedules.timetable : { message: '没有数据' }
@@ -75,15 +104,32 @@ export const SchedulesExportAction = () => {
           </Typography>
         </Stack>
         <Stack spacing={1.5} sx={{ px: 2.5, pb: 2.5 }}>
-          <ButtonGroup variant="outlined" disableElevation fullWidth>
+          <LoadingButton
+            variant="contained"
+            color="primary"
+            onClick={handleExportImage}
+            loading={loading}
+            sx={{ py: 0.75 }}
+          >
+            导出当前周课表为图片
+          </LoadingButton>
+          <ButtonGroup
+            variant="outlined"
+            color="info"
+            disableElevation
+            fullWidth
+            size="small"
+          >
             <Tooltip title="正在适配中" arrow placement="top">
-              <Button>CSV</Button>
+              <Button sx={{ py: 0.75 }}>CSV</Button>
             </Tooltip>
             <Tooltip title="清廉街使用的格式" arrow placement="top">
-              <Button onClick={handleExportJSON}>JSON</Button>
+              <Button onClick={handleExportJSON} sx={{ py: 0.75 }}>
+                JSON
+              </Button>
             </Tooltip>
             <Tooltip title="正在适配中" arrow placement="top">
-              <Button>ICS</Button>
+              <Button sx={{ py: 0.75 }}>ICS</Button>
             </Tooltip>
           </ButtonGroup>
         </Stack>

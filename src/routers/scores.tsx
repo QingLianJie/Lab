@@ -19,7 +19,7 @@ import { ScoresList } from '../components/scores/List'
 import { ScoresDisabled } from '../components/scores/Placeholder'
 import { ScoresPlan } from '../components/scores/Plan'
 import { ScoresStatus } from '../components/scores/Status'
-import { ScoresSimpleTips, ScoresUploadTips } from '../components/scores/Tips'
+import { ScoresSimpleTips } from '../components/scores/Tips'
 import { SettingsFetch } from '../components/settings/Fetch'
 import { scoresAtom, scoresViewAtom } from '../contexts/scores'
 

@@ -1,10 +1,9 @@
-import { SchoolRounded } from '@mui/icons-material'
-import { Button, Stack, Typography, useTheme } from '@mui/material'
-import { amber } from '@mui/material/colors'
+import { SchoolOutlined, SchoolRounded } from '@mui/icons-material'
+import { Button, Stack, Typography } from '@mui/material'
 import { useAtom, useAtomValue } from 'jotai'
 import { Fragment } from 'react'
-import { modalsAtom } from '../../../contexts/modals'
 import { studentAtom } from '../../../contexts/bridge'
+import { modalsAtom } from '../../../contexts/modals'
 import { SettingsHeader } from '../Header'
 
 export const SettingsBridge = () => {
@@ -13,7 +12,11 @@ export const SettingsBridge = () => {
 
   return (
     <Fragment>
-      <SettingsHeader title="HEU 账号" help="/settings?tab=help#bridge" />
+      <SettingsHeader
+        title="HEU 账号"
+        help="/settings?tab=help#bridge"
+        icon={SchoolOutlined}
+      />
       <Stack
         spacing={0.5}
         sx={{

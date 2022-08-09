@@ -53,7 +53,7 @@ export const components = {
     styleOverrides: {
       root: {
         minWidth: 'unset',
-        padding: '6px 12px',
+        padding: '4px 12px',
         textTransform: 'none' as const,
       },
     },

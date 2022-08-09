@@ -166,7 +166,12 @@ export const HomeFavoritesLinkEdit = () => {
             label="添加到收藏夹"
             sx={{ '& span': { fontSize: 'body2.fontSize' } }}
           />
-          <Button type="submit" variant="contained" color="primary">
+          <Button
+            type="submit"
+            variant="contained"
+            color="primary"
+            sx={{ py: 0.75 }}
+          >
             添加链接
           </Button>
         </Stack>

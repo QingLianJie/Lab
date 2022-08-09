@@ -202,7 +202,7 @@ export const ScoresFilter = () => {
             type="button"
             variant="outlined"
             color="warning"
-            sx={{ width: '100%', mt: 1.5, py: 0.625 }}
+            sx={{ width: '100%', mt: 1.5, py: 0.75 }}
             onClick={resetFilter}
           >
             重置筛选及搜索

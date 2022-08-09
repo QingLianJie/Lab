@@ -1,14 +1,8 @@
-import {
-  CheckOutlined,
-  FileUploadOutlined,
-  RestartAltOutlined,
-} from '@mui/icons-material'
+import { CheckOutlined, RestartAltOutlined } from '@mui/icons-material'
 import {
   Alert,
   Backdrop,
   IconButton,
-  Link,
-  Portal,
   Stack,
   Typography,
   useMediaQuery,
@@ -16,12 +10,10 @@ import {
 } from '@mui/material'
 import confetti from 'canvas-confetti'
 import { useAtom } from 'jotai'
-import { enqueueSnackbar } from 'notistack'
-import { Fragment, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { type ScoreColumnKey } from '../../configs/scores/columns'
+import { modalsAtom } from '../../contexts/modals'
 import { scoresViewAtom } from '../../contexts/scores'
-import { Confirm } from '../base/Modal'
-import { Tooltip } from '../base/styled/Tooltip'
 
 const defaultColumns = ['name', 'type', 'credit', 'nature', 'score']
 
@@ -70,17 +62,44 @@ export const ScoresSimpleTips = () => {
   )
 }
 
-interface ThanksProps {
-  thanks: boolean
-  onClose: () => void
-}
+export const Thanks = () => {
+  const { breakpoints } = useTheme()
+  const isMobile = useMediaQuery(breakpoints.down('md'))
+  const [modals, setModals] = useAtom(modalsAtom)
 
-export const Thanks = ({ thanks, onClose }: ThanksProps) => {
+  useEffect(() => {
+    if (!modals.thanks) return
+    createConfetti()
+  }, [modals.thanks])
+
+  const createConfetti = () => {
+    const end = Date.now() + 2 * 1000
+
+    ;(function frame() {
+      confetti({
+        particleCount: 5,
+        angle: isMobile ? 85 : 60,
+        spread: 72,
+        origin: { x: 0, y: isMobile ? 0.75 : 0.5 },
+        zIndex: 9999,
+      })
+      confetti({
+        particleCount: 5,
+        angle: isMobile ? 95 : 120,
+        spread: 72,
+        origin: { x: 1, y: isMobile ? 0.75 : 0.5 },
+        zIndex: 9999,
+      })
+
+      if (Date.now() < end) requestAnimationFrame(frame)
+    })()
+  }
+
   return (
     <Backdrop
       sx={{ color: '#fff', zIndex: 5000, mt: 0 }}
-      open={thanks}
-      onClick={onClose}
+      open={modals.thanks}
+      onClick={() => setModals({ ...modals, thanks: false })}
     >
       <Stack spacing={2} sx={{ mb: { xs: 4, sm: 0 } }}>
         <Typography

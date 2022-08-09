@@ -12,7 +12,7 @@ interface SchedulesBlockProps extends GridProps {
   col: number
   span?: number
   row: number
-  border: 'left' | 'top' | 'both'
+  border: 'left' | 'top' | 'both' | 'none'
 }
 
 export const SchedulesBlock = ({

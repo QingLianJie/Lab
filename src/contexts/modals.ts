@@ -12,7 +12,9 @@ type Modals = {
   }
   schedules: {
     details: false | SummaryCourse[] | SummaryRemarkCourse[]
+    calendar: boolean
   }
+  thanks: boolean
 }
 
 export const modalsAtom = atom<Modals>({
@@ -20,5 +22,6 @@ export const modalsAtom = atom<Modals>({
   captcha: false,
   bind: false,
   scores: { filter: false },
-  schedules: { details: false },
+  schedules: { details: false, calendar: false },
+  thanks: false,
 })

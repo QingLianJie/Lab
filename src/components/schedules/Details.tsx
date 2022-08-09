@@ -135,6 +135,7 @@ export const SchedulesDetails = () => {
                         fullWidth
                         variant="outlined"
                         onClick={() => handleSearch(course.name)}
+                        sx={{ py: 0.75 }}
                       >
                         搜索相关课程
                       </Button>

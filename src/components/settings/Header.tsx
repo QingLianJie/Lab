@@ -5,6 +5,7 @@ import {
   type SvgIconComponent,
 } from '@mui/icons-material'
 import {
+  Icon,
   IconButton,
   Stack,
   Typography,
@@ -17,12 +18,14 @@ import { Tooltip } from '../base/styled/Tooltip'
 
 interface SettingsHeaderProps {
   title: string
+  icon: SvgIconComponent
   children?: ReactNode
   href?: string
   help?: string
 }
 
 export const SettingsHeader = ({
+  icon,
   title,
   href,
   help,
@@ -33,19 +36,19 @@ export const SettingsHeader = ({
 
   return (
     <Stack
-      spacing={{ xs: 1, sm: 2 }}
+      spacing={{ xs: 1, sm: 1.75 }}
       direction="row"
       sx={{
         alignItems: 'center',
         justifyContent: 'space-between',
         borderBottom: 1,
         borderColor: 'divider',
-        pl: { xs: 1.5, sm: 2.5, md: 3 },
-        pr: { xs: 1.5, md: 2 },
+        pl: { xs: 1.5, sm: 2.75 },
+        pr: { xs: 1.5, sm: 1.75 },
         py: 1,
       }}
     >
-      {isMobile && (
+      {isMobile ? (
         <Tooltip title="返回" arrow placement="top">
           <IconButton
             component={Link}
@@ -60,6 +63,8 @@ export const SettingsHeader = ({
             <ArrowBackOutlined />
           </IconButton>
         </Tooltip>
+      ) : (
+        <Icon component={icon} sx={{ color: 'text.disabled' }} />
       )}
 
       <Typography

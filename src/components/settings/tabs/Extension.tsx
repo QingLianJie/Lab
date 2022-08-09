@@ -1,6 +1,5 @@
-import { ExtensionRounded } from '@mui/icons-material'
-import { Button, Chip, Stack, Typography, useTheme } from '@mui/material'
-import { amber } from '@mui/material/colors'
+import { ExtensionOutlined, ExtensionRounded } from '@mui/icons-material'
+import { Button, Chip, Stack, Typography } from '@mui/material'
 import { useAtomValue } from 'jotai'
 import { Fragment } from 'react'
 import { bridgeAtom, fetcherAtom } from '../../../contexts/bridge'
@@ -22,7 +21,11 @@ export const SettingsExtension = () => {
 
   return (
     <Fragment>
-      <SettingsHeader title="插件与 App" help="/settings?tab=help#extension" />
+      <SettingsHeader
+        title="插件与 App"
+        help="/settings?tab=help#extension"
+        icon={ExtensionOutlined}
+      />
       <Stack
         spacing={0.5}
         sx={{
