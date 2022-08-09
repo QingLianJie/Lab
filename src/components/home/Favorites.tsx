@@ -53,8 +53,9 @@ export const HomeFavorites = () => {
                 sx={{
                   minHeight: 44,
                   minWidth: 'auto',
-                  ml: tab.name === '分享' ? 'auto' : 0,
+                  ml: { xs: tab.name === '分享' ? 'auto' : 0, sm: 0 },
                   px: 2.25,
+                  flex: { xs: 'unset', sm: 'auto' },
                   whiteSpace: 'nowrap',
                   fontWeight: currentTab === tab.id ? 700 : 500,
                 }}

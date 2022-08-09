@@ -48,7 +48,7 @@ export const HomeWidgetPlaceholder = () => {
             sx={{
               color: 'text.primary',
               fontWeight: 700,
-              pb: 1.5,
+              pb: 1,
             }}
           >
             成绩和课表

@@ -105,10 +105,11 @@ export const ScoresTitleRow = () => {
 
   return (
     <TableRow>
-      <TableCell sx={{ py: 1.5, pr: 0, width: 48, minWidth: 48 }}>
+      <TableCell sx={{ py: 1.125, pr: 0, width: 48, minWidth: 48 }}>
         <Checkbox
           sx={{
-            m: -1,
+            mx: -1,
+            my: -1.125,
             color: 'text.disabled',
             '&:hover': { color: 'primary' },
             transition: 'all 0.2s',

@@ -28,8 +28,8 @@ import { Markdown } from '../base/Markdown'
 type PlanVersion = 'tips' | '2014' | '2019'
 
 const plans = [
-  { name: '2019', id: '2019' },
-  { name: '2014', id: '2014' },
+  { name: '2019 版', id: '2019' },
+  { name: '2014 版', id: '2014' },
   { name: '培养方案', id: 'tips' },
 ]
 
@@ -60,7 +60,9 @@ export const ScoresPlan = () => {
                   minWidth: 'auto',
                   fontWeight: currentTab === plan.id ? 700 : 500,
                   px: 2.25,
-                  ml: plan.id === 'tips' ? 'auto' : 0,
+                  whiteSpace: 'nowrap',
+                  ml: { xs: plan.id === 'tips' ? 'auto' : 0, sm: 0 },
+                  flex: { xs: 'unset', sm: 'auto' },
                 }}
               />
             ))}

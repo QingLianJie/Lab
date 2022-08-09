@@ -18,7 +18,7 @@ export const HomeProfileWidget = () => {
             sx={{
               color: 'text.primary',
               fontWeight: 700,
-              pb: 1.5,
+              pb: 1,
             }}
           >
             加入清廉街
@@ -31,7 +31,7 @@ export const HomeProfileWidget = () => {
             direction="row"
             sx={{
               mx: -1.25,
-              mt: 2.5,
+              mt: 1,
               mb: -0.5,
               justifyContent: 'space-between',
             }}

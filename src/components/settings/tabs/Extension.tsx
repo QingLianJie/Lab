@@ -71,7 +71,14 @@ export const SettingsExtension = () => {
                   {fetcherMap(fetcher.name)}
                   <Chip
                     label={fetcher.version}
-                    sx={{ ml: 1, height: 30, fontSize: 'body1.fontSize' }}
+                    sx={{
+                      ml: 1,
+                      height: 'auto',
+                      fontSize: 'body1.fontSize',
+                      px: 1.25,
+                      py: 0.375,
+                      '& span': { px: 0 },
+                    }}
                   />
                 </Fragment>
               ) : (

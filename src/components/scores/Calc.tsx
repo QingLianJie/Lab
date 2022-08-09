@@ -55,7 +55,6 @@ export const ScoresCalc = () => {
           sx={{ width: '100%', flex: 1 }}
         >
           <CalcCard title="加权平均分" content={calcAverage()} unit="分" />
-
           <CalcCard
             title="优秀 / 挂科"
             content={`${calcExcellent()} / ${calcFailed()}`}

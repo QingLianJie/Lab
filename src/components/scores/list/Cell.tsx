@@ -44,7 +44,7 @@ export const ScoresHeadCell = ({ column }: ScoresHeadCellProps) => {
       sx={{
         width: column.link && isMobile ? column.width * 0.75 : column.width,
         whiteSpace: 'nowrap',
-        fontSize: 'body1.fontSize',
+        fontSize: 'body2.fontSize',
         fontWeight: 700,
         color: 'text.secondary',
         py: 1.25,
