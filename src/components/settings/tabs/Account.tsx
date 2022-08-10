@@ -1,16 +1,37 @@
 import {
   AccountCircleOutlined,
   AccountCircleRounded,
+  DeleteOutlineOutlined,
 } from '@mui/icons-material'
-import { Button, Stack, Typography } from '@mui/material'
+import { Avatar, Button, Chip, Divider, Stack, Typography } from '@mui/material'
 import { useAtom } from 'jotai'
+import ky from 'ky'
+import { enqueueSnackbar } from 'notistack'
 import { Fragment } from 'react'
-import { info } from '../../../configs/site-info'
-import { AuthModal, modalsAtom } from '../../../contexts/modals'
+import { useSWRConfig } from 'swr'
+import { api, info } from '../../../configs/site-info'
+import { modalsAtom, type AuthModal } from '../../../contexts/modals'
+import { accountAtom } from '../../../contexts/settings'
+import { Tooltip } from '../../base/styled/Tooltip'
 import { SettingsHeader } from '../Header'
 
 export const SettingsAccount = () => {
-  const [modals, setModals] = useAtom(modalsAtom)
+  const [account, setAccount] = useAtom(accountAtom)
+  const { mutate } = useSWRConfig()
+
+  const handleLogout = () => {
+    ky.post(`${api}/rest-auth/logout/`, { credentials: 'include' }).then(() => {
+      enqueueSnackbar('已退出登录')
+      mutate(`${api}/rest-auth/user/`, () => false)
+      setAccount(false)
+    })
+  }
+
+  const handleDeleteAccount = () => {
+    const ans = confirm('确认删除清廉街账号？删除后将无法恢复，请谨慎操作！')
+    if (!ans) return
+    enqueueSnackbar('这个功能还没做')
+  }
 
   return (
     <Fragment>
@@ -20,63 +41,207 @@ export const SettingsAccount = () => {
         icon={AccountCircleOutlined}
       />
 
-      <Stack
-        spacing={0.5}
-        sx={{
-          flex: 1,
-          height: '100%',
-          px: { xs: 2.5, md: 3 },
-          py: 8,
-          alignItems: 'center',
-          justifyContent: 'center',
-        }}
-      >
-        <AccountCircleRounded
-          sx={{
-            width: 120,
-            height: 120,
-            mb: 2,
-            color: false ? 'primary.main' : 'action.selected',
-            transition: 'color 0.2s',
-          }}
-        />
-        <Typography
-          variant="h6"
-          component="span"
-          sx={{ color: 'text.primary', textAlign: 'center', fontWeight: 700 }}
-        >
-          未登录{info.name}账号
-        </Typography>
-
-        <Typography
-          variant="body1"
-          component="span"
-          sx={{ color: 'text.secondary', textAlign: 'center' }}
-        >
-          登录后可以上传成绩和发表评论
-        </Typography>
-        <Stack direction="row" sx={{ py: 1 }}>
-          {['登录', '注册'].map(action => (
-            <Button
-              variant="text"
-              disableElevation
-              color="info"
+      {account ? (
+        <Stack
+          direction={{ xs: 'column', md: 'row' }}
+          divider={
+            <Divider
+              orientation="vertical"
               sx={{
-                minWidth: 'unset',
-                py: 0.75,
-                px: 1.5,
-                textTransform: 'none',
+                height: { xs: 'auto', md: '100%' },
+                width: { xs: '100%', md: 'auto' },
+                borderBottomWidth: { xs: 1, md: 0 },
+                borderBottomColor: 'divider',
               }}
-              onClick={() =>
-                setModals({ ...modals, auth: action as AuthModal })
-              }
-              key={action}
+            />
+          }
+          sx={{ alignItems: 'flex-start', height: '100%' }}
+        >
+          <Stack
+            sx={{
+              flex: { xs: 0, md: 1 },
+              width: '100%',
+              height: '100%',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+            }}
+          >
+            <Stack
+              spacing={{ xs: 2.75, md: 4 }}
+              direction={{ xs: 'row', md: 'column' }}
+              sx={{
+                width: '100%',
+                height: '100%',
+                px: 2.75,
+                py: 4,
+                alignItems: 'center',
+                justifyContent: { xs: 'flex-start', md: 'center' },
+              }}
             >
-              {action}
-            </Button>
-          ))}
+              <Tooltip title="修改头像" arrow placement="top">
+                <Avatar
+                  src={account ? account.avatar : undefined}
+                  alt={account ? account.name : '未登录'}
+                  sx={{
+                    backgroundColor: 'background.subtle',
+                    width: { xs: 96, sm: 108, md: 160 },
+                    height: { xs: 96, sm: 108, md: 160 },
+                    border: 1,
+                    borderColor: 'divider',
+                    boxShadow: '0 0.75rem 3rem rgba(0, 0, 0, 0.1)',
+                    cursor: 'pointer',
+                  }}
+                >
+                  <Typography
+                    sx={{
+                      color: 'text.disabled',
+                      fontSize: { xs: 36, sm: 42, md: 64 },
+                      fontWeight: 700,
+                    }}
+                  >
+                    {account.name.slice(0, 1)}
+                  </Typography>
+                </Avatar>
+              </Tooltip>
+              <Stack
+                spacing={0.5}
+                sx={{ alignItems: { xs: 'flex-start', md: 'center' } }}
+              >
+                <Typography variant="h5" component="p" sx={{ fontWeight: 700 }}>
+                  {account.name}
+                </Typography>
+
+                <Typography
+                  variant="body1"
+                  sx={{ color: 'text.secondary', pb: 1 }}
+                >
+                  {account.email || '无邮箱'}
+                </Typography>
+                <Chip
+                  label={`UID ${account.id}`}
+                  size="small"
+                  sx={{
+                    fontSize: 'caption.fontSize',
+                    fontWeight: 700,
+                    height: 'auto',
+                    px: 0,
+                    py: 0.1,
+                  }}
+                />
+              </Stack>
+            </Stack>
+
+            <Stack
+              direction="row"
+              sx={{
+                width: '100%',
+                pt: { xs: 0, md: 2 },
+                px: 1.625,
+                pb: 1.5,
+                flex: 1,
+                alignItems: 'flex-end',
+              }}
+            >
+              <Stack direction="row" sx={{ flex: 1 }}>
+                <Button>修改密码</Button>
+                <Button onClick={handleLogout}>退出登录</Button>
+              </Stack>
+
+              <Button
+                color="error"
+                startIcon={<DeleteOutlineOutlined />}
+                onClick={handleDeleteAccount}
+              >
+                删除账号
+              </Button>
+            </Stack>
+          </Stack>
+          <Stack sx={{ flex: 1, width: '100%', height: '100%' }}>
+            <Stack
+              sx={{
+                flex: 1,
+                height: '100%',
+                width: '100%',
+                px: 2,
+                py: { xs: 12, sm: 8, md: 4 },
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+            >
+              <Typography sx={{ color: 'text.disabled' }}>
+                没有发表过课程评论
+              </Typography>
+            </Stack>
+          </Stack>
         </Stack>
-      </Stack>
+      ) : (
+        <Login />
+      )}
     </Fragment>
+  )
+}
+
+const Login = () => {
+  const [modals, setModals] = useAtom(modalsAtom)
+
+  return (
+    <Stack
+      spacing={0.5}
+      sx={{
+        flex: 1,
+        height: '100%',
+        px: { xs: 2.5, md: 3 },
+        py: 8,
+        alignItems: 'center',
+        justifyContent: 'center',
+      }}
+    >
+      <AccountCircleRounded
+        sx={{
+          width: 120,
+          height: 120,
+          mb: 2,
+          color: false ? 'primary.main' : 'action.selected',
+          transition: 'color 0.2s',
+        }}
+      />
+      <Typography
+        variant="h6"
+        component="p"
+        sx={{ color: 'text.primary', textAlign: 'center', fontWeight: 700 }}
+      >
+        未登录{info.name}账号
+      </Typography>
+
+      <Typography
+        variant="body1"
+        component="p"
+        sx={{ color: 'text.secondary', textAlign: 'center' }}
+      >
+        登录后可以上传成绩和发表评论
+      </Typography>
+      <Stack direction="row" sx={{ py: 1 }}>
+        {['登录', '注册'].map(action => (
+          <Button
+            variant="text"
+            disableElevation
+            color="info"
+            sx={{
+              minWidth: 'unset',
+              py: 0.75,
+              px: 1.5,
+              textTransform: 'none',
+            }}
+            onClick={() =>
+              setModals(modals => ({ ...modals, auth: action as AuthModal }))
+            }
+            key={action}
+          >
+            {action}
+          </Button>
+        ))}
+      </Stack>
+    </Stack>
   )
 }

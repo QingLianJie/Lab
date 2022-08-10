@@ -60,11 +60,12 @@ export const HomeWidgetPlaceholder = () => {
         </Stack>
 
         <List dense sx={{ py: 1.5 }}>
-          <TaskItem name="1. 安装插件或 App" checked={!!bridge} />
-          <TaskItem name="2. 添加 HEU 账号" checked={!!student} />
+          <TaskItem name="安装插件或 App" checked={!!bridge} index={1} />
+          <TaskItem name="添加 HEU 账号" checked={!!student} index={2} />
           <TaskItem
-            name="3. 获取成绩和课表数据"
+            name="获取成绩和课表数据"
             checked={!!(scores && schedules)}
+            index={3}
           />
         </List>
 
@@ -92,12 +93,13 @@ export const HomeWidgetPlaceholder = () => {
 }
 
 interface TaskItemProps {
+  index: number
   name: string
   checked: boolean
 }
 
-const TaskItem = ({ name, checked }: TaskItemProps) => (
-  <ListItem disablePadding sx={{ py: 0.125 }}>
+const TaskItem = ({ name, checked, index }: TaskItemProps) => (
+  <ListItem disablePadding>
     <Stack
       direction="row"
       sx={{
@@ -107,15 +109,25 @@ const TaskItem = ({ name, checked }: TaskItemProps) => (
         px: 2.25,
       }}
     >
+      <Typography
+        sx={{
+          pr: 1,
+          fontWeight: 700,
+          color: checked ? 'text.primary' : 'text.disabled',
+          fontVariantNumeric: 'tabular-nums',
+        }}
+      >
+        {index}.
+      </Typography>
       <ListItemText
         primary={name}
         sx={{
           '& span': {
+            color: checked ? 'text.primary' : 'text.disabled',
             fontSize: 'body1.fontSize',
             overflow: 'hidden',
             textOverflow: 'ellipsis',
             whiteSpace: 'nowrap',
-            fontVariantNumeric: 'tabular-nums',
           },
         }}
       />

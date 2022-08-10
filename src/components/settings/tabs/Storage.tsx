@@ -126,22 +126,14 @@ export const SettingsStorage = () => {
         }
         sx={{ height: '100%' }}
       >
-        <Stack
-          sx={{
-            flex: 1,
-            px: { xs: 1.25, md: 1.75 },
-            pt: { xs: 2, md: 2.5 },
-            pb: { xs: 1, md: 1.5 },
-            fontSize: '0.925rem',
-          }}
-        >
-          <Box sx={{ px: 1.25 }}>
+        <Stack sx={{ flex: 1 }}>
+          <Box sx={{ px: 3, pt: 2.75, fontSize: '0.925rem' }}>
             <Markdown>{markdown}</Markdown>
           </Box>
 
           <Stack
             direction="row"
-            sx={{ pt: 2, flex: 1, alignItems: 'flex-end' }}
+            sx={{ pt: 2, px: 1.625, pb: 1.5, flex: 1, alignItems: 'flex-end' }}
           >
             <Stack direction="row" sx={{ flex: 1 }}>
               <Button
@@ -177,6 +169,7 @@ export const SettingsStorage = () => {
             </Button>
           </Stack>
         </Stack>
+
         <Stack sx={{ flex: 1 }}>
           <List disablePadding>
             {storages.map((storage, index) => (

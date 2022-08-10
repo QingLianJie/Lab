@@ -42,14 +42,14 @@ export const SettingsBridge = () => {
           <Fragment>
             <Typography
               variant="body1"
-              component="span"
+              component="p"
               sx={{ color: 'text.secondary', textAlign: 'center' }}
             >
               已添加 HEU 账号
             </Typography>
             <Typography
               variant="h5"
-              component="span"
+              component="p"
               sx={{
                 color: 'text.primary',
                 textAlign: 'center',

@@ -11,12 +11,15 @@ import { enqueueSnackbar } from 'notistack'
 import { useEffect, useRef, useState, type FormEvent } from 'react'
 import { studentAtom } from '../../../contexts/bridge'
 import { modalsAtom } from '../../../contexts/modals'
+import { schedulesAtom } from '../../../contexts/schedules'
+import { scoresAtom } from '../../../contexts/scores'
 import { Modal } from '../../base/Modal'
 
 export const BindModal = () => {
   const [modals, setModals] = useAtom(modalsAtom)
   const [student, setStudent] = useAtom(studentAtom)
-  const [showPassword, setShowPassword] = useState(false)
+  const [scores, setScores] = useAtom(scoresAtom)
+  const [schedules, setSchedules] = useAtom(schedulesAtom)
 
   const inputRef = useRef<HTMLInputElement>()
 
@@ -29,6 +32,7 @@ export const BindModal = () => {
 
   const [id, setId] = useState(student ? student.id : '')
   const [password, setPassword] = useState(student ? student.password : '')
+  const [showPassword, setShowPassword] = useState(false)
 
   const handleBind = (e: FormEvent) => {
     e.preventDefault()
@@ -41,6 +45,9 @@ export const BindModal = () => {
     setStudent(false)
     setId('')
     setPassword('')
+    setShowPassword(false)
+    setScores(false)
+    setSchedules(false)
     handleCancel()
     enqueueSnackbar(`已移除 HEU 账号：${id}`)
   }

@@ -50,14 +50,14 @@ export const SettingsExtension = () => {
           <Fragment>
             <Typography
               variant="body1"
-              component="span"
+              component="p"
               sx={{ color: 'text.secondary', textAlign: 'center' }}
             >
               已连接到插件
             </Typography>
             <Typography
               variant="h5"
-              component="span"
+              component="p"
               sx={{
                 color: 'text.primary',
                 textAlign: 'center',

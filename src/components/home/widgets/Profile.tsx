@@ -1,6 +1,5 @@
 import {
   AccountCircleOutlined,
-  FaceOutlined,
   FileUploadOutlined,
   LogoutOutlined,
 } from '@mui/icons-material'
@@ -80,7 +79,7 @@ export const HomeProfileWidget = () => {
               src={account ? account.avatar : undefined}
               alt={account ? account.name : '未登录'}
               sx={{
-                backgroundColor: 'background.default',
+                backgroundColor: 'background.subtle',
                 width: 52,
                 height: 52,
                 border: 1,
@@ -94,7 +93,7 @@ export const HomeProfileWidget = () => {
             >
               <Typography
                 sx={{
-                  color: 'text.secondary',
+                  color: 'text.disabled',
                   fontSize: 'h6.fontSize',
                   fontWeight: 700,
                 }}
@@ -129,7 +128,7 @@ export const HomeProfileWidget = () => {
             onClick={
               scores && schedules
                 ? handleUpload
-                : () => navigate('/settings?tab="account')
+                : () => navigate('/settings?tab=account')
             }
             sx={{ pl: 2.25, pr: 2, py: 1.5 }}
           >
@@ -143,7 +142,9 @@ export const HomeProfileWidget = () => {
               </Typography>
               <Icon
                 component={
-                  scores && schedules ? FileUploadOutlined : FaceOutlined
+                  scores && schedules
+                    ? FileUploadOutlined
+                    : AccountCircleOutlined
                 }
                 sx={{ color: 'text.disabled', width: 20, height: 20 }}
               />
