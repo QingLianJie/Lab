@@ -9,7 +9,7 @@ export const lightPalette = {
 
 export const darkPalette = {
   mode: 'dark' as const,
-  primary: { main: '#f06292' },
+  primary: { main: '#ec407a' },
   secondary: blue,
   background: { default: grey[900], paper: grey[800], subtle: '#4a4a4a' },
 }

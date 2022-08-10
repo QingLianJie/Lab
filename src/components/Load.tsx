@@ -1,24 +1,35 @@
 import { Bridge } from '@qing-dev/bridge'
 import { useAtom, useAtomValue } from 'jotai'
-import ky from 'ky'
 import { Fragment, useEffect } from 'react'
-import { useMount, useTimeout } from 'react-use'
+import { useMount } from 'react-use'
 import useSWR from 'swr'
-import { api } from '../configs/site-info'
+import { prefix } from '../configs/site-info'
 import { bridgeAtom, fetcherAtom } from '../contexts/bridge'
 import { scoresAtom, scoresListAtom } from '../contexts/scores'
 import { accountAtom } from '../contexts/settings'
 import { type UserResponse } from '../index.d'
-import { fetcher, slientFetcher } from '../utils/func'
+import { slientFetcher } from '../utils/func'
 
 export const Load = () => {
   const { data, error } = useSWR<UserResponse | false>(
-    `${api}/rest-auth/user/`,
+    `${prefix}/rest-auth/user/`,
     slientFetcher,
     {
       refreshInterval: 60 * 60 * 1000,
       suspense: true,
       shouldRetryOnError: false,
+      refreshWhenHidden: false,
+      onSuccess: (data: UserResponse | false) => {
+        if (!data) return
+
+        setAccount({
+          name: data.username,
+          id: data.pk,
+          email: data.email,
+          avatar: data.image,
+        })
+      },
+      onError: () => setAccount(false),
     }
   )
 
@@ -34,9 +45,7 @@ export const Load = () => {
       const bridge = new Bridge(fetcher)
       setBridge(bridge)
     }
-  })
 
-  useEffect(() => {
     if (error) setAccount(false)
     if (data)
       setAccount({
@@ -45,7 +54,7 @@ export const Load = () => {
         email: data.email,
         avatar: data.image,
       })
-  }, [data])
+  })
 
   const scores = useAtomValue(scoresAtom)
   const [scoresList, setScoresList] = useAtom(scoresListAtom)

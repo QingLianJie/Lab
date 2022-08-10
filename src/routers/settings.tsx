@@ -1,6 +1,6 @@
 import { SettingsRounded } from '@mui/icons-material'
 import { Card, createTheme, ThemeProvider, useTheme } from '@mui/material'
-import { amber } from '@mui/material/colors'
+import { amber, pink } from '@mui/material/colors'
 import { useEffect, useState } from 'react'
 import { useLocation, useSearchParams } from 'react-router-dom'
 import { Layout } from '../components/Layout'
@@ -10,10 +10,15 @@ import { SettingsTab } from '../components/settings/Tab'
 export const SettingsPage = () => {
   const theme = useTheme()
   const { palette } = theme
+  const isDark = palette.mode === 'dark'
 
   const settingsTheme = createTheme({
     ...theme,
-    palette: { ...palette, primary: amber },
+    palette: {
+      ...palette,
+      primary: amber,
+      secondary: isDark ? { main: '#ec407a' } : pink,
+    },
   })
 
   const [params] = useSearchParams()

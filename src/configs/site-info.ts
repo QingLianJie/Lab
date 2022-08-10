@@ -6,6 +6,6 @@ export const info = {
   github: 'https://github.com/QingLianJie',
 }
 
-export const api = import.meta.env.DEV
-  ? 'http://localhost:2333'
-  : 'https://api.qingliangjie.cn'
+export const api = 'https://api.qingliangjie.cn'
+
+export const prefix = import.meta.env.DEV ? 'http://localhost:2333' : api

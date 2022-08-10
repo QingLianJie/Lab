@@ -12,7 +12,7 @@ import ky, { type HTTPError } from 'ky'
 import { enqueueSnackbar } from 'notistack'
 import { useEffect, useRef, useState, type FormEvent } from 'react'
 import { useSWRConfig } from 'swr'
-import { api } from '../../../../configs/site-info'
+import { prefix } from '../../../../configs/site-info'
 import { modalsAtom } from '../../../../contexts/modals'
 import { accountAtom } from '../../../../contexts/settings'
 import { type UserResponse } from '../../../../index.d'
@@ -42,7 +42,7 @@ export const AuthLogin = () => {
   const handleLogin = (e: FormEvent) => {
     e.preventDefault()
     setLoading(true)
-    ky.post(`${api}/rest-auth/login/`, {
+    ky.post(`${prefix}/rest-auth/login/`, {
       json: new RegExp(EmailRegex).test(form.name)
         ? { email: form.name, password: form.password }
         : { username: form.name, password: form.password },
@@ -52,16 +52,16 @@ export const AuthLogin = () => {
         enqueueSnackbar('登录成功')
         setModals({ ...modals, auth: false })
         setLoading(false)
-        mutate(`${api}/rest-auth/user/`)
+        mutate(`${prefix}/rest-auth/user/`)
       })
       .catch((error: HTTPError) => {
         console.error(error)
         setLoading(false)
         error.response
           .json()
-          .then(messages =>
-            messages.non_field_errors.forEach((message: string) =>
-              enqueueSnackbar(message)
+          .then((messages: { [key: string]: string }) =>
+            Object.values(messages).forEach((message: string) =>
+              enqueueSnackbar(`登录失败 - ${message}`)
             )
           )
       })

@@ -20,7 +20,7 @@ import ky from 'ky'
 import { enqueueSnackbar } from 'notistack'
 import { useNavigate } from 'react-router-dom'
 import { useSWRConfig } from 'swr'
-import { api } from '../../../configs/site-info'
+import { prefix } from '../../../configs/site-info'
 import { modalsAtom } from '../../../contexts/modals'
 import { schedulesAtom } from '../../../contexts/schedules'
 import { scoresAtom } from '../../../contexts/scores'
@@ -38,11 +38,13 @@ export const HomeProfileWidget = () => {
   const [account, setAccount] = useAtom(accountAtom)
 
   const handleLogout = () => {
-    ky.post(`${api}/rest-auth/logout/`, { credentials: 'include' }).then(() => {
-      enqueueSnackbar('已退出登录')
-      mutate(`${api}/rest-auth/user/`, () => false)
-      setAccount(false)
-    })
+    ky.post(`${prefix}/rest-auth/logout/`, { credentials: 'include' }).then(
+      () => {
+        enqueueSnackbar('已退出登录')
+        mutate(`${prefix}/rest-auth/user/`)
+        setAccount(false)
+      }
+    )
   }
 
   const handleUpload = () => {

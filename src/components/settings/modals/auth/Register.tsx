@@ -1,7 +1,6 @@
 import { VisibilityOffOutlined, VisibilityOutlined } from '@mui/icons-material'
 import { LoadingButton } from '@mui/lab'
 import {
-  Button,
   IconButton,
   InputAdornment,
   Stack,
@@ -13,10 +12,8 @@ import ky, { type HTTPError } from 'ky'
 import { enqueueSnackbar } from 'notistack'
 import { useEffect, useRef, useState, type FormEvent } from 'react'
 import { useSWRConfig } from 'swr'
-import { api } from '../../../../configs/site-info'
+import { prefix } from '../../../../configs/site-info'
 import { modalsAtom } from '../../../../contexts/modals'
-import { accountAtom } from '../../../../contexts/settings'
-import { type UserResponse } from '../../../../index.d'
 import { NameRegex, PasswordRegex } from '../../../../utils/format'
 
 type RegisterForm = {
@@ -27,10 +24,9 @@ type RegisterForm = {
 }
 
 export const AuthRegister = () => {
-  const [modals, setModals] = useAtom(modalsAtom)
-  const [account, setAccount] = useAtom(accountAtom)
   const inputRef = useRef<HTMLInputElement>()
 
+  const [modals, setModals] = useAtom(modalsAtom)
   const [loading, setLoading] = useState(false)
   const { mutate } = useSWRConfig()
 
@@ -56,7 +52,7 @@ export const AuthRegister = () => {
     }
 
     setLoading(true)
-    ky.post(`${api}/rest-auth/registration/`, {
+    ky.post(`${prefix}/rest-auth/registration/`, {
       json: {
         username: form.name,
         email: form.email,
@@ -69,15 +65,15 @@ export const AuthRegister = () => {
         enqueueSnackbar('注册成功')
         setModals({ ...modals, auth: false })
         setLoading(false)
-        mutate(`${api}/rest-auth/user/`)
+        mutate(`${prefix}/rest-auth/user/`)
       })
       .catch((error: HTTPError) => {
         console.error(error)
         error.response
           .json()
-          .then(messages =>
-            messages.non_field_errors.forEach((message: string) =>
-              enqueueSnackbar(message)
+          .then((messages: { [key: string]: string }) =>
+            Object.values(messages).forEach((message: string) =>
+              enqueueSnackbar(`注册失败 - ${message}`)
             )
           )
       })

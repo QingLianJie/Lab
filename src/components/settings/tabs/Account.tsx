@@ -7,24 +7,31 @@ import { Avatar, Button, Chip, Divider, Stack, Typography } from '@mui/material'
 import { useAtom } from 'jotai'
 import ky from 'ky'
 import { enqueueSnackbar } from 'notistack'
-import { Fragment } from 'react'
+import { Fragment, useState } from 'react'
 import { useSWRConfig } from 'swr'
-import { api, info } from '../../../configs/site-info'
+import { prefix, info } from '../../../configs/site-info'
 import { modalsAtom, type AuthModal } from '../../../contexts/modals'
 import { accountAtom } from '../../../contexts/settings'
 import { Tooltip } from '../../base/styled/Tooltip'
 import { SettingsHeader } from '../Header'
+import { ChangePasswordModal } from '../modals/ChangePassword'
+import { EditAvatarModal } from '../modals/EditAvatar'
 
 export const SettingsAccount = () => {
+  const [openAvatar, setOpenAvatar] = useState(false)
+  const [openPassword, setOpenPassword] = useState(false)
+
   const [account, setAccount] = useAtom(accountAtom)
   const { mutate } = useSWRConfig()
 
   const handleLogout = () => {
-    ky.post(`${api}/rest-auth/logout/`, { credentials: 'include' }).then(() => {
-      enqueueSnackbar('已退出登录')
-      mutate(`${api}/rest-auth/user/`, () => false)
-      setAccount(false)
-    })
+    ky.post(`${prefix}/rest-auth/logout/`, { credentials: 'include' }).then(
+      () => {
+        enqueueSnackbar('已退出登录')
+        mutate(`${prefix}/rest-auth/user/`)
+        setAccount(false)
+      }
+    )
   }
 
   const handleDeleteAccount = () => {
@@ -78,14 +85,19 @@ export const SettingsAccount = () => {
                 justifyContent: { xs: 'flex-start', md: 'center' },
               }}
             >
+              <EditAvatarModal
+                open={openAvatar}
+                onClose={() => setOpenAvatar(false)}
+              />
               <Tooltip title="修改头像" arrow placement="top">
                 <Avatar
                   src={account ? account.avatar : undefined}
                   alt={account ? account.name : '未登录'}
+                  onClick={() => setOpenAvatar(true)}
                   sx={{
                     backgroundColor: 'background.subtle',
-                    width: { xs: 96, sm: 108, md: 160 },
-                    height: { xs: 96, sm: 108, md: 160 },
+                    width: { xs: 96, sm: 108, md: 150 },
+                    height: { xs: 96, sm: 108, md: 150 },
                     border: 1,
                     borderColor: 'divider',
                     boxShadow: '0 0.75rem 3rem rgba(0, 0, 0, 0.1)',
@@ -143,7 +155,11 @@ export const SettingsAccount = () => {
               }}
             >
               <Stack direction="row" sx={{ flex: 1 }}>
-                <Button>修改密码</Button>
+                <ChangePasswordModal
+                  open={openPassword}
+                  onClose={() => setOpenPassword(false)}
+                />
+                <Button onClick={() => setOpenPassword(true)}>修改密码</Button>
                 <Button onClick={handleLogout}>退出登录</Button>
               </Stack>
 
