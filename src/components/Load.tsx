@@ -12,7 +12,7 @@ import { slientFetcher } from '../utils/func'
 
 export const Load = () => {
   const { data, error } = useSWR<UserResponse | false>(
-    `${prefix}/rest-auth/user/`,
+    `${prefix}/api/user`,
     slientFetcher,
     {
       refreshInterval: 60 * 60 * 1000,
@@ -26,7 +26,7 @@ export const Load = () => {
           name: data.username,
           id: data.pk,
           email: data.email,
-          avatar: data.image,
+          avatar: `${prefix}${data.image}`,
         })
       },
       onError: () => setAccount(false),
@@ -52,7 +52,7 @@ export const Load = () => {
         name: data.username,
         id: data.pk,
         email: data.email,
-        avatar: data.image,
+        avatar: `${prefix}${data.image}`,
       })
   })
 

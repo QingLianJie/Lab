@@ -136,31 +136,39 @@ export const Nav = () => {
         title={account ? account.name : `登录到${info.name}`}
         placement={isMobile ? 'top' : 'right'}
       >
-        <Avatar
-          src={account ? account.avatar : ''}
-          alt={account ? account.name : '登录'}
+        <Box
           sx={{
             position: 'absolute',
             bottom: 36,
             left: '50%',
             display: { xs: 'none', md: 'flex' },
-            width: 40,
-            height: 40,
             transform: 'translateX(-50%)',
-            backgroundColor: 'transparent',
-            '&:hover': {
-              backgroundColor: isMobile ? 'unset' : 'action.hover',
-            },
-            cursor: 'pointer',
-            transition: 'background-color 0.2s',
-          }}
-          onClick={() => {
-            if (account) navigate('/settings?tab=account')
-            else setModals({ ...modals, auth: '登录' })
+            border: account ? 1 : 0,
+            borderColor: 'divider',
+            borderRadius: '50%',
           }}
         >
-          <AccountCircleOutlined sx={{ color: 'text.disabled' }} />
-        </Avatar>
+          <Avatar
+            src={account ? account.avatar : ''}
+            alt={account ? account.name : '登录'}
+            sx={{
+              width: 40,
+              height: 40,
+              backgroundColor: 'transparent',
+              '&:hover': {
+                backgroundColor: isMobile ? 'unset' : 'action.hover',
+              },
+              cursor: 'pointer',
+              transition: 'background-color 0.2s',
+            }}
+            onClick={() => {
+              if (account) navigate('/settings?tab=account')
+              else setModals({ ...modals, auth: '登录' })
+            }}
+          >
+            <AccountCircleOutlined sx={{ color: 'text.disabled' }} />
+          </Avatar>
+        </Box>
       </Tooltip>
     </Box>
   )

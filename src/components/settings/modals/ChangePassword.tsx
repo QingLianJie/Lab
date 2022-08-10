@@ -77,7 +77,7 @@ export const ChangePasswordModal = ({
         setAccount(false)
 
         ky.post(`${prefix}/rest-auth/logout/`, { credentials: 'include' }).then(
-          () => mutate(`${prefix}/rest-auth/user/`)
+          () => mutate(`${prefix}/api/user`)
         )
 
         onClose()
@@ -107,9 +107,11 @@ export const ChangePasswordModal = ({
       onClose={onClose}
       sx={{ '& .MuiPaper-root': { maxWidth: '16rem' } }}
     >
-      <Helmet>
-        <title>修改密码 - {info.name}</title>
-      </Helmet>
+      {open && (
+        <Helmet>
+          <title>修改密码 - {info.name}</title>
+        </Helmet>
+      )}
 
       <Stack
         component="form"

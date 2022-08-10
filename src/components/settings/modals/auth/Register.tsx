@@ -65,7 +65,7 @@ export const AuthRegister = () => {
         enqueueSnackbar('注册成功')
         setModals({ ...modals, auth: false })
         setLoading(false)
-        mutate(`${prefix}/rest-auth/user/`)
+        mutate(`${prefix}/api/user`)
       })
       .catch((error: HTTPError) => {
         console.error(error)

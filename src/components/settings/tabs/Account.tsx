@@ -3,7 +3,15 @@ import {
   AccountCircleRounded,
   DeleteOutlineOutlined,
 } from '@mui/icons-material'
-import { Avatar, Button, Chip, Divider, Stack, Typography } from '@mui/material'
+import {
+  Avatar,
+  Box,
+  Button,
+  Chip,
+  Divider,
+  Stack,
+  Typography,
+} from '@mui/material'
 import { useAtom } from 'jotai'
 import ky from 'ky'
 import { enqueueSnackbar } from 'notistack'
@@ -28,7 +36,7 @@ export const SettingsAccount = () => {
     ky.post(`${prefix}/rest-auth/logout/`, { credentials: 'include' }).then(
       () => {
         enqueueSnackbar('已退出登录')
-        mutate(`${prefix}/rest-auth/user/`)
+        mutate(`${prefix}/api/user`)
         setAccount(false)
       }
     )
@@ -90,30 +98,37 @@ export const SettingsAccount = () => {
                 onClose={() => setOpenAvatar(false)}
               />
               <Tooltip title="修改头像" arrow placement="top">
-                <Avatar
-                  src={account ? account.avatar : undefined}
-                  alt={account ? account.name : '未登录'}
-                  onClick={() => setOpenAvatar(true)}
+                <Box
                   sx={{
-                    backgroundColor: 'background.subtle',
-                    width: { xs: 96, sm: 108, md: 150 },
-                    height: { xs: 96, sm: 108, md: 150 },
                     border: 1,
                     borderColor: 'divider',
+                    borderRadius: '50%',
                     boxShadow: '0 0.75rem 3rem rgba(0, 0, 0, 0.1)',
-                    cursor: 'pointer',
                   }}
                 >
-                  <Typography
+                  <Avatar
+                    src={account ? account.avatar : undefined}
+                    alt={account ? account.name : '未登录'}
+                    onClick={() => setOpenAvatar(true)}
                     sx={{
-                      color: 'text.disabled',
-                      fontSize: { xs: 36, sm: 42, md: 64 },
-                      fontWeight: 700,
+                      backgroundColor: 'background.subtle',
+                      width: { xs: 96, sm: 108, md: 150 },
+                      height: { xs: 96, sm: 108, md: 150 },
+
+                      cursor: 'pointer',
                     }}
                   >
-                    {account.name.slice(0, 1)}
-                  </Typography>
-                </Avatar>
+                    <Typography
+                      sx={{
+                        color: 'text.disabled',
+                        fontSize: { xs: 36, sm: 42, md: 64 },
+                        fontWeight: 700,
+                      }}
+                    >
+                      {account.name.slice(0, 1)}
+                    </Typography>
+                  </Avatar>
+                </Box>
               </Tooltip>
               <Stack
                 spacing={0.5}

@@ -52,7 +52,7 @@ export const AuthLogin = () => {
         enqueueSnackbar('登录成功')
         setModals({ ...modals, auth: false })
         setLoading(false)
-        mutate(`${prefix}/rest-auth/user/`)
+        mutate(`${prefix}/api/user`)
       })
       .catch((error: HTTPError) => {
         console.error(error)

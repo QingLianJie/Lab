@@ -29,7 +29,6 @@ import { scoresAtom } from '../../../contexts/scores'
 import { defaultSettings, settingsAtom } from '../../../contexts/settings'
 import markdown from '../../../markdown/settings/storage.md?raw'
 import { byteFormat } from '../../../utils/format'
-import { Confirm } from '../../base/Modal'
 import { Markdown } from '../../base/Markdown'
 import { SettingsHeader } from '../Header'
 

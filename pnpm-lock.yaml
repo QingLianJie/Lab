@@ -17,6 +17,7 @@ specifiers:
   '@types/react-transition-group': ^4.4.5
   '@vitejs/plugin-react': ^2.0.0
   canvas-confetti: ^1.5.1
+  cropperjs: ^1.5.12
   dayjs: ^1.11.4
   fflate: ^0.7.3
   github-markdown-css: ^5.1.0
@@ -27,6 +28,7 @@ specifiers:
   notistack: 3.0.0-alpha.7
   prettier: ^2.7.1
   react: ^18.2.0
+  react-cropper: ^2.1.8
   react-dom: ^18.2.0
   react-draggable: ^4.4.5
   react-helmet-async: ^1.3.0
@@ -53,6 +55,7 @@ dependencies:
   '@mui/x-date-pickers': 5.0.0-beta.4_lwkuk5vtwk7lto3detlugpzwxu
   '@qing-dev/bridge': 0.2.3
   canvas-confetti: 1.5.1
+  cropperjs: 1.5.12
   dayjs: 1.11.4
   fflate: 0.7.3
   github-markdown-css: 5.1.0
@@ -62,6 +65,7 @@ dependencies:
   lodash: 4.17.21
   notistack: 3.0.0-alpha.7_vt6aeitzauirmcdhimiad2yjxy
   react: 18.2.0
+  react-cropper: 2.1.8_react@18.2.0
   react-dom: 18.2.0_react@18.2.0
   react-draggable: 4.4.5_biqbaboplfbrettd7655fr4n2y
   react-helmet-async: 1.3.0_biqbaboplfbrettd7655fr4n2y
@@ -2358,6 +2362,10 @@ packages:
       path-type: 4.0.0
       yaml: 1.10.2
 
+  /cropperjs/1.5.12:
+    resolution: {integrity: sha512-re7UdjE5UnwdrovyhNzZ6gathI4Rs3KGCBSc8HCIjUo5hO42CtzyblmWLj6QWVw7huHyDMfpKxhiO2II77nhDw==}
+    dev: false
+
   /crypto-random-string/2.0.0:
     resolution: {integrity: sha512-v1plID3y9r/lPhviJ1wrXpLeyUIGAZ2SHNYTEapm7/8A9nLPoyvVp3RK/EPFqn5kEznyWgYZNsRtYYIWbuG8KA==}
     engines: {node: '>=8'}
@@ -3945,6 +3953,15 @@ packages:
     dependencies:
       safe-buffer: 5.1.2
     dev: true
+
+  /react-cropper/2.1.8_react@18.2.0:
+    resolution: {integrity: sha512-QEj6CE9et/gMRqpaKMgZQdBgtzLjjq+zj1pmHwtoWG6GqscDl4QpTwoEElWN2pieYxkwFaZa0lPiD2b9nwqLKQ==}
+    peerDependencies:
+      react: '>=16.0.0'
+    dependencies:
+      cropperjs: 1.5.12
+      react: 18.2.0
+    dev: false
 
   /react-dom/18.2.0_react@18.2.0:
     resolution: {integrity: sha512-6IMTriUmvsjHUjNtEDudZfuDQUoWXVxKHhlEGSk81n4YFS+r/Kl99wXiwlVXtPBtJenozv2P+hxDsw9eA7Xo6g==}

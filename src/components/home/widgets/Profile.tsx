@@ -5,6 +5,7 @@ import {
 } from '@mui/icons-material'
 import {
   Avatar,
+  Box,
   Button,
   Card,
   CardActionArea,
@@ -41,7 +42,7 @@ export const HomeProfileWidget = () => {
     ky.post(`${prefix}/rest-auth/logout/`, { credentials: 'include' }).then(
       () => {
         enqueueSnackbar('已退出登录')
-        mutate(`${prefix}/rest-auth/user/`)
+        mutate(`${prefix}/api/user`)
         setAccount(false)
       }
     )
@@ -77,32 +78,38 @@ export const HomeProfileWidget = () => {
             spacing={1.75}
             sx={{ px: 2.25, pb: 2, alignItems: 'center' }}
           >
-            <Avatar
-              src={account ? account.avatar : undefined}
-              alt={account ? account.name : '未登录'}
+            <Box
               sx={{
-                backgroundColor: 'background.subtle',
-                width: 52,
-                height: 52,
                 border: 1,
                 borderColor: 'divider',
+                borderRadius: '50%',
                 boxShadow: '0 0.5rem 1.5rem rgba(0, 0, 0, 0.1)',
                 cursor: 'pointer',
                 '&:hover': { transform: 'scale(1.1)' },
                 transition: 'transform 0.2s',
               }}
-              onClick={() => navigate('/settings?tab=account')}
             >
-              <Typography
+              <Avatar
+                src={account ? account.avatar : undefined}
+                alt={account ? account.name : '未登录'}
                 sx={{
-                  color: 'text.disabled',
-                  fontSize: 'h6.fontSize',
-                  fontWeight: 700,
+                  backgroundColor: 'background.subtle',
+                  width: 52,
+                  height: 52,
                 }}
+                onClick={() => navigate('/settings?tab=account')}
               >
-                {account.name.slice(0, 1)}
-              </Typography>
-            </Avatar>
+                <Typography
+                  sx={{
+                    color: 'text.disabled',
+                    fontSize: 'h6.fontSize',
+                    fontWeight: 700,
+                  }}
+                >
+                  {account.name.slice(0, 1)}
+                </Typography>
+              </Avatar>
+            </Box>
             <Stack spacing={0.25}>
               <Stack direction="row" spacing={1} sx={{ alignItems: 'center' }}>
                 <Typography variant="body1" sx={{ fontWeight: 700 }}>
