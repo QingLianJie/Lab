@@ -1,5 +1,5 @@
 import { SchedulesAtom } from '..'
-import { atomLocal } from '../utils/atom'
+import { atomLocal } from '../utils/addons'
 
 export const schedulesAtom = atomLocal<SchedulesAtom | false>(
   'schedules',

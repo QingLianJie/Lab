@@ -1,5 +1,5 @@
 import { favorites } from '../configs/home/favorites'
-import { atomLocal } from '../utils/atom'
+import { atomLocal } from '../utils/addons'
 
 export type Favorite = {
   id: number

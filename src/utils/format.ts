@@ -27,6 +27,16 @@ export const calendarDate = (time: string) =>
     sameElse: 'YYYY 年 M 月 D 日',
   })
 
+export const calendarAuto = (time: string) =>
+  dayjs(time).calendar(dayjs(), {
+    sameDay: '[今天] HH:mm',
+    nextDay: '[明天] HH:mm',
+    nextWeek: 'YYYY 年 M 月 D 日',
+    lastDay: '[昨天] HH:mm',
+    lastWeek: 'YYYY 年 M 月 D 日',
+    sameElse: 'YYYY 年 M 月 D 日',
+  })
+
 export const relativeTime = (time: string) => dayjs(time).fromNow()
 
 export const byteFormat = (bytes: number, decimals = 2) => {

@@ -1,12 +1,6 @@
 import { VisibilityOffOutlined, VisibilityOutlined } from '@mui/icons-material'
 import { LoadingButton } from '@mui/lab'
-import {
-  Button,
-  IconButton,
-  InputAdornment,
-  Stack,
-  TextField,
-} from '@mui/material'
+import { IconButton, InputAdornment, Stack, TextField } from '@mui/material'
 import { useAtom } from 'jotai'
 import ky, { type HTTPError } from 'ky'
 import { enqueueSnackbar } from 'notistack'
@@ -14,8 +8,6 @@ import { useEffect, useRef, useState, type FormEvent } from 'react'
 import { useSWRConfig } from 'swr'
 import { prefix } from '../../../../configs/site-info'
 import { modalsAtom } from '../../../../contexts/modals'
-import { accountAtom } from '../../../../contexts/settings'
-import { type UserResponse } from '../../../../index.d'
 import { EmailRegex } from '../../../../utils/format'
 
 type LoginForm = {
@@ -29,8 +21,6 @@ export const AuthLogin = () => {
 
   const [form, setForm] = useState<LoginForm>({ name: '', password: '' })
   const [showPassword, setShowPassword] = useState(false)
-
-  const [account, setAccount] = useAtom(accountAtom)
   const [loading, setLoading] = useState(false)
   const { mutate } = useSWRConfig()
 

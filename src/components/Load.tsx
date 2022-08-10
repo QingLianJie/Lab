@@ -7,8 +7,8 @@ import { prefix } from '../configs/site-info'
 import { bridgeAtom, fetcherAtom } from '../contexts/bridge'
 import { scoresAtom, scoresListAtom } from '../contexts/scores'
 import { accountAtom } from '../contexts/settings'
-import { type UserResponse } from '../index.d'
-import { slientFetcher } from '../utils/func'
+import { slientFetcher } from '../utils/addons'
+import { accountResponseMap, type UserResponse } from '../utils/maps'
 
 export const Load = () => {
   const { data, error } = useSWR<UserResponse | false>(
@@ -17,17 +17,14 @@ export const Load = () => {
     {
       refreshInterval: 60 * 60 * 1000,
       suspense: true,
-      shouldRetryOnError: false,
       refreshWhenHidden: false,
+      shouldRetryOnError: false,
+      revalidateIfStale: false,
+      revalidateOnFocus: false,
+      revalidateOnMount: false,
       onSuccess: (data: UserResponse | false) => {
         if (!data) return
-
-        setAccount({
-          name: data.username,
-          id: data.pk,
-          email: data.email,
-          avatar: `${prefix}${data.image}`,
-        })
+        setAccount(accountResponseMap(data))
       },
       onError: () => setAccount(false),
     }
@@ -47,13 +44,7 @@ export const Load = () => {
     }
 
     if (error) setAccount(false)
-    if (data)
-      setAccount({
-        name: data.username,
-        id: data.pk,
-        email: data.email,
-        avatar: `${prefix}${data.image}`,
-      })
+    if (data) setAccount(accountResponseMap(data))
   })
 
   const scores = useAtomValue(scoresAtom)

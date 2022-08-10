@@ -1,7 +1,7 @@
 import { type Bridge } from '@qing-dev/bridge'
 import { atom } from 'jotai'
 import { type FetcherInfo } from '..'
-import { atomLocal } from '../utils/atom'
+import { atomLocal } from '../utils/addons'
 
 type Student =
   | false

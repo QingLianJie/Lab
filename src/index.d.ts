@@ -120,12 +120,3 @@ export type SchedulesAtom = {
     color: string
   }[]
 }
-
-export interface UserResponse {
-  pk: number
-  username: string
-  image: string
-  self: boolean
-  heu_username: string
-  email: string
-}

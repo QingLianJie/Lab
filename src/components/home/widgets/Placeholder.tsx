@@ -113,7 +113,7 @@ const TaskItem = ({ name, checked, index }: TaskItemProps) => (
         sx={{
           pr: 1,
           fontWeight: 700,
-          color: checked ? 'text.primary' : 'text.disabled',
+          color: 'text.primary',
           fontVariantNumeric: 'tabular-nums',
         }}
       >
@@ -123,7 +123,8 @@ const TaskItem = ({ name, checked, index }: TaskItemProps) => (
         primary={name}
         sx={{
           '& span': {
-            color: checked ? 'text.primary' : 'text.disabled',
+            color: 'text.primary',
+            fontWeight: 700,
             fontSize: 'body1.fontSize',
             overflow: 'hidden',
             textOverflow: 'ellipsis',

@@ -25,7 +25,7 @@ import { modalsAtom } from '../../../contexts/modals'
 import { schedulesAtom, schedulesViewAtom } from '../../../contexts/schedules'
 import { scoresAtom } from '../../../contexts/scores'
 import { scoreMap } from '../../../utils/calc'
-import { calendarTime } from '../../../utils/format'
+import { calendarAuto, calendarTime, relativeTime } from '../../../utils/format'
 import { SettingsGoAction } from '../../settings/Fetch'
 
 export const HomeStatisticsWidget = () => {
@@ -96,7 +96,7 @@ export const HomeStatisticsWidget = () => {
                 component="time"
                 sx={{ fontSize: 'inherit', fontWeight: 700 }}
               >
-                {calendarTime(scores.date)}
+                {calendarAuto(scores.date)}
               </Typography>
             </Typography>
             <Stack direction="row" spacing={1} sx={{ alignItems: 'center' }}>
