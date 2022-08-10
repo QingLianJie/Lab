@@ -47,6 +47,7 @@ export const AuthLogin = () => {
           label="用户名或邮箱"
           size="small"
           fullWidth
+          autoComplete="username"
           autoFocus
           value={form.name}
           onChange={e => setForm({ ...form, name: e.target.value })}
@@ -74,6 +75,7 @@ export const AuthLogin = () => {
           name="password"
           label="密码"
           size="small"
+          autoComplete="current-password"
           fullWidth
           value={form.password}
           onChange={e => setForm({ ...form, password: e.target.value })}

@@ -20,6 +20,7 @@ export const AccountModal = () => {
     <Fragment>
       {pages.map(page => (
         <Modal
+          key={page.name}
           title={page.name}
           subtitle={
             page.name === '重置密码'

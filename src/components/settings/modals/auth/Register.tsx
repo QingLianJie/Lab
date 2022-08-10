@@ -56,6 +56,7 @@ export const AuthRegister = () => {
         name="name"
         label="昵称"
         size="small"
+        autoComplete="username"
         fullWidth
         autoFocus
         value={form.name}
@@ -78,6 +79,7 @@ export const AuthRegister = () => {
         type="email"
         label="邮箱"
         size="small"
+        autoComplete="email"
         fullWidth
         value={form.email}
         onChange={e => setForm({ ...form, email: e.target.value })}
@@ -92,6 +94,7 @@ export const AuthRegister = () => {
         size="small"
         fullWidth
         value={form.password}
+        autoComplete="new-password"
         helperText="8 到 24 个字符，且不能为纯数字"
         onChange={e => setForm({ ...form, password: e.target.value })}
         InputProps={{

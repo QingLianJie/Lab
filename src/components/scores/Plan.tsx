@@ -212,7 +212,8 @@ const PlanList = ({ plan }: PlanListProps) => {
                                 key={child.name}
                                 sx={{
                                   py: 0.25,
-                                  px: 0,
+                                  pl: 0.5,
+                                  pr: 0,
                                   justifyContent: 'space-between',
                                 }}
                               >

@@ -52,4 +52,6 @@ export const formatNumbers = (nums: number[]) => {
 }
 
 export const NameRegex = '^.{3,16}$'
+export const EmailRegex =
+  /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
 export const PasswordRegex = '^.*(?=.{8,24})(?=.*[A-Za-z!@#$%^&*?]).*$'

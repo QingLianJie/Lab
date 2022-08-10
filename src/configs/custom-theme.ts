@@ -70,6 +70,7 @@ export const components = {
     styleOverrides: {
       root: {
         textDecoration: 'none',
+        textUnderlineOffset: '0.2em',
         '&:hover': { textDecoration: 'underline' },
       },
     },

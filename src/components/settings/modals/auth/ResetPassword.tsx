@@ -59,6 +59,7 @@ export const AuthResetPassword = () => {
         type="email"
         label="注册时用的邮箱"
         size="small"
+        autoComplete="email"
         fullWidth
         autoFocus
         value={form.email}
@@ -81,6 +82,7 @@ export const AuthResetPassword = () => {
           name="captcha"
           label="验证码"
           size="small"
+          autoComplete="one-time-code"
           fullWidth
           autoFocus
           value={form.captcha}
@@ -96,6 +98,7 @@ export const AuthResetPassword = () => {
         name="password"
         label="新的密码"
         size="small"
+        autoComplete="new-password"
         fullWidth
         value={form.password}
         helperText="8 到 24 个字符，且不能为纯数字"
