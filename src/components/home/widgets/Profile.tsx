@@ -1,18 +1,174 @@
-import { Button, Card, Stack, Typography } from '@mui/material'
+import {
+  AccountCircleOutlined,
+  FaceOutlined,
+  FileUploadOutlined,
+  LogoutOutlined,
+} from '@mui/icons-material'
+import {
+  Avatar,
+  Button,
+  Card,
+  CardActionArea,
+  Chip,
+  Divider,
+  Icon,
+  IconButton,
+  Stack,
+  Typography,
+} from '@mui/material'
 import { useAtom, useAtomValue } from 'jotai'
+import ky from 'ky'
+import { enqueueSnackbar } from 'notistack'
+import { useNavigate } from 'react-router-dom'
+import { useSWRConfig } from 'swr'
+import { api } from '../../../configs/site-info'
 import { modalsAtom } from '../../../contexts/modals'
+import { schedulesAtom } from '../../../contexts/schedules'
+import { scoresAtom } from '../../../contexts/scores'
 import { accountAtom } from '../../../contexts/settings'
+import { Tooltip } from '../../base/styled/Tooltip'
 
 export const HomeProfileWidget = () => {
+  const navigate = useNavigate()
+
   const [modals, setModals] = useAtom(modalsAtom)
-  const account = useAtomValue(accountAtom)
+  const scores = useAtomValue(scoresAtom)
+  const schedules = useAtomValue(schedulesAtom)
+
+  const { mutate } = useSWRConfig()
+  const [account, setAccount] = useAtom(accountAtom)
+
+  const handleLogout = () => {
+    ky.post(`${api}/rest-auth/logout/`, { credentials: 'include' }).then(() => {
+      enqueueSnackbar('已退出登录')
+      mutate(`${api}/rest-auth/user/`, () => false)
+      setAccount(false)
+    })
+  }
+
+  const handleUpload = () => {
+    const ans = confirm(
+      '上传成绩可以帮助请链接完善课程数据库，确认将匿名成绩上传到清廉街？'
+    )
+    if (!ans) return
+    enqueueSnackbar('这个功能还没做')
+    setModals(modals => ({ ...modals, thanks: true }))
+  }
 
   return (
-    <Card variant="outlined" sx={{ px: 2, py: 1.5 }}>
+    <Card variant="outlined">
       {account ? (
-        <Stack>HomeProfile</Stack>
+        <Stack sx={{ position: 'relative' }}>
+          <Typography
+            variant="body1"
+            sx={{
+              color: 'text.primary',
+              fontWeight: 700,
+              pb: 1.5,
+              px: 2.25,
+              pt: 2,
+            }}
+          >
+            清廉街账号
+          </Typography>
+          <Stack
+            direction="row"
+            spacing={1.75}
+            sx={{ px: 2.25, pb: 2, alignItems: 'center' }}
+          >
+            <Avatar
+              src={account ? account.avatar : undefined}
+              alt={account ? account.name : '未登录'}
+              sx={{
+                backgroundColor: 'background.default',
+                width: 52,
+                height: 52,
+                border: 1,
+                borderColor: 'divider',
+                boxShadow: '0 0.5rem 1.5rem rgba(0, 0, 0, 0.1)',
+                cursor: 'pointer',
+                '&:hover': { transform: 'scale(1.1)' },
+                transition: 'transform 0.2s',
+              }}
+              onClick={() => navigate('/settings?tab=account')}
+            >
+              <Typography
+                sx={{
+                  color: 'text.secondary',
+                  fontSize: 'h6.fontSize',
+                  fontWeight: 700,
+                }}
+              >
+                {account.name.slice(0, 1)}
+              </Typography>
+            </Avatar>
+            <Stack spacing={0.25}>
+              <Stack direction="row" spacing={1} sx={{ alignItems: 'center' }}>
+                <Typography variant="body1" sx={{ fontWeight: 700 }}>
+                  {account.name}
+                </Typography>
+                <Chip
+                  label={`UID ${account.id}`}
+                  size="small"
+                  sx={{
+                    fontSize: 'caption.fontSize',
+                    fontWeight: 700,
+                    height: 'auto',
+                    px: 0,
+                    py: 0.1,
+                  }}
+                />
+              </Stack>
+              <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+                {account.email || '无邮箱'}
+              </Typography>
+            </Stack>
+          </Stack>
+          <Divider />
+          <CardActionArea
+            onClick={
+              scores && schedules
+                ? handleUpload
+                : () => navigate('/settings?tab="account')
+            }
+            sx={{ pl: 2.25, pr: 2, py: 1.5 }}
+          >
+            <Stack
+              direction="row"
+              spacing={2.5}
+              sx={{ alignItems: 'center', justifyContent: 'space-between' }}
+            >
+              <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+                {scores && schedules ? '上传匿名成绩' : '查看账号信息'}
+              </Typography>
+              <Icon
+                component={
+                  scores && schedules ? FileUploadOutlined : FaceOutlined
+                }
+                sx={{ color: 'text.disabled', width: 20, height: 20 }}
+              />
+            </Stack>
+          </CardActionArea>
+
+          <Tooltip title="退出登录" arrow placement="top">
+            <IconButton
+              aria-label="退出登录"
+              sx={{
+                position: 'absolute',
+                right: 5,
+                top: 8,
+                color: 'text.disabled',
+                '&:hover': { color: 'text.primary' },
+                transition: 'all 0.2s',
+              }}
+              onClick={handleLogout}
+            >
+              <LogoutOutlined sx={{ width: 24, height: 24 }} />
+            </IconButton>
+          </Tooltip>
+        </Stack>
       ) : (
-        <Stack sx={{ pt: 0.5, px: 0.25 }}>
+        <Stack sx={{ px: 2.25, py: 2 }}>
           <Typography
             variant="body1"
             sx={{
@@ -31,8 +187,8 @@ export const HomeProfileWidget = () => {
             direction="row"
             sx={{
               mx: -1.25,
-              mt: 2,
-              mb: -0.5,
+              mt: 2.25,
+              mb: -1.125,
               justifyContent: 'space-between',
             }}
           >
@@ -40,7 +196,9 @@ export const HomeProfileWidget = () => {
               {(['登录', '注册'] as const).map(text => (
                 <Button
                   sx={{ py: 0.5, px: 1.25 }}
-                  onClick={() => setModals({ ...modals, auth: text })}
+                  onClick={() =>
+                    setModals(modals => ({ ...modals, auth: text }))
+                  }
                   key={text}
                 >
                   {text}
@@ -49,7 +207,9 @@ export const HomeProfileWidget = () => {
             </Stack>
             <Button
               sx={{ py: 0.5, px: 1.25 }}
-              onClick={() => setModals({ ...modals, auth: '重置密码' })}
+              onClick={() =>
+                setModals(modals => ({ ...modals, auth: '重置密码' }))
+              }
             >
               重置密码
             </Button>

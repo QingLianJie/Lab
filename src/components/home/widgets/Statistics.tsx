@@ -107,7 +107,7 @@ export const HomeStatisticsWidget = () => {
                   fontSize: 'caption.fontSize',
                   fontWeight: 700,
                   height: 'auto',
-                  px: 0.1,
+                  px: 0,
                   py: 0.1,
                 }}
               />

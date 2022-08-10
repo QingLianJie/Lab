@@ -5,3 +5,7 @@ export const info = {
   icp: '黑ICP备2021003925号-1',
   github: 'https://github.com/QingLianJie',
 }
+
+export const api = import.meta.env.DEV
+  ? 'http://localhost:2333'
+  : 'https://api.qingliangjie.cn'

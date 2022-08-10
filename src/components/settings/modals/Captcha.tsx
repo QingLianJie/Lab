@@ -140,13 +140,13 @@ export const CaptchaModal = () => {
       setTerm('')
       setCaptcha('')
       setToken('')
-      setModals({ ...modals, captcha: false })
+      setModals(modals => ({ ...modals, captcha: false }))
       enqueueSnackbar('成功获取成绩和课表数据')
 
       if (upload) {
         setUpload(false)
         enqueueSnackbar('上传成绩还没做')
-        setModals({ ...modals, thanks: true })
+        setModals(modals => ({ ...modals, thanks: true }))
       }
     } catch (error) {
       console.error(error)

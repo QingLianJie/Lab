@@ -155,7 +155,7 @@ export const Nav = () => {
             transition: 'background-color 0.2s',
           }}
           onClick={() => {
-            if (account) navigate('/settings')
+            if (account) navigate('/settings?tab=account')
             else setModals({ ...modals, auth: '登录' })
           }}
         >

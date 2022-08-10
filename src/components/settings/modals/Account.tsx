@@ -1,6 +1,8 @@
 import { Box } from '@mui/material'
 import { useAtom } from 'jotai'
 import { Fragment } from 'react'
+import { Helmet } from 'react-helmet-async'
+import { info } from '../../../configs/site-info'
 import { modalsAtom } from '../../../contexts/modals'
 import { Modal } from '../../base/Modal'
 import { AuthLogin } from './auth/Login'
@@ -34,6 +36,13 @@ export const AccountModal = () => {
           onClose={() => setModals(modals => ({ ...modals, auth: false }))}
           sx={{ '& .MuiPaper-root': { maxWidth: '16rem' } }}
         >
+          {modals.auth === page.name && (
+            <Helmet>
+              <title>
+                {page.name} - {info.name}
+              </title>
+            </Helmet>
+          )}
           <Box component={page.component} />
         </Modal>
       ))}

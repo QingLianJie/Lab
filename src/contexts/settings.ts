@@ -18,9 +18,9 @@ type Account =
   | false
   | {
       id: number
-      avatar: string
+      avatar?: string
       name: string
-      email: string
+      email?: string
     }
 
 export const accountAtom = atom<Account>(false)

@@ -1,4 +1,5 @@
 import { VisibilityOffOutlined, VisibilityOutlined } from '@mui/icons-material'
+import { LoadingButton } from '@mui/lab'
 import {
   Button,
   IconButton,
@@ -8,27 +9,37 @@ import {
   Typography,
 } from '@mui/material'
 import { useAtom } from 'jotai'
+import ky, { type HTTPError } from 'ky'
 import { enqueueSnackbar } from 'notistack'
 import { useEffect, useRef, useState, type FormEvent } from 'react'
+import { useSWRConfig } from 'swr'
+import { api } from '../../../../configs/site-info'
 import { modalsAtom } from '../../../../contexts/modals'
+import { accountAtom } from '../../../../contexts/settings'
+import { type UserResponse } from '../../../../index.d'
 import { NameRegex, PasswordRegex } from '../../../../utils/format'
 
 type RegisterForm = {
   email: string
   name: string
-  password: string
+  password1: string
+  password2: string
 }
 
 export const AuthRegister = () => {
   const [modals, setModals] = useAtom(modalsAtom)
+  const [account, setAccount] = useAtom(accountAtom)
   const inputRef = useRef<HTMLInputElement>()
-  const captchaRef = useRef<HTMLInputElement>()
+
+  const [loading, setLoading] = useState(false)
+  const { mutate } = useSWRConfig()
 
   const [showPassword, setShowPassword] = useState(false)
   const [form, setForm] = useState<RegisterForm>({
     email: '',
     name: '',
-    password: '',
+    password1: '',
+    password2: '',
   })
 
   useEffect(() => {
@@ -38,8 +49,38 @@ export const AuthRegister = () => {
 
   const handleRegister = (e: FormEvent) => {
     e.preventDefault()
-    enqueueSnackbar('这个功能还没做')
-    setModals({ ...modals, auth: false })
+
+    if (form.password1 !== form.password2) {
+      enqueueSnackbar('两次输入的密码不一致')
+      return
+    }
+
+    setLoading(true)
+    ky.post(`${api}/rest-auth/registration/`, {
+      json: {
+        username: form.name,
+        email: form.email,
+        password1: form.password1,
+        password2: form.password2,
+      },
+      credentials: 'include',
+    })
+      .then(() => {
+        enqueueSnackbar('注册成功')
+        setModals({ ...modals, auth: false })
+        setLoading(false)
+        mutate(`${api}/rest-auth/user/`)
+      })
+      .catch((error: HTTPError) => {
+        console.error(error)
+        error.response
+          .json()
+          .then(messages =>
+            messages.non_field_errors.forEach((message: string) =>
+              enqueueSnackbar(message)
+            )
+          )
+      })
   }
 
   return (
@@ -89,14 +130,14 @@ export const AuthRegister = () => {
         inputProps={{ pattern: PasswordRegex }}
         type={showPassword ? 'text' : 'password'}
         required
-        name="password"
+        name="password1"
         label="密码"
         size="small"
         fullWidth
-        value={form.password}
+        value={form.password1}
         autoComplete="new-password"
         helperText="8 到 24 个字符，且不能为纯数字"
-        onChange={e => setForm({ ...form, password: e.target.value })}
+        onChange={e => setForm({ ...form, password1: e.target.value })}
         InputProps={{
           endAdornment: (
             <InputAdornment position={'end'} sx={{ mr: -1 }}>
@@ -116,14 +157,45 @@ export const AuthRegister = () => {
         }}
       />
 
-      <Button
+      <TextField
+        inputProps={{ pattern: PasswordRegex }}
+        type={showPassword ? 'text' : 'password'}
+        required
+        name="password2"
+        label="再次输入密码"
+        size="small"
+        fullWidth
+        value={form.password2}
+        autoComplete="new-password"
+        onChange={e => setForm({ ...form, password2: e.target.value })}
+        InputProps={{
+          endAdornment: (
+            <InputAdornment position={'end'} sx={{ mr: -1 }}>
+              <IconButton
+                onClick={() => setShowPassword(!showPassword)}
+                tabIndex={-1}
+                sx={{ color: 'text.disabled' }}
+              >
+                {showPassword ? (
+                  <VisibilityOutlined fontSize="small" />
+                ) : (
+                  <VisibilityOffOutlined fontSize="small" />
+                )}
+              </IconButton>
+            </InputAdornment>
+          ),
+        }}
+      />
+
+      <LoadingButton
         type="submit"
         variant="contained"
+        loading={loading}
         color="primary"
         sx={{ width: '100%', py: 0.75 }}
       >
         注册
-      </Button>
+      </LoadingButton>
     </Stack>
   )
 }

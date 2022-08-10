@@ -19,7 +19,7 @@ export default function App() {
           horizontal: 'center',
         }}
         autoHideDuration={3000}
-        style={{ fontSize: '1rem', paddingLeft: '1.25rem' }}
+        style={{ fontSize: '1rem', paddingLeft: '1.25rem', zIndex: 9999 }}
         hideIconVariant
         action={snackbarKey => (
           <IconButton
