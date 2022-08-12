@@ -1,31 +1,23 @@
+import { RefreshOutlined, SchoolOutlined } from '@mui/icons-material'
 import {
-  BrowseGalleryOutlined,
-  RefreshOutlined,
-  TableChartOutlined,
-} from '@mui/icons-material'
-import {
-  Button,
   Card,
   CardActionArea,
   Chip,
   Divider,
-  Icon,
-  List,
-  ListItem,
-  ListItemText,
+  IconButton,
   Stack,
   Typography,
 } from '@mui/material'
 import { useAtom, useAtomValue } from 'jotai'
 import { enqueueSnackbar } from 'notistack'
 import { Fragment } from 'react'
-import { useNavigate } from 'react-router-dom'
 import { bridgeAtom, studentAtom } from '../../../contexts/bridge'
 import { modalsAtom } from '../../../contexts/modals'
-import { schedulesAtom, schedulesViewAtom } from '../../../contexts/schedules'
+import { schedulesAtom } from '../../../contexts/schedules'
 import { scoresAtom } from '../../../contexts/scores'
 import { scoreMap } from '../../../utils/calc'
-import { calendarAuto, calendarTime, relativeTime } from '../../../utils/format'
+import { calendarAuto } from '../../../utils/format'
+import { Tooltip } from '../../base/styled/Tooltip'
 import { SettingsGoAction } from '../../settings/Fetch'
 
 export const HomeStatisticsWidget = () => {
@@ -83,7 +75,23 @@ export const HomeStatisticsWidget = () => {
     : 0
 
   return (
-    <Card variant="outlined">
+    <Card variant="outlined" sx={{ position: 'relative' }}>
+      <Tooltip title="修改 HEU 账号" arrow placement="top">
+        <IconButton
+          aria-label="修改 HEU 账号"
+          sx={{
+            position: 'absolute',
+            right: 6,
+            top: 8,
+            color: 'text.disabled',
+            '&:hover': { color: 'text.primary' },
+            transition: 'all 0.2s',
+          }}
+          onClick={() => setModals(modals => ({ ...modals, bind: true }))}
+        >
+          <SchoolOutlined sx={{ width: 24, height: 24 }} />
+        </IconButton>
+      </Tooltip>
       <Stack spacing={1} sx={{ pt: 2, pb: 1.75 }}>
         <Typography variant="body1" sx={{ px: 2.25, fontWeight: 700 }}>
           成绩和课表

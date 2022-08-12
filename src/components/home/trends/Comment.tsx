@@ -1,164 +1,88 @@
+import { TagOutlined } from '@mui/icons-material'
 import {
-  ArrowForwardOutlined,
-  ExpandMoreOutlined,
-  SmsOutlined,
-} from '@mui/icons-material'
-import {
-  Card,
-  CardActionArea,
-  Chip,
-  Collapse,
-  Divider,
-  IconButton,
-  List,
+  Avatar,
+  Box,
   ListItem,
-  ListItemButton,
+  ListItemAvatar,
   Stack,
   Typography,
 } from '@mui/material'
-import { green, red } from '@mui/material/colors'
-import { Fragment, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
-import { type TrendsComment, type TrendsCommentCourse } from '../../../index.d'
+import { type TrendsComment } from '../../..'
+import { relativeTime } from '../../../utils/format'
 import { Tooltip } from '../../base/styled/Tooltip'
-import { HomeTrendsCommentMessage } from './Message'
 
-interface HomeTrendsComment {
-  course: TrendsCommentCourse
-  comments: TrendsComment[]
+interface HomeTrendsCourseCommentProps {
+  comment: TrendsComment
 }
 
-export const HomeTrendsComment = ({ course, comments }: HomeTrendsComment) => {
-  const navigate = useNavigate()
-  const isHot = comments.length > 4
-  const [open, setOpen] = useState(false)
-
-  return (
-    <Card variant="outlined" sx={{ position: 'relative' }}>
-      <Tooltip title="添加评论" arrow placement="top">
-        <IconButton
-          aria-label="添加评论"
+export const HomeTrendsCourseComment = ({
+  comment,
+}: HomeTrendsCourseCommentProps) => (
+  <ListItem disablePadding sx={{ px: 2, py: 0.75 }}>
+    <ListItemAvatar sx={{ minWidth: 54 }}>
+      <Tooltip title={comment.user.name} arrow placement="top">
+        <Box
           sx={{
-            position: 'absolute',
-            right: 8,
-            top: 8,
-            zIndex: 20,
-            color: 'text.disabled',
-            '&:hover': { color: 'text.primary' },
-            transition: 'all 0.2s',
+            width: 'fit-content',
+            border: 1,
+            borderColor: 'divider',
+            borderRadius: '50%',
           }}
         >
-          <SmsOutlined sx={{ width: 24, height: 24 }} />
-        </IconButton>
-      </Tooltip>
-
-      <CardActionArea
-        onClick={() => navigate(`/courses/${course.id}`)}
-        sx={{ position: 'relative' }}
-      >
-        <Stack sx={{ px: 2.25, py: 2 }} spacing={0.75}>
-          <Stack direction="row" spacing={1.5} sx={{ alignItems: 'center' }}>
-            <Chip
-              label={isHot ? '热议' : '最近'}
-              size="small"
-              color={isHot ? 'primary' : 'default'}
-              sx={{
-                fontSize: 'caption.fontSize',
-                fontWeight: 700,
-                height: 'auto',
-                px: 0,
-                py: 0.1,
-                ml: -0.125,
-              }}
-            />
-
-            <Typography variant="body1" sx={{ fontWeight: 700 }}>
-              {course.name}
-            </Typography>
-          </Stack>
-
-          <Stack direction="row" spacing={1.5} sx={{ alignItems: 'center' }}>
-            <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-              {course.type}
-            </Typography>
-            <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-              {course.credit} 学分
-            </Typography>
-            <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-              {course.period} 学时
-            </Typography>
-            <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-              {course.nature}
-            </Typography>
-          </Stack>
-          <Stack direction="row" spacing={1.5} sx={{ alignItems: 'center' }}>
-            <Typography
-              variant="body2"
-              sx={{ fontWeight: 700, color: green[400] }}
-            >
-              优秀 00.0%
-            </Typography>
-
-            <Typography
-              variant="body2"
-              sx={{ fontWeight: 700, color: red[400], flex: 1 }}
-            >
-              挂科 00.0%
-            </Typography>
-
-            <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-              {course.count} 人学过
-            </Typography>
-          </Stack>
-        </Stack>
-      </CardActionArea>
-
-      <Divider />
-      <List dense sx={{ px: 0, py: 1 }}>
-        {comments
-          .sort((a, b) => b.id - a.id)
-          .slice(0, 4)
-          .map(comment => (
-            <HomeTrendsCommentMessage comment={comment} key={comment.id} />
-          ))}
-
-        {isHot && (
-          <Collapse in={open}>
-            {comments
-              .sort((a, b) => b.id - a.id)
-              .slice(4)
-              .map(comment => (
-                <HomeTrendsCommentMessage comment={comment} key={comment.id} />
-              ))}
-          </Collapse>
-        )}
-      </List>
-
-      {isHot && (
-        <Fragment>
-          <Divider />
-          <CardActionArea onClick={() => setOpen(open => !open)}>
-            <Stack
-              sx={{
-                width: '100%',
-                py: 0.25,
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}
-            >
-              <ExpandMoreOutlined
+          <Avatar
+            src={comment.user.avatar || undefined}
+            alt={comment.user.anonymous ? '匿名' : comment.user.name}
+            sx={{
+              backgroundColor: 'background.subtle',
+              width: 36,
+              height: 36,
+            }}
+          >
+            {comment.user.anonymous ? (
+              <TagOutlined
+                sx={{ color: 'text.disabled', width: 22, height: 22 }}
+              />
+            ) : (
+              <Typography
                 sx={{
                   color: 'text.disabled',
-                  width: 20,
-                  height: 20,
-                  transform: open ? 'rotate(180deg)' : 'rotate(0deg)',
-                  transition: 'transform 0.2s',
+                  fontSize: 'body1.fontSize',
+                  fontWeight: 700,
                 }}
-              />
-            </Stack>
-          </CardActionArea>
-        </Fragment>
-      )}
-    </Card>
-  )
-}
+              >
+                {comment.user.name.slice(0, 1)}
+              </Typography>
+            )}
+          </Avatar>
+        </Box>
+      </Tooltip>
+    </ListItemAvatar>
+
+    <Stack
+      spacing={0.25}
+      direction="row"
+      sx={{ width: '100%', alignItems: 'center' }}
+    >
+      <Typography
+        sx={{
+          width: 'fit-content',
+          display: 'inline-block',
+          flex: 1,
+          wordBreak: 'break-all',
+          verticalAlign: 'center',
+        }}
+      >
+        <Typography variant="body1" component="span" sx={{ mr: 1.5 }}>
+          {comment.content}
+        </Typography>
+        <Typography
+          variant="body2"
+          component="time"
+          sx={{ color: 'text.secondary', whiteSpace: 'nowrap' }}
+        >
+          {relativeTime(comment.date)}
+        </Typography>
+      </Typography>
+    </Stack>
+  </ListItem>
+)

@@ -20,7 +20,7 @@ import {
   RecentCommentResponse,
   recentCommentResponseMap,
 } from '../../utils/maps'
-import { HomeTrendsComment } from './trends/Comment'
+import { HomeTrendsCourse } from './trends/Course'
 
 export const HomeTrends = () => {
   const { data } = useSWR<RecentCommentResponse[]>(
@@ -60,7 +60,7 @@ export const HomeTrends = () => {
       ) : (
         <Stack spacing={2}>
           {groupedComments.map(group => (
-            <HomeTrendsComment
+            <HomeTrendsCourse
               course={group.course}
               comments={group.comments}
               key={group.course.id}
