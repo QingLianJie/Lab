@@ -98,6 +98,6 @@ export const SettingsAccountCommentsLoading = () => (
       justifyContent: 'center',
     }}
   >
-    <CircularProgress size={24} thickness={6} />
+    <CircularProgress size={48} thickness={6} />
   </Stack>
 )

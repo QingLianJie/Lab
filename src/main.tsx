@@ -13,6 +13,7 @@ import { lazy, StrictMode, Suspense, useMemo } from 'react'
 import ReactDOM from 'react-dom/client'
 import { HelmetProvider } from 'react-helmet-async'
 import LogoOutlined from './assets/logo-outlined.svg'
+import { ReloadPrompt } from './components/Load'
 import {
   components,
   darkPalette,
@@ -42,6 +43,7 @@ const Main = () => {
         <HelmetProvider>
           <Suspense fallback={<Loading />}>
             <Box sx={{ backgroundColor: 'background.default' }}>
+              <ReloadPrompt />
               <LazyApp />
             </Box>
           </Suspense>
