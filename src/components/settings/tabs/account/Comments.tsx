@@ -30,6 +30,7 @@ export const SettingsAccountComments = () => {
       suspense: true,
       shouldRetryOnError: false,
       revalidateIfStale: false,
+      revalidateOnMount: true,
       revalidateOnFocus: false,
     }
   )

@@ -6,8 +6,8 @@ export const info = {
   github: 'https://github.com/QingLianJie',
 }
 
-// export const prefix = 'https://api.qinglianjie.cn'
+export const prefix = 'https://api.qinglianjie.cn'
 
-export const prefix = import.meta.env.DEV
-  ? 'http://localhost:2333'
-  : 'https://api.qingliangjie.cn'
+// export const prefix = import.meta.env.DEV
+//   ? 'http://localhost:2333'
+//   : 'https://api.qinglianjie.cn'

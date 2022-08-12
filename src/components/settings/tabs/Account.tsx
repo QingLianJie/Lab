@@ -15,7 +15,8 @@ import {
 import { useAtom } from 'jotai'
 import ky from 'ky'
 import { enqueueSnackbar } from 'notistack'
-import { Fragment, useState } from 'react'
+import { Fragment, Suspense, useState } from 'react'
+import { ErrorBoundary } from 'react-error-boundary'
 import { useSWRConfig } from 'swr'
 import { prefix, info } from '../../../configs/site-info'
 import { modalsAtom, type AuthModal } from '../../../contexts/modals'
@@ -24,7 +25,11 @@ import { Tooltip } from '../../base/styled/Tooltip'
 import { SettingsHeader } from '../Header'
 import { ChangePasswordModal } from '../modals/ChangePassword'
 import { EditAvatarModal } from '../modals/EditAvatar'
-import { SettingsAccountComments } from './account/Comments'
+import {
+  SettingsAccountComments,
+  SettingsAccountCommentsError,
+  SettingsAccountCommentsLoading,
+} from './account/Comments'
 
 export const SettingsAccount = () => {
   const [openAvatar, setOpenAvatar] = useState(false)
@@ -188,7 +193,11 @@ export const SettingsAccount = () => {
             </Stack>
           </Stack>
           <Stack sx={{ flex: 1, width: '100%', height: '100%' }}>
-            <SettingsAccountComments />
+            <ErrorBoundary fallback={<SettingsAccountCommentsError />}>
+              <Suspense fallback={<SettingsAccountCommentsLoading />}>
+                <SettingsAccountComments />
+              </Suspense>
+            </ErrorBoundary>
           </Stack>
         </Stack>
       ) : (

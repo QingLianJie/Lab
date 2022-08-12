@@ -31,6 +31,7 @@ export const HomeTrends = () => {
       suspense: true,
       shouldRetryOnError: false,
       revalidateIfStale: false,
+      revalidateOnMount: true,
       revalidateOnFocus: false,
     }
   )

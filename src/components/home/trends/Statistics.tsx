@@ -23,7 +23,11 @@ export const HomeTrendsCommentStatistics = ({
   return (
     <Stack
       direction={{ xs: 'row', md: 'column' }}
-      sx={{ pt: { xs: 1.5, md: 2 }, pb: { xs: 2.5, md: 1.25 } }}
+      sx={{
+        pt: { xs: 1.5, md: 2 },
+        pb: { xs: 2.5, md: 1.25 },
+        px: { xs: 0.25, md: 0 },
+      }}
       spacing={1.25}
     >
       <Stack
@@ -119,14 +123,25 @@ export const HomeTrendsCommentStatistics = ({
         </Stack>
         {!isMobile && (
           <Stack direction="row" spacing={1.5} sx={{ alignItems: 'center' }}>
-            <Box
+            <Stack
               sx={{
                 width: 4,
                 height: 16,
                 borderRadius: 2,
-                backgroundColor: pink[400],
+                position: 'relative',
+                justifyContent: 'flex-end',
+                backgroundColor: 'action.selected',
+                overflow: 'hidden',
               }}
-            />
+            >
+              <Box
+                sx={{
+                  width: '100%',
+                  height: `${average}%`,
+                  backgroundColor: pink[400],
+                }}
+              />
+            </Stack>
             <Typography
               variant="caption"
               sx={{ color: pink[400], fontWeight: 700 }}
