@@ -61,7 +61,7 @@ export const SettingsDashboard = () => {
                   position: 'absolute',
                   right: { xs: 14, md: 20 },
                   bottom: { xs: 14, md: 16 },
-                  color: 'action.disabled',
+                  color: 'text.disabled',
                   width: 24,
                   height: 24,
                 }}
@@ -97,7 +97,7 @@ export const SettingsDashboard = () => {
               sx={{
                 fontFamily: 'code.fontFamily',
                 fontSize: { xs: 'body2.fontSize', md: 'body1.fontSize' },
-                color: 'action.disabled',
+                color: 'text.disabled',
                 userSelect: 'none',
                 mt: { xs: 2, md: 3 },
               }}

@@ -114,7 +114,6 @@ export const SettingsAccount = () => {
                       backgroundColor: 'background.subtle',
                       width: { xs: 96, sm: 108, md: 150 },
                       height: { xs: 96, sm: 108, md: 150 },
-
                       cursor: 'pointer',
                     }}
                   >

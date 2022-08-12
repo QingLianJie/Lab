@@ -50,7 +50,7 @@ export const HomeProfileWidget = () => {
 
   const handleUpload = () => {
     const ans = confirm(
-      '上传成绩可以帮助请链接完善课程数据库，确认将匿名成绩上传到清廉街？'
+      '上传成绩可以帮助清廉街完善课程数据库，确认将匿名成绩上传到清廉街？'
     )
     if (!ans) return
     enqueueSnackbar('这个功能还没做')
@@ -110,9 +110,17 @@ export const HomeProfileWidget = () => {
                 </Typography>
               </Avatar>
             </Box>
-            <Stack spacing={0.25}>
+            <Stack spacing={0.25} sx={{ overflow: 'hidden' }}>
               <Stack direction="row" spacing={1} sx={{ alignItems: 'center' }}>
-                <Typography variant="body1" sx={{ fontWeight: 700 }}>
+                <Typography
+                  variant="body1"
+                  sx={{
+                    fontWeight: 700,
+                    whiteSpace: 'nowrap',
+                    overflow: 'hidden',
+                    textOverflow: 'ellipsis',
+                  }}
+                >
                   {account.name}
                 </Typography>
                 <Chip
@@ -127,7 +135,16 @@ export const HomeProfileWidget = () => {
                   }}
                 />
               </Stack>
-              <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+              <Typography
+                variant="body2"
+                sx={{
+                  width: '100%',
+                  color: 'text.secondary',
+                  whiteSpace: 'nowrap',
+                  overflow: 'hidden',
+                  textOverflow: 'ellipsis',
+                }}
+              >
                 {account.email || '无邮箱'}
               </Typography>
             </Stack>
@@ -184,7 +201,7 @@ export const HomeProfileWidget = () => {
             sx={{
               color: 'text.primary',
               fontWeight: 700,
-              pb: 1,
+              pb: 1.5,
             }}
           >
             加入清廉街
@@ -197,8 +214,8 @@ export const HomeProfileWidget = () => {
             direction="row"
             sx={{
               mx: -1.25,
-              mt: 2.25,
-              mb: -1.125,
+              mt: 1.5,
+              mb: -1,
               justifyContent: 'space-between',
             }}
           >

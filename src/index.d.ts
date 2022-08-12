@@ -26,8 +26,9 @@ export interface Course {
   type: string
   category: string
   test: string
-  credit: string
-  period: string
+  credit: number
+  nature: string
+  period: number
 }
 
 export interface Score {
@@ -120,3 +121,30 @@ export type SchedulesAtom = {
     color: string
   }[]
 }
+
+export interface TrendsCommentUser {
+  score?: string
+  anonymous: boolean
+  name: string
+  id: number
+  avatar?: string
+}
+
+export interface TrendsComment {
+  id: number
+  content: string
+  date: string
+  user: TrendsCommentUser
+}
+
+export interface TrendsCommentCourse extends Course {
+  count: number
+}
+
+export interface TrendsComments {
+  type: 'recent-comments'
+  course: TrendsCommentCourse
+  comments: TrendsComment[]
+}
+
+export type Trends = TrendsComments[]

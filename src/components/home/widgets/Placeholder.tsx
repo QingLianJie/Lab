@@ -1,15 +1,24 @@
 import {
   ArrowForwardOutlined,
+  CategoryOutlined,
+  DownloadingOutlined,
   CheckOutlined,
   CloseOutlined,
+  HelpOutlineOutlined,
+  SchoolOutlined,
+  type SvgIconComponent,
 } from '@mui/icons-material'
 import {
+  Box,
   Card,
   CardActionArea,
   Divider,
   Icon,
+  IconButton,
   List,
   ListItem,
+  ListItemButton,
+  ListItemIcon,
   ListItemText,
   Stack,
   Typography,
@@ -21,6 +30,7 @@ import { bridgeAtom, studentAtom } from '../../../contexts/bridge'
 import { modalsAtom } from '../../../contexts/modals'
 import { schedulesAtom } from '../../../contexts/schedules'
 import { scoresAtom } from '../../../contexts/scores'
+import { Tooltip } from '../../base/styled/Tooltip'
 
 export const HomeWidgetPlaceholder = () => {
   const [modals, setModals] = useAtom(modalsAtom)
@@ -38,7 +48,7 @@ export const HomeWidgetPlaceholder = () => {
   }
 
   return (
-    <Card variant="outlined">
+    <Card variant="outlined" sx={{ position: 'relative' }}>
       <Stack divider={<Divider />}>
         <Stack
           sx={{ width: '100%', py: 2, px: 2.25, alignItems: 'flex-start' }}
@@ -48,24 +58,32 @@ export const HomeWidgetPlaceholder = () => {
             sx={{
               color: 'text.primary',
               fontWeight: 700,
-              pb: 1,
+              pb: 1.5,
             }}
           >
             成绩和课表
           </Typography>
           <Typography variant="body2" sx={{ color: 'text.secondary' }}>
             新版清廉街修改了数据获取方式，需要安装插件或者下载 App
-            后获取成绩和课表数据。
+            后，在本地获取成绩和课表数据。
           </Typography>
         </Stack>
 
         <List dense sx={{ py: 1.5 }}>
-          <TaskItem name="安装插件或 App" checked={!!bridge} index={1} />
-          <TaskItem name="添加 HEU 账号" checked={!!student} index={2} />
+          <TaskItem
+            name="安装插件或 App"
+            checked={!!bridge}
+            icon={CategoryOutlined}
+          />
+          <TaskItem
+            name="添加 HEU 账号"
+            checked={!!student}
+            icon={SchoolOutlined}
+          />
           <TaskItem
             name="获取成绩和课表数据"
             checked={!!(scores && schedules)}
-            index={3}
+            icon={DownloadingOutlined}
           />
         </List>
 
@@ -88,43 +106,60 @@ export const HomeWidgetPlaceholder = () => {
           </Stack>
         </CardActionArea>
       </Stack>
+
+      <Tooltip title="了解更多" arrow placement="top">
+        <IconButton
+          aria-label="了解更多"
+          sx={{
+            position: 'absolute',
+            right: 6,
+            top: 6,
+            color: 'text.disabled',
+            '&:hover': { color: 'text.primary' },
+            transition: 'all 0.2s',
+          }}
+        >
+          <HelpOutlineOutlined sx={{ width: 24, height: 24 }} />
+        </IconButton>
+      </Tooltip>
     </Card>
   )
 }
 
 interface TaskItemProps {
-  index: number
+  icon: SvgIconComponent
   name: string
   checked: boolean
 }
 
-const TaskItem = ({ name, checked, index }: TaskItemProps) => (
-  <ListItem disablePadding>
-    <Stack
-      direction="row"
-      sx={{
-        width: '100%',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        px: 2.25,
-      }}
-    >
-      <Typography
-        sx={{
-          pr: 1,
-          fontWeight: 700,
-          color: 'text.primary',
-          fontVariantNumeric: 'tabular-nums',
-        }}
-      >
-        {index}.
-      </Typography>
+const TaskItem = ({ name, checked, icon }: TaskItemProps) => (
+  <ListItem
+    disablePadding
+    secondaryAction={
+      <Box sx={{ display: 'flex', alignItems: 'center' }}>
+        <Icon
+          component={checked ? CheckOutlined : CloseOutlined}
+          fontSize="small"
+          sx={{ color: checked ? green[400] : 'text.disabled' }}
+        />
+      </Box>
+    }
+  >
+    <ListItemButton>
+      <ListItemIcon sx={{ minWidth: 32 }}>
+        <Icon
+          component={icon}
+          fontSize="small"
+          sx={{ color: checked ? green[400] : 'text.disabled' }}
+        />
+      </ListItemIcon>
       <ListItemText
         primary={name}
         sx={{
+          my: 0.25,
+          flex: 1,
           '& span': {
             color: 'text.primary',
-            fontWeight: 700,
             fontSize: 'body1.fontSize',
             overflow: 'hidden',
             textOverflow: 'ellipsis',
@@ -132,16 +167,6 @@ const TaskItem = ({ name, checked, index }: TaskItemProps) => (
           },
         }}
       />
-
-      <Icon
-        component={checked ? CheckOutlined : CloseOutlined}
-        sx={{
-          mr: -0.5,
-          color: checked ? green[400] : 'action.disabled',
-          width: 20,
-          height: 20,
-        }}
-      />
-    </Stack>
+    </ListItemButton>
   </ListItem>
 )

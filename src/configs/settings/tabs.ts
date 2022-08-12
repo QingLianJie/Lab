@@ -3,10 +3,10 @@ import {
   AccountCircleRounded,
   AlternateEmailOutlined,
   AlternateEmailRounded,
-  DataObjectOutlined,
-  DataObjectRounded,
   ArrowBackOutlined,
   ArrowBackRounded,
+  DataObjectOutlined,
+  DataObjectRounded,
   DnsOutlined,
   DnsRounded,
   ExtensionOutlined,
@@ -23,9 +23,6 @@ import {
 } from '@mui/icons-material'
 import { Box } from '@mui/material'
 import { type ElementType } from 'react'
-import { AuthLogin } from '../../components/settings/modals/auth/Login'
-import { AuthRegister } from '../../components/settings/modals/auth/Register'
-import { AuthResetPassword } from '../../components/settings/modals/auth/ResetPassword'
 import { SettingsAbout } from '../../components/settings/tabs/About'
 import { SettingsAccount } from '../../components/settings/tabs/Account'
 import { SettingsBridge } from '../../components/settings/tabs/Bridge'
