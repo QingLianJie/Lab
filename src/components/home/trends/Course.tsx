@@ -21,6 +21,8 @@ import { useNavigate } from 'react-router-dom'
 import { type TrendsComment, type TrendsCommentCourse } from '../../..'
 import { HomeTrendsCommentStatistics } from './Statistics'
 import { HomeTrendsCourseComment } from './Comment'
+import { HomeTrendsSendComment } from './SendComment'
+import { TransitionGroup } from 'react-transition-group'
 
 interface HomeTrendsCourse {
   course: TrendsCommentCourse
@@ -183,28 +185,19 @@ export const HomeTrendsCourse = ({ course, comments }: HomeTrendsCourse) => {
         </CardActionArea>
 
         <Stack sx={{ width: '100%' }}>
-          <CardActionArea sx={{ pl: 2.25, pr: 2.25, py: 1.5 }}>
-            <Stack
-              direction="row"
-              spacing={2.5}
-              sx={{ alignItems: 'center', justifyContent: 'space-between' }}
-            >
-              <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                登录清廉街账号后添加评论
-              </Typography>
-              <SmsOutlined
-                sx={{ color: 'text.disabled', width: 20, height: 20 }}
-              />
-            </Stack>
-          </CardActionArea>
+          <HomeTrendsSendComment course={course} />
           <Divider />
           <List dense sx={{ px: 0, py: 1 }}>
-            {comments
-              .sort((a, b) => b.id - a.id)
-              .slice(0, hotLen)
-              .map(comment => (
-                <HomeTrendsCourseComment comment={comment} key={comment.id} />
-              ))}
+            <TransitionGroup>
+              {comments
+                .sort((a, b) => b.id - a.id)
+                .slice(0, hotLen)
+                .map(comment => (
+                  <Collapse key={comment.id}>
+                    <HomeTrendsCourseComment comment={comment} />
+                  </Collapse>
+                ))}
+            </TransitionGroup>
 
             {isHot && (
               <Collapse in={open}>
@@ -279,6 +272,8 @@ export const HomeTrendsCourse = ({ course, comments }: HomeTrendsCourse) => {
                       comments.length === 1
                         ? 6.5
                         : comments.length === 2
+                        ? 5.5
+                        : comments.length === 3
                         ? 4.5
                         : 1.5,
                     flex: 1,

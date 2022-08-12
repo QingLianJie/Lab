@@ -12,10 +12,13 @@ import { useAtomValue } from 'jotai'
 import { Fragment, Suspense } from 'react'
 import { ErrorBoundary } from 'react-error-boundary'
 import { HomeFavorites } from '../components/home/Favorites'
-import { HomeNotes } from '../components/home/Notes'
 import { HomeSearchBar } from '../components/home/Search'
 import { HomeShortcuts } from '../components/home/Shortcuts'
-import { HomeTrends, HomeTrendsError, HomeTrendsLoading } from '../components/home/Trends'
+import {
+  HomeTrends,
+  HomeTrendsError,
+  HomeTrendsLoading,
+} from '../components/home/Trends'
 import { HomeWidgetPlaceholder } from '../components/home/widgets/Placeholder'
 import { HomeProfileWidget } from '../components/home/widgets/Profile'
 import { HomeStatisticsWidget } from '../components/home/widgets/Statistics'

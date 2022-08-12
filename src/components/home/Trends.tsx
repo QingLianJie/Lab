@@ -17,13 +17,13 @@ import { prefix } from '../../configs/site-info'
 import { type TrendsComments } from '../../index.d'
 import { fetcher } from '../../utils/addons'
 import {
-  RecentCommentResponse,
-  recentCommentResponseMap,
+  CourseCommentResponse,
+  courseCommentResponseMap,
 } from '../../utils/maps'
 import { HomeTrendsCourse } from './trends/Course'
 
 export const HomeTrends = () => {
-  const { data } = useSWR<RecentCommentResponse[]>(
+  const { data } = useSWR<CourseCommentResponse[]>(
     `${prefix}/api/recent/comments`,
     fetcher,
     {
@@ -38,7 +38,7 @@ export const HomeTrends = () => {
   const groupedComments: TrendsComments[] = useMemo(() => {
     if (!data) return []
     return data
-      .map(comment => recentCommentResponseMap(comment))
+      .map(comment => courseCommentResponseMap(comment))
       .reduce((pre, cur) => {
         const { course, ...comment } = cur
         const index = pre.findIndex(item => item.course.id === cur.course.id)

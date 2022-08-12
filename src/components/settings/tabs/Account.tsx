@@ -24,6 +24,7 @@ import { Tooltip } from '../../base/styled/Tooltip'
 import { SettingsHeader } from '../Header'
 import { ChangePasswordModal } from '../modals/ChangePassword'
 import { EditAvatarModal } from '../modals/EditAvatar'
+import { SettingsAccountComments } from './account/Comments'
 
 export const SettingsAccount = () => {
   const [openAvatar, setOpenAvatar] = useState(false)
@@ -187,22 +188,7 @@ export const SettingsAccount = () => {
             </Stack>
           </Stack>
           <Stack sx={{ flex: 1, width: '100%', height: '100%' }}>
-            <Stack
-              sx={{
-                flex: 1,
-                height: '100%',
-                width: '100%',
-                px: 2,
-                py: { xs: 12, sm: 8, md: 4 },
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}
-            >
-              <Typography sx={{ color: 'text.disabled' }}>
-                没有发表过课程评论
-              </Typography>
-            </Stack>
+            <SettingsAccountComments />
           </Stack>
         </Stack>
       ) : (

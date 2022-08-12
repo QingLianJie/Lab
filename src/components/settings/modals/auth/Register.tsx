@@ -69,6 +69,7 @@ export const AuthRegister = () => {
       })
       .catch((error: HTTPError) => {
         console.error(error)
+        setLoading(false)
         error.response
           .json()
           .then((messages: { [key: string]: string }) =>

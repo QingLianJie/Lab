@@ -8,7 +8,7 @@ import {
 } from '@mui/material'
 import { useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { useKey, useKeyPress } from 'react-use'
+import { useKey } from 'react-use'
 import { Tooltip } from '../base/styled/Tooltip'
 
 export const HomeSearchBar = () => {

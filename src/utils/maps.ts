@@ -35,7 +35,7 @@ export interface CommentUserResponse {
   image?: string
 }
 
-export interface RecentCommentResponse {
+export interface CourseCommentResponse {
   id: number
   content: string
   created: string
@@ -43,10 +43,11 @@ export interface RecentCommentResponse {
   course: CourseResponse
   user: CommentUserResponse
   show: boolean
+  self: boolean
   score: string
 }
 
-export const recentCommentResponseMap = (response: RecentCommentResponse) => ({
+export const courseCommentResponseMap = (response: CourseCommentResponse) => ({
   id: response.id,
   content: response.content,
   date: response.created,
@@ -56,6 +57,7 @@ export const recentCommentResponseMap = (response: RecentCommentResponse) => ({
     name: response.user.username,
     id: response.user.pk || -1,
     avatar: response.user.image ? `${prefix}${response.user.image}` : undefined,
+    self: response.self,
   },
   course: {
     id: response.course.course_id,
@@ -72,4 +74,23 @@ export const recentCommentResponseMap = (response: RecentCommentResponse) => ({
     category: response.course.general_category,
     count: response.course.count,
   },
+})
+
+export interface ProfileResponse {
+  pk: number
+  username: string
+  image: string
+  self: boolean
+  heu_username: string
+  email: string
+  comments: CourseCommentResponse[]
+}
+
+export const profileResponseMap = (response: ProfileResponse) => ({
+  name: response.username,
+  id: response.pk,
+  email: response.email,
+  avatar: `${prefix}${response.image}`,
+  self: response.self,
+  comments: response.comments.map(comment => courseCommentResponseMap(comment)),
 })

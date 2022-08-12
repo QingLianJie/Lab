@@ -61,6 +61,8 @@ export const EditAvatarModal = ({ open, onClose }: EditAvatarModalProps) => {
         .then(() => {
           enqueueSnackbar('头像上传成功')
           mutate(`${prefix}/api/user`)
+          mutate(`${prefix}/api/profile/${account ? account.name : ''}`)
+          mutate(`${prefix}/api/recent/comments`)
           setLoading(false)
           onClose()
           setImage('')

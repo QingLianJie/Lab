@@ -128,6 +128,7 @@ export interface TrendsCommentUser {
   name: string
   id: number
   avatar?: string
+  self?: boolean
 }
 
 export interface TrendsComment {
@@ -148,3 +149,16 @@ export interface TrendsComments {
 }
 
 export type Trends = TrendsComments[]
+
+export interface UserProfileComment extends TrendsComment {
+  course: TrendsCommentCourse
+}
+
+export interface UserProfile {
+  name: string
+  id: number
+  email?: string
+  avatar?: string
+  self?: boolean
+  comments: UserProfileComment[]
+}

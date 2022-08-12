@@ -66,7 +66,7 @@ export const Modal = ({
   ...props
 }: ModalProps) => (
   <Dialog open={open} onClose={onClose} {...props}>
-    <DialogTitle sx={{ py: 2.125 }}>
+    <DialogTitle sx={{ pt: 2.25, pb: 2.75 }}>
       <Stack spacing={0.375}>
         <Typography
           sx={{

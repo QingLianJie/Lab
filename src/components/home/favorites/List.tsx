@@ -44,75 +44,81 @@ export const HomeFavoritesList = () => {
 
   return (
     <List dense sx={{ width: '100%' }}>
-      {favorites.map(favorite =>
-        'children' in favorite ? (
-          <Fragment key={favorite.id}>
-            <ListItem
-              disablePadding
-              secondaryAction={
-                modes.favorites && (
-                  <Tooltip title="删除这个分组" arrow placement="top">
-                    <IconButton
-                      aria-label="删除这个分组"
-                      edge="end"
-                      onClick={() => handleRemove(favorite.name, favorite.id)}
-                      sx={{ right: '2.5px' }}
-                    >
-                      <FolderDeleteOutlined
-                        sx={{ color: red[500], width: 22, height: 22 }}
-                      />
-                    </IconButton>
-                  </Tooltip>
-                )
-              }
-            >
-              <ListItemButton onClick={() => handleOpen(favorite.id)}>
-                <ListItemIcon sx={{ minWidth: 32 }}>
-                  <Icon
-                    component={
-                      open.includes(favorite.id)
-                        ? FolderRounded
-                        : FolderOutlined
-                    }
-                    fontSize="small"
-                    sx={{ color: 'text.disabled' }}
+      <TransitionGroup>
+        {favorites.map(favorite =>
+          'children' in favorite ? (
+            <Collapse key={favorite.id}>
+              <ListItem
+                disablePadding
+                secondaryAction={
+                  modes.favorites && (
+                    <Tooltip title="删除这个分组" arrow placement="top">
+                      <IconButton
+                        aria-label="删除这个分组"
+                        edge="end"
+                        onClick={() => handleRemove(favorite.name, favorite.id)}
+                        sx={{ right: '2.5px' }}
+                      >
+                        <FolderDeleteOutlined
+                          sx={{ color: red[500], width: 22, height: 22 }}
+                        />
+                      </IconButton>
+                    </Tooltip>
+                  )
+                }
+              >
+                <ListItemButton onClick={() => handleOpen(favorite.id)}>
+                  <ListItemIcon sx={{ minWidth: 32 }}>
+                    <Icon
+                      component={
+                        open.includes(favorite.id)
+                          ? FolderRounded
+                          : FolderOutlined
+                      }
+                      fontSize="small"
+                      sx={{ color: 'text.disabled' }}
+                    />
+                  </ListItemIcon>
+                  <ListItemText
+                    primary={`${favorite.name} (${favorite.children.length})`}
+                    sx={{
+                      '& span': {
+                        fontSize: 'body1.fontSize',
+                        whiteSpace: 'nowrap',
+                        fontWeight: open.includes(favorite.id) ? 700 : 500,
+                        fontVariantNumeric: 'tabular-nums',
+                      },
+                    }}
                   />
-                </ListItemIcon>
-                <ListItemText
-                  primary={`${favorite.name} (${favorite.children.length})`}
-                  sx={{
-                    '& span': {
-                      fontSize: 'body1.fontSize',
-                      whiteSpace: 'nowrap',
-                      fontWeight: open.includes(favorite.id) ? 700 : 500,
-                      fontVariantNumeric: 'tabular-nums',
-                    },
-                  }}
-                />
-                {open.includes(favorite.id) ? (
-                  <ExpandLess
-                    fontSize="small"
-                    sx={{ color: 'text.disabled' }}
-                  />
-                ) : (
-                  <ExpandMore
-                    fontSize="small"
-                    sx={{ color: 'text.disabled' }}
-                  />
-                )}
-              </ListItemButton>
-            </ListItem>
+                  {open.includes(favorite.id) ? (
+                    <ExpandLess
+                      fontSize="small"
+                      sx={{ color: 'text.disabled' }}
+                    />
+                  ) : (
+                    <ExpandMore
+                      fontSize="small"
+                      sx={{ color: 'text.disabled' }}
+                    />
+                  )}
+                </ListItemButton>
+              </ListItem>
 
-            <Collapse in={open.includes(favorite.id)}>
-              {favorite.children.map(item => (
-                <HomeFavoritesLinkItem key={item.id} favorite={item} />
-              ))}
+              <Collapse in={open.includes(favorite.id)}>
+                <TransitionGroup>
+                  {favorite.children.map(item => (
+                    <Collapse key={item.id}>
+                      <HomeFavoritesLinkItem favorite={item} />
+                    </Collapse>
+                  ))}
+                </TransitionGroup>
+              </Collapse>
             </Collapse>
-          </Fragment>
-        ) : (
-          <HomeFavoritesLinkItem key={favorite.id} favorite={favorite} />
-        )
-      )}
+          ) : (
+            <HomeFavoritesLinkItem key={favorite.id} favorite={favorite} />
+          )
+        )}
+      </TransitionGroup>
     </List>
   )
 }
