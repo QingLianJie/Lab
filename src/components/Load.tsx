@@ -1,6 +1,5 @@
 import { Bridge } from '@qing-dev/bridge'
 import { useAtom, useAtomValue } from 'jotai'
-import { enqueueSnackbar } from 'notistack'
 import { Fragment, useEffect } from 'react'
 import { useMount } from 'react-use'
 import useSWR from 'swr'
@@ -8,14 +7,16 @@ import { useRegisterSW } from 'virtual:pwa-register/react'
 import { prefix } from '../configs/site-info'
 import { bridgeAtom, fetcherAtom } from '../contexts/bridge'
 import { scoresAtom, scoresListAtom } from '../contexts/scores'
-import { accountAtom } from '../contexts/settings'
+import { accountAtom, settingsAtom } from '../contexts/settings'
 import { slientFetcher } from '../utils/addons'
 import { accountResponseMap, type UserResponse } from '../utils/maps'
 import { Confirm } from './base/Modal'
 
 export const Load = () => {
+  const settings = useAtomValue(settingsAtom)
+
   const { data, error } = useSWR<UserResponse | false>(
-    `${prefix}/api/user`,
+    `${settings.developer.api || prefix}/api/user`,
     slientFetcher,
     {
       refreshInterval: 60 * 60 * 1000,

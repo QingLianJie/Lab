@@ -1,7 +1,7 @@
 import { VisibilityOutlined, VisibilityOffOutlined } from '@mui/icons-material'
 import { LoadingButton } from '@mui/lab'
 import { Stack, TextField, InputAdornment, IconButton } from '@mui/material'
-import { useAtom } from 'jotai'
+import { useAtom, useAtomValue } from 'jotai'
 import ky, { HTTPError } from 'ky'
 import { enqueueSnackbar } from 'notistack'
 import { FormEvent, useEffect, useRef, useState } from 'react'
@@ -9,7 +9,7 @@ import { Helmet } from 'react-helmet-async'
 import { useSWRConfig } from 'swr'
 import { info, prefix } from '../../../configs/site-info'
 import { modalsAtom } from '../../../contexts/modals'
-import { accountAtom } from '../../../contexts/settings'
+import { accountAtom, settingsAtom } from '../../../contexts/settings'
 import { PasswordRegex } from '../../../utils/format'
 import { Modal } from '../../base/Modal'
 
@@ -32,6 +32,7 @@ export const ChangePasswordModal = ({
 
   const [modals, setModals] = useAtom(modalsAtom)
   const [account, setAccount] = useAtom(accountAtom)
+  const settings = useAtomValue(settingsAtom)
 
   const { mutate } = useSWRConfig()
   const [loading, setLoading] = useState(false)
@@ -63,7 +64,7 @@ export const ChangePasswordModal = ({
     }
 
     setLoading(true)
-    ky.post(`${prefix}/rest-auth/password/change/`, {
+    ky.post(`${settings.developer.api || prefix}/rest-auth/password/change/`, {
       json: {
         old_password: form.password0,
         new_password1: form.password1,
@@ -76,9 +77,9 @@ export const ChangePasswordModal = ({
         setLoading(false)
         setAccount(false)
 
-        ky.post(`${prefix}/rest-auth/logout/`, { credentials: 'include' }).then(
-          () => mutate(`${prefix}/api/user`)
-        )
+        ky.post(`${settings.developer.api || prefix}/rest-auth/logout/`, {
+          credentials: 'include',
+        }).then(() => mutate(`${settings.developer.api || prefix}/api/user`))
 
         onClose()
         setModals(modals => ({ ...modals, auth: '登录' }))

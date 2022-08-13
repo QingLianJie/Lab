@@ -9,7 +9,8 @@ import {
 } from '@mui/material'
 import { useAtomValue } from 'jotai'
 import { type Comment } from '../../..'
-import { accountAtom } from '../../../contexts/settings'
+import { prefix } from '../../../configs/site-info'
+import { accountAtom, settingsAtom } from '../../../contexts/settings'
 import { relativeTime } from '../../../utils/format'
 import { Tooltip } from '../../base/styled/Tooltip'
 
@@ -21,6 +22,7 @@ export const HomeTrendsCourseComment = ({
   comment,
 }: HomeTrendsCourseCommentProps) => {
   const account = useAtomValue(accountAtom)
+  const settings = useAtomValue(settingsAtom)
 
   return (
     <ListItem disablePadding sx={{ px: 2, py: 0.75 }}>
@@ -43,7 +45,10 @@ export const HomeTrendsCourseComment = ({
             }}
           >
             <Avatar
-              src={comment.user.avatar || undefined}
+              src={
+                `${settings.developer.api || prefix}${comment.user.avatar}` ||
+                undefined
+              }
               alt={comment.user.name}
               sx={{
                 backgroundColor: 'background.subtle',

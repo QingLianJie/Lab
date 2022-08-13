@@ -19,7 +19,7 @@ import ky, { HTTPError } from 'ky'
 import { enqueueSnackbar } from 'notistack'
 import { mutate } from 'swr'
 import { prefix } from '../../../../configs/site-info'
-import { accountAtom } from '../../../../contexts/settings'
+import { accountAtom, settingsAtom } from '../../../../contexts/settings'
 
 interface SettingsAccountCommentProps {
   comment: UserProfileComment
@@ -29,19 +29,24 @@ export const SettingsAccountComment = ({
   comment,
 }: SettingsAccountCommentProps) => {
   const navigate = useNavigate()
+  const settings = useAtomValue(settingsAtom)
   const account = useAtomValue(accountAtom)
 
   const handleRemove = () => {
     const ans = confirm(`确定要删除这个评论吗？`)
     if (!ans) return
 
-    ky.delete(`${prefix}/api/comment/${comment.id}`, {
+    ky.delete(`${settings.developer.api || prefix}/api/comment/${comment.id}`, {
       credentials: 'include',
     })
       .then(() => {
         enqueueSnackbar('删除成功')
-        mutate(`${prefix}/api/profile/${account ? account.name : ''}`)
-        mutate(`${prefix}/api/recent/comments`)
+        mutate(
+          `${settings.developer.api || prefix}/api/profile/${
+            account ? account.name : ''
+          }`
+        )
+        mutate(`${settings.developer.api || prefix}/api/recent/comments`)
       })
       .catch((error: HTTPError) => {
         console.error(error)
@@ -90,7 +95,10 @@ export const SettingsAccountComment = ({
               }}
             >
               <Avatar
-                src={comment.user.avatar || undefined}
+                src={
+                  `${settings.developer.api || prefix}${comment.user.avatar}` ||
+                  undefined
+                }
                 alt={comment.user.name}
                 sx={{
                   backgroundColor: 'background.subtle',

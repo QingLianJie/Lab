@@ -1,13 +1,7 @@
+import { SendOutlined, SmsOutlined } from '@mui/icons-material'
+import { LoadingButton } from '@mui/lab'
 import {
-  SendOutlined,
-  FilterAltOutlined,
-  SmsOutlined,
-  AccountCircleOutlined,
-} from '@mui/icons-material'
-import {
-  Button,
   CardActionArea,
-  Icon,
   IconButton,
   InputAdornment,
   InputBase,
@@ -15,15 +9,14 @@ import {
   Typography,
 } from '@mui/material'
 import { useAtomValue } from 'jotai'
-import { type CommentCourse } from '../../../index.d'
-import { accountAtom } from '../../../contexts/settings'
-import { Tooltip } from '../../base/styled/Tooltip'
-import { useState } from 'react'
 import ky, { HTTPError } from 'ky'
 import { enqueueSnackbar } from 'notistack'
+import { useState } from 'react'
 import { mutate } from 'swr'
 import { prefix } from '../../../configs/site-info'
-import { LoadingButton } from '@mui/lab'
+import { accountAtom, settingsAtom } from '../../../contexts/settings'
+import { type CommentCourse } from '../../../index.d'
+import { Tooltip } from '../../base/styled/Tooltip'
 
 interface HomeTrendsSendCommentProps {
   course: CommentCourse
@@ -32,6 +25,7 @@ interface HomeTrendsSendCommentProps {
 export const HomeTrendsSendComment = ({
   course,
 }: HomeTrendsSendCommentProps) => {
+  const settings = useAtomValue(settingsAtom)
   const account = useAtomValue(accountAtom)
   const [comment, setComment] = useState('')
   const [isAnonymosus, setAnonymous] = useState(false)
@@ -41,20 +35,26 @@ export const HomeTrendsSendComment = ({
     if (!comment) return
     setLoading(true)
 
-    ky.post(`${prefix}/api/course/${course.id}/comments`, {
-      json: {
-        content: comment,
-        anonymous: isAnonymosus,
-        show: false,
-      },
-      credentials: 'include',
-    })
+    ky.post(
+      `${settings.developer.api || prefix}/api/course/${course.id}/comments`,
+      {
+        json: {
+          content: comment,
+          anonymous: isAnonymosus,
+          show: false,
+        },
+        credentials: 'include',
+      }
+    )
       .then(() => {
         enqueueSnackbar('发布评论成功')
         setLoading(false)
         setComment('')
-        mutate(`${prefix}/api/recent/comments`)
-        if (account) mutate(`${prefix}/api/profile/${account.name}`)
+        mutate(`${settings.developer.api || prefix}/api/recent/comments`)
+        if (account)
+          mutate(
+            `${settings.developer.api || prefix}/api/profile/${account.name}`
+          )
       })
       .catch((error: HTTPError) => {
         console.error(error)

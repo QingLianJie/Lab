@@ -11,20 +11,24 @@ import {
   Stack,
   Typography,
 } from '@mui/material'
+import { useAtomValue } from 'jotai'
 import { Fragment, useMemo } from 'react'
 import useSWR from 'swr'
 import { prefix } from '../../configs/site-info'
+import { settingsAtom } from '../../contexts/settings'
 import { type TrendsCourseComments } from '../../index.d'
 import { fetcher } from '../../utils/addons'
 import {
-  CourseCommentResponse,
+  type CourseCommentResponse,
   courseCommentResponseMap,
 } from '../../utils/maps'
 import { HomeTrendsCourse } from './trends/Course'
 
 export const HomeTrends = () => {
+  const settings = useAtomValue(settingsAtom)
+
   const { data } = useSWR<CourseCommentResponse[]>(
-    `${prefix}/api/recent/comments`,
+    `${settings.developer.api || prefix}/api/recent/comments`,
     fetcher,
     {
       refreshInterval: 30 * 60 * 1000,

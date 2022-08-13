@@ -10,7 +10,7 @@ import { Fragment, useMemo } from 'react'
 import { TransitionGroup } from 'react-transition-group'
 import useSWR from 'swr'
 import { prefix } from '../../../../configs/site-info'
-import { accountAtom } from '../../../../contexts/settings'
+import { accountAtom, settingsAtom } from '../../../../contexts/settings'
 import { type UserProfile } from '../../../../index.d'
 import { fetcher } from '../../../../utils/addons'
 import {
@@ -21,9 +21,12 @@ import { SettingsAccountComment } from './Comment'
 
 export const SettingsAccountComments = () => {
   const account = useAtomValue(accountAtom)
+  const settings = useAtomValue(settingsAtom)
 
   const { data } = useSWR<ProfileResponse>(
-    `${prefix}/api/profile/${account ? account.name : ''}`,
+    `${settings.developer.api || prefix}/api/profile/${
+      account ? account.name : ''
+    }`,
     fetcher,
     {
       refreshInterval: 24 * 60 * 60 * 1000,

@@ -1,11 +1,10 @@
 import {
-  type CourseDetails,
-  type CommentCourse,
-  type UserProfileComment,
-  type UserProfile,
   CourseScoresType,
+  type CommentCourse,
+  type CourseDetails,
+  type UserProfile,
+  type UserProfileComment,
 } from '../index.d'
-import { prefix } from '../configs/site-info'
 
 export interface UserResponse {
   pk: number
@@ -20,7 +19,7 @@ export const accountResponseMap = (response: UserResponse) => ({
   name: response.username,
   id: response.pk,
   email: response.email,
-  avatar: `${prefix}${response.image}`,
+  avatar: response.image,
 })
 
 export interface CourseResponse {
@@ -77,7 +76,7 @@ export const courseCommentResponseMap = (
     anonymous: response.anonymous,
     name: response.user.username,
     id: response.user.pk || -1,
-    avatar: response.user.image ? `${prefix}${response.user.image}` : undefined,
+    avatar: response.user.image ? response.user.image : undefined,
     self: response.self,
   },
   course: courseResponseMap(response.course),
@@ -97,7 +96,7 @@ export const profileResponseMap = (response: ProfileResponse): UserProfile => ({
   name: response.username,
   id: response.pk,
   email: response.email,
-  avatar: `${prefix}${response.image}`,
+  avatar: response.image,
   self: response.self,
   comments: response.comments.map(comment => courseCommentResponseMap(comment)),
 })
@@ -158,9 +157,7 @@ export const courseDetailsResponseMap = (
           anonymous: comment.anonymous,
           name: comment.user.username,
           id: comment.user.pk || -1,
-          avatar: comment.user.image
-            ? `${prefix}${comment.user.image}`
-            : undefined,
+          avatar: comment.user.image ? comment.user.image : undefined,
           self: comment.self,
         },
       })),

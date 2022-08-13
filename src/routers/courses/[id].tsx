@@ -22,6 +22,8 @@ import {
 } from '../../utils/maps'
 import { type CourseDetails as CourseDetailsType } from '../../index.d'
 import { CourseDetailsInfo } from '../../components/courses/details/Info'
+import { useAtomValue } from 'jotai'
+import { settingsAtom } from '../../contexts/settings'
 
 export const CourseDetailsPage = () => {
   const { id } = useParams()
@@ -64,8 +66,10 @@ interface CourseDetailsProps {
 }
 
 const CourseDetails = ({ id }: CourseDetailsProps) => {
+  const settings = useAtomValue(settingsAtom)
+
   const { data } = useSWR<CourseDetailsResponse>(
-    `${prefix}/api/course/${id}`,
+    `${settings.developer.api || prefix}/api/course/${id}`,
     fetcher,
     {
       refreshInterval: 60 * 60 * 1000,

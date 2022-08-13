@@ -12,7 +12,7 @@ import {
   Stack,
   Typography,
 } from '@mui/material'
-import { useAtom } from 'jotai'
+import { useAtom, useAtomValue } from 'jotai'
 import ky from 'ky'
 import { enqueueSnackbar } from 'notistack'
 import { Fragment, Suspense, useState } from 'react'
@@ -20,7 +20,7 @@ import { ErrorBoundary } from 'react-error-boundary'
 import { useSWRConfig } from 'swr'
 import { prefix, info } from '../../../configs/site-info'
 import { modalsAtom, type AuthModal } from '../../../contexts/modals'
-import { accountAtom } from '../../../contexts/settings'
+import { accountAtom, settingsAtom } from '../../../contexts/settings'
 import { Tooltip } from '../../base/styled/Tooltip'
 import { SettingsHeader } from '../Header'
 import { ChangePasswordModal } from '../modals/ChangePassword'
@@ -32,6 +32,7 @@ import {
 } from './account/Comments'
 
 export const SettingsAccount = () => {
+  const settings = useAtomValue(settingsAtom)
   const [openAvatar, setOpenAvatar] = useState(false)
   const [openPassword, setOpenPassword] = useState(false)
 
@@ -39,13 +40,13 @@ export const SettingsAccount = () => {
   const { mutate } = useSWRConfig()
 
   const handleLogout = () => {
-    ky.post(`${prefix}/rest-auth/logout/`, { credentials: 'include' }).then(
-      () => {
-        enqueueSnackbar('已退出登录')
-        mutate(`${prefix}/api/user`)
-        setAccount(false)
-      }
-    )
+    ky.post(`${settings.developer.api || prefix}/rest-auth/logout/`, {
+      credentials: 'include',
+    }).then(() => {
+      enqueueSnackbar('已退出登录')
+      mutate(`${settings.developer.api || prefix}/api/user`)
+      setAccount(false)
+    })
   }
 
   const handleDeleteAccount = () => {
@@ -113,7 +114,11 @@ export const SettingsAccount = () => {
                   }}
                 >
                   <Avatar
-                    src={account ? account.avatar : undefined}
+                    src={
+                      account
+                        ? `${settings.developer.api || prefix}${account.avatar}`
+                        : undefined
+                    }
                     alt={account ? account.name : '未登录'}
                     onClick={() => setOpenAvatar(true)}
                     sx={{

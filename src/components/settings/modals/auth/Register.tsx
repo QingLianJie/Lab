@@ -7,13 +7,14 @@ import {
   TextField,
   Typography,
 } from '@mui/material'
-import { useAtom } from 'jotai'
+import { useAtom, useAtomValue } from 'jotai'
 import ky, { type HTTPError } from 'ky'
 import { enqueueSnackbar } from 'notistack'
 import { useEffect, useRef, useState, type FormEvent } from 'react'
 import { useSWRConfig } from 'swr'
 import { prefix } from '../../../../configs/site-info'
 import { modalsAtom } from '../../../../contexts/modals'
+import { settingsAtom } from '../../../../contexts/settings'
 import { NameRegex, PasswordRegex } from '../../../../utils/format'
 
 type RegisterForm = {
@@ -24,6 +25,7 @@ type RegisterForm = {
 }
 
 export const AuthRegister = () => {
+  const settings = useAtomValue(settingsAtom)
   const inputRef = useRef<HTMLInputElement>()
 
   const [modals, setModals] = useAtom(modalsAtom)
@@ -52,7 +54,7 @@ export const AuthRegister = () => {
     }
 
     setLoading(true)
-    ky.post(`${prefix}/rest-auth/registration/`, {
+    ky.post(`${settings.developer.api || prefix}/rest-auth/registration/`, {
       json: {
         username: form.name,
         email: form.email,
@@ -65,7 +67,7 @@ export const AuthRegister = () => {
         enqueueSnackbar('注册成功')
         setModals({ ...modals, auth: false })
         setLoading(false)
-        mutate(`${prefix}/api/user`)
+        mutate(`${settings.developer.api || prefix}/api/user`)
       })
       .catch((error: HTTPError) => {
         console.error(error)

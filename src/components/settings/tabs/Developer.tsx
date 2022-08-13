@@ -1,7 +1,8 @@
-import { DnsOutlined } from '@mui/icons-material'
+import { CheckOutlined, DnsOutlined } from '@mui/icons-material'
 import {
   Alert,
   Divider,
+  IconButton,
   Link,
   Stack,
   TextareaAutosize,
@@ -10,16 +11,18 @@ import {
 } from '@mui/material'
 import { indigo } from '@mui/material/colors'
 import { useAtom } from 'jotai'
-import { Fragment } from 'react'
+import { Fragment, useState } from 'react'
 import { Link as RouterLink } from 'react-router-dom'
 import { useDebounce } from 'react-use'
 import markdown from '../../../../README.md?raw'
 import { settingsAtom } from '../../../contexts/settings'
 import { Markdown } from '../../base/Markdown'
+import { Tooltip } from '../../base/styled/Tooltip'
 import { SettingsHeader } from '../Header'
 
 export const SettingsDeveloper = () => {
   const [settings, setSettings] = useAtom(settingsAtom)
+  const [api, setApi] = useState(settings.developer.api)
   const { palette } = useTheme()
   const isDark = palette.mode === 'dark'
 
@@ -31,6 +34,14 @@ export const SettingsDeveloper = () => {
     500,
     [settings.developer.css]
   )
+
+  const handleApi = () => {
+    setSettings(settings => ({
+      ...settings,
+      developer: { ...settings.developer, api: api },
+    }))
+    location.reload()
+  }
 
   return (
     <Fragment>
@@ -105,23 +116,35 @@ export const SettingsDeveloper = () => {
               </Link>{' '}
               。
             </Alert>
-            <TextField
-              id="api"
-              label="后端 API 地址"
-              defaultValue={settings.developer.api}
-              size="small"
-              sx={{ fontFamily: 'code.fontFamily' }}
-              helperText="例如：https://api.qinglianjie.cn"
-              onChange={e =>
-                setSettings(s => ({
-                  ...s,
-                  developer: {
-                    ...s.developer,
-                    api: e.target.value,
-                  },
-                }))
-              }
-            />
+            <Stack
+              direction="row"
+              spacing={1}
+              sx={{ alignItems: 'flex-start' }}
+            >
+              <TextField
+                id="api"
+                label="后端 API 地址"
+                placeholder={api}
+                defaultValue={''}
+                size="small"
+                helperText="例如：https://api.qinglianjie.cn"
+                onChange={e => setApi(e.target.value)}
+                sx={{ fontFamily: 'code.fontFamily', width: '100%' }}
+              />
+              <Tooltip title="应用并刷新页面" arrow placement="top">
+                <IconButton
+                  aria-label="应用"
+                  onClick={handleApi}
+                  sx={{
+                    color: 'text.disabled',
+                    '&:hover': { color: 'text.primary' },
+                    transition: 'all 0.2s',
+                  }}
+                >
+                  <CheckOutlined sx={{ width: 24, height: 24 }} />
+                </IconButton>
+              </Tooltip>
+            </Stack>
           </Stack>
         </Stack>
 

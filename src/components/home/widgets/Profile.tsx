@@ -25,7 +25,7 @@ import { prefix } from '../../../configs/site-info'
 import { modalsAtom } from '../../../contexts/modals'
 import { schedulesAtom } from '../../../contexts/schedules'
 import { scoresAtom } from '../../../contexts/scores'
-import { accountAtom } from '../../../contexts/settings'
+import { accountAtom, settingsAtom } from '../../../contexts/settings'
 import { Tooltip } from '../../base/styled/Tooltip'
 
 export const HomeProfileWidget = () => {
@@ -37,15 +37,16 @@ export const HomeProfileWidget = () => {
 
   const { mutate } = useSWRConfig()
   const [account, setAccount] = useAtom(accountAtom)
+  const settings = useAtomValue(settingsAtom)
 
   const handleLogout = () => {
-    ky.post(`${prefix}/rest-auth/logout/`, { credentials: 'include' }).then(
-      () => {
-        enqueueSnackbar('已退出登录')
-        mutate(`${prefix}/api/user`)
-        setAccount(false)
-      }
-    )
+    ky.post(`${settings.developer.api || prefix}/rest-auth/logout/`, {
+      credentials: 'include',
+    }).then(() => {
+      enqueueSnackbar('已退出登录')
+      mutate(`${settings.developer.api || prefix}/api/user`)
+      setAccount(false)
+    })
   }
 
   const handleUpload = () => {
@@ -90,7 +91,11 @@ export const HomeProfileWidget = () => {
               }}
             >
               <Avatar
-                src={account ? account.avatar : undefined}
+                src={
+                  account
+                    ? `${settings.developer.api || prefix}${account.avatar}`
+                    : undefined
+                }
                 alt={account ? account.name : '未登录'}
                 sx={{
                   backgroundColor: 'background.subtle',

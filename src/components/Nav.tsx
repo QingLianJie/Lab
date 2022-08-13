@@ -5,6 +5,7 @@ import {
   BottomNavigationAction,
   Box,
   Icon,
+  Typography,
   useMediaQuery,
   useTheme,
 } from '@mui/material'
@@ -14,9 +15,9 @@ import { useEffect, useState } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import LogoOutlined from '../assets/logo-outlined.svg'
 import { Routers, routers } from '../configs/routers'
-import { info } from '../configs/site-info'
+import { info, prefix } from '../configs/site-info'
 import { modalsAtom } from '../contexts/modals'
-import { accountAtom } from '../contexts/settings'
+import { accountAtom, settingsAtom } from '../contexts/settings'
 import { Tooltip } from './base/styled/Tooltip'
 
 export const Nav = () => {
@@ -30,6 +31,7 @@ export const Nav = () => {
 
   const [modals, setModals] = useAtom(modalsAtom)
   const account = useAtomValue(accountAtom)
+  const settings = useAtomValue(settingsAtom)
 
   useEffect(() => {
     const router = findLast(routers, r => pathname.startsWith(r.href))
@@ -149,7 +151,11 @@ export const Nav = () => {
           }}
         >
           <Avatar
-            src={account ? account.avatar : ''}
+            src={
+              account
+                ? `${settings.developer.api || prefix}${account.avatar}`
+                : undefined
+            }
             alt={account ? account.name : '登录'}
             sx={{
               width: 40,
@@ -166,7 +172,19 @@ export const Nav = () => {
               else setModals({ ...modals, auth: '登录' })
             }}
           >
-            <AccountCircleOutlined sx={{ color: 'text.disabled' }} />
+            {account ? (
+              <Typography
+                sx={{
+                  color: 'text.disabled',
+                  fontSize: 'body1.fontSize',
+                  fontWeight: 700,
+                }}
+              >
+                {account.name.slice(0, 1)}
+              </Typography>
+            ) : (
+              <AccountCircleOutlined sx={{ color: 'text.disabled' }} />
+            )}
           </Avatar>
         </Box>
       </Tooltip>

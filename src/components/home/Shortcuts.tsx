@@ -48,6 +48,22 @@ export const HomeShortcuts = () => {
         ) : (
           <Fragment>
             <Grid item xs={12}>
+              <Collapse in={open}>
+                <Divider />
+                <Grid container>
+                  {shortcuts.others.map((item, index) => (
+                    <ShortcutItem
+                      shortcut={item}
+                      key={item.name}
+                      index={index}
+                      count={shortcuts.others.length}
+                    />
+                  ))}
+                </Grid>
+              </Collapse>
+            </Grid>
+
+            <Grid item xs={12}>
               <Divider />
               <CardActionArea
                 onClick={() => setOpen(!open)}
@@ -70,21 +86,6 @@ export const HomeShortcuts = () => {
                   }}
                 />
               </CardActionArea>
-            </Grid>
-            <Grid item xs={12}>
-              <Collapse in={open}>
-                <Divider />
-                <Grid container>
-                  {shortcuts.others.map((item, index) => (
-                    <ShortcutItem
-                      shortcut={item}
-                      key={item.name}
-                      index={index}
-                      count={shortcuts.others.length}
-                    />
-                  ))}
-                </Grid>
-              </Collapse>
             </Grid>
           </Fragment>
         )}

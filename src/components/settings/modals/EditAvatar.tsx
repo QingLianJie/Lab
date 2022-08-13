@@ -9,7 +9,7 @@ import Cropper from 'react-cropper'
 import { Helmet } from 'react-helmet-async'
 import { useSWRConfig } from 'swr'
 import { info, prefix } from '../../../configs/site-info'
-import { accountAtom } from '../../../contexts/settings'
+import { accountAtom, settingsAtom } from '../../../contexts/settings'
 import { Modal } from '../../base/Modal'
 
 interface EditAvatarModalProps {
@@ -23,6 +23,7 @@ export const EditAvatarModal = ({ open, onClose }: EditAvatarModalProps) => {
   const [cropper, setCropper] = useState<Cropper | null>(null)
 
   const { mutate } = useSWRConfig()
+  const settings = useAtomValue(settingsAtom)
   const account = useAtomValue(accountAtom)
   const [loading, setLoading] = useState(false)
 
@@ -54,15 +55,19 @@ export const EditAvatarModal = ({ open, onClose }: EditAvatarModalProps) => {
       }-${new Date().getTime()}.jpeg`
       formdata.append('image', blob, name)
 
-      ky.post(`${prefix}/api/user/profile/photo`, {
+      ky.post(`${settings.developer.api || prefix}/api/user/profile/photo`, {
         body: formdata,
         credentials: 'include',
       })
         .then(() => {
           enqueueSnackbar('头像上传成功')
-          mutate(`${prefix}/api/user`)
-          mutate(`${prefix}/api/profile/${account ? account.name : ''}`)
-          mutate(`${prefix}/api/recent/comments`)
+          mutate(`${settings.developer.api || prefix}/api/user`)
+          mutate(
+            `${settings.developer.api || prefix}/api/profile/${
+              account ? account.name : ''
+            }`
+          )
+          mutate(`${settings.developer.api || prefix}/api/recent/comments`)
           setLoading(false)
           onClose()
           setImage('')

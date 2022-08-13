@@ -1,13 +1,14 @@
 import { VisibilityOffOutlined, VisibilityOutlined } from '@mui/icons-material'
 import { LoadingButton } from '@mui/lab'
 import { IconButton, InputAdornment, Stack, TextField } from '@mui/material'
-import { useAtom } from 'jotai'
+import { useAtom, useAtomValue } from 'jotai'
 import ky, { type HTTPError } from 'ky'
 import { enqueueSnackbar } from 'notistack'
 import { useEffect, useRef, useState, type FormEvent } from 'react'
 import { useSWRConfig } from 'swr'
 import { prefix } from '../../../../configs/site-info'
 import { modalsAtom } from '../../../../contexts/modals'
+import { settingsAtom } from '../../../../contexts/settings'
 import { EmailRegex } from '../../../../utils/format'
 
 type LoginForm = {
@@ -16,6 +17,7 @@ type LoginForm = {
 }
 
 export const AuthLogin = () => {
+  const settings = useAtomValue(settingsAtom)
   const [modals, setModals] = useAtom(modalsAtom)
   const inputRef = useRef<HTMLInputElement>()
 
@@ -32,7 +34,7 @@ export const AuthLogin = () => {
   const handleLogin = (e: FormEvent) => {
     e.preventDefault()
     setLoading(true)
-    ky.post(`${prefix}/rest-auth/login/`, {
+    ky.post(`${settings.developer.api || prefix}/rest-auth/login/`, {
       json: new RegExp(EmailRegex).test(form.name)
         ? { email: form.name, password: form.password }
         : { username: form.name, password: form.password },
@@ -42,7 +44,7 @@ export const AuthLogin = () => {
         enqueueSnackbar('登录成功')
         setModals({ ...modals, auth: false })
         setLoading(false)
-        mutate(`${prefix}/api/user`)
+        mutate(`${settings.developer.api || prefix}/api/user`)
       })
       .catch((error: HTTPError) => {
         console.error(error)
