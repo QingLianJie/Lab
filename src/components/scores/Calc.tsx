@@ -87,7 +87,7 @@ const CalcCard = ({ title, content, unit }: CalcCardProps) => (
       <Typography
         variant="h5"
         component="span"
-        sx={{ fontWeight: 700, fontSize: { xs: '1.25rem', sm: '1.5rem' } }}
+        sx={{ fontWeight: 700, fontSize: '1.25rem' }}
       >
         {content}
       </Typography>

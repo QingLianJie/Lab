@@ -47,15 +47,7 @@ const Router = () => (
         path={router.href}
         element={<Box component={router.component} />}
         key={router.name}
-      >
-        {router.children?.map(r => (
-          <Route
-            path={r.href}
-            element={<Box component={r.component} />}
-            key={r.name}
-          />
-        ))}
-      </Route>
+      />
     ))}
   </Routes>
 )

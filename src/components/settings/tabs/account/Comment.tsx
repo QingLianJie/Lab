@@ -73,7 +73,11 @@ export const SettingsAccountComment = ({
     >
       <ListItemButton
         sx={{ px: 2, py: 0.75 }}
-        onClick={() => navigate(`/courses/${comment.course.id}`)}
+        onClick={() =>
+          navigate(`/courses/${comment.course.id}`, {
+            state: { title: comment.course.name },
+          })
+        }
       >
         <ListItemAvatar sx={{ minWidth: 54 }}>
           <Tooltip title={comment.user.name} arrow placement="top">

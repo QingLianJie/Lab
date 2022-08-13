@@ -18,15 +18,15 @@ import {
 } from '@mui/material'
 import { Fragment, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { type TrendsComment, type TrendsCommentCourse } from '../../..'
+import { type Comment, type CommentCourse } from '../../..'
 import { HomeTrendsCommentStatistics } from './Statistics'
 import { HomeTrendsCourseComment } from './Comment'
 import { HomeTrendsSendComment } from './SendComment'
 import { TransitionGroup } from 'react-transition-group'
 
 interface HomeTrendsCourse {
-  course: TrendsCommentCourse
-  comments: TrendsComment[]
+  course: CommentCourse
+  comments: Comment[]
 }
 
 export const HomeTrendsCourse = ({ course, comments }: HomeTrendsCourse) => {
@@ -50,7 +50,9 @@ export const HomeTrendsCourse = ({ course, comments }: HomeTrendsCourse) => {
         }
       >
         <CardActionArea
-          onClick={() => navigate(`/courses/${course.id}`)}
+          onClick={() =>
+            navigate(`/courses/${course.id}`, { state: { title: course.name } })
+          }
           sx={{ position: 'relative', maxWidth: { xs: 'unset', md: 160 } }}
         >
           <Stack sx={{ justifyContent: 'flex-start', height: '100%' }}>

@@ -1,15 +1,20 @@
 import { ClassRounded } from '@mui/icons-material'
 import { createTheme, Stack, ThemeProvider, useTheme } from '@mui/material'
-import { red } from '@mui/material/colors'
+import { red, pink } from '@mui/material/colors'
 import { Layout, Working } from '../components/Layout'
 
 export const CoursesPage = () => {
   const theme = useTheme()
   const { palette } = theme
+  const isDark = palette.mode === 'dark'
 
   const coursesTheme = createTheme({
     ...theme,
-    palette: { ...palette, primary: red },
+    palette: {
+      ...palette,
+      primary: red,
+      secondary: isDark ? { main: '#ec407a' } : pink,
+    },
   })
 
   return (

@@ -1,6 +1,6 @@
 import { TableChartRounded } from '@mui/icons-material'
 import { createTheme, Stack, ThemeProvider, useTheme } from '@mui/material'
-import { blue } from '@mui/material/colors'
+import { blue, pink } from '@mui/material/colors'
 import { useAtomValue } from 'jotai'
 import { Layout } from '../components/Layout'
 import { SchedulesDetails } from '../components/schedules/Details'
@@ -10,12 +10,18 @@ import { schedulesAtom } from '../contexts/schedules'
 
 export const SchedulesPage = () => {
   const schedules = useAtomValue(schedulesAtom)
+
   const theme = useTheme()
   const { palette } = theme
+  const isDark = palette.mode === 'dark'
 
   const schedulesTheme = createTheme({
     ...theme,
-    palette: { ...palette, primary: blue },
+    palette: {
+      ...palette,
+      primary: blue,
+      secondary: isDark ? { main: '#ec407a' } : pink,
+    },
   })
 
   return (

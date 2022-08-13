@@ -122,7 +122,7 @@ export type SchedulesAtom = {
   }[]
 }
 
-export interface TrendsCommentUser {
+export interface CommentUser {
   score?: string
   anonymous: boolean
   name: string
@@ -131,27 +131,53 @@ export interface TrendsCommentUser {
   self?: boolean
 }
 
-export interface TrendsComment {
+export interface Comment {
   id: number
   content: string
   date: string
-  user: TrendsCommentUser
+  user: CommentUser
 }
 
-export interface TrendsCommentCourse extends Course {
+export interface CommentCourse extends Course {
   count: number
 }
 
-export interface TrendsComments {
-  type: 'recent-comments'
-  course: TrendsCommentCourse
-  comments: TrendsComment[]
+export interface TrendsCourseComment {
+  course: CommentCourse
+  comments: Comment[]
 }
 
-export type Trends = TrendsComments[]
+export type TrendsCourseComments = TrendsCourseComment[]
 
-export interface UserProfileComment extends TrendsComment {
-  course: TrendsCommentCourse
+export enum CourseScoresType {
+  '等级制',
+  '分数制',
+}
+
+export interface CourseDetails {
+  course: CommentCourse
+  statistics: {
+    name: string
+    count: number
+    scores: (
+      | {
+          type: CourseScoresType['等级制']
+          data: { [key: string]: number }
+        }
+      | {
+          type: CourseScoresType['分数制']
+          data: { [key: number]: number }
+        }
+    )[]
+  }[]
+  comments: {
+    name: '清廉街' | '腐败街'
+    comments: Comment[]
+  }[]
+}
+
+export interface UserProfileComment extends Comment {
+  course: CommentCourse
 }
 
 export interface UserProfile {

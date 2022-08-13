@@ -37,12 +37,13 @@ export const HomePage = () => {
 
   const theme = useTheme()
   const { palette, breakpoints } = theme
+  const isDark = palette.mode === 'dark'
   const isMobile = useMediaQuery(breakpoints.down('sm'))
   const isPad = useMediaQuery(breakpoints.between('sm', 'lg'))
 
   const homeTheme = createTheme({
     ...theme,
-    palette: { ...palette, primary: pink },
+    palette: { ...palette, primary: isDark ? { main: '#ec407a' } : pink },
   })
 
   return (

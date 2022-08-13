@@ -14,7 +14,7 @@ import {
 import { Fragment, useMemo } from 'react'
 import useSWR from 'swr'
 import { prefix } from '../../configs/site-info'
-import { type TrendsComments } from '../../index.d'
+import { type TrendsCourseComments } from '../../index.d'
 import { fetcher } from '../../utils/addons'
 import {
   CourseCommentResponse,
@@ -36,7 +36,7 @@ export const HomeTrends = () => {
     }
   )
 
-  const groupedComments: TrendsComments[] = useMemo(() => {
+  const groupedComments: TrendsCourseComments = useMemo(() => {
     if (!data) return []
     return data
       .map(comment => courseCommentResponseMap(comment))
@@ -44,9 +44,9 @@ export const HomeTrends = () => {
         const { course, ...comment } = cur
         const index = pre.findIndex(item => item.course.id === cur.course.id)
         if (index !== -1) pre[index].comments.push(comment)
-        else pre.push({ type: 'recent-comments', course, comments: [comment] })
+        else pre.push({ course, comments: [comment] })
         return pre
-      }, [] as TrendsComments[])
+      }, [] as TrendsCourseComments)
       .sort((a, b) => b.comments.length - a.comments.length)
   }, [data])
 
@@ -159,7 +159,7 @@ export const HomeTrendsLoading = () => (
         justifyContent: 'center',
       }}
     >
-      <CircularProgress size={48} thickness={6} />
+      <CircularProgress size={48} thickness={4} />
     </Stack>
   </Card>
 )

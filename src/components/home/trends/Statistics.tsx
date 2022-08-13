@@ -1,10 +1,10 @@
 import { Stack, Box, Typography, useMediaQuery, useTheme } from '@mui/material'
 import { green, red, pink } from '@mui/material/colors'
 import { useState } from 'react'
-import { type TrendsCommentCourse } from '../../..'
+import { type CommentCourse } from '../../..'
 
 interface HomeTrendsCommentStatisticsProps {
-  course: TrendsCommentCourse
+  course: CommentCourse
 }
 
 export const HomeTrendsCommentStatistics = ({

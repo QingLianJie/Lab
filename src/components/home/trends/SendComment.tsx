@@ -15,7 +15,7 @@ import {
   Typography,
 } from '@mui/material'
 import { useAtomValue } from 'jotai'
-import { type TrendsCommentCourse } from '../../../index.d'
+import { type CommentCourse } from '../../../index.d'
 import { accountAtom } from '../../../contexts/settings'
 import { Tooltip } from '../../base/styled/Tooltip'
 import { useState } from 'react'
@@ -26,7 +26,7 @@ import { prefix } from '../../../configs/site-info'
 import { LoadingButton } from '@mui/lab'
 
 interface HomeTrendsSendCommentProps {
-  course: TrendsCommentCourse
+  course: CommentCourse
 }
 
 export const HomeTrendsSendComment = ({

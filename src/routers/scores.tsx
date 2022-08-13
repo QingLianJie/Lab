@@ -8,7 +8,7 @@ import {
   useMediaQuery,
   useTheme,
 } from '@mui/material'
-import { green } from '@mui/material/colors'
+import { green, pink } from '@mui/material/colors'
 import { useAtomValue } from 'jotai'
 import { Fragment, useState } from 'react'
 import { useMount } from 'react-use'
@@ -32,12 +32,17 @@ export const ScoresPage = () => {
 
   const theme = useTheme()
   const { palette, breakpoints } = theme
+  const isDark = palette.mode === 'dark'
   const isMobile = useMediaQuery(breakpoints.down('sm'))
   const isPad = useMediaQuery(breakpoints.down('md'))
 
   const scoresTheme = createTheme({
     ...theme,
-    palette: { ...palette, primary: green },
+    palette: {
+      ...palette,
+      primary: green,
+      secondary: isDark ? { main: '#ec407a' } : pink,
+    },
   })
 
   return (

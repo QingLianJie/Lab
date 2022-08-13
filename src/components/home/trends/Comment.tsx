@@ -8,13 +8,13 @@ import {
   Typography,
 } from '@mui/material'
 import { useAtomValue } from 'jotai'
-import { type TrendsComment } from '../../..'
+import { type Comment } from '../../..'
 import { accountAtom } from '../../../contexts/settings'
 import { relativeTime } from '../../../utils/format'
 import { Tooltip } from '../../base/styled/Tooltip'
 
 interface HomeTrendsCourseCommentProps {
-  comment: TrendsComment
+  comment: Comment
 }
 
 export const HomeTrendsCourseComment = ({

@@ -1,3 +1,10 @@
+import {
+  type CourseDetails,
+  type CommentCourse,
+  type UserProfileComment,
+  type UserProfile,
+  CourseScoresType,
+} from '../index.d'
 import { prefix } from '../configs/site-info'
 
 export interface UserResponse {
@@ -47,7 +54,21 @@ export interface CourseCommentResponse {
   score: string
 }
 
-export const courseCommentResponseMap = (response: CourseCommentResponse) => ({
+export const courseResponseMap = (response: CourseResponse): CommentCourse => ({
+  id: response.course_id,
+  name: response.name,
+  credit: isNaN(Number(response.credit)) ? 0 : Number(response.credit),
+  period: isNaN(Number(response.total_time)) ? 0 : Number(response.total_time),
+  type: response.attributes,
+  nature: response.kind,
+  test: response.assessment_method,
+  category: response.general_category,
+  count: response.count,
+})
+
+export const courseCommentResponseMap = (
+  response: CourseCommentResponse
+): UserProfileComment => ({
   id: response.id,
   content: response.content,
   date: response.created,
@@ -59,21 +80,7 @@ export const courseCommentResponseMap = (response: CourseCommentResponse) => ({
     avatar: response.user.image ? `${prefix}${response.user.image}` : undefined,
     self: response.self,
   },
-  course: {
-    id: response.course.course_id,
-    name: response.course.name,
-    credit: isNaN(Number(response.course.credit))
-      ? 0
-      : Number(response.course.credit),
-    period: isNaN(Number(response.course.total_time))
-      ? 0
-      : Number(response.course.total_time),
-    type: response.course.attributes,
-    nature: response.course.kind,
-    test: response.course.assessment_method,
-    category: response.course.general_category,
-    count: response.course.count,
-  },
+  course: courseResponseMap(response.course),
 })
 
 export interface ProfileResponse {
@@ -86,11 +93,91 @@ export interface ProfileResponse {
   comments: CourseCommentResponse[]
 }
 
-export const profileResponseMap = (response: ProfileResponse) => ({
+export const profileResponseMap = (response: ProfileResponse): UserProfile => ({
   name: response.username,
   id: response.pk,
   email: response.email,
   avatar: `${prefix}${response.image}`,
   self: response.self,
   comments: response.comments.map(comment => courseCommentResponseMap(comment)),
+})
+
+export interface CourseDetailsResponse extends CourseResponse {
+  comments: {
+    id: number
+    content: string
+    created: string
+    anonymous: boolean
+    user: CommentUserResponse
+    show: boolean
+    self: boolean
+    score: string
+  }[]
+  more_comments: string
+  my_scores: string | null
+  statistics: {
+    [key: string]: {
+      total: number
+      exam: { [key: number]: number }
+      test: { [key: string]: number }
+    }
+  }
+  fubaijie_comments: {
+    id: number
+    content: string
+    created: string
+    anonymous: boolean
+    course: CourseResponse
+    username: string
+    show: boolean
+    score: string
+  }[]
+}
+
+export const courseDetailsResponseMap = (
+  response: CourseDetailsResponse
+): CourseDetails => ({
+  course: courseResponseMap(response),
+  statistics: [...Object.entries(response.statistics)].map(([key, value]) => ({
+    name: key === 'all' ? '所有时间' : key,
+    count: value.total,
+    scores: [
+      { type: CourseScoresType['等级制'], data: value.exam },
+      { type: CourseScoresType['分数制'], data: value.test },
+    ].filter(obj => Object.keys(obj.data).length !== 0),
+  })),
+  comments: [
+    {
+      name: '清廉街',
+      comments: response.comments.map(comment => ({
+        id: comment.id,
+        content: comment.content,
+        date: comment.created,
+        user: {
+          score: comment.score ? comment.score : undefined,
+          anonymous: comment.anonymous,
+          name: comment.user.username,
+          id: comment.user.pk || -1,
+          avatar: comment.user.image
+            ? `${prefix}${comment.user.image}`
+            : undefined,
+          self: comment.self,
+        },
+      })),
+    },
+    {
+      name: '腐败街',
+      comments: response.fubaijie_comments.map(comment => ({
+        id: comment.id,
+        content: comment.content,
+        date: comment.created,
+        user: {
+          score: comment.score ? comment.score : undefined,
+          anonymous: comment.anonymous,
+          name: comment.username,
+          id: -1,
+        },
+      })),
+    },
+  ],
 })

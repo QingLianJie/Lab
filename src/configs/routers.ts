@@ -41,7 +41,7 @@ import { type ElementType } from 'react'
 import { HomePage } from '../routers'
 import { NotFoundPage } from '../routers/404'
 import { CoursesPage } from '../routers/courses'
-import { CoursePage } from '../routers/courses/[id]'
+import { CourseDetailsPage } from '../routers/courses/[id]'
 import { SchedulesPage } from '../routers/schedules'
 import { ScoresPage } from '../routers/scores'
 import { SettingsPage } from '../routers/settings'
@@ -72,15 +72,16 @@ export const routers = [
     href: '/courses',
     component: CoursesPage,
     icon: [ClassOutlined, ClassRounded],
-    children: [
-      {
-        name: '课程详情',
-        href: '/courses/:id',
-        component: CoursePage,
-      },
-    ],
     color: [red[500], red[400]],
     group: 0,
+  },
+  {
+    name: '课程详情',
+    href: '/courses/:id',
+    component: CourseDetailsPage,
+    icon: [ClassOutlined, ClassRounded],
+    color: [red[500], red[400]],
+    group: -1,
   },
   {
     name: '成绩',

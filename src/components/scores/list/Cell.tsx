@@ -8,7 +8,7 @@ import {
 } from '@mui/material'
 import { indigo } from '@mui/material/colors'
 import { useAtom } from 'jotai'
-import { Link as RouterLink } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { type Score } from '../../..'
 import { type ScoreColumn } from '../../../configs/scores/columns'
 import { scoresViewAtom } from '../../../contexts/scores'
@@ -79,6 +79,7 @@ interface ScoresBodyCellProps {
 }
 
 export const ScoresBodyCell = ({ column, item }: ScoresBodyCellProps) => {
+  const navigate = useNavigate()
   const { palette, breakpoints } = useTheme()
   const isDark = palette.mode === 'dark'
   const isMobile = useMediaQuery(breakpoints.down('sm'))
@@ -113,10 +114,13 @@ export const ScoresBodyCell = ({ column, item }: ScoresBodyCellProps) => {
         </Typography>
       ) : column.link ? (
         <Link
-          component={RouterLink}
-          to={`/courses/${item['id']}`}
           sx={{ color: indigo[isDark ? 200 : 500] }}
-          onClick={e => e.stopPropagation()}
+          onClick={e => {
+            e.stopPropagation()
+            navigate(`/courses/${item['id']}`, {
+              state: { title: item['name'] },
+            })
+          }}
           title={item[column.id]?.toString()}
         >
           {item[column.id]}
