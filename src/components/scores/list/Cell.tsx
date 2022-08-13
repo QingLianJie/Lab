@@ -62,8 +62,10 @@ export const ScoresHeadCell = ({ column }: ScoresHeadCellProps) => {
           position: 'relative',
           '& svg': {
             position: 'absolute',
-            right: -24,
-            top: 2,
+            right: -22,
+            top: 4,
+            width: 16,
+            height: 16,
           },
         }}
       >

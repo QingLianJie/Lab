@@ -66,6 +66,11 @@ export const HomeFavoritesList = () => {
                     </Tooltip>
                   )
                 }
+                sx={{
+                  backgroundColor: open.includes(favorite.id)
+                    ? 'background.subtle'
+                    : 'background.paper',
+                }}
               >
                 <ListItemButton onClick={() => handleOpen(favorite.id)}>
                   <ListItemIcon sx={{ minWidth: 32 }}>
@@ -82,6 +87,8 @@ export const HomeFavoritesList = () => {
                   <ListItemText
                     primary={`${favorite.name} (${favorite.children.length})`}
                     sx={{
+                      py: open.includes(favorite.id) ? 0.25 : 0,
+                      transition: 'padding 0.2s',
                       '& span': {
                         fontSize: 'body1.fontSize',
                         whiteSpace: 'nowrap',
@@ -143,14 +150,14 @@ export const HomeFavoritesStarredList = ({
                 py: 4,
               }}
             >
-              <Typography variant="body1" sx={{ color: 'text.secondary' }}>
-                没有收藏过的链接
+              <Typography variant="body1" sx={{ color: 'text.disabled' }}>
+                没有收藏的链接
               </Typography>
               <Typography
                 variant="body2"
-                sx={{ color: 'text.secondary', textAlign: 'center' }}
+                sx={{ color: 'text.disabled', textAlign: 'center' }}
               >
-                点击链接右侧的 ⭐ 添加
+                点击 ⭐ 添加到收藏
               </Typography>
             </Stack>
           </Collapse>

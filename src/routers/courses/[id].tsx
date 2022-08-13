@@ -1,34 +1,42 @@
 import { ClassRounded } from '@mui/icons-material'
 import {
-  CircularProgress,
   createTheme,
   Grid,
   Stack,
   ThemeProvider,
-  Typography,
   useTheme,
 } from '@mui/material'
-import { red, pink } from '@mui/material/colors'
-import { Fragment, Suspense, useMemo } from 'react'
+import { pink, red } from '@mui/material/colors'
+import { useAtomValue } from 'jotai'
+import {
+  Fragment,
+  Suspense,
+  useMemo,
+  useState,
+  type Dispatch,
+  type SetStateAction,
+} from 'react'
 import { ErrorBoundary } from 'react-error-boundary'
 import { useLocation, useParams } from 'react-router-dom'
 import useSWR from 'swr'
+import { ErrorCard, LoadingCard } from '../../components/base/Placeholder'
+import { CourseDetailsInfo } from '../../components/courses/details/Info'
+import { CourseDetailsStatistics } from '../../components/courses/details/Statistics'
 import { Layout } from '../../components/Layout'
 import { prefix } from '../../configs/site-info'
+import { settingsAtom } from '../../contexts/settings'
+import { type CourseDetails as CourseDetailsType } from '../../index.d'
 import { fetcher } from '../../utils/addons'
 import {
-  type CourseDetailsResponse,
   courseDetailsResponseMap,
+  type CourseDetailsResponse,
 } from '../../utils/maps'
-import { type CourseDetails as CourseDetailsType } from '../../index.d'
-import { CourseDetailsInfo } from '../../components/courses/details/Info'
-import { useAtomValue } from 'jotai'
-import { settingsAtom } from '../../contexts/settings'
 
 export const CourseDetailsPage = () => {
   const { id } = useParams()
   const location = useLocation()
-  const { title } = location.state as { title: string }
+  const state = location.state as { title: string }
+  const [title, setTitle] = useState(state?.title || '课程详情')
 
   const theme = useTheme()
   const { palette } = theme
@@ -46,14 +54,14 @@ export const CourseDetailsPage = () => {
   return (
     <ThemeProvider theme={coursesTheme}>
       <Layout
-        title={title || '课程详情'}
+        title={title}
         subtitle={id || '筛选和查看课程数据'}
         icon={ClassRounded}
         color={red[400]}
       >
-        <ErrorBoundary fallback={<CourseDetailsError />}>
-          <Suspense fallback={<CourseDetailsLoading />}>
-            <CourseDetails id={id} />
+        <ErrorBoundary fallback={<ErrorCard />}>
+          <Suspense fallback={<LoadingCard />}>
+            <CourseDetails id={id} setTitle={setTitle} />
           </Suspense>
         </ErrorBoundary>
       </Layout>
@@ -63,9 +71,10 @@ export const CourseDetailsPage = () => {
 
 interface CourseDetailsProps {
   id?: string
+  setTitle: Dispatch<SetStateAction<string>>
 }
 
-const CourseDetails = ({ id }: CourseDetailsProps) => {
+const CourseDetails = ({ id, setTitle }: CourseDetailsProps) => {
   const settings = useAtomValue(settingsAtom)
 
   const { data } = useSWR<CourseDetailsResponse>(
@@ -84,7 +93,9 @@ const CourseDetails = ({ id }: CourseDetailsProps) => {
 
   const courseDetails: CourseDetailsType | undefined = useMemo(() => {
     if (!data) return undefined
-    return courseDetailsResponseMap(data)
+    const details = courseDetailsResponseMap(data)
+    setTitle(details.course.name)
+    return details
   }, [data])
 
   return (
@@ -94,6 +105,7 @@ const CourseDetails = ({ id }: CourseDetailsProps) => {
           <Grid item xs={12} sm={6} md={4} lg={3}>
             <Stack spacing={2}>
               <CourseDetailsInfo details={courseDetails} />
+              <CourseDetailsStatistics details={courseDetails} />
             </Stack>
           </Grid>
 
@@ -109,41 +121,3 @@ const CourseDetails = ({ id }: CourseDetailsProps) => {
     </Fragment>
   )
 }
-
-export const CourseDetailsLoading = () => (
-  <Stack
-    sx={{
-      flex: 1,
-      height: '100%',
-      px: 2,
-      py: { xs: 12, sm: 8, md: 4 },
-      alignItems: 'center',
-      justifyContent: 'center',
-    }}
-  >
-    <CircularProgress size={48} thickness={4} />
-  </Stack>
-)
-
-interface CourseDetailsErrorProps {
-  title?: string
-}
-
-const CourseDetailsError = ({ title }: CourseDetailsErrorProps) => (
-  <Stack
-    sx={{
-      flex: 1,
-      height: '100%',
-      width: '100%',
-      px: 2,
-      py: { xs: 12, sm: 8, md: 4 },
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-    }}
-  >
-    <Typography sx={{ color: 'text.disabled' }}>
-      {title || '获取课程详情出错'}
-    </Typography>
-  </Stack>
-)

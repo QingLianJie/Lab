@@ -66,6 +66,7 @@ export const HomeShortcuts = () => {
             <Grid item xs={12}>
               <Divider />
               <CardActionArea
+                title="展开更多"
                 onClick={() => setOpen(!open)}
                 sx={{
                   position: 'relative',

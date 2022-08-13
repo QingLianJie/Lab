@@ -1,10 +1,26 @@
-import { Card, Divider, Stack, Typography } from '@mui/material'
-import { useAtomValue } from 'jotai'
-import { scoresListAtom } from '../../contexts/scores'
+import { ExpandLessOutlined, HorizontalRuleOutlined } from '@mui/icons-material'
+import {
+  Card,
+  CardActionArea,
+  Divider,
+  Icon,
+  Stack,
+  Typography,
+  useMediaQuery,
+  useTheme,
+} from '@mui/material'
+import { useAtom, useAtomValue } from 'jotai'
+import { Fragment } from 'react'
+import { scoresListAtom, scoresViewAtom } from '../../contexts/scores'
 import { scoreMap } from '../../utils/calc'
+import { Tooltip } from '../base/styled/Tooltip'
 
 export const ScoresCalc = () => {
+  const { breakpoints } = useTheme()
+  const isMobile = useMediaQuery(breakpoints.down('sm'))
+
   const scoresList = useAtomValue(scoresListAtom)
+  const [scoresView, setScoresView] = useAtom(scoresViewAtom)
 
   const selectedScores = scoresList.filter(s => s.selected)
   const isSelected = selectedScores.length > 0
@@ -61,6 +77,38 @@ export const ScoresCalc = () => {
           />
         </Stack>
       </Stack>
+
+      {!isMobile && (
+        <Fragment>
+          <Divider />
+          <Tooltip
+            title={scoresView.pin ? '取消固定在顶部' : '固定在顶部'}
+            arrow
+            placement="top"
+          >
+            <CardActionArea
+              onClick={() =>
+                setScoresView(view => ({ ...view, pin: !view.pin }))
+              }
+              sx={{
+                position: 'relative',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                py: 0.25,
+                px: 2,
+              }}
+            >
+              <Icon
+                component={
+                  scoresView.pin ? ExpandLessOutlined : HorizontalRuleOutlined
+                }
+                sx={{ width: 20, height: 20, color: 'text.disabled' }}
+              />
+            </CardActionArea>
+          </Tooltip>
+        </Fragment>
+      )}
     </Card>
   )
 }
@@ -73,7 +121,7 @@ interface CalcCardProps {
 
 const CalcCard = ({ title, content, unit }: CalcCardProps) => (
   <Stack
-    spacing={1}
+    spacing={0.75}
     sx={{ px: 2.25, py: 2, flex: 1, width: '100%', overflow: 'hidden' }}
   >
     <Typography
@@ -83,7 +131,7 @@ const CalcCard = ({ title, content, unit }: CalcCardProps) => (
     >
       {title}
     </Typography>
-    <Stack direction="row" spacing={1} sx={{ alignItems: 'baseline' }}>
+    <Stack direction="row" spacing={0.75} sx={{ alignItems: 'baseline' }}>
       <Typography
         variant="h5"
         component="span"

@@ -30,6 +30,7 @@ export const scoresFilterAtom = atomWithReset<ScoresFilter>({
 })
 
 type ScoresView = {
+  pin: boolean
   groups: GroupsType
   columns: ScoreColumnKey[]
   simple: boolean
@@ -40,6 +41,7 @@ type ScoresView = {
 }
 
 export const scoresViewAtom = atomLocal<ScoresView>('scores-view', {
+  pin: true,
   groups: 'term',
   columns: ['name', 'type', 'credit', 'nature', 'score'],
   simple: false,

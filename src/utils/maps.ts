@@ -1,5 +1,4 @@
 import {
-  CourseScoresType,
   type CommentCourse,
   type CourseDetails,
   type UserProfile,
@@ -117,7 +116,7 @@ export interface CourseDetailsResponse extends CourseResponse {
   statistics: {
     [key: string]: {
       total: number
-      exam: { [key: number]: number }
+      exam: { [key: string]: number }
       test: { [key: string]: number }
     }
   }
@@ -141,8 +140,8 @@ export const courseDetailsResponseMap = (
     name: key === 'all' ? '所有时间' : key,
     count: value.total,
     scores: [
-      { type: CourseScoresType['等级制'], data: value.exam },
-      { type: CourseScoresType['分数制'], data: value.test },
+      { type: '等级制', data: value.exam },
+      { type: '分数制', data: value.test },
     ].filter(obj => Object.keys(obj.data).length !== 0),
   })),
   comments: [

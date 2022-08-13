@@ -6,3 +6,13 @@ type CourseFilter = Partial<Course> & {
 }
 
 export const coursesFilterAtom = atom<CourseFilter>({})
+
+type CourseDetailsView = {
+  statistics: string
+  comments: '清廉街' | '腐败街'
+}
+
+export const courseDetailsViewAtom = atom<CourseDetailsView>({
+  statistics: '所有时间',
+  comments: '清廉街',
+})

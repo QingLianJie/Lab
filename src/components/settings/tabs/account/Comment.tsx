@@ -96,8 +96,11 @@ export const SettingsAccountComment = ({
             >
               <Avatar
                 src={
-                  `${settings.developer.api || prefix}${comment.user.avatar}` ||
-                  undefined
+                  comment.user.avatar
+                    ? `${settings.developer.api || prefix}${
+                        comment.user.avatar
+                      }`
+                    : undefined
                 }
                 alt={comment.user.name}
                 sx={{

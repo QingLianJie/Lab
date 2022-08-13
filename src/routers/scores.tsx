@@ -10,7 +10,7 @@ import {
 } from '@mui/material'
 import { green, pink } from '@mui/material/colors'
 import { useAtomValue } from 'jotai'
-import { Fragment, useState } from 'react'
+import { Fragment, useState, useEffect } from 'react'
 import { useMount } from 'react-use'
 import { Layout } from '../components/Layout'
 import { ScoresCalc } from '../components/scores/Calc'
@@ -29,6 +29,10 @@ export const ScoresPage = () => {
   const [changed, setChanged] = useState(false)
 
   useMount(() => localStorage.getItem('scores-view') && setChanged(true))
+  useEffect(() => {
+    if (scoresView.pin) document.documentElement.style.overflowY = 'unset'
+    else document.documentElement.style.overflowY = 'overlay'
+  }, [scoresView.pin])
 
   const theme = useTheme()
   const { palette, breakpoints } = theme
@@ -60,15 +64,19 @@ export const ScoresPage = () => {
               container
               spacing={2}
               sx={{
+                position: 'relative',
                 flex: 1,
-                flexDirection: {
-                  xs: 'column-reverse',
-                  sm: 'row',
-                },
+                flexDirection: { xs: 'column-reverse', sm: 'row' },
               }}
             >
-              <Grid item xs={12} sm={5} md={4} lg={3}>
-                <Stack spacing={2}>
+              <Grid item direction="row" xs={12} sm={5} md={4} lg={3}>
+                <Stack
+                  spacing={2}
+                  sx={{
+                    position: scoresView.pin ? 'sticky' : 'relative',
+                    top: scoresView.pin ? 16 : 0,
+                  }}
+                >
                   <ScoresCalc />
 
                   {scores ? (

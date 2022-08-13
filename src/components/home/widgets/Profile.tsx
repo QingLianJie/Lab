@@ -92,7 +92,7 @@ export const HomeProfileWidget = () => {
             >
               <Avatar
                 src={
-                  account
+                  account && account.avatar
                     ? `${settings.developer.api || prefix}${account.avatar}`
                     : undefined
                 }

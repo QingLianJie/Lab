@@ -68,111 +68,133 @@ export const ScoresGroup = ({ name, scores }: ScoresGroupProps) => {
 
   return (
     <Fragment>
-      <TableRow
-        sx={{
-          '&:hover': { backgroundColor: 'action.hover' },
-          cursor: 'pointer',
-          transition: 'all 0.2s',
-        }}
-      >
-        <TableCell sx={{ py: 1.5, pr: 0, width: 48, minWidth: 48 }} colSpan={1}>
-          <Checkbox
+      {!nothing && (
+        <Fragment>
+          <TableRow
             sx={{
-              m: -1,
-              color: 'text.disabled',
-              '&:hover': { color: 'primary' },
+              backgroundColor: open ? 'background.subtle' : 'background.paper',
+              '&:hover': { backgroundColor: 'action.hover' },
+              cursor: 'pointer',
               transition: 'all 0.2s',
             }}
-            checked={!nothing && every}
-            indeterminate={!every && some}
-            onChange={handleSelect}
-          />
-        </TableCell>
-        <TableCell
-          sx={{ py: 1.5, px: 1.25 }}
-          colSpan={scoresView.columns.length + 1}
-          onClick={() => setOpen(v => !v)}
-        >
-          <Stack direction="row" sx={{ justifyContent: 'space-between' }}>
-            <Stack direction="row" spacing={2} sx={{ alignItems: 'center' }}>
-              <Typography
-                variant="body2"
-                sx={{ color: 'text.secondary', minWidth: 32 }}
-              >
-                {groups.find(group => group.id === scoresView.groups)?.name}
-              </Typography>
-              <Typography sx={{ fontWeight: 700, minWidth: 182 }}>
-                {scoresView.groups === 'term' && student
-                  ? `${termName(
-                      // 这个地方逻辑不严谨，不能从学号获取入学年份，
-                      // 因为没法适配研究生的学号，之后需要改
-                      parseInt(student.id.slice(0, 4)),
-                      name
-                    )} ｜ ${name}`
-                  : name}
-              </Typography>
-            </Stack>
-            <Stack direction="row" spacing={1.5} sx={{ alignItems: 'center' }}>
-              {!isMobile && (
-                <Fragment>
-                  <Typography
-                    variant="body2"
-                    sx={{ color: 'text.secondary', minWidth: 72 }}
-                  >
-                    均分 {calcAverage()}
-                  </Typography>
-
-                  <Typography
-                    variant="body2"
-                    sx={{ color: 'text.secondary', minWidth: 20 }}
-                  >
-                    {scores.filter(item => !item.hidden).length}
-                  </Typography>
-                </Fragment>
-              )}
-              <Box
-                sx={{
-                  minWidth: 32,
-                  pr: 1,
-                  display: 'flex',
-                  alignItems: 'center',
-                }}
-              >
-                <Icon
-                  component={ExpandMoreOutlined}
-                  aria-label="展开或折叠成绩分组"
-                  sx={{
-                    color: 'text.disabled',
-                    transform: open ? 'rotate(180deg)' : 'rotate(0)',
-                    transition: 'transform 0.2s',
-                  }}
-                />
-              </Box>
-            </Stack>
-          </Stack>
-        </TableCell>
-      </TableRow>
-      <TableRow>
-        <TableCell
-          sx={{ p: 0, border: 'none', width: 'auto' }}
-          colSpan={scoresView.columns.length + 2}
-        >
-          <Collapse in={open}>
-            <Table
+          >
+            <TableCell
               sx={{
-                border: 'none',
-                width: 'auto',
-                minWidth: '100%',
-                tableLayout: 'fixed',
+                py: open ? 2 : 1.5,
+                pr: 0,
+                width: 48,
+                minWidth: 48,
+                transition: 'padding 0.2s',
               }}
+              colSpan={1}
             >
-              <TableBody>
-                <ScoresRows list={scores} />
-              </TableBody>
-            </Table>
-          </Collapse>
-        </TableCell>
-      </TableRow>
+              <Checkbox
+                sx={{
+                  m: -1,
+                  color: 'text.disabled',
+                  '&:hover': { color: 'primary' },
+                  transition: 'all 0.2s',
+                }}
+                checked={!nothing && every}
+                indeterminate={!every && some}
+                onChange={handleSelect}
+              />
+            </TableCell>
+            <TableCell
+              sx={{ py: 1.5, px: 1.25 }}
+              colSpan={scoresView.columns.length + 1}
+              onClick={() => setOpen(v => !v)}
+            >
+              <Stack direction="row" sx={{ justifyContent: 'space-between' }}>
+                <Stack
+                  direction="row"
+                  spacing={2}
+                  sx={{ alignItems: 'center' }}
+                >
+                  <Typography
+                    variant="body2"
+                    sx={{ color: 'text.secondary', minWidth: 32 }}
+                  >
+                    {groups.find(group => group.id === scoresView.groups)?.name}
+                  </Typography>
+                  <Typography sx={{ fontWeight: 700, minWidth: 182 }}>
+                    {scoresView.groups === 'term' && student
+                      ? `${termName(
+                          // 这个地方逻辑不严谨，不能从学号获取入学年份，
+                          // 因为没法适配研究生的学号，之后需要改
+                          parseInt(student.id.slice(0, 4)),
+                          name
+                        )} ｜ ${name}`
+                      : name}
+                  </Typography>
+                </Stack>
+                <Stack
+                  direction="row"
+                  spacing={1.5}
+                  sx={{ alignItems: 'center' }}
+                >
+                  {!isMobile && (
+                    <Fragment>
+                      <Typography
+                        variant="body2"
+                        sx={{ color: 'text.secondary', minWidth: 72 }}
+                      >
+                        均分 {calcAverage()}
+                      </Typography>
+
+                      <Typography
+                        variant="body2"
+                        sx={{ color: 'text.secondary', minWidth: 20 }}
+                      >
+                        {scores.filter(item => !item.hidden).length}
+                      </Typography>
+                    </Fragment>
+                  )}
+                  <Box
+                    sx={{
+                      minWidth: 32,
+                      pr: 1,
+                      display: 'flex',
+                      alignItems: 'center',
+                    }}
+                  >
+                    <Icon
+                      component={ExpandMoreOutlined}
+                      aria-label="展开或折叠成绩分组"
+                      sx={{
+                        color: 'text.disabled',
+                        transform: open ? 'rotate(180deg)' : 'rotate(0)',
+                        transition: 'transform 0.2s',
+                      }}
+                    />
+                  </Box>
+                </Stack>
+              </Stack>
+            </TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell
+              sx={{ p: 0, border: 'none', width: 'auto' }}
+              colSpan={scoresView.columns.length + 2}
+            >
+              <Collapse in={open}>
+                <Table
+                  sx={{
+                    border: 'none',
+                    width: 'auto',
+                    minWidth: '100%',
+                    tableLayout: 'fixed',
+                  }}
+                >
+                  <TableBody>
+                    <ScoresRows list={scores} />
+                  </TableBody>
+                </Table>
+              </Collapse>
+            </TableCell>
+          </TableRow>
+        </Fragment>
+      )}
     </Fragment>
   )
 }

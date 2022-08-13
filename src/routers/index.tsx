@@ -11,14 +11,11 @@ import { pink } from '@mui/material/colors'
 import { useAtomValue } from 'jotai'
 import { Fragment, Suspense } from 'react'
 import { ErrorBoundary } from 'react-error-boundary'
+import { ErrorCard, LoadingCard } from '../components/base/Placeholder'
 import { HomeFavorites } from '../components/home/Favorites'
 import { HomeSearchBar } from '../components/home/Search'
 import { HomeShortcuts } from '../components/home/Shortcuts'
-import {
-  HomeTrends,
-  HomeTrendsError,
-  HomeTrendsLoading,
-} from '../components/home/Trends'
+import { HomeTrends } from '../components/home/Trends'
 import { HomeWidgetPlaceholder } from '../components/home/widgets/Placeholder'
 import { HomeProfileWidget } from '../components/home/widgets/Profile'
 import { HomeStatisticsWidget } from '../components/home/widgets/Statistics'
@@ -77,8 +74,8 @@ export const HomePage = () => {
             <Grid item xs={12} sm={7} md={8} lg={6}>
               <Stack spacing={2} sx={{ flex: 1, height: '100%' }}>
                 <HomeSearchBar />
-                <ErrorBoundary fallback={<HomeTrendsError />}>
-                  <Suspense fallback={<HomeTrendsLoading />}>
+                <ErrorBoundary fallback={<ErrorCard />}>
+                  <Suspense fallback={<LoadingCard />}>
                     <HomeTrends />
                   </Suspense>
                 </ErrorBoundary>

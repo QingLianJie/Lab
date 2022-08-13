@@ -207,19 +207,27 @@ const PlanList = ({ plan }: PlanListProps) => {
                         </Stack>
                         {item.children && (
                           <List disablePadding sx={{ width: '100%' }}>
-                            {item.children.map(child => (
+                            {item.children.map((child, index) => (
                               <ListItem
                                 key={child.name}
-                                sx={{
-                                  py: 0.25,
-                                  pl: 0.5,
-                                  pr: 0,
-                                  justifyContent: 'space-between',
-                                }}
+                                sx={{ py: 0.25, px: 0 }}
                               >
                                 <Typography
+                                  variant="body2"
+                                  sx={{
+                                    color: 'text.secondary',
+                                    ml: -0.25,
+                                    pr: 1.25,
+                                  }}
+                                >
+                                  {index === item.children.length - 1
+                                    ? '└'
+                                    : '├'}
+                                </Typography>
+
+                                <Typography
                                   variant="caption"
-                                  sx={{ color: 'text.secondary' }}
+                                  sx={{ color: 'text.secondary', flex: 1 }}
                                 >
                                   {child.name}
                                 </Typography>

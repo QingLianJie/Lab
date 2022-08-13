@@ -149,26 +149,17 @@ export interface TrendsCourseComment {
 
 export type TrendsCourseComments = TrendsCourseComment[]
 
-export enum CourseScoresType {
-  '等级制',
-  '分数制',
-}
+export type CourseDetailsScores = {
+  type: '等级制' | '分数制' | string
+  data: { [key: string]: number }
+}[]
 
 export interface CourseDetails {
   course: CommentCourse
   statistics: {
     name: string
     count: number
-    scores: (
-      | {
-          type: CourseScoresType['等级制']
-          data: { [key: string]: number }
-        }
-      | {
-          type: CourseScoresType['分数制']
-          data: { [key: number]: number }
-        }
-    )[]
+    scores: CourseDetailsScores
   }[]
   comments: {
     name: '清廉街' | '腐败街'
