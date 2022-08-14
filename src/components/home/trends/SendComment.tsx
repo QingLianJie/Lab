@@ -1,6 +1,6 @@
 import { SendOutlined, SmsOutlined } from '@mui/icons-material'
-import { LoadingButton } from '@mui/lab'
 import {
+  Button,
   CardActionArea,
   IconButton,
   InputAdornment,
@@ -79,6 +79,7 @@ export const HomeTrendsSendComment = ({
         inputProps={{ 'aria-label': '发布课程评论' }}
         autoComplete="off"
         value={comment}
+        disabled={loading}
         multiline
         onChange={e => setComment(e.target.value)}
         sx={{
@@ -100,14 +101,14 @@ export const HomeTrendsSendComment = ({
               arrow
               placement="top"
             >
-              <LoadingButton
+              <Button
                 color="primary"
-                loading={loading}
+                disabled={loading}
                 onClick={() => setAnonymous(anonymous => !anonymous)}
                 sx={{ fontSize: '0.925rem', fontWeight: 700 }}
               >
-                {isAnonymosus ? '匿名' : account.name}
-              </LoadingButton>
+                {loading ? '发布中 ...' : isAnonymosus ? '匿名' : account.name}
+              </Button>
             </Tooltip>
           </InputAdornment>
         }
@@ -118,7 +119,8 @@ export const HomeTrendsSendComment = ({
                 aria-label="发布评论"
                 onClick={handleSendComment}
                 sx={{
-                  cursor: comment.length === 0 ? 'not-allowed' : 'pointer',
+                  cursor:
+                    loading || comment.length === 0 ? 'not-allowed' : 'pointer',
                 }}
               >
                 <SendOutlined

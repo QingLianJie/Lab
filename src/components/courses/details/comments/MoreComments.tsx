@@ -2,6 +2,7 @@ import { ExpandMoreOutlined, SmsOutlined } from '@mui/icons-material'
 import {
   Button,
   CardActionArea,
+  Collapse,
   Dialog,
   DialogContent,
   DialogTitle,
@@ -15,6 +16,7 @@ import {
   Typography,
 } from '@mui/material'
 import { Fragment, useMemo, useRef, useState } from 'react'
+import { TransitionGroup } from 'react-transition-group'
 import { type CourseDetails } from '../../../../index.d'
 import { HomeTrendsCourseComment } from '../../../home/trends/Comment'
 
@@ -124,9 +126,13 @@ export const CourseDetailsMoreComments = ({
           sx={{ px: 0, pb: 1.5, overflow: 'auto', maxHeight: '75vh' }}
         >
           <List dense sx={{ py: 0 }}>
-            {currentComments.slice(0, 20 * page).map(comment => (
-              <HomeTrendsCourseComment key={comment.id} comment={comment} />
-            ))}
+            <TransitionGroup>
+              {currentComments.slice(0, 20 * page).map(comment => (
+                <Collapse key={comment.id}>
+                  <HomeTrendsCourseComment comment={comment} />
+                </Collapse>
+              ))}
+            </TransitionGroup>
 
             <ListItem disablePadding>
               {page * 20 >= currentComments.length ? (
