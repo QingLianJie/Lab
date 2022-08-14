@@ -6,13 +6,13 @@ import { courseDetailsViewAtom } from '../../../contexts/courses'
 import { type CourseDetails } from '../../../index.d'
 import { scoreMap } from '../../../utils/calc'
 
-interface CourseDetailsStatistics {
+interface CourseDetailsStatisticsProps {
   details: CourseDetails
 }
 
 export const CourseDetailsStatistics = ({
   details,
-}: CourseDetailsStatistics) => {
+}: CourseDetailsStatisticsProps) => {
   const courseDetailsView = useAtomValue(courseDetailsViewAtom)
 
   const statistics = useMemo(

@@ -129,11 +129,7 @@ export const SettingsAccountComment = ({
           </Tooltip>
         </ListItemAvatar>
 
-        <Stack
-          spacing={0.25}
-          direction="row"
-          sx={{ width: '100%', alignItems: 'center' }}
-        >
+        <Stack direction="row" sx={{ width: '100%', alignItems: 'center' }}>
           <Typography
             sx={{
               width: 'fit-content',

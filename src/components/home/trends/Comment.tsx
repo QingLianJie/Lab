@@ -8,9 +8,9 @@ import {
   Typography,
 } from '@mui/material'
 import { useAtomValue } from 'jotai'
-import { type Comment } from '../../..'
 import { prefix } from '../../../configs/site-info'
 import { accountAtom, settingsAtom } from '../../../contexts/settings'
+import { type Comment } from '../../../index.d'
 import { relativeTime } from '../../../utils/format'
 import { Tooltip } from '../../base/styled/Tooltip'
 
@@ -31,7 +31,7 @@ export const HomeTrendsCourseComment = ({
           title={
             account && comment.user.self
               ? `${comment.user.name} (我)`
-              : comment.user.name
+              : comment.user.name || '<没有名字>'
           }
           arrow
           placement="top"
@@ -77,11 +77,7 @@ export const HomeTrendsCourseComment = ({
         </Tooltip>
       </ListItemAvatar>
 
-      <Stack
-        spacing={0.25}
-        direction="row"
-        sx={{ width: '100%', alignItems: 'center' }}
-      >
+      <Stack direction="row" sx={{ width: '100%', alignItems: 'center' }}>
         <Typography
           sx={{
             width: 'fit-content',

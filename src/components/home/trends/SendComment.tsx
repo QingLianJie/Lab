@@ -8,12 +8,13 @@ import {
   Stack,
   Typography,
 } from '@mui/material'
-import { useAtomValue } from 'jotai'
+import { useAtom, useAtomValue } from 'jotai'
 import ky, { HTTPError } from 'ky'
 import { enqueueSnackbar } from 'notistack'
 import { useState } from 'react'
 import { mutate } from 'swr'
 import { prefix } from '../../../configs/site-info'
+import { modalsAtom } from '../../../contexts/modals'
 import { accountAtom, settingsAtom } from '../../../contexts/settings'
 import { type CommentCourse } from '../../../index.d'
 import { Tooltip } from '../../base/styled/Tooltip'
@@ -26,7 +27,9 @@ export const HomeTrendsSendComment = ({
   course,
 }: HomeTrendsSendCommentProps) => {
   const settings = useAtomValue(settingsAtom)
+  const [modals, setModals] = useAtom(modalsAtom)
   const account = useAtomValue(accountAtom)
+
   const [comment, setComment] = useState('')
   const [isAnonymosus, setAnonymous] = useState(false)
   const [loading, setLoading] = useState(false)
@@ -129,7 +132,10 @@ export const HomeTrendsSendComment = ({
       />
     </Stack>
   ) : (
-    <CardActionArea sx={{ pl: 2.25, pr: 2.25, py: 1.5 }}>
+    <CardActionArea
+      onClick={() => setModals(modals => ({ ...modals, auth: '登录' }))}
+      sx={{ pl: 2.25, pr: 2.25, py: 1.5 }}
+    >
       <Stack
         direction="row"
         spacing={2.5}

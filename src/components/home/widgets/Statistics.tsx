@@ -99,7 +99,7 @@ export const HomeStatisticsWidget = () => {
         {scores && schedules ? (
           <Stack spacing={0.25} sx={{ px: 2.25 }}>
             <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-              数据最后更新于{' '}
+              数据更新于{' '}
               <Typography
                 component="time"
                 sx={{ fontSize: 'inherit', fontWeight: 700 }}

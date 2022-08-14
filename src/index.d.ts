@@ -179,3 +179,11 @@ export interface UserProfile {
   self?: boolean
   comments: UserProfileComment[]
 }
+
+export interface UploadData {
+  hash: string // scores 的 MD5 摘要值
+  id: string // 学号经 MD5 摘要
+  date: string
+  scores: Scores
+  grade: number // 年级 2018 2019 等
+}

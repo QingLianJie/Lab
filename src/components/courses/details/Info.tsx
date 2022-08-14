@@ -1,11 +1,11 @@
 import { Card, Stack, Divider, Typography } from '@mui/material'
 import { type CourseDetails } from '../../../index.d'
 
-interface CourseDetailsInfo {
+interface CourseDetailsInfoProps {
   details: CourseDetails
 }
 
-export const CourseDetailsInfo = ({ details }: CourseDetailsInfo) => (
+export const CourseDetailsInfo = ({ details }: CourseDetailsInfoProps) => (
   <Card variant="outlined">
     <Stack
       divider={<Divider orientation="horizontal" sx={{ height: 'auto' }} />}

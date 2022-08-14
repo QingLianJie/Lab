@@ -20,6 +20,7 @@ import { ErrorBoundary } from 'react-error-boundary'
 import { useLocation, useParams } from 'react-router-dom'
 import useSWR from 'swr'
 import { ErrorCard, LoadingCard } from '../../components/base/Placeholder'
+import { CourseDetailsComments } from '../../components/courses/details/comments/Comments'
 import { CourseDetailsInfo } from '../../components/courses/details/Info'
 import { CourseDetailsStatistics } from '../../components/courses/details/Statistics'
 import { Layout } from '../../components/Layout'
@@ -114,7 +115,9 @@ const CourseDetails = ({ id, setTitle }: CourseDetailsProps) => {
           </Grid>
 
           <Grid item xs={12} sm={12} md={4} lg={3}>
-            <Stack spacing={2}></Stack>
+            <Stack spacing={2}>
+              <CourseDetailsComments details={courseDetails} />
+            </Stack>
           </Grid>
         </Grid>
       )}
