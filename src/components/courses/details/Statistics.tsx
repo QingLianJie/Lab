@@ -20,7 +20,7 @@ export const CourseDetailsStatistics = ({
       details.statistics.find(
         stat => stat.name === courseDetailsView.statistics
       ) || details.statistics?.[0],
-    [details.statistics]
+    [courseDetailsView.statistics]
   )
 
   const getScore = (score: string) => {
@@ -61,7 +61,7 @@ export const CourseDetailsStatistics = ({
         },
         { count: 0, scores: 0, excellent: 0, failed: 0, average: 0, pows: 0 }
       ),
-    [details.statistics]
+    [courseDetailsView.statistics]
   )
 
   return (

@@ -1,4 +1,8 @@
-import { ExpandMoreOutlined, SmsOutlined } from '@mui/icons-material'
+import {
+  CheckOutlined,
+  ExpandMoreOutlined,
+  SmsOutlined,
+} from '@mui/icons-material'
 import {
   Button,
   CardActionArea,
@@ -6,10 +10,13 @@ import {
   Dialog,
   DialogContent,
   DialogTitle,
+  Fade,
   Icon,
   List,
   ListItem,
   ListItemButton,
+  ListItemIcon,
+  ListItemText,
   Menu,
   MenuItem,
   Stack,
@@ -30,6 +37,7 @@ export const CourseDetailsMoreComments = ({
   const [open, setOpen] = useState(false)
   const [page, setPage] = useState(1)
   const [source, setSource] = useState<'清廉街' | '腐败街'>('清廉街')
+
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
   const scrollRef = useRef<HTMLDivElement>(null)
 
@@ -83,12 +91,12 @@ export const CourseDetailsMoreComments = ({
           },
         }}
       >
-        <DialogTitle sx={{ pt: 1.75, pb: 1.5, px: 1.75 }}>
+        <DialogTitle sx={{ pt: 1.25, pb: 1.5, px: 1.25 }}>
           <Stack spacing={2} direction="row" sx={{ alignItems: 'baseline' }}>
             <Typography
               sx={{
                 flex: 1,
-                px: 0.75,
+                px: 1.25,
                 fontSize: 'body1.fontSize',
                 fontWeight: 700,
               }}
@@ -98,24 +106,49 @@ export const CourseDetailsMoreComments = ({
             <Button
               color="primary"
               onClick={e => setAnchorEl(e.currentTarget)}
-              endIcon={<Icon component={ExpandMoreOutlined} />}
               sx={{ width: 'fit-content', alignItems: 'center' }}
             >
-              {source}
+              <Typography
+                sx={{
+                  fontSize: 'body2.fontSize',
+                  fontWeight: 700,
+                  color: 'text.primary',
+                  pr: 1,
+                  py: 0.5,
+                }}
+              >
+                {source}
+              </Typography>
+              <ExpandMoreOutlined
+                sx={{
+                  color: 'text.disabled',
+                  width: 20,
+                  height: 20,
+                  transform: anchorEl ? 'rotate(180deg)' : 'rotate(0deg)',
+                  transition: 'transform 0.2s',
+                }}
+              />
             </Button>
 
             <Menu
               anchorEl={anchorEl}
               open={!!anchorEl}
               onClose={() => setAnchorEl(null)}
+              TransitionComponent={Fade}
             >
               {details.comments.map(comment => (
                 <MenuItem
                   key={comment.name}
                   selected={source === comment.name}
                   onClick={() => handleSource(comment.name)}
+                  sx={{ minWidth: 120, minHeight: 'unset' }}
                 >
-                  {comment.name}
+                  <ListItemText sx={{ flex: 1 }}>{comment.name}</ListItemText>
+                  {comment.name === source && (
+                    <ListItemIcon sx={{ pl: 2 }}>
+                      <CheckOutlined sx={{ fontSize: 20 }} />
+                    </ListItemIcon>
+                  )}
                 </MenuItem>
               ))}
             </Menu>

@@ -23,6 +23,7 @@ import { ErrorCard, LoadingCard } from '../../components/base/Placeholder'
 import { CourseDetailsComments } from '../../components/courses/details/comments/Comments'
 import { CourseDetailsInfo } from '../../components/courses/details/Info'
 import { CourseDetailsStatistics } from '../../components/courses/details/Statistics'
+import { CourseDetailsToolBar } from '../../components/courses/details/ToolBar'
 import { Layout } from '../../components/Layout'
 import { prefix } from '../../configs/site-info'
 import { settingsAtom } from '../../contexts/settings'
@@ -102,7 +103,7 @@ const CourseDetails = ({ id, setTitle }: CourseDetailsProps) => {
   return (
     <Fragment>
       {courseDetails && (
-        <Grid container spacing={2} sx={{ flex: 1, height: '100%' }}>
+        <Grid container spacing={2}>
           <Grid item xs={12} sm={6} md={4} lg={3}>
             <Stack spacing={2}>
               <CourseDetailsInfo details={courseDetails} />
@@ -111,7 +112,9 @@ const CourseDetails = ({ id, setTitle }: CourseDetailsProps) => {
           </Grid>
 
           <Grid item xs={12} sm={6} md={8} lg={6}>
-            <Stack spacing={2} sx={{ flex: 1, height: '100%' }}></Stack>
+            <Stack spacing={2}>
+              <CourseDetailsToolBar details={courseDetails} />
+            </Stack>
           </Grid>
 
           <Grid item xs={12} sm={12} md={4} lg={3}>

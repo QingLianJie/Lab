@@ -1,11 +1,9 @@
 import {
   CheckOutlined,
-  ExpandLessOutlined,
   ExpandMoreOutlined,
   SchoolOutlined,
 } from '@mui/icons-material'
 import {
-  ButtonGroup,
   Card,
   Fade,
   IconButton,
@@ -23,7 +21,6 @@ import Button from '@mui/material/Button'
 import { useAtom, useAtomValue } from 'jotai'
 import { range } from 'lodash'
 import { Fragment, useState } from 'react'
-import { groups, GroupsType } from '../../configs/scores/groups'
 import { studentAtom } from '../../contexts/bridge'
 import { schedulesAtom, schedulesViewAtom } from '../../contexts/schedules'
 import { termName } from '../../utils/calc'
