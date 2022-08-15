@@ -36,6 +36,7 @@ export const SettingsDeveloper = () => {
   )
 
   const handleApi = () => {
+    if (api === settings.developer.api) return
     setSettings(settings => ({
       ...settings,
       developer: { ...settings.developer, api: api },
@@ -138,6 +139,10 @@ export const SettingsDeveloper = () => {
                   sx={{
                     color: 'text.disabled',
                     '&:hover': { color: 'text.primary' },
+                    cursor:
+                      api === settings.developer.api
+                        ? 'not-allowed'
+                        : 'pointer',
                     transition: 'all 0.2s',
                   }}
                 >

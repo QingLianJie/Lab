@@ -1,6 +1,6 @@
 import { TabContext, TabList, TabPanel } from '@mui/lab'
 import { Box, Card, Divider, Tab } from '@mui/material'
-import { useAtomValue } from 'jotai'
+import { atom, useAtomValue } from 'jotai'
 import { SyntheticEvent, useMemo, useState } from 'react'
 import { favoritesAtom, Favorite } from '../../contexts/links'
 import { HomeFavoritesEditMode, HomeFavoritesLinkEdit } from './favorites/Edit'
@@ -14,6 +14,8 @@ const tabs = [
   { name: '链接列表', id: 'all' },
   { name: '分享', id: 'share' },
 ]
+
+export const editAtom = atom<boolean>(false)
 
 export const HomeFavorites = () => {
   const favorites = useAtomValue(favoritesAtom)

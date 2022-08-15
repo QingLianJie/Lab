@@ -16,8 +16,8 @@ import {
 import { amber, red } from '@mui/material/colors'
 import { useAtom, useAtomValue } from 'jotai'
 import { Favorite, favoritesAtom } from '../../../contexts/links'
-import { modesAtom } from '../../../contexts/modes'
 import { Tooltip } from '../../base/styled/Tooltip'
+import { editAtom } from '../Favorites'
 
 interface HomeFavoritesLinkItemProps {
   favorite: Favorite
@@ -27,7 +27,7 @@ export const HomeFavoritesLinkItem = ({
   favorite,
 }: HomeFavoritesLinkItemProps) => {
   const [favorites, setFavorites] = useAtom(favoritesAtom)
-  const modes = useAtomValue(modesAtom)
+  const edit = useAtomValue(editAtom)
 
   const handleStar = () => {
     setFavorites(favorites =>
@@ -70,7 +70,7 @@ export const HomeFavoritesLinkItem = ({
     <ListItem
       disablePadding
       secondaryAction={
-        modes.favorites ? (
+        edit ? (
           <Tooltip title="删除这个链接" arrow placement="top">
             <IconButton
               aria-label="删除这个链接"

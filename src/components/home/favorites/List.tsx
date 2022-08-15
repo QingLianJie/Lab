@@ -22,14 +22,15 @@ import { useAtom, useAtomValue } from 'jotai'
 import { Fragment, useMemo, useState } from 'react'
 import { TransitionGroup } from 'react-transition-group'
 import { Favorite, favoritesAtom } from '../../../contexts/links'
-import { modesAtom } from '../../../contexts/modes'
+
 import { Tooltip } from '../../base/styled/Tooltip'
+import { editAtom } from '../Favorites'
 import { HomeFavoritesLinkItem } from './LinkItem'
 
 export const HomeFavoritesList = () => {
+  const edit = useAtomValue(editAtom)
   const [favorites, setFavorites] = useAtom(favoritesAtom)
   const [open, setOpen] = useState<number[]>([])
-  const modes = useAtomValue(modesAtom)
 
   const handleOpen = (id: number) => {
     if (open.includes(id)) setOpen(open.filter(item => item !== id))
@@ -51,7 +52,7 @@ export const HomeFavoritesList = () => {
               <ListItem
                 disablePadding
                 secondaryAction={
-                  modes.favorites && (
+                  edit && (
                     <Tooltip title="删除这个分组" arrow placement="top">
                       <IconButton
                         aria-label="删除这个分组"

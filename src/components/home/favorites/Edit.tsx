@@ -10,12 +10,12 @@ import {
   TextField,
   Typography,
 } from '@mui/material'
-import { type FormEvent, Fragment, useEffect, useRef, useState } from 'react'
-import { modesAtom } from '../../../contexts/modes'
-import { Modal } from '../../base/Modal'
 import { useAtom } from 'jotai'
-import { favoritesAtom } from '../../../contexts/links'
 import { enqueueSnackbar } from 'notistack'
+import { Fragment, useEffect, useRef, useState, type FormEvent } from 'react'
+import { favoritesAtom } from '../../../contexts/links'
+import { Modal } from '../../base/Modal'
+import { editAtom } from '../Favorites'
 
 type FormType = {
   name: string
@@ -182,13 +182,11 @@ export const HomeFavoritesLinkEdit = () => {
 }
 
 export const HomeFavoritesEditMode = () => {
-  const [modes, setModes] = useAtom(modesAtom)
+  const [edit, setEdit] = useAtom(editAtom)
 
   return (
     <Fragment>
-      <CardActionArea
-        onClick={() => setModes({ ...modes, favorites: !modes.favorites })}
-      >
+      <CardActionArea onClick={() => setEdit(edit => !edit)}>
         <Stack
           spacing={1.5}
           direction="row"
@@ -204,13 +202,13 @@ export const HomeFavoritesEditMode = () => {
             variant="body2"
             sx={{
               color: 'text.secondary',
-              fontWeight: modes.favorites ? 700 : 500,
+              fontWeight: edit ? 700 : 500,
             }}
           >
-            {modes.favorites ? '退出编辑模式' : '进入编辑模式'}
+            {edit ? '退出编辑模式' : '进入编辑模式'}
           </Typography>
           <Icon
-            component={modes.favorites ? EditOffOutlined : EditOutlined}
+            component={edit ? EditOffOutlined : EditOutlined}
             fontSize="small"
             sx={{ color: 'text.disabled', width: 20, height: 20 }}
           />
