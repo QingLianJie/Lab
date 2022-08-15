@@ -7,10 +7,12 @@ import {
   useTheme,
 } from '@mui/material'
 import { pink, red } from '@mui/material/colors'
-import { useAtomValue } from 'jotai'
+import { atom, useAtom, useAtomValue } from 'jotai'
 import {
   Fragment,
   Suspense,
+  useCallback,
+  useEffect,
   useMemo,
   useState,
   type Dispatch,
@@ -33,6 +35,17 @@ import {
   courseDetailsResponseMap,
   type CourseDetailsResponse,
 } from '../../utils/maps'
+
+type CourseDetailsView = {
+  statistics: string
+  comments: '清廉街' | '腐败街'
+}
+
+export const courseDetailsAtom = atom<CourseDetailsType | false>(false)
+export const courseDetailsViewAtom = atom<CourseDetailsView>({
+  statistics: '所有时间',
+  comments: '清廉街',
+})
 
 export const CourseDetailsPage = () => {
   const { id } = useParams()
@@ -78,6 +91,7 @@ interface CourseDetailsProps {
 
 const CourseDetails = ({ id, setTitle }: CourseDetailsProps) => {
   const settings = useAtomValue(settingsAtom)
+  const [courseDetails, setCourseDetails] = useAtom(courseDetailsAtom)
 
   const { data } = useSWR<CourseDetailsResponse>(
     `${settings.developer.api || prefix}/api/course/${id}`,
@@ -93,11 +107,13 @@ const CourseDetails = ({ id, setTitle }: CourseDetailsProps) => {
     }
   )
 
-  const courseDetails: CourseDetailsType | undefined = useMemo(() => {
-    if (!data) return undefined
+  useEffect(() => {
+    if (!data) return
     const details = courseDetailsResponseMap(data)
     setTitle(details.course.name)
-    return details
+    console.log(details)
+
+    setCourseDetails(details)
   }, [data])
 
   return (
@@ -106,20 +122,20 @@ const CourseDetails = ({ id, setTitle }: CourseDetailsProps) => {
         <Grid container spacing={2}>
           <Grid item xs={12} sm={6} md={4} lg={3}>
             <Stack spacing={2}>
-              <CourseDetailsInfo details={courseDetails} />
-              <CourseDetailsStatistics details={courseDetails} />
+              <CourseDetailsInfo />
+              <CourseDetailsStatistics />
             </Stack>
           </Grid>
 
           <Grid item xs={12} sm={6} md={8} lg={6}>
             <Stack spacing={2}>
-              <CourseDetailsToolBar details={courseDetails} />
+              <CourseDetailsToolBar />
             </Stack>
           </Grid>
 
           <Grid item xs={12} sm={12} md={4} lg={3}>
             <Stack spacing={2}>
-              <CourseDetailsComments details={courseDetails} />
+              <CourseDetailsComments />
             </Stack>
           </Grid>
         </Grid>

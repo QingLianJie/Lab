@@ -30,6 +30,7 @@
     "notistack": "3.0.0-alpha.7",
     "qrcode.react": "^3.1.0",
     "react": "^18.2.0",
+    "react-charts": "3.0.0-beta.47",
     "react-cool-virtual": "^0.7.0",
     "react-cropper": "^2.1.8",
     "react-dom": "^18.2.0",

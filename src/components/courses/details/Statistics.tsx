@@ -2,26 +2,24 @@ import { Card, Divider, Stack, Typography } from '@mui/material'
 import { green, red } from '@mui/material/colors'
 import { useAtomValue } from 'jotai'
 import { useMemo } from 'react'
-import { courseDetailsViewAtom } from '../../../contexts/courses'
-import { type CourseDetails } from '../../../index.d'
+import {
+  courseDetailsAtom,
+  courseDetailsViewAtom,
+} from '../../../routers/courses/[id]'
 import { scoreMap } from '../../../utils/calc'
 
-interface CourseDetailsStatisticsProps {
-  details: CourseDetails
-}
-
-export const CourseDetailsStatistics = ({
-  details,
-}: CourseDetailsStatisticsProps) => {
+export const CourseDetailsStatistics = () => {
   const courseDetailsView = useAtomValue(courseDetailsViewAtom)
+  const courseDetails = useAtomValue(courseDetailsAtom)
 
-  const statistics = useMemo(
-    () =>
-      details.statistics.find(
+  const statistics = useMemo(() => {
+    if (!courseDetails) return false
+    return (
+      courseDetails.statistics.find(
         stat => stat.name === courseDetailsView.statistics
-      ) || details.statistics?.[0],
-    [courseDetailsView.statistics]
-  )
+      ) || courseDetails.statistics?.[0]
+    )
+  }, [courseDetailsView.statistics])
 
   const getScore = (score: string) => {
     const num = Number(score)
@@ -29,40 +27,40 @@ export const CourseDetailsStatistics = ({
     return num
   }
 
-  const { count, excellent, failed, average, pows } = useMemo(
-    () =>
-      statistics.scores.reduce(
-        (pre, cur) => {
-          const entries = Object.entries(cur.data)
-          const count = Object.values(cur.data).reduce((p, c) => p + c, 0)
-          const scores = entries.reduce((p, c) => p + getScore(c[0]) * c[1], 0)
-          const excellent = entries
-            .filter(c => getScore(c[0]) >= 90)
-            .reduce((p, c) => p + c[1], 0)
-          const failed = entries
-            .filter(c => getScore(c[0]) < 60)
-            .reduce((p, c) => p + c[1], 0)
+  const { count, excellent, failed, average, pows } = useMemo(() => {
+    if (!courseDetails || !statistics)
+      return { count: 0, excellent: 0, failed: 0, average: 0, pows: 0 }
+    return statistics.scores.reduce(
+      (pre, cur) => {
+        const entries = Object.entries(cur.data)
+        const count = Object.values(cur.data).reduce((p, c) => p + c, 0)
+        const scores = entries.reduce((p, c) => p + getScore(c[0]) * c[1], 0)
+        const excellent = entries
+          .filter(c => getScore(c[0]) >= 90)
+          .reduce((p, c) => p + c[1], 0)
+        const failed = entries
+          .filter(c => getScore(c[0]) < 60)
+          .reduce((p, c) => p + c[1], 0)
 
-          // 计算标准差
-          const average = scores / count
-          const pows = entries.reduce(
-            (p, c) => p + Math.pow(getScore(c[0]) - average, 2) * c[1],
-            0
-          )
+        // 计算标准差
+        const average = scores / count
+        const pows = entries.reduce(
+          (p, c) => p + Math.pow(getScore(c[0]) - average, 2) * c[1],
+          0
+        )
 
-          return {
-            count: pre.count + count,
-            scores: pre.scores + scores,
-            excellent: pre.excellent + excellent,
-            failed: pre.failed + failed,
-            average,
-            pows: pre.pows + pows,
-          }
-        },
-        { count: 0, scores: 0, excellent: 0, failed: 0, average: 0, pows: 0 }
-      ),
-    [courseDetailsView.statistics]
-  )
+        return {
+          count: pre.count + count,
+          scores: pre.scores + scores,
+          excellent: pre.excellent + excellent,
+          failed: pre.failed + failed,
+          average,
+          pows: pre.pows + pows,
+        }
+      },
+      { count: 0, scores: 0, excellent: 0, failed: 0, average: 0, pows: 0 }
+    )
+  }, [courseDetails, courseDetailsView.statistics])
 
   return (
     <Card variant="outlined">
@@ -102,7 +100,7 @@ export const CourseDetailsStatistics = ({
           />
           <StatsCard
             title="统计人次"
-            content={statistics.count}
+            content={statistics ? statistics.count : 0}
             unit="人"
             subtitle={courseDetailsView.statistics}
           />

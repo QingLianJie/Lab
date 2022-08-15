@@ -11,7 +11,6 @@ import {
   DialogContent,
   DialogTitle,
   Fade,
-  Icon,
   List,
   ListItem,
   ListItemButton,
@@ -22,38 +21,45 @@ import {
   Stack,
   Typography,
 } from '@mui/material'
+import { useAtom, useAtomValue } from 'jotai'
 import { Fragment, useMemo, useRef, useState } from 'react'
 import { TransitionGroup } from 'react-transition-group'
-import { type CourseDetails } from '../../../../index.d'
+import {
+  courseDetailsAtom,
+  courseDetailsViewAtom,
+} from '../../../../routers/courses/[id]'
 import { HomeTrendsCourseComment } from '../../../home/trends/Comment'
 
-interface CourseDetailsMoreCommentsProps {
-  details: CourseDetails
-}
-
-export const CourseDetailsMoreComments = ({
-  details,
-}: CourseDetailsMoreCommentsProps) => {
+export const CourseDetailsMoreComments = () => {
   const [open, setOpen] = useState(false)
   const [page, setPage] = useState(1)
-  const [source, setSource] = useState<'清廉街' | '腐败街'>('清廉街')
+
+  const courseDetails = useAtomValue(courseDetailsAtom)
+  const [courseDetailsView, setCourseDetailsView] = useAtom(
+    courseDetailsViewAtom
+  )
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
   const scrollRef = useRef<HTMLDivElement>(null)
 
-  const recentComments =
-    details.comments
-      .find(comment => comment.name === '清廉街')
-      ?.comments.slice(0, 4) || []
+  const recentComments = courseDetails
+    ? courseDetails.comments
+        .find(comment => comment.name === '清廉街')
+        ?.comments.slice(0, 4) || []
+    : []
 
   const currentComments = useMemo(
     () =>
-      details.comments.find(comment => comment.name === source)?.comments || [],
-    [source]
+      courseDetails
+        ? courseDetails.comments.find(
+            comment => comment.name === courseDetailsView.comments
+          )?.comments || []
+        : [],
+    [courseDetailsView.comments]
   )
 
   const handleSource = (name: '清廉街' | '腐败街') => {
-    setSource(name)
+    setCourseDetailsView(view => ({ ...view, comment: name }))
     setAnchorEl(null)
     if (scrollRef && scrollRef.current) scrollRef.current.scrollTop = 0
   }
@@ -117,7 +123,7 @@ export const CourseDetailsMoreComments = ({
                   py: 0.5,
                 }}
               >
-                {source}
+                {courseDetailsView.comments}
               </Typography>
               <ExpandMoreOutlined
                 sx={{
@@ -136,21 +142,22 @@ export const CourseDetailsMoreComments = ({
               onClose={() => setAnchorEl(null)}
               TransitionComponent={Fade}
             >
-              {details.comments.map(comment => (
-                <MenuItem
-                  key={comment.name}
-                  selected={source === comment.name}
-                  onClick={() => handleSource(comment.name)}
-                  sx={{ minWidth: 120, minHeight: 'unset' }}
-                >
-                  <ListItemText sx={{ flex: 1 }}>{comment.name}</ListItemText>
-                  {comment.name === source && (
-                    <ListItemIcon sx={{ pl: 2 }}>
-                      <CheckOutlined sx={{ fontSize: 20 }} />
-                    </ListItemIcon>
-                  )}
-                </MenuItem>
-              ))}
+              {courseDetails &&
+                courseDetails.comments.map(comment => (
+                  <MenuItem
+                    key={comment.name}
+                    selected={courseDetailsView.comments === comment.name}
+                    onClick={() => handleSource(comment.name)}
+                    sx={{ minWidth: 120, minHeight: 'unset' }}
+                  >
+                    <ListItemText sx={{ flex: 1 }}>{comment.name}</ListItemText>
+                    {comment.name === courseDetailsView.comments && (
+                      <ListItemIcon sx={{ pl: 2 }}>
+                        <CheckOutlined sx={{ fontSize: 20 }} />
+                      </ListItemIcon>
+                    )}
+                  </MenuItem>
+                ))}
             </Menu>
           </Stack>
         </DialogTitle>

@@ -1,19 +1,17 @@
 import { QrCodeOutlined } from '@mui/icons-material'
-import { LoadingButton } from '@mui/lab'
-import { Button, ButtonGroup, IconButton, Stack, useTheme } from '@mui/material'
+import { Button, IconButton, Stack } from '@mui/material'
+import { useAtomValue } from 'jotai'
 import { enqueueSnackbar } from 'notistack'
-import { useState, Fragment } from 'react'
+import { QRCodeCanvas } from 'qrcode.react'
+import { Fragment, useState } from 'react'
 import { info } from '../../../../configs/site-info'
-import { type CourseDetails } from '../../../../index.d'
+import { courseDetailsAtom } from '../../../../routers/courses/[id]'
 import { Modal } from '../../../base/Modal'
 import { Tooltip } from '../../../base/styled/Tooltip'
-import { QRCodeCanvas } from 'qrcode.react'
 
-interface CourseDetailsShareProps {
-  details: CourseDetails
-}
-
-export const CourseDetailsShare = ({ details }: CourseDetailsShareProps) => {
+export const CourseDetailsShare = () => {
+  const courseDetails = useAtomValue(courseDetailsAtom)
+  const name = courseDetails ? courseDetails.course.name : '未知课程'
   const [open, setOpen] = useState(false)
 
   return (
@@ -74,8 +72,8 @@ export const CourseDetailsShare = ({ details }: CourseDetailsShareProps) => {
               onClick={() =>
                 navigator.share({
                   url: location.href,
-                  title: `${details.course.name} - ${info.name}`,
-                  text: `在${info.name}上查看 ${details.course.name} 课程数据`,
+                  title: `${name} - ${info.name}`,
+                  text: `在${info.name}上查看 ${name} 课程数据`,
                 })
               }
               sx={{ py: 0.625 }}

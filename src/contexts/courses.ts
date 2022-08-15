@@ -7,10 +7,3 @@ type CourseFilter = Partial<Course> & {
 
 export const coursesFilterAtom = atom<CourseFilter>({})
 
-type CourseDetailsView = {
-  statistics: string
-}
-
-export const courseDetailsViewAtom = atom<CourseDetailsView>({
-  statistics: '所有时间',
-})

@@ -1,41 +1,29 @@
-import {
-  CheckOutlined,
-  ExpandMoreOutlined,
-  SchoolOutlined,
-} from '@mui/icons-material'
+import { CheckOutlined, ExpandMoreOutlined } from '@mui/icons-material'
 import {
   Card,
   Fade,
-  IconButton,
   ListItemIcon,
   ListItemText,
   Menu,
   MenuItem,
-  Pagination,
   Stack,
   Typography,
-  useMediaQuery,
-  useTheme,
 } from '@mui/material'
 import Button from '@mui/material/Button'
 import { useAtom, useAtomValue } from 'jotai'
-import { range } from 'lodash'
-import { Fragment, useState } from 'react'
-import { CourseDetails } from '../../..'
-import { courseDetailsViewAtom } from '../../../contexts/courses'
+import { useState } from 'react'
+import {
+  courseDetailsAtom,
+  courseDetailsViewAtom,
+} from '../../../routers/courses/[id]'
 import { CourseDetailsExport } from './actions/Export'
 import { CourseDetailsShare } from './actions/Share'
 
-interface CourseDetailsToolBarProps {
-  details: CourseDetails
-}
-
-export const CourseDetailsToolBar = ({
-  details,
-}: CourseDetailsToolBarProps) => {
+export const CourseDetailsToolBar = () => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
   const open = Boolean(anchorEl)
 
+  const courseDetails = useAtomValue(courseDetailsAtom)
   const [courseDetailsView, setCourseDetailsView] = useAtom(
     courseDetailsViewAtom
   )
@@ -93,26 +81,27 @@ export const CourseDetailsToolBar = ({
             TransitionComponent={Fade}
             PaperProps={{ sx: { maxHeight: 240 } }}
           >
-            {details.statistics.map(item => (
-              <MenuItem
-                onClick={e => {
-                  setCourseDetailsView(view => ({
-                    ...view,
-                    statistics: item.name,
-                  }))
-                  setAnchorEl(null)
-                }}
-                key={item.name}
-                sx={{ minWidth: 180, minHeight: 'unset' }}
-              >
-                <ListItemText sx={{ flex: 1 }}>{item.name}</ListItemText>
-                {item.name === courseDetailsView.statistics && (
-                  <ListItemIcon sx={{ pl: 2 }}>
-                    <CheckOutlined sx={{ fontSize: 20 }} />
-                  </ListItemIcon>
-                )}
-              </MenuItem>
-            ))}
+            {courseDetails &&
+              courseDetails.statistics.map(item => (
+                <MenuItem
+                  onClick={e => {
+                    setCourseDetailsView(view => ({
+                      ...view,
+                      statistics: item.name,
+                    }))
+                    setAnchorEl(null)
+                  }}
+                  key={item.name}
+                  sx={{ minWidth: 180, minHeight: 'unset' }}
+                >
+                  <ListItemText sx={{ flex: 1 }}>{item.name}</ListItemText>
+                  {item.name === courseDetailsView.statistics && (
+                    <ListItemIcon sx={{ pl: 2 }}>
+                      <CheckOutlined sx={{ fontSize: 20 }} />
+                    </ListItemIcon>
+                  )}
+                </MenuItem>
+              ))}
           </Menu>
         </Stack>
 
@@ -126,8 +115,8 @@ export const CourseDetailsToolBar = ({
             alignItems: 'center',
           }}
         >
-          <CourseDetailsShare details={details} />
-          <CourseDetailsExport details={details} />
+          <CourseDetailsShare />
+          <CourseDetailsExport />
         </Stack>
       </Stack>
     </Card>

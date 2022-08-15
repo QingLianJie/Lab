@@ -1,54 +1,76 @@
-import { Card, Stack, Divider, Typography } from '@mui/material'
-import { type CourseDetails } from '../../../index.d'
+import { Card, Divider, Stack, Typography } from '@mui/material'
+import { useAtomValue } from 'jotai'
+import { courseDetailsAtom } from '../../../routers/courses/[id]'
 
-interface CourseDetailsInfoProps {
-  details: CourseDetails
-}
+export const CourseDetailsInfo = () => {
+  const courseDetails = useAtomValue(courseDetailsAtom)
 
-export const CourseDetailsInfo = ({ details }: CourseDetailsInfoProps) => (
-  <Card variant="outlined">
-    <Stack
-      divider={<Divider orientation="horizontal" sx={{ height: 'auto' }} />}
-      sx={{ overflowX: 'auto' }}
-    >
+  return (
+    <Card variant="outlined">
       <Stack
-        direction="row"
-        divider={<Divider orientation="vertical" sx={{ height: 'auto' }} />}
-        sx={{ width: '100%', flex: 1 }}
+        divider={<Divider orientation="horizontal" sx={{ height: 'auto' }} />}
+        sx={{ overflowX: 'auto' }}
       >
-        <InfoCard title="课程类型" content={details.course.type} small />
-        <InfoCard title="课程学分" content={details.course.credit} />
-      </Stack>
-
-      <Stack
-        direction="row"
-        divider={<Divider orientation="vertical" sx={{ height: 'auto' }} />}
-        sx={{ width: '100%', flex: 1 }}
-      >
-        <InfoCard title="考查方式" content={details.course.test} small />
-        <InfoCard title="课程学时" content={details.course.period} />
-      </Stack>
-
-      <Stack
-        direction="row"
-        divider={<Divider orientation="vertical" sx={{ height: 'auto' }} />}
-        sx={{ width: '100%', flex: 1 }}
-      >
-        <InfoCard title="课程分类" content={details.course.nature} small />
-      </Stack>
-
-      {details.course.category && (
         <Stack
           direction="row"
           divider={<Divider orientation="vertical" sx={{ height: 'auto' }} />}
           sx={{ width: '100%', flex: 1 }}
         >
-          <InfoCard title="课程分类" content={details.course.category} />
+          <InfoCard
+            title="课程类型"
+            content={courseDetails ? courseDetails.course.type : '未知'}
+            small
+          />
+          <InfoCard
+            title="课程学分"
+            content={courseDetails ? courseDetails.course.credit : 0}
+          />
         </Stack>
-      )}
-    </Stack>
-  </Card>
-)
+
+        <Stack
+          direction="row"
+          divider={<Divider orientation="vertical" sx={{ height: 'auto' }} />}
+          sx={{ width: '100%', flex: 1 }}
+        >
+          <InfoCard
+            title="考查方式"
+            content={courseDetails ? courseDetails.course.test : 0}
+            small
+          />
+          <InfoCard
+            title="课程学时"
+            content={courseDetails ? courseDetails.course.period : 0}
+          />
+        </Stack>
+
+        <Stack
+          direction="row"
+          divider={<Divider orientation="vertical" sx={{ height: 'auto' }} />}
+          sx={{ width: '100%', flex: 1 }}
+        >
+          <InfoCard
+            title="课程分类"
+            content={courseDetails ? courseDetails.course.nature : '正在加载'}
+            small
+          />
+        </Stack>
+
+        {courseDetails && courseDetails.course.category && (
+          <Stack
+            direction="row"
+            divider={<Divider orientation="vertical" sx={{ height: 'auto' }} />}
+            sx={{ width: '100%', flex: 1 }}
+          >
+            <InfoCard
+              title="课程分类"
+              content={courseDetails.course.category}
+            />
+          </Stack>
+        )}
+      </Stack>
+    </Card>
+  )
+}
 
 interface InfoCardProps {
   title: string

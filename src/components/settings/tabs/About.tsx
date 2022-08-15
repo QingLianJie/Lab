@@ -5,6 +5,7 @@ import { SettingsHeader } from '../Header'
 import LogoOutlined from '../../../assets/logo-outlined.svg'
 import { Tooltip } from '../../base/styled/Tooltip'
 import { InfoOutlined, ThumbDownAltOutlined } from '@mui/icons-material'
+import dayjs from 'dayjs'
 
 export const SettingsAbout = () => {
   const [eggs, setEggs] = useState('你瞅啥')
@@ -49,7 +50,7 @@ export const SettingsAbout = () => {
         </Tooltip>
       </SettingsHeader>
       <Stack
-        spacing={1}
+        spacing={0.5}
         sx={{
           flex: 1,
           height: '100%',
@@ -66,7 +67,7 @@ export const SettingsAbout = () => {
           src={LogoOutlined}
           sx={{ width: 96, height: 96, m: 2 }}
         />
-        <Typography variant="h5" component="p" sx={{ fontWeight: 700 }}>
+        <Typography variant="h5" component="p" sx={{ py: 1, fontWeight: 700 }}>
           {info.name}
         </Typography>
         <Typography
@@ -74,6 +75,12 @@ export const SettingsAbout = () => {
           sx={{ color: 'text.secondary', textAlign: 'center' }}
         >
           {info.description.slice(0, -1)}
+        </Typography>
+        <Typography
+          variant="caption"
+          sx={{ color: 'text.secondary', textAlign: 'center', pb: 1 }}
+        >
+          构建时间 {dayjs(_BUILD_TIMESTAMP_).format('YYYY-MM-DD HH:mm:ss')}
         </Typography>
 
         <Tooltip title="GitHub" arrow placement="top">

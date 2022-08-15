@@ -64,7 +64,7 @@ export const ScoresFilter = () => {
 
   return (
     <Fragment>
-      {/* <Fab
+      <Fab
         color="primary"
         aria-label="筛选"
         sx={{
@@ -81,7 +81,7 @@ export const ScoresFilter = () => {
         }
       >
         <FilterAltOutlined />
-      </Fab> */}
+      </Fab>
 
       <Modal
         title="筛选课程"

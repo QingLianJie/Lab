@@ -12,4 +12,7 @@ export default defineConfig({
     pwa(),
   ],
   build: { assetsInlineLimit: 20480 },
+  define: {
+    _BUILD_TIMESTAMP_: JSON.stringify(new Date().toISOString()),
+  },
 })

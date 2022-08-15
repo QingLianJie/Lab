@@ -13,49 +13,47 @@ import {
   Typography,
 } from '@mui/material'
 import { useAtomValue } from 'jotai'
-import ky, { HTTPError } from 'ky'
+import ky, { type HTTPError } from 'ky'
 import { enqueueSnackbar } from 'notistack'
 import { Fragment, useState } from 'react'
 import { TransitionGroup } from 'react-transition-group'
 import { mutate } from 'swr'
-import { type Comment, type CourseDetails } from '../../../..'
+import { type Comment } from '../../../..'
 import { prefix } from '../../../../configs/site-info'
 import { accountAtom, settingsAtom } from '../../../../contexts/settings'
+import { courseDetailsAtom } from '../../../../routers/courses/[id]'
 import { relativeTime } from '../../../../utils/format'
 import { Tooltip } from '../../../base/styled/Tooltip'
 import { ProfileLogin } from '../../../home/widgets/Profile'
 import { CourseDetailsMoreComments } from './MoreComments'
 
-interface CourseDetailsCommentsProps {
-  details: CourseDetails
-}
-
-export const CourseDetailsComments = ({
-  details,
-}: CourseDetailsCommentsProps) => {
+export const CourseDetailsComments = () => {
   const settings = useAtomValue(settingsAtom)
   const account = useAtomValue(accountAtom)
+  const courseDetails = useAtomValue(courseDetailsAtom)
 
   const [comment, setComment] = useState('')
   const [isAnonymosus, setAnonymous] = useState(false)
   const [loading, setLoading] = useState(false)
 
-  const recentComments =
-    details.comments
-      .find(comment => comment.name === '清廉街')
-      ?.comments.slice(0, 4) || []
+  const recentComments = courseDetails
+    ? courseDetails.comments
+        .find(comment => comment.name === '清廉街')
+        ?.comments.slice(0, 4) || []
+    : []
 
-  const fubaijieComments =
-    details.comments.find(comment => comment.name === '腐败街')?.comments
-      .length || 0
+  const fubaijieComments = courseDetails
+    ? courseDetails.comments.find(comment => comment.name === '腐败街')
+        ?.comments.length || 0
+    : 0
 
   const handleSendComment = () => {
-    if (!comment) return
+    if (!comment || !courseDetails) return
     setLoading(true)
 
     ky.post(
       `${settings.developer.api || prefix}/api/course/${
-        details.course.id
+        courseDetails.course.id
       }/comments`,
       {
         json: {
@@ -72,7 +70,9 @@ export const CourseDetailsComments = ({
         setComment('')
         mutate(`${settings.developer.api || prefix}/api/recent/comments`)
         mutate(
-          `${settings.developer.api || prefix}/api/course/${details.course.id}`
+          `${settings.developer.api || prefix}/api/course/${
+            courseDetails.course.id
+          }`
         )
         if (account)
           mutate(
@@ -217,7 +217,7 @@ export const CourseDetailsComments = ({
         {(recentComments.length !== 0 || fubaijieComments !== 0) && (
           <Fragment>
             <Divider />
-            <CourseDetailsMoreComments details={details} />
+            <CourseDetailsMoreComments />
           </Fragment>
         )}
 
