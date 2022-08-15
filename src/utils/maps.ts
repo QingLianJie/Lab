@@ -140,8 +140,8 @@ export const courseDetailsResponseMap = (
     name: key === 'all' ? '所有时间' : key,
     count: value.total,
     scores: [
-      { type: '等级制', data: value.exam },
-      { type: '分数制', data: value.test },
+      { type: '等级制', data: value.test },
+      { type: '分数制', data: value.exam },
     ].filter(obj => Object.keys(obj.data).length !== 0),
   })),
   comments: [

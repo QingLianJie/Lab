@@ -11,9 +11,7 @@ import { atom, useAtom, useAtomValue } from 'jotai'
 import {
   Fragment,
   Suspense,
-  useCallback,
   useEffect,
-  useMemo,
   useState,
   type Dispatch,
   type SetStateAction,
@@ -22,6 +20,8 @@ import { ErrorBoundary } from 'react-error-boundary'
 import { useLocation, useParams } from 'react-router-dom'
 import useSWR from 'swr'
 import { ErrorCard, LoadingCard } from '../../components/base/Placeholder'
+import { CourseDetailsBarChart } from '../../components/courses/details/charts/Bar'
+import { CourseDetailsStackChart } from '../../components/courses/details/charts/Stack'
 import { CourseDetailsComments } from '../../components/courses/details/comments/Comments'
 import { CourseDetailsInfo } from '../../components/courses/details/Info'
 import { CourseDetailsStatistics } from '../../components/courses/details/Statistics'
@@ -111,8 +111,6 @@ const CourseDetails = ({ id, setTitle }: CourseDetailsProps) => {
     if (!data) return
     const details = courseDetailsResponseMap(data)
     setTitle(details.course.name)
-    console.log(details)
-
     setCourseDetails(details)
   }, [data])
 
@@ -130,6 +128,8 @@ const CourseDetails = ({ id, setTitle }: CourseDetailsProps) => {
           <Grid item xs={12} sm={6} md={8} lg={6}>
             <Stack spacing={2}>
               <CourseDetailsToolBar />
+              <CourseDetailsBarChart />
+              <CourseDetailsStackChart />
             </Stack>
           </Grid>
 

@@ -69,7 +69,7 @@ export const ScoresPage = () => {
                 flexDirection: { xs: 'column-reverse', sm: 'row' },
               }}
             >
-              <Grid item direction="row" xs={12} sm={5} md={4} lg={3}>
+              <Grid item xs={12} sm={5} md={4} lg={3}>
                 <Stack
                   spacing={2}
                   sx={{

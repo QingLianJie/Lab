@@ -19,7 +19,7 @@ export const CourseDetailsStatistics = () => {
         stat => stat.name === courseDetailsView.statistics
       ) || courseDetails.statistics?.[0]
     )
-  }, [courseDetailsView.statistics])
+  }, [courseDetails, courseDetailsView.statistics])
 
   const getScore = (score: string) => {
     const num = Number(score)

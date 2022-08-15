@@ -6,7 +6,6 @@ import {
 import {
   Button,
   CardActionArea,
-  Collapse,
   Dialog,
   DialogContent,
   DialogTitle,
@@ -23,7 +22,6 @@ import {
 } from '@mui/material'
 import { useAtom, useAtomValue } from 'jotai'
 import { Fragment, useMemo, useRef, useState } from 'react'
-import { TransitionGroup } from 'react-transition-group'
 import {
   courseDetailsAtom,
   courseDetailsViewAtom,
@@ -55,11 +53,11 @@ export const CourseDetailsMoreComments = () => {
             comment => comment.name === courseDetailsView.comments
           )?.comments || []
         : [],
-    [courseDetailsView.comments]
+    [courseDetails, courseDetailsView.comments]
   )
 
   const handleSource = (name: '清廉街' | '腐败街') => {
-    setCourseDetailsView(view => ({ ...view, comment: name }))
+    setCourseDetailsView(view => ({ ...view, comments: name }))
     setAnchorEl(null)
     if (scrollRef && scrollRef.current) scrollRef.current.scrollTop = 0
   }
@@ -97,7 +95,7 @@ export const CourseDetailsMoreComments = () => {
           },
         }}
       >
-        <DialogTitle sx={{ pt: 1.25, pb: 1.5, px: 1.25 }}>
+        <DialogTitle sx={{ pt: 1.25, pb: 0.5, px: 1.25 }}>
           <Stack spacing={2} direction="row" sx={{ alignItems: 'baseline' }}>
             <Typography
               sx={{
@@ -112,14 +110,19 @@ export const CourseDetailsMoreComments = () => {
             <Button
               color="primary"
               onClick={e => setAnchorEl(e.currentTarget)}
-              sx={{ width: 'fit-content', alignItems: 'center' }}
+              sx={{
+                width: 'fit-content',
+                py: 0.375,
+                pr: 1.25,
+                alignItems: 'center',
+              }}
             >
               <Typography
                 sx={{
                   fontSize: 'body2.fontSize',
                   fontWeight: 700,
                   color: 'text.primary',
-                  pr: 1,
+                  pr: 0.5,
                   py: 0.5,
                 }}
               >
@@ -163,24 +166,29 @@ export const CourseDetailsMoreComments = () => {
         </DialogTitle>
         <DialogContent
           ref={scrollRef}
-          sx={{ px: 0, pb: 1.5, overflow: 'auto', maxHeight: '75vh' }}
+          sx={{
+            px: 0,
+            overflow: 'auto',
+            maxHeight: '75vh',
+            minHeight: '45vh',
+            display: 'flex',
+            alignItems: currentComments.length === 0 ? 'center' : 'flex:start',
+            justifyContent: 'center',
+          }}
         >
-          <List dense sx={{ py: 0 }}>
-            <TransitionGroup>
-              {currentComments.slice(0, 20 * page).map(comment => (
-                <Collapse key={comment.id}>
-                  <HomeTrendsCourseComment comment={comment} />
-                </Collapse>
-              ))}
-            </TransitionGroup>
+          <List dense sx={{ pt: 0, width: '100%' }}>
+            {currentComments.slice(0, 20 * page).map(comment => (
+              <HomeTrendsCourseComment key={comment.id} comment={comment} />
+            ))}
 
-            <ListItem disablePadding>
+            <ListItem disablePadding sx={{ mb: 1.5 }}>
               {page * 20 >= currentComments.length ? (
                 <Typography
                   variant="body2"
                   sx={{
-                    py: 1,
-                    color: 'text.secondary',
+                    pt: 1,
+                    pb: currentComments.length === 0 ? 2 : 1,
+                    color: 'text.disabled',
                     width: '100%',
                     textAlign: 'center',
                   }}

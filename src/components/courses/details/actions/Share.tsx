@@ -1,5 +1,5 @@
 import { QrCodeOutlined } from '@mui/icons-material'
-import { Button, IconButton, Stack } from '@mui/material'
+import { Paper, Button, IconButton, Stack } from '@mui/material'
 import { useAtomValue } from 'jotai'
 import { enqueueSnackbar } from 'notistack'
 import { QRCodeCanvas } from 'qrcode.react'
@@ -40,18 +40,22 @@ export const CourseDetailsShare = () => {
         sx={{ '& .MuiPaper-root': { maxWidth: '16rem' } }}
       >
         <Stack spacing={1.5} sx={{ px: 2.5, pb: 2.5 }}>
-          <QRCodeCanvas
-            size={216}
-            value={location.href}
-            bgColor={'#ffffff'}
-            fgColor={'#000000'}
-            includeMargin={true}
-            style={{
-              width: '100%',
-              aspectRatio: '1 / 1',
-              borderRadius: '4px',
-            }}
-          />
+          <Paper
+            variant="outlined"
+            sx={{ backgroundColor: '#fff', p: 1.5, display: 'flex' }}
+          >
+            <QRCodeCanvas
+              size={192}
+              value={location.href}
+              bgColor={'#ffffff'}
+              fgColor={'#000000'}
+              style={{
+                width: '100%',
+                aspectRatio: '1 / 1',
+                borderRadius: '4px',
+              }}
+            />
+          </Paper>
 
           <Button
             variant="contained"
