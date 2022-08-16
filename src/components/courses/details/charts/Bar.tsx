@@ -2,7 +2,6 @@ import { CheckOutlined, ExpandMoreOutlined } from '@mui/icons-material'
 import {
   Button,
   Card,
-  Divider,
   Fade,
   ListItemIcon,
   ListItemText,
@@ -119,7 +118,8 @@ export const CourseDetailsBarChart = () => {
           alignItems: 'center',
           justifyContent: 'space-between',
           width: '100%',
-          py: 1.25,
+          pt: 1.25,
+          pb: 1,
           pl: 2.25,
           pr: 1.25,
         }}
@@ -173,7 +173,10 @@ export const CourseDetailsBarChart = () => {
             <MenuItem
               key={item}
               selected={item === type}
-              onClick={() => setType(item)}
+              onClick={() => {
+                setType(item)
+                setAnchorEl(null)
+              }}
               sx={{ minWidth: 120, minHeight: 'unset' }}
             >
               <ListItemText sx={{ flex: 1 }}>{item}</ListItemText>
@@ -188,7 +191,7 @@ export const CourseDetailsBarChart = () => {
       </Stack>
       <Stack
         sx={{
-          mx: 2.5,
+          mx: { xs: 2, sm: 2.5 },
           mb: 1,
           height: 300,
           maxHeight: 300,
@@ -202,11 +205,12 @@ export const CourseDetailsBarChart = () => {
               dataKey="score"
               type={type === '分数制' ? 'number' : 'category'}
               tickMargin={10}
-              tickCount={100}
+              tickCount={101}
               tickLine={false}
               minTickGap={20}
               tick={<CustomXAxisTick />}
-              axisLine={{ stroke: '#999', opacity: 0.5 }}
+              padding={{ left: 6, right: 6 }}
+              axisLine={{ stroke: '#999', opacity: 0.25 }}
             />
             <YAxis
               width={maxCount >= 1000 ? 40 : maxCount >= 100 ? 30 : 25}
@@ -215,7 +219,8 @@ export const CourseDetailsBarChart = () => {
               minTickGap={10}
               tick={<CustomYAxisTick />}
               allowDecimals={false}
-              axisLine={{ stroke: '#999', opacity: 0.5 }}
+              padding={{ top: 24 }}
+              axisLine={{ stroke: '#999', opacity: 0.25 }}
             />
             <Tooltip
               content={
@@ -245,23 +250,6 @@ export const CourseDetailsBarChart = () => {
             )}
           </BarChart>
         </ResponsiveContainer>
-      </Stack>
-      <Divider />
-      <Stack
-        direction="row"
-        sx={{
-          alignItems: 'center',
-          py: 1.75,
-          px: 2.25,
-          justifyContent: 'space-between',
-        }}
-      >
-        <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-          {courseDetailsView.statistics} 数据的成绩分布
-        </Typography>
-        <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-          {statistics ? statistics.count : 0} 个统计数据
-        </Typography>
       </Stack>
     </Card>
   )
@@ -355,23 +343,24 @@ const CustomTooltip = ({
   )
 }
 
-const CustomXAxisTick = ({ x, y, ...props }: SVGProps<SVGTextElement>) => (
+export const CustomXAxisTick = ({
+  x,
+  y,
+  ...props
+}: SVGProps<SVGTextElement>) => (
   <g transform={`translate(${x},${y})`}>
-    <text
-      x={0}
-      y={0}
-      dy={8}
-      textAnchor="middle"
-      fill="#999"
-      fontSize="0.875rem"
-    >
+    <text x={0} y={0} dy={6} textAnchor="middle" fill="#999" fontSize="0.8rem">
       {/* @ts-ignore */}
       {props.payload.value}
     </text>
   </g>
 )
 
-const CustomYAxisTick = ({ x, y, ...props }: SVGProps<SVGTextElement>) => (
+export const CustomYAxisTick = ({
+  x,
+  y,
+  ...props
+}: SVGProps<SVGTextElement>) => (
   <g transform={`translate(${x},${y})`}>
     <text
       x={0}
@@ -380,7 +369,7 @@ const CustomYAxisTick = ({ x, y, ...props }: SVGProps<SVGTextElement>) => (
       dx={6}
       fill="#999"
       textAnchor="end"
-      fontSize="0.875rem"
+      fontSize="0.8rem"
     >
       {/* @ts-ignore */}
       {props.payload.value}

@@ -4,6 +4,7 @@ import {
   Grid,
   Stack,
   ThemeProvider,
+  useMediaQuery,
   useTheme,
 } from '@mui/material'
 import { pink, red } from '@mui/material/colors'
@@ -93,6 +94,11 @@ const CourseDetails = ({ id, setTitle }: CourseDetailsProps) => {
   const settings = useAtomValue(settingsAtom)
   const [courseDetails, setCourseDetails] = useAtom(courseDetailsAtom)
 
+  const { breakpoints } = useTheme()
+  const isMobile = useMediaQuery(breakpoints.down('sm'))
+  const isPad = useMediaQuery(breakpoints.between('sm', 'lg'))
+  const isDesktop = useMediaQuery(breakpoints.up('lg'))
+
   const { data } = useSWR<CourseDetailsResponse>(
     `${settings.developer.api || prefix}/api/course/${id}`,
     fetcher,
@@ -118,26 +124,29 @@ const CourseDetails = ({ id, setTitle }: CourseDetailsProps) => {
     <Fragment>
       {courseDetails && (
         <Grid container spacing={2}>
-          <Grid item xs={12} sm={6} md={4} lg={3}>
+          <Grid item xs={12} sm={5} md={4} lg={3}>
             <Stack spacing={2}>
+              {isMobile && <CourseDetailsToolBar />}
               <CourseDetailsInfo />
               <CourseDetailsStatistics />
+              {isPad && <CourseDetailsComments />}
             </Stack>
           </Grid>
 
-          <Grid item xs={12} sm={6} md={8} lg={6}>
+          <Grid item xs={12} sm={7} md={8} lg={6}>
             <Stack spacing={2}>
-              <CourseDetailsToolBar />
+              {!isMobile && <CourseDetailsToolBar />}
+
               <CourseDetailsBarChart />
               <CourseDetailsStackChart />
             </Stack>
           </Grid>
 
-          <Grid item xs={12} sm={12} md={4} lg={3}>
-            <Stack spacing={2}>
+          {(isMobile || isDesktop) && (
+            <Grid item xs={12} sm={12} md={4} lg={3}>
               <CourseDetailsComments />
-            </Stack>
-          </Grid>
+            </Grid>
+          )}
         </Grid>
       )}
     </Fragment>

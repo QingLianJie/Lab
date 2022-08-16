@@ -50,6 +50,7 @@ export const CourseDetailsToolBar = () => {
           }}
         >
           <Button
+            color="primary"
             sx={{ px: 1.75, py: 1 }}
             onClick={e => setAnchorEl(e.currentTarget)}
           >
