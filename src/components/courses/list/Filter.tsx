@@ -17,11 +17,11 @@ import {
   courseNature,
   courseTest,
   courseType,
-} from '../../../../configs/courses/filters'
-import { coursesHistoryAtom } from '../../../../contexts/courses'
-import { modalsAtom } from '../../../../contexts/modals'
-import { removeEmpty } from '../../../../utils/format'
-import { Modal } from '../../../base/Modal'
+} from '../../../configs/courses/filters'
+import { coursesHistoryAtom } from '../../../contexts/courses'
+import { modalsAtom } from '../../../contexts/modals'
+import { removeEmpty } from '../../../utils/format'
+import { Modal } from '../../base/Modal'
 
 const defaultForm = { type: '', nature: '', test: '', credit: '', period: '' }
 

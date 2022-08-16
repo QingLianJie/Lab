@@ -14,7 +14,7 @@ import { Fragment, useState, useEffect } from 'react'
 import { useMount } from 'react-use'
 import { Layout } from '../components/Layout'
 import { ScoresCalc } from '../components/scores/Calc'
-import { ScoresFilter } from '../components/scores/Filter'
+import { ScoresFilterModal } from '../components/scores/Filter'
 import { ScoresList } from '../components/scores/List'
 import { ScoresDisabled } from '../components/scores/Placeholder'
 import { ScoresPlan } from '../components/scores/Plan'
@@ -59,7 +59,7 @@ export const ScoresPage = () => {
       >
         {scores && scores.scores.length !== 0 ? (
           <Fragment>
-            <ScoresFilter />
+            <ScoresFilterModal />
             <Grid
               container
               spacing={2}
