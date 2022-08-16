@@ -22,6 +22,7 @@ import { Modal } from '../../../base/Modal'
 import { Tooltip } from '../../../base/styled/Tooltip'
 
 const keyMap = {
+  search: '课程搜索',
   type: '课程分类',
   nature: '课程性质',
   test: '考试类型',

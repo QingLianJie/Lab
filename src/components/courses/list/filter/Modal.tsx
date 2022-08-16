@@ -11,7 +11,7 @@ import {
   TextField,
 } from '@mui/material'
 import { useAtom } from 'jotai'
-import { type FormEvent, Fragment, useState } from 'react'
+import { type FormEvent, Fragment, useState, useEffect } from 'react'
 import { useLocation, useNavigate, useSearchParams } from 'react-router-dom'
 import {
   courseNature,
@@ -33,13 +33,28 @@ export const CoursesListFilterModal = () => {
   const [modals, setModals] = useAtom(modalsAtom)
   const [coursesHistory, setCoursesHistory] = useAtom(coursesHistoryAtom)
 
-  const [form, setForm] = useState({
-    type: params.get('type') || '',
-    nature: params.get('nature') || '',
-    test: params.get('test') || '',
-    credit: params.get('credit') || '',
-    period: params.get('period') || '',
-  })
+  const [form, setForm] = useState(
+    pathname === '/courses'
+      ? {
+          type: params.get('type') || '',
+          nature: params.get('nature') || '',
+          test: params.get('test') || '',
+          credit: params.get('credit') || '',
+          period: params.get('period') || '',
+        }
+      : defaultForm
+  )
+
+  useEffect(() => {
+    if (pathname !== '/courses') return
+    setForm({
+      type: params.get('type') || '',
+      nature: params.get('nature') || '',
+      test: params.get('test') || '',
+      credit: params.get('credit') || '',
+      period: params.get('period') || '',
+    })
+  }, [params])
 
   const handleClose = () =>
     setModals(modals => ({

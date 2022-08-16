@@ -1,23 +1,39 @@
 import { SearchOutlined } from '@mui/icons-material'
 import { InputAdornment, InputBase, Stack } from '@mui/material'
-import { useState } from 'react'
-import { useSearchParams } from 'react-router-dom'
+import { useAtom } from 'jotai'
+import { useEffect, useRef, useState } from 'react'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 import { useKey } from 'react-use'
+import { coursesHistoryAtom } from '../../../contexts/courses'
 
 export const CoursesListSearch = () => {
-  const [search, setSearch] = useState('')
+  const inputRef = useRef<HTMLInputElement>(null)
+  const navigate = useNavigate()
+
   const [params, setParams] = useSearchParams()
+  const [search, setSearch] = useState(params.get('search') || '')
+  const [coursesHistory, setCoursesHistory] = useAtom(coursesHistoryAtom)
 
-  const handleSearch = () => {
-    if (!search) return
-    setParams({ search })
-  }
+  useKey(
+    'Enter',
+    e => {
+      if (!search || !inputRef || inputRef?.current !== e.target) return
+      navigate(`/courses?search=${search}`)
+      setCoursesHistory(coursesHistory => [
+        { search, id: new Date().getTime() },
+        ...coursesHistory,
+      ])
+    },
+    undefined,
+    [search]
+  )
 
-  useKey('Enter', handleSearch)
+  useEffect(() => setSearch(params.get('search') || ''), [params])
 
   return (
     <Stack direction="row" sx={{ flex: 1 }}>
       <InputBase
+        inputRef={inputRef}
         placeholder="搜索课程"
         inputProps={{ 'aria-label': '搜索课程' }}
         value={search}
