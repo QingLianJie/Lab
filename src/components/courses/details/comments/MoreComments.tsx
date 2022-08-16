@@ -81,7 +81,6 @@ export const CourseDetailsMoreComments = () => {
       </CardActionArea>
 
       <Dialog
-        title="课程评论"
         fullWidth
         keepMounted
         maxWidth={false}
@@ -177,7 +176,7 @@ export const CourseDetailsMoreComments = () => {
           }}
         >
           <List dense sx={{ pt: 0, width: '100%' }}>
-            {currentComments.slice(0, 20 * page).map(comment => (
+            {currentComments.slice(0, 30 * page).map(comment => (
               <HomeTrendsCourseComment key={comment.id} comment={comment} />
             ))}
 

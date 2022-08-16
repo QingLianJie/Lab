@@ -74,16 +74,19 @@ export const HomeWidgetPlaceholder = () => {
             name="安装插件或 App"
             checked={!!bridge}
             icon={CategoryOutlined}
+            onClick={() => navigate('/settings?tab=extension')}
           />
           <TaskItem
             name="添加 HEU 账号"
             checked={!!student}
             icon={SchoolOutlined}
+            onClick={() => setModals({ ...modals, bind: true })}
           />
           <TaskItem
             name="获取成绩和课表数据"
             checked={!!(scores && schedules)}
             icon={DownloadingOutlined}
+            onClick={() => setModals({ ...modals, captcha: true })}
           />
         </List>
 
@@ -130,9 +133,10 @@ interface TaskItemProps {
   icon: SvgIconComponent
   name: string
   checked: boolean
+  onClick: () => void
 }
 
-const TaskItem = ({ name, checked, icon }: TaskItemProps) => (
+const TaskItem = ({ name, checked, icon, onClick }: TaskItemProps) => (
   <ListItem
     disablePadding
     secondaryAction={
@@ -145,7 +149,7 @@ const TaskItem = ({ name, checked, icon }: TaskItemProps) => (
       </Box>
     }
   >
-    <ListItemButton>
+    <ListItemButton onClick={onClick}>
       <ListItemIcon sx={{ minWidth: 32 }}>
         <Icon
           component={icon}

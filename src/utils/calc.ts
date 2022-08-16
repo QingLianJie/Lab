@@ -2,7 +2,7 @@ import { amber, green, red } from '@mui/material/colors'
 import { isNumber } from 'lodash'
 
 export const scoreMap = (score: number | string) => {
-  if (isNumber(score)) return score
+  if (isNumber(score)) return Number(score)
 
   switch (score) {
     case '优秀':

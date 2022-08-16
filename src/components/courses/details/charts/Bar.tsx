@@ -2,6 +2,7 @@ import { CheckOutlined, ExpandMoreOutlined } from '@mui/icons-material'
 import {
   Button,
   Card,
+  Divider,
   Fade,
   ListItemIcon,
   ListItemText,
@@ -11,18 +12,18 @@ import {
   Stack,
   Typography,
 } from '@mui/material'
-import { amber, green, red } from '@mui/material/colors'
+import { amber, blue, green, red } from '@mui/material/colors'
 import { useAtomValue } from 'jotai'
-import { type SVGProps, useEffect, useMemo, useState } from 'react'
+import { Fragment, useEffect, useMemo, useState, type SVGProps } from 'react'
 import {
   Bar,
   BarChart,
-  ResponsiveContainer,
   CartesianGrid,
+  ReferenceLine,
+  ResponsiveContainer,
   Tooltip,
   TooltipProps,
   XAxis,
-  ReferenceLine,
   YAxis,
 } from 'recharts'
 import {
@@ -33,6 +34,7 @@ import {
   courseDetailsAtom,
   courseDetailsViewAtom,
 } from '../../../../routers/courses/[id]'
+import { scoreMap } from '../../../../utils/calc'
 
 export const CourseDetailsBarChart = () => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
@@ -49,9 +51,10 @@ export const CourseDetailsBarChart = () => {
     )
   }, [courseDetails, courseDetailsView.statistics])
 
-  const scoresTypes = statistics
-    ? statistics.scores.map(score => score.type)
-    : []
+  const scoresTypes = useMemo(
+    () => (statistics ? statistics.scores.map(score => score.type) : []),
+    [statistics]
+  )
 
   const [type, setType] = useState(scoresTypes?.[0] || '分数制')
 
@@ -75,6 +78,37 @@ export const CourseDetailsBarChart = () => {
       count: scores.find(([key, value]) => key === score)?.[1] || 0,
     }))
   }, [type, courseDetailsView.statistics, courseDetails])
+
+  const maxCount = useMemo(
+    () => Math.max(...chartData.map(data => data.count)),
+    [chartData]
+  )
+
+  const dataCount = useMemo(
+    () => chartData.reduce((pre, cur) => pre + cur.count, 0),
+    [chartData]
+  )
+
+  const calcMiddle = useMemo(() => {
+    let half = dataCount / 2
+    let middle = ''
+    chartData.reduce((pre, cur) => {
+      if (pre + cur.count >= half && pre < half) middle = cur.score
+      return pre + cur.count
+    }, 0)
+    return middle
+  }, [chartData])
+
+  const calcAverage = useMemo(
+    () =>
+      Math.round(
+        chartData.reduce(
+          (pre, cur) => pre + scoreMap(Number(cur.score)) * cur.count,
+          0
+        ) / dataCount
+      ).toString(),
+    [chartData]
+  )
 
   return (
     <Card variant="outlined">
@@ -155,7 +189,7 @@ export const CourseDetailsBarChart = () => {
       <Stack
         sx={{
           mx: 2.5,
-          mb: 1.5,
+          mb: 1,
           height: 300,
           maxHeight: 300,
           overflow: 'hidden',
@@ -172,22 +206,62 @@ export const CourseDetailsBarChart = () => {
               tickLine={false}
               minTickGap={20}
               tick={<CustomXAxisTick />}
-              axisLine={{ strokeOpacity: '50%' }}
+              axisLine={{ stroke: '#999', opacity: 0.5 }}
             />
             <YAxis
-              width={30}
+              width={maxCount >= 1000 ? 40 : maxCount >= 100 ? 30 : 25}
               tickMargin={10}
               tickLine={false}
               minTickGap={10}
               tick={<CustomYAxisTick />}
-              axisLine={{ strokeOpacity: '50%' }}
+              allowDecimals={false}
+              axisLine={{ stroke: '#999', opacity: 0.5 }}
             />
-            <Tooltip content={<CustomTooltip />} />
-            <CartesianGrid strokeDasharray="2 3" opacity={0.5} />
-            <ReferenceLine x="60" stroke={amber[400]} />
+            <Tooltip
+              content={
+                <CustomTooltip
+                  middle={type === '分数制' ? calcMiddle : undefined}
+                  average={type === '分数制' ? calcAverage : undefined}
+                />
+              }
+            />
+            <CartesianGrid opacity={0.25} />
             <Bar dataKey="count" fill={red[400]} />
+            {type === '分数制' && (
+              <Fragment>
+                <ReferenceLine x="60" isFront stroke={amber[400]} />
+                <ReferenceLine
+                  x={calcMiddle || undefined}
+                  isFront
+                  stroke={blue[400]}
+                />
+
+                <ReferenceLine
+                  x={calcAverage || undefined}
+                  isFront
+                  stroke={green[400]}
+                />
+              </Fragment>
+            )}
           </BarChart>
         </ResponsiveContainer>
+      </Stack>
+      <Divider />
+      <Stack
+        direction="row"
+        sx={{
+          alignItems: 'center',
+          py: 1.75,
+          px: 2.25,
+          justifyContent: 'space-between',
+        }}
+      >
+        <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+          {courseDetailsView.statistics} 数据的成绩分布
+        </Typography>
+        <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+          {statistics ? statistics.count : 0} 个统计数据
+        </Typography>
       </Stack>
     </Card>
   )
@@ -197,47 +271,88 @@ const CustomTooltip = ({
   active,
   payload,
   label,
-}: TooltipProps<ValueType, NameType>) => {
-  if (active && payload && payload.length) {
-    return (
-      <Paper
-        variant="elevation"
-        elevation={12}
-        sx={{
-          minWidth: 96,
-          outline: 'none',
-          px: 2,
-          pt: 1.5,
-          pb: 1.25,
-          pointerEvents: 'none',
-        }}
-      >
-        <Stack>
-          <Typography
-            variant="body2"
-            component="p"
-            sx={{ color: 'text.secondary' }}
-          >
-            成绩 {label}
-          </Typography>
-          <Stack spacing={0.75} direction="row" sx={{ alignItems: 'baseline' }}>
-            <Typography variant="h6" component="p" sx={{ fontWeight: 700 }}>
-              {payload[0].value}
-            </Typography>
+  middle,
+  average,
+}: TooltipProps<ValueType, NameType> & {
+  middle?: string
+  average?: string
+}) => {
+  const isMiddle = middle === label
+  const isAverage = average === label
+  const isPass = label === '60'
+
+  return (
+    <Fragment>
+      {active && payload && payload.length && (
+        <Paper
+          variant="elevation"
+          elevation={12}
+          sx={{
+            minWidth: 96,
+            outline: 'none',
+            px: 2,
+            py: 1.5,
+            pointerEvents: 'none',
+          }}
+        >
+          <Stack>
             <Typography
               variant="body2"
               component="p"
               sx={{ color: 'text.secondary' }}
             >
-              人
+              成绩 {label}
             </Typography>
-          </Stack>
-        </Stack>
-      </Paper>
-    )
-  }
+            <Stack
+              spacing={0.75}
+              direction="row"
+              sx={{ alignItems: 'baseline' }}
+            >
+              <Typography variant="h6" component="p" sx={{ fontWeight: 700 }}>
+                {payload[0].value}
+              </Typography>
+              <Typography
+                variant="body2"
+                component="p"
+                sx={{ color: 'text.secondary' }}
+              >
+                人
+              </Typography>
+            </Stack>
+            {isAverage && (
+              <Typography
+                variant="body2"
+                component="p"
+                sx={{ fontWeight: 700, color: green[400] }}
+              >
+                平均分
+              </Typography>
+            )}
 
-  return null
+            {isPass && (
+              <Typography
+                variant="body2"
+                component="p"
+                sx={{ fontWeight: 700, color: amber[500] }}
+              >
+                及格线
+              </Typography>
+            )}
+
+            {isMiddle && (
+              <Typography
+                variant="body2"
+                component="p"
+                sx={{ fontWeight: 700, color: blue[400] }}
+              >
+                中位数
+              </Typography>
+            )}
+          </Stack>
+        </Paper>
+      )}
+    </Fragment>
+  )
 }
 
 const CustomXAxisTick = ({ x, y, ...props }: SVGProps<SVGTextElement>) => (

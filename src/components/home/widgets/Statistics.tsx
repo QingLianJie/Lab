@@ -11,6 +11,7 @@ import {
 import { useAtom, useAtomValue } from 'jotai'
 import { enqueueSnackbar } from 'notistack'
 import { Fragment } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { bridgeAtom, studentAtom } from '../../../contexts/bridge'
 import { modalsAtom } from '../../../contexts/modals'
 import { schedulesAtom } from '../../../contexts/schedules'
@@ -151,11 +152,13 @@ export const HomeStatisticsWidget = () => {
               title="已学课程"
               content={scores ? scores.scores.length : 0}
               unit="个"
+              href="/scores"
             />
             <StatsCard
               title="学期课程"
               content={schdulesCoursesLength}
               unit="个"
+              href="/schedules"
             />
           </Stack>
           <Divider />
@@ -164,10 +167,16 @@ export const HomeStatisticsWidget = () => {
             divider={<Divider orientation="vertical" sx={{ height: 'auto' }} />}
             sx={{ width: '100%', flex: 1 }}
           >
-            <StatsCard title="加权平均分" content={calcAverage()} unit="分" />
+            <StatsCard
+              title="加权平均分"
+              content={calcAverage()}
+              unit="分"
+              href="/scores"
+            />
             <StatsCard
               title="优秀 / 挂科"
               content={`${calcExcellent()} / ${calcFailed()}`}
+              href="/scores"
             />
           </Stack>
         </Fragment>
@@ -196,40 +205,47 @@ interface StatsCardProps {
   title: string
   content: string | number
   unit?: string
+  href: string
 }
 
-const StatsCard = ({ title, content, unit }: StatsCardProps) => (
-  <Stack
-    spacing={0.5}
-    sx={{
-      px: 2.25,
-      pt: 1.75,
-      pb: 1.5,
-      flex: 1,
-      width: '100%',
-      overflow: 'hidden',
-    }}
-  >
-    <Typography
-      variant="body2"
-      sx={{ color: 'text.secondary', whiteSpace: 'nowrap' }}
-    >
-      {title}
-    </Typography>
-    <Stack direction="row" spacing={0.75} sx={{ alignItems: 'baseline' }}>
-      <Typography
-        variant="body1"
-        sx={{ fontSize: '1.125rem', fontWeight: 700 }}
+const StatsCard = ({ title, content, unit, href }: StatsCardProps) => {
+  const navigate = useNavigate()
+
+  return (
+    <CardActionArea onClick={() => navigate(href)}>
+      <Stack
+        spacing={0.5}
+        sx={{
+          px: 2.25,
+          pt: 2,
+          pb: 1.75,
+          flex: 1,
+          width: '100%',
+          overflow: 'hidden',
+        }}
       >
-        {content}
-      </Typography>
-      <Typography
-        variant="body2"
-        component="span"
-        sx={{ color: 'text.secondary', whiteSpace: 'nowrap' }}
-      >
-        {unit}
-      </Typography>
-    </Stack>
-  </Stack>
-)
+        <Typography
+          variant="body2"
+          sx={{ color: 'text.secondary', whiteSpace: 'nowrap' }}
+        >
+          {title}
+        </Typography>
+        <Stack direction="row" spacing={0.75} sx={{ alignItems: 'baseline' }}>
+          <Typography
+            variant="body1"
+            sx={{ fontSize: '1.125rem', fontWeight: 700 }}
+          >
+            {content}
+          </Typography>
+          <Typography
+            variant="body2"
+            component="span"
+            sx={{ color: 'text.secondary', whiteSpace: 'nowrap' }}
+          >
+            {unit}
+          </Typography>
+        </Stack>
+      </Stack>
+    </CardActionArea>
+  )
+}

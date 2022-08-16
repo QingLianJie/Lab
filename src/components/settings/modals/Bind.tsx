@@ -37,8 +37,10 @@ export const BindModal = () => {
   const handleBind = (e: FormEvent) => {
     e.preventDefault()
     setStudent({ id, password })
+    setScores(false)
+    setSchedules(false)
     handleCancel()
-    enqueueSnackbar(`已添加 HEU 账号：${id}`)
+    enqueueSnackbar(`已添加 HEU 账号：${id}，请重新获取数据`)
   }
 
   const handleUnBind = () => {

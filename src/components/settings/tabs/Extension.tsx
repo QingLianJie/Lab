@@ -57,7 +57,7 @@ export const SettingsExtension = () => {
             </Typography>
             <Typography
               variant="h5"
-              component="p"
+              component="div"
               sx={{
                 color: 'text.primary',
                 textAlign: 'center',

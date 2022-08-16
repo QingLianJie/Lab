@@ -187,8 +187,8 @@ export const CourseDetailsComments = () => {
             sx={{
               width: '100%',
               alignItems: 'center',
-              pt: 4,
-              pb: 6,
+              pt: 6,
+              pb: 8,
             }}
           >
             <Typography variant="body1" sx={{ color: 'text.disabled' }}>
