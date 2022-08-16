@@ -6,12 +6,15 @@ import {
   InputBase,
   Stack,
 } from '@mui/material'
+import { useAtom } from 'jotai'
 import { useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useKey } from 'react-use'
+import { modalsAtom } from '../../contexts/modals'
 import { Tooltip } from '../base/styled/Tooltip'
 
 export const HomeSearchBar = () => {
+  const [modals, setModals] = useAtom(modalsAtom)
   const inputRef = useRef<HTMLInputElement>(null)
   const navigate = useNavigate()
   const [search, setSearch] = useState('')
@@ -54,7 +57,15 @@ export const HomeSearchBar = () => {
           endAdornment={
             <InputAdornment position="end" sx={{ ml: 1.5 }}>
               <Tooltip title="筛选课程" arrow placement="top">
-                <IconButton aria-label="筛选课程">
+                <IconButton
+                  aria-label="筛选课程"
+                  onClick={() =>
+                    setModals(modals => ({
+                      ...modals,
+                      courses: { ...modals.courses, filter: true },
+                    }))
+                  }
+                >
                   <FilterAltOutlined
                     sx={{ color: 'text.disabled', transition: 'all 0.2s' }}
                   />

@@ -22,30 +22,29 @@ export const ScoresColumnsAction = () => {
 
   const handleColumns = (name: ScoreColumnKey) => {
     if (scoresView.columns.includes(name))
-      setScoresView({
-        ...scoresView,
-        columns: scoresView.columns.filter(item => item !== name),
-      })
-    else
-      setScoresView({ ...scoresView, columns: [...scoresView.columns, name] })
+      setScoresView(view => ({
+        ...view,
+        columns: view.columns.filter(item => item !== name),
+      }))
+    else setScoresView(view => ({ ...view, columns: [...view.columns, name] }))
     setAnchorEl(null)
   }
 
   const handleAllColumns = () => {
-    setScoresView({ ...scoresView, columns: columns.map(item => item.id) })
+    setScoresView(view => ({ ...view, columns: columns.map(item => item.id) }))
     setAnchorEl(null)
   }
 
   const handleSimpleColumns = () => {
-    setScoresView({ ...scoresView, columns: ['name', 'score'] })
+    setScoresView(view => ({ ...view, columns: ['name', 'score'] }))
     setAnchorEl(null)
   }
 
   const handleDefaultColumns = () => {
-    setScoresView({
-      ...scoresView,
+    setScoresView(view => ({
+      ...view,
       columns: ['name', 'type', 'credit', 'nature', 'score'],
-    })
+    }))
     setAnchorEl(null)
   }
 

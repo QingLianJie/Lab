@@ -1,6 +1,9 @@
 import { ClassRounded } from '@mui/icons-material'
 import { createTheme, Stack, ThemeProvider, useTheme } from '@mui/material'
 import { red, pink } from '@mui/material/colors'
+import { CoursesListFilterFab } from '../components/courses/list/filter/Fab'
+import { CoursesListTable } from '../components/courses/list/Table'
+import { CoursesListToolBar } from '../components/courses/list/ToolBar'
 import { Layout, Working } from '../components/Layout'
 
 export const CoursesPage = () => {
@@ -25,8 +28,10 @@ export const CoursesPage = () => {
         icon={ClassRounded}
         color={red[400]}
       >
+        <CoursesListFilterFab />
         <Stack spacing={2} sx={{ flex: 1 }}>
-          <Working />
+          <CoursesListToolBar />
+          <CoursesListTable />
         </Stack>
       </Layout>
     </ThemeProvider>

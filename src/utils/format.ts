@@ -7,7 +7,7 @@ dayjs.locale('zh-cn')
 dayjs.extend(calendar)
 dayjs.extend(relative)
 
-export const calendarTime = (time: string) =>
+export const calendarTime = (time: string | number) =>
   dayjs(time).calendar(dayjs(), {
     sameDay: '[今天] HH:mm',
     nextDay: '[明天] HH:mm',
@@ -65,3 +65,6 @@ export const NameRegex = '^.{3,16}$'
 export const EmailRegex =
   /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
 export const PasswordRegex = '^.*(?=.{8,24})(?=.*[A-Za-z!@#$%^&*?]).*$'
+
+export const removeEmpty = <T>(obj: T) =>
+  Object.fromEntries(Object.entries(obj).filter(([_, v]) => v))

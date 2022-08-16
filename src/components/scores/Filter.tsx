@@ -74,10 +74,10 @@ export const ScoresFilter = () => {
           bottom: { xs: 92, md: 48 },
         }}
         onClick={() =>
-          setModals({
+          setModals(modals => ({
             ...modals,
             scores: { ...modals.scores, filter: true },
-          })
+          }))
         }
       >
         <FilterAltOutlined />
@@ -90,10 +90,10 @@ export const ScoresFilter = () => {
         open={modals.scores.filter}
         keepMounted
         onClose={() =>
-          setModals({
+          setModals(modals => ({
             ...modals,
             scores: { ...modals.scores, filter: false },
-          })
+          }))
         }
         sx={{ '& .MuiPaper-root': { maxWidth: '16rem' } }}
       >
