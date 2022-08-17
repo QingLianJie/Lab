@@ -1,4 +1,4 @@
-import { Avatar, IconButton, Stack, Typography } from '@mui/material'
+import { Avatar, Chip, IconButton, Stack, Typography } from '@mui/material'
 import { Fragment, useState } from 'react'
 import { info } from '../../../configs/site-info'
 import { SettingsHeader } from '../Header'
@@ -6,6 +6,7 @@ import LogoOutlined from '../../../assets/logo-outlined.svg'
 import { Tooltip } from '../../base/styled/Tooltip'
 import { InfoOutlined, ThumbDownAltOutlined } from '@mui/icons-material'
 import dayjs from 'dayjs'
+import { version } from '../../../../package.json'
 
 export const SettingsAbout = () => {
   const [eggs, setEggs] = useState('你瞅啥')
@@ -67,9 +68,20 @@ export const SettingsAbout = () => {
           src={LogoOutlined}
           sx={{ width: 96, height: 96, m: 2 }}
         />
-        <Typography variant="h5" component="p" sx={{ py: 1, fontWeight: 700 }}>
-          {info.name}
-        </Typography>
+        <Stack direction="row" spacing={1.5} sx={{ alignItems: 'center' }}>
+          <Typography
+            variant="h5"
+            component="p"
+            sx={{ py: 1, fontWeight: 700 }}
+          >
+            {info.name}
+          </Typography>
+
+          <Chip
+            label={`v${version}`}
+            sx={{ fontSize: 'body1.fontSize', fontWeight: 700 }}
+          />
+        </Stack>
         <Typography
           variant="body1"
           sx={{ color: 'text.secondary', textAlign: 'center' }}

@@ -1,0 +1,11 @@
+{
+	auto_https off
+}
+
+:20080
+
+root * /var/www
+file_server
+try_files {path} /index.html
+
+encode gzip zstd

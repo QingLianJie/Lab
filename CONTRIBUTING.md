@@ -29,3 +29,10 @@ pnpm i
 
 3. 启动开发服务器，监听 3000 端口。
 4. 浏览器打开 https://internal.qinglianjie.cn/ ，可以进行开发调试。
+
+## 怎么构建 Docker 镜像？
+
+```shell
+docker build -t qing-dev:v0.0.0 .
+docker run -d -p 20080:20080 --name qing-dev qing-dev:v0.0.0
+```

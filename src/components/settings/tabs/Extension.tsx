@@ -112,9 +112,9 @@ export const SettingsExtension = () => {
         <Stack direction="row" sx={{ py: 1 }}>
           <Button
             variant="text"
-            disableElevation
             color="info"
-            href=""
+            component="a"
+            href="https://greasyfork.org/zh-CN/scripts/441439-%E6%B8%85%E5%BB%89%E8%A1%97-bridge-userscript"
             target="_blank"
             rel="noopener noreferrer"
             sx={{
