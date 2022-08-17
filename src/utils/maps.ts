@@ -1,9 +1,11 @@
 import {
+  type CoursesList,
   type CommentCourse,
   type CourseDetails,
   type UserProfile,
   type UserProfileComment,
 } from '../index.d'
+import { removeEmpty } from './format'
 
 export interface UserResponse {
   pk: number
@@ -177,3 +179,41 @@ export const courseDetailsResponseMap = (
     },
   ],
 })
+
+export interface CoursesListResponse {
+  count: number
+  next: string
+  previous: string
+  results: CourseResponse[]
+}
+
+export const coursesListResponseMap = (
+  response: CoursesListResponse
+): CoursesList => ({
+  count: response.count,
+  courses: response.results.map(course => courseResponseMap(course)),
+})
+
+export interface CoursesListQuery {
+  search?: string
+  type?: string
+  nature?: string
+  test?: string
+  credit?: string
+  period?: string
+}
+
+export const coursesListQueryMap = (query: string) => {
+  const params = new URLSearchParams(query)
+
+  return new URLSearchParams(
+    removeEmpty({
+      search: params.get('search') || '',
+      attributes: params.get('type') || '',
+      assessment_method: params.get('test') || '',
+      kind: params.get('nature') || '',
+      credit: params.get('credit') || '',
+      total_time: params.get('period') || '',
+    })
+  ).toString()
+}

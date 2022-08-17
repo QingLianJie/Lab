@@ -100,3 +100,44 @@ export const LoadingCard = () => (
     </Stack>
   </Card>
 )
+
+interface BasePlaceholderProps {
+  title: string
+  description: string
+}
+
+export const BasePlaceholder = ({
+  title,
+  description,
+}: BasePlaceholderProps) => (
+  <Stack
+    spacing={0.5}
+    sx={{
+      flex: 1,
+      width: '100%',
+      height: '100%',
+      px: 4,
+      py: { xs: 8, sm: 18 },
+      alignItems: 'center',
+    }}
+  >
+    <Typography
+      variant="h6"
+      component="span"
+      sx={{
+        color: 'text.disabled',
+        textAlign: 'center',
+        fontWeight: 700,
+      }}
+    >
+      {title}
+    </Typography>
+    <Typography
+      variant="body1"
+      component="span"
+      sx={{ color: 'text.disabled', textAlign: 'center' }}
+    >
+      {description}
+    </Typography>
+  </Stack>
+)

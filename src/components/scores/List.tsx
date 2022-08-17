@@ -19,9 +19,9 @@ import {
   scoresListAtom,
   scoresViewAtom,
 } from '../../contexts/scores'
-import { ScoresGroup } from './list/Group'
+import { BasePlaceholder } from '../base/Placeholder'
+import { ScoresGroup } from './list/Groups'
 import { ScoresRows, ScoresTitleRow } from './list/Rows'
-import { ScoresPlaceholder } from './Placeholder'
 import { ScoresToolBar } from './ToolBar'
 
 export const ScoresList = () => {
@@ -99,7 +99,7 @@ export const ScoresList = () => {
     <Fragment>
       {!scores || scores.scores.length === 0 ? (
         <Card variant="outlined">
-          <ScoresPlaceholder
+          <BasePlaceholder
             title="暂无成绩数据"
             description="可能本来就没有成绩，或者程序出错了"
           />
@@ -124,7 +124,7 @@ export const ScoresList = () => {
 
                 {scoresList.every(item => item.hidden) ? (
                   <Box component="caption">
-                    <ScoresPlaceholder
+                    <BasePlaceholder
                       title="暂无成绩数据"
                       description="当前筛选结果下并没有找到成绩"
                     />

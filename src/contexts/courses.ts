@@ -3,15 +3,19 @@ import { atomLocal, atomSession } from '../utils/addons'
 
 type CoursesView = {
   columns: CourseColumnKey[]
-  sort: {
-    column: CourseColumnKey
-    order: 'asc' | 'desc'
-  }
 }
 
 export const coursesViewAtom = atomLocal<CoursesView>('courses-view', {
-  columns: ['name', 'type', 'credit', 'period', 'nature', 'category'],
-  sort: { column: 'name', order: 'desc' },
+  columns: [
+    'id',
+    'name',
+    'type',
+    'credit',
+    'period',
+    'test',
+    'nature',
+    'category',
+  ],
 })
 
 export type CoursesHistory = {

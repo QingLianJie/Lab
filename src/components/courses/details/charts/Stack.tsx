@@ -163,7 +163,7 @@ export const CourseDetailsStackChart = () => {
         sx={{
           mx: { xs: 2, sm: 2.5 },
           mb: 1,
-          height: 24 + chartData.length * 30,
+          height: 48 + chartData.length * 24,
           overflow: 'hidden',
           position: 'relative',
         }}

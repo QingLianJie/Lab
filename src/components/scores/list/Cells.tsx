@@ -9,7 +9,7 @@ import {
 import { indigo } from '@mui/material/colors'
 import { useAtom } from 'jotai'
 import { useNavigate } from 'react-router-dom'
-import { type Score } from '../../..'
+import { type Score } from '../../../index.d'
 import { type ScoreColumn } from '../../../configs/scores/columns'
 import { scoresViewAtom } from '../../../contexts/scores'
 import { scoreColor, scoreMap } from '../../../utils/calc'

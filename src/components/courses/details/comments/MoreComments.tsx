@@ -21,7 +21,7 @@ import {
   Typography,
 } from '@mui/material'
 import { useAtom, useAtomValue } from 'jotai'
-import { Fragment, useMemo, useRef, useState } from 'react'
+import { Fragment, useEffect, useMemo, useRef, useState } from 'react'
 import {
   courseDetailsAtom,
   courseDetailsViewAtom,
@@ -61,6 +61,17 @@ export const CourseDetailsMoreComments = () => {
     setAnchorEl(null)
     if (scrollRef && scrollRef.current) scrollRef.current.scrollTop = 0
   }
+
+  useEffect(() => {
+    if (!courseDetails) return
+    const target = courseDetails.comments.find(
+      comment => comment.comments.length !== 0
+    )
+    setCourseDetailsView(view => ({
+      ...view,
+      comments: target?.name || '清廉街',
+    }))
+  }, [courseDetails])
 
   return (
     <Fragment>

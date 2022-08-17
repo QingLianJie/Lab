@@ -1,7 +1,5 @@
-import { FilterAltOutlined } from '@mui/icons-material'
 import {
   Button,
-  Fab,
   Fade,
   FormControl,
   InputLabel,
@@ -11,7 +9,7 @@ import {
   TextField,
 } from '@mui/material'
 import { useAtom } from 'jotai'
-import { type FormEvent, Fragment, useState, useEffect } from 'react'
+import { Fragment, useEffect, useState, type FormEvent } from 'react'
 import { useLocation, useNavigate, useSearchParams } from 'react-router-dom'
 import {
   courseNature,

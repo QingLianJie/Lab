@@ -95,7 +95,10 @@ export const CoursesHistoryAction = () => {
               没有课程搜索记录
             </Typography>
           ) : (
-            <List dense sx={{ maxHeight: 300, overflowY: 'auto', py: 1 }}>
+            <List
+              dense
+              sx={{ maxHeight: 300, overflowY: 'auto', py: 1, flex: 1 }}
+            >
               {coursesHistory.map(history => (
                 <ListItem disablePadding key={history.id}>
                   <ListItemButton

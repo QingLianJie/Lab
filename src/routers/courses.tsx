@@ -6,6 +6,9 @@ import { modalsAtom } from '../contexts/modals'
 import { CoursesListTable } from '../components/courses/list/Table'
 import { CoursesListToolBar } from '../components/courses/list/ToolBar'
 import { Layout } from '../components/Layout'
+import { Suspense } from 'react'
+import { ErrorBoundary } from 'react-error-boundary'
+import { ErrorCard, LoadingCard } from '../components/base/Placeholder'
 
 export const CoursesPage = () => {
   const theme = useTheme()
@@ -32,7 +35,11 @@ export const CoursesPage = () => {
         <FilterFab />
         <Stack spacing={2} sx={{ flex: 1 }}>
           <CoursesListToolBar />
-          <CoursesListTable />
+          <ErrorBoundary fallback={<ErrorCard />}>
+            <Suspense fallback={<LoadingCard />}>
+              <CoursesListTable />
+            </Suspense>
+          </ErrorBoundary>
         </Stack>
       </Layout>
     </ThemeProvider>

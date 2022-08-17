@@ -167,6 +167,11 @@ export interface CourseDetails {
   }[]
 }
 
+export interface CoursesList {
+  count: number
+  courses: CommentCourse[]
+}
+
 export interface UserProfileComment extends Comment {
   course: CommentCourse
 }
