@@ -6,16 +6,7 @@ type CoursesView = {
 }
 
 export const coursesViewAtom = atomLocal<CoursesView>('courses-view', {
-  columns: [
-    'id',
-    'name',
-    'type',
-    'credit',
-    'period',
-    'test',
-    'nature',
-    'category',
-  ],
+  columns: ['id', 'name', 'type', 'credit', 'period', 'test', 'nature'],
 })
 
 export type CoursesHistory = {

@@ -214,6 +214,7 @@ export const coursesListQueryMap = (query: string) => {
       kind: params.get('nature') || '',
       credit: params.get('credit') || '',
       total_time: params.get('period') || '',
+      page: params.get('page') || '',
     })
   ).toString()
 }

@@ -12,7 +12,6 @@ import {
 import { lazy, StrictMode, Suspense, useMemo } from 'react'
 import ReactDOM from 'react-dom/client'
 import { HelmetProvider } from 'react-helmet-async'
-import { SWRConfig } from 'swr'
 import LogoOutlined from './assets/logo-outlined.svg'
 import { ReloadPrompt } from './components/Load'
 import {

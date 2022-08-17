@@ -1,6 +1,7 @@
 import {
   Box,
   Card,
+  Chip,
   Pagination,
   Stack,
   Table,
@@ -34,10 +35,10 @@ export const CoursesListTable = () => {
   const navigate = useNavigate()
   const settings = useAtomValue(settingsAtom)
 
+  const query = useMemo(() => coursesListQueryMap(params.toString()), [params])
+
   const { data } = useSWR<CoursesListResponse>(
-    `${settings.developer.api || prefix}/api/courses?${coursesListQueryMap(
-      params.toString()
-    )}`,
+    `${settings.developer.api || prefix}/api/courses?${query}`,
     fetcher,
     {
       refreshInterval: 60 * 60 * 1000,
@@ -89,17 +90,27 @@ export const CoursesListTable = () => {
                         xs: index === 0 ? 2 : 1,
                         sm: index === 0 ? 2.5 : 1.25,
                       },
-                      pr: {
-                        xs: index === filteredColumns.length - 1 ? 2 : 1,
-                        sm: index === filteredColumns.length - 1 ? 2.5 : 1.25,
-                      },
+                      pr: { xs: 1, sm: 1.25 },
                       textAlign: column.number ? 'right' : 'left',
-                      '&:last-of-type': { pr: 3 },
                     }}
                   >
                     {column.header || column.name}
                   </TableCell>
                 ))}
+
+                <TableCell
+                  sx={{
+                    whiteSpace: 'nowrap',
+                    textOverflow: 'ellipsis',
+                    fontSize: 'body2.fontSize',
+                    color: 'text.secondary',
+                    fontWeight: 700,
+                    textAlign: 'right',
+                    py: 1.25,
+                    pl: { xs: 1, sm: 1.25 },
+                    pr: { xs: 2, sm: 2.5 },
+                  }}
+                />
               </TableRow>
             </TableHead>
 
@@ -173,6 +184,23 @@ export const CoursesListTable = () => {
                         </Typography>
                       </TableCell>
                     ))}
+
+                    <TableCell
+                      sx={{
+                        textAlign: 'right',
+                        py: 1.25,
+                        pl: { xs: 1, sm: 1.25 },
+                        pr: { xs: 1.75, sm: 2.25 },
+                        borderBottomWidth:
+                          coursesList.courses.length - 1 === listIndex ? 0 : 1,
+                      }}
+                    >
+                      <Chip
+                        label={`${course.count} 人学过`}
+                        size="small"
+                        sx={{ fontWeight: 700, fontSize: 'caption.fontSize' }}
+                      />
+                    </TableCell>
                   </TableRow>
                 ))}
               </TableBody>

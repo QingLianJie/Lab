@@ -1,4 +1,6 @@
 import {
+  AccessTimeOutlined,
+  AccessTimeRounded,
   AlternateEmailOutlined,
   AlternateEmailRounded,
   ArticleOutlined,
@@ -13,8 +15,6 @@ import {
   ExtensionRounded,
   HelpOutlineOutlined,
   HelpRounded,
-  AccessTimeOutlined,
-  AccessTimeRounded,
   InboxOutlined,
   InboxRounded,
   InsertChartOutlined,
@@ -38,10 +38,10 @@ import {
   yellow,
 } from '@mui/material/colors'
 import { type ElementType } from 'react'
-import { HomePage } from '../routers'
 import { NotFoundPage } from '../routers/404'
 import { CoursesPage } from '../routers/courses'
 import { CourseDetailsPage } from '../routers/courses/[id]'
+import { HomePage } from '../routers/index'
 import { SchedulesPage } from '../routers/schedules'
 import { ScoresPage } from '../routers/scores'
 import { SettingsPage } from '../routers/settings'

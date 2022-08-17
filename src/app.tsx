@@ -33,21 +33,17 @@ export default function App() {
       >
         <Modals />
         <Nav />
-        <Router />
+        <Routes>
+          {routers.map(router => (
+            <Route
+              path={router.href}
+              element={<Box component={router.component} />}
+              key={router.name}
+            />
+          ))}
+        </Routes>
         <Load />
       </SnackbarProvider>
     </BrowserRouter>
   )
 }
-
-const Router = () => (
-  <Routes>
-    {routers.map(router => (
-      <Route
-        path={router.href}
-        element={<Box component={router.component} />}
-        key={router.name}
-      />
-    ))}
-  </Routes>
-)
