@@ -31,6 +31,7 @@ jobs:
           pnpm i
           pnpm run build
           ls -al
+          cp dist/* app
 
       - name: 构建和推送
         uses: docker/build-push-action@v2
