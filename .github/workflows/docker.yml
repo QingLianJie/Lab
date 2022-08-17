@@ -20,6 +20,7 @@ jobs:
           npm i -g pnpm
           pnpm i
           pnpm run build
+          ls -al
 
       - name: 获取 Tag
         id: vars

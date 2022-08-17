@@ -1,6 +1,7 @@
 {
   "git": {
-    "commitMessage": "发布版本 v${version}"
+    "commitMessage": "发布版本 v${version}",
+    "pushRepo": "https://github.com/QingLianJie/Lab.git"
   },
   "npm": {
     "publish": false
