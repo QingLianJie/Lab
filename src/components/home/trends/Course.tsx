@@ -55,7 +55,13 @@ export const HomeTrendsCourse = ({ course, comments }: HomeTrendsCourse) => {
           }
           sx={{ position: 'relative', maxWidth: { xs: 'unset', md: 160 } }}
         >
-          <Stack sx={{ justifyContent: 'flex-start', height: '100%' }}>
+          <Stack
+            sx={{
+              overflow: 'hidden',
+              justifyContent: 'flex-start',
+              height: '100%',
+            }}
+          >
             <Stack
               direction={{ xs: 'row', md: 'column' }}
               spacing={{ xs: 1.5, md: 0.5 }}
@@ -71,9 +77,7 @@ export const HomeTrendsCourse = ({ course, comments }: HomeTrendsCourse) => {
                 sx={{
                   fontWeight: 700,
                   pb: { xs: 0, md: 1 },
-                  whiteSpace: 'nowrap',
-                  overflow: 'hidden',
-                  textOverflow: 'ellipsis',
+
                   flex: { xs: 1, md: 'unset' },
                 }}
               >
@@ -88,15 +92,7 @@ export const HomeTrendsCourse = ({ course, comments }: HomeTrendsCourse) => {
                   whiteSpace: 'nowrap',
                 }}
               >
-                <Typography
-                  variant="body2"
-                  sx={{
-                    color: 'text.secondary',
-                    whiteSpace: 'nowrap',
-                    overflow: 'hidden',
-                    textOverflow: 'ellipsis',
-                  }}
-                >
+                <Typography variant="body2" sx={{ color: 'text.secondary' }}>
                   {course.type}
                 </Typography>
 
@@ -109,15 +105,7 @@ export const HomeTrendsCourse = ({ course, comments }: HomeTrendsCourse) => {
                     sx={{ width: 16, height: 16, color: 'text.disabled' }}
                   />
 
-                  <Typography
-                    variant="body2"
-                    sx={{
-                      color: 'text.secondary',
-                      whiteSpace: 'nowrap',
-                      overflow: 'hidden',
-                      textOverflow: 'ellipsis',
-                    }}
-                  >
+                  <Typography variant="body2" sx={{ color: 'text.secondary' }}>
                     {course.credit}
                   </Typography>
                 </Stack>
@@ -129,30 +117,14 @@ export const HomeTrendsCourse = ({ course, comments }: HomeTrendsCourse) => {
                   <AccessTimeOutlined
                     sx={{ width: 16, height: 16, color: 'text.disabled' }}
                   />
-                  <Typography
-                    variant="body2"
-                    sx={{
-                      color: 'text.secondary',
-                      whiteSpace: 'nowrap',
-                      overflow: 'hidden',
-                      textOverflow: 'ellipsis',
-                    }}
-                  >
+                  <Typography variant="body2" sx={{ color: 'text.secondary' }}>
                     {course.period}
                   </Typography>
                 </Stack>
               </Stack>
 
               {!isMobile && (
-                <Typography
-                  variant="body2"
-                  sx={{
-                    color: 'text.secondary',
-                    whiteSpace: 'nowrap',
-                    overflow: 'hidden',
-                    textOverflow: 'ellipsis',
-                  }}
-                >
+                <Typography variant="body2" sx={{ color: 'text.secondary' }}>
                   {course.nature}
                 </Typography>
               )}

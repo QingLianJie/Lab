@@ -30,7 +30,14 @@ export const Confirm = ({
   description,
   isDanger,
 }: ConfirmProps) => (
-  <Dialog open={open} onClose={onClose} sx={{ mb: { xs: 6, sm: 2 } }}>
+  <Dialog
+    open={open}
+    onClose={onClose}
+    sx={{
+      mb: { xs: 6, sm: 2 },
+      '& .MuiPaper-root': { maxWidth: '16rem' },
+    }}
+  >
     <DialogTitle sx={{ pb: 1, fontSize: '1rem', fontWeight: 700 }}>
       {title}
     </DialogTitle>
