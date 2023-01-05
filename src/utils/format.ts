@@ -66,5 +66,5 @@ export const EmailRegex =
   /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
 export const PasswordRegex = '^.*(?=.{8,24})(?=.*[A-Za-z!@#$%^&*?]).*$'
 
-export const removeEmpty = <T>(obj: T) =>
+export const removeEmpty = <T extends { [key: string]: string }>(obj: T) =>
   Object.fromEntries(Object.entries(obj).filter(([_, v]) => v))
