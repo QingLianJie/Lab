@@ -19,15 +19,7 @@ export const HomeTrends = () => {
 
   const { data } = useSWR<CourseCommentResponse[]>(
     `${settings.developer.api || prefix}/api/recent/comments`,
-    fetcher,
-    {
-      refreshInterval: 30 * 60 * 1000,
-      suspense: true,
-      shouldRetryOnError: false,
-      revalidateIfStale: false,
-      revalidateOnMount: true,
-      revalidateOnFocus: false,
-    }
+    fetcher
   )
 
   const groupedComments: TrendsCourseComments = useMemo(() => {

@@ -101,16 +101,7 @@ const CourseDetails = ({ id, setTitle }: CourseDetailsProps) => {
 
   const { data } = useSWR<CourseDetailsResponse>(
     `${settings.developer.api || prefix}/api/course/${id}`,
-    fetcher,
-    {
-      refreshInterval: 60 * 60 * 1000,
-      suspense: true,
-      refreshWhenHidden: false,
-      shouldRetryOnError: false,
-      revalidateIfStale: false,
-      revalidateOnMount: true,
-      revalidateOnFocus: false,
-    }
+    fetcher
   )
 
   useEffect(() => {

@@ -39,16 +39,7 @@ export const CoursesListTable = () => {
 
   const { data } = useSWR<CoursesListResponse>(
     `${settings.developer.api || prefix}/api/courses?${query}`,
-    fetcher,
-    {
-      refreshInterval: 60 * 60 * 1000,
-      suspense: true,
-      refreshWhenHidden: false,
-      shouldRetryOnError: false,
-      revalidateIfStale: false,
-      revalidateOnMount: true,
-      revalidateOnFocus: false,
-    }
+    fetcher
   )
 
   const coursesList = useMemo(() => {

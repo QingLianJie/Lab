@@ -19,13 +19,6 @@ export const Load = () => {
     `${settings.developer.api || prefix}/api/user`,
     slientFetcher,
     {
-      refreshInterval: 60 * 60 * 1000,
-      suspense: true,
-      refreshWhenHidden: false,
-      shouldRetryOnError: false,
-      revalidateIfStale: false,
-      revalidateOnFocus: false,
-      revalidateOnMount: false,
       onSuccess: (data: UserResponse | false) => {
         if (!data) return
         setAccount(accountResponseMap(data))

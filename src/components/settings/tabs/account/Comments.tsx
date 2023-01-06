@@ -27,15 +27,7 @@ export const SettingsAccountComments = () => {
     `${settings.developer.api || prefix}/api/profile/${
       account ? account.name : ''
     }`,
-    fetcher,
-    {
-      refreshInterval: 24 * 60 * 60 * 1000,
-      suspense: true,
-      shouldRetryOnError: false,
-      revalidateIfStale: false,
-      revalidateOnMount: true,
-      revalidateOnFocus: false,
-    }
+    fetcher
   )
 
   const profile: UserProfile = useMemo(() => {
