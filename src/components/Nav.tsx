@@ -15,7 +15,7 @@ import { useEffect, useState } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import LogoOutlined from '../assets/logo-outlined.svg'
 import { Routers, routers } from '../configs/routers'
-import { info, prefix } from '../configs/site-info'
+import { info, ninja, prefix } from '../configs/site-info'
 import { modalsAtom } from '../contexts/modals'
 import { accountAtom, settingsAtom } from '../contexts/settings'
 import { Tooltip } from './base/styled/Tooltip'
@@ -153,7 +153,7 @@ export const Nav = () => {
           <Avatar
             src={
               account && account.avatar
-                ? `${settings.developer.api || prefix}${account.avatar}`
+                ? `${settings.developer.api || ninja}${account.avatar}`
                 : undefined
             }
             alt={account ? account.name : '登录'}

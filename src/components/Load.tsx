@@ -16,7 +16,7 @@ export const Load = () => {
   const settings = useAtomValue(settingsAtom)
 
   const { data, error } = useSWR<UserResponse | false>(
-    `${settings.developer.api || ninja}/auth/me`,
+    `${settings.developer.api || ninja}/api/user/me/`,
     slientFetcher,
     {
       onSuccess: (data: UserResponse | false) => {

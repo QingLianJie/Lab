@@ -64,7 +64,7 @@ export const ChangePasswordModal = ({
     }
 
     setLoading(true)
-    ky.post(`${settings.developer.api || ninja}/auth/password/change`, {
+    ky.post(`${settings.developer.api || ninja}/api/auth/password/change/`, {
       json: {
         old_password: form.password0,
         new_password: form.password1,
@@ -76,9 +76,9 @@ export const ChangePasswordModal = ({
         setLoading(false)
         setAccount(false)
 
-        ky.delete(`${settings.developer.api || ninja}/auth/logout`, {
+        ky.delete(`${settings.developer.api || ninja}/api/auth/logout/`, {
           credentials: 'include',
-        }).then(() => mutate(`${settings.developer.api || ninja}/auth/me`))
+        }).then(() => mutate(`${settings.developer.api || ninja}/api/user/me/`))
 
         onClose()
         setModals(modals => ({ ...modals, auth: '登录' }))

@@ -18,7 +18,7 @@ type Account =
   | false
   | {
       id: number
-      avatar?: string
+      avatar?: string | null
       name: string
       email?: string
     }

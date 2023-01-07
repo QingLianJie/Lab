@@ -7,7 +7,7 @@ export const info = {
 }
 
 export const prefix = 'https://api.qinglianjie.cn'
-export const ninja = 'https://ninja.qinglianjie.cn/api'
+export const ninja = 'https://ninja.qinglianjie.cn'
 
 // export const prefix = import.meta.env.DEV
 //   ? 'http://localhost:2333'

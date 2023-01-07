@@ -54,7 +54,7 @@ export const AuthRegister = () => {
     }
 
     setLoading(true)
-    ky.post(`${settings.developer.api || ninja}/auth/register`, {
+    ky.post(`${settings.developer.api || ninja}/api/auth/register/`, {
       json: {
         username: form.name,
         email: form.email,
@@ -66,7 +66,7 @@ export const AuthRegister = () => {
         enqueueSnackbar('注册成功')
         setModals({ ...modals, auth: false })
         setLoading(false)
-        mutate(`${settings.developer.api || ninja}/auth/me`)
+        mutate(`${settings.developer.api || ninja}/api/user/me/`)
       })
       .catch((error: HTTPError) => {
         console.error(error)

@@ -3,6 +3,7 @@ import {
   AccountCircleRounded,
   DeleteOutlineOutlined,
 } from '@mui/icons-material'
+import { LoadingButton } from '@mui/lab'
 import {
   Avatar,
   Box,
@@ -13,7 +14,7 @@ import {
   Typography,
 } from '@mui/material'
 import { useAtom, useAtomValue } from 'jotai'
-import ky from 'ky'
+import ky, { type HTTPError } from 'ky'
 import { enqueueSnackbar } from 'notistack'
 import { Fragment, Suspense, useState } from 'react'
 import { ErrorBoundary } from 'react-error-boundary'
@@ -35,24 +36,54 @@ export const SettingsAccount = () => {
   const settings = useAtomValue(settingsAtom)
   const [openAvatar, setOpenAvatar] = useState(false)
   const [openPassword, setOpenPassword] = useState(false)
+  const [loading, setLoading] = useState(false)
 
   const [account, setAccount] = useAtom(accountAtom)
   const { mutate } = useSWRConfig()
 
   const handleLogout = () => {
-    ky.delete(`${settings.developer.api || ninja}/auth/logout`, {
+    ky.delete(`${settings.developer.api || ninja}/api/auth/logout/`, {
       credentials: 'include',
     }).then(() => {
       enqueueSnackbar('已退出登录')
-      mutate(`${settings.developer.api || ninja}/auth/me`)
+      mutate(`${settings.developer.api || ninja}/api/user/me/`)
       setAccount(false)
     })
   }
 
   const handleDeleteAccount = () => {
-    const ans = confirm('确认删除清廉街账号？删除后将无法恢复，请谨慎操作！')
+    if (!account) return
+    const ans = prompt(
+      '确认删除清廉街账号？删除后将无法恢复，请在输入框中输入你的邮箱来确认！'
+    )
+
     if (!ans) return
-    enqueueSnackbar('这个功能还没做')
+    if (ans !== account.email) {
+      enqueueSnackbar('邮箱输入错误，请检查')
+      return
+    }
+
+    setLoading(true)
+    ky.delete(`${settings.developer.api || ninja}/api/user/delete/user/`, {
+      credentials: 'include',
+    })
+      .then(() => {
+        setLoading(false)
+        enqueueSnackbar('已删除账号，感谢使用清廉街')
+        mutate(`${settings.developer.api || ninja}/api/user/me/`)
+        setAccount(false)
+      })
+      .catch((error: HTTPError) => {
+        console.error(error)
+        setLoading(false)
+        error.response
+          .json()
+          .then((messages: { [key: string]: string }) =>
+            Object.values(messages).forEach((message: string) =>
+              enqueueSnackbar(`删除账号失败 - ${message}`)
+            )
+          )
+      })
   }
 
   return (
@@ -116,7 +147,7 @@ export const SettingsAccount = () => {
                   <Avatar
                     src={
                       account && account.avatar
-                        ? `${settings.developer.api || prefix}${account.avatar}`
+                        ? `${settings.developer.api || ninja}${account.avatar}`
                         : undefined
                     }
                     alt={account ? account.name : '未登录'}
@@ -188,13 +219,14 @@ export const SettingsAccount = () => {
                 <Button onClick={handleLogout}>退出登录</Button>
               </Stack>
 
-              <Button
+              <LoadingButton
                 color="error"
                 startIcon={<DeleteOutlineOutlined />}
+                loading={loading}
                 onClick={handleDeleteAccount}
               >
                 删除账号
-              </Button>
+              </LoadingButton>
             </Stack>
           </Stack>
           <Stack sx={{ flex: 1, width: '100%', height: '100%' }}>
@@ -252,7 +284,7 @@ const Login = () => {
         登录后可以上传成绩和发表评论
       </Typography>
       <Stack direction="row" sx={{ py: 1 }}>
-        {['登录', '注册'].map(action => (
+        {['登录', '注册', '重置密码'].map(action => (
           <Button
             variant="text"
             disableElevation

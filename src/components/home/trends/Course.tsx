@@ -195,6 +195,7 @@ export const HomeTrendsCourse = ({ course, comments }: HomeTrendsCourse) => {
                       width: '100%',
                       px: 2.25,
                       py: 1.5,
+                      mb: 2,
                       flex: 1,
                     }}
                   >

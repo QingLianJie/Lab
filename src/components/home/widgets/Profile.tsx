@@ -40,11 +40,11 @@ export const HomeProfileWidget = () => {
   const settings = useAtomValue(settingsAtom)
 
   const handleLogout = () => {
-    ky.delete(`${settings.developer.api || ninja}/auth/logout`, {
+    ky.delete(`${settings.developer.api || ninja}/api/auth/logout/`, {
       credentials: 'include',
     }).then(() => {
       enqueueSnackbar('已退出登录')
-      mutate(`${settings.developer.api || ninja}/auth/me`)
+      mutate(`${settings.developer.api || ninja}/api/user/me/`)
       setAccount(false)
     })
   }
@@ -93,7 +93,7 @@ export const HomeProfileWidget = () => {
               <Avatar
                 src={
                   account && account.avatar
-                    ? `${settings.developer.api || prefix}${account.avatar}`
+                    ? `${settings.developer.api || ninja}${account.avatar}`
                     : undefined
                 }
                 alt={account ? account.name : '未登录'}

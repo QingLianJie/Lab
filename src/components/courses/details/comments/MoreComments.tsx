@@ -198,6 +198,7 @@ export const CourseDetailsMoreComments = () => {
                   sx={{
                     pt: 1,
                     pb: currentComments.length === 0 ? 2 : 1,
+                    mb: 2,
                     color: 'text.disabled',
                     width: '100%',
                     textAlign: 'center',
@@ -208,7 +209,7 @@ export const CourseDetailsMoreComments = () => {
               ) : (
                 <ListItemButton
                   onClick={() => setPage(page => page + 1)}
-                  sx={{ py: 1, justifyContent: 'center' }}
+                  sx={{ py: 1, mb: 2, justifyContent: 'center' }}
                 >
                   <Typography variant="body2" sx={{ color: 'text.secondary' }}>
                     加载更多评论

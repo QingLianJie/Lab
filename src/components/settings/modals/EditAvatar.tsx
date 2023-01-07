@@ -1,14 +1,14 @@
 import { LoadingButton } from '@mui/lab'
 import { Box, Button, Stack, Typography } from '@mui/material'
 import 'cropperjs/dist/cropper.css'
-import { useAtomValue } from 'jotai'
+import { useAtom, useAtomValue } from 'jotai'
 import ky from 'ky'
 import { enqueueSnackbar } from 'notistack'
 import { Fragment, useRef, useState, type ChangeEvent } from 'react'
 import Cropper from 'react-cropper'
 import { Helmet } from 'react-helmet-async'
 import { useSWRConfig } from 'swr'
-import { info, prefix } from '../../../configs/site-info'
+import { info, ninja, prefix } from '../../../configs/site-info'
 import { accountAtom, settingsAtom } from '../../../contexts/settings'
 import { Modal } from '../../base/Modal'
 
@@ -24,8 +24,9 @@ export const EditAvatarModal = ({ open, onClose }: EditAvatarModalProps) => {
 
   const { mutate } = useSWRConfig()
   const settings = useAtomValue(settingsAtom)
-  const account = useAtomValue(accountAtom)
-  const [loading, setLoading] = useState(false)
+  const [account, setAccount] = useAtom(accountAtom)
+  const [deleteLoading, setDeleteLoading] = useState(false)
+  const [uploadLoading, setUploadLoading] = useState(false)
 
   const handleSelect = (e: ChangeEvent) => {
     const input = e.target as HTMLInputElement
@@ -38,7 +39,7 @@ export const EditAvatarModal = ({ open, onClose }: EditAvatarModalProps) => {
 
   const handleUpload = () => {
     if (!cropper) return
-    setLoading(true)
+    setUploadLoading(true)
     const canvas = cropper.getCroppedCanvas({
       maxWidth: 512,
       maxHeight: 512,
@@ -55,20 +56,24 @@ export const EditAvatarModal = ({ open, onClose }: EditAvatarModalProps) => {
       }-${new Date().getTime()}.jpeg`
       formdata.append('image', blob, name)
 
-      ky.post(`${settings.developer.api || prefix}/api/user/profile/photo`, {
+      ky.post(`${settings.developer.api || ninja}/api/user/avatar/`, {
         body: formdata,
         credentials: 'include',
       })
-        .then(() => {
+        .then(res => res.text())
+        .then(data => {
           enqueueSnackbar('头像上传成功')
-          mutate(`${settings.developer.api || prefix}/api/user`)
-          mutate(
-            `${settings.developer.api || prefix}/api/profile/${
-              account ? account.name : ''
-            }`
+          // mutate(`${settings.developer.api || ninja}/api/user/me/`)
+          // mutate(
+          //   `${settings.developer.api || prefix}/api/profile/${
+          //     account ? account.name : ''
+          //   }`
+          // )
+          // mutate(`${settings.developer.api || prefix}/api/recent/comments`)
+          setAccount(account =>
+            account ? { ...account, avatar: data.replace(/"/g, '') } : account
           )
-          mutate(`${settings.developer.api || prefix}/api/recent/comments`)
-          setLoading(false)
+          setUploadLoading(false)
           onClose()
           setImage('')
           setCropper(null)
@@ -76,9 +81,36 @@ export const EditAvatarModal = ({ open, onClose }: EditAvatarModalProps) => {
         .catch((error: Error) => {
           console.error(error)
           enqueueSnackbar('头像上传失败')
-          setLoading(false)
+          setUploadLoading(false)
         })
     }, 'image/jpeg')
+  }
+
+  const handleDelete = () => {
+    setDeleteLoading(true)
+    ky.delete(`${settings.developer.api || ninja}/api/user/avatar/`, {
+      credentials: 'include',
+    })
+      .then(() => {
+        enqueueSnackbar('头像删除成功')
+        setAccount(account =>
+          account ? { ...account, avatar: null } : account
+        )
+        // mutate(`${settings.developer.api || ninja}/api/user/me/`)
+        // mutate(
+        //   `${settings.developer.api || prefix}/api/profile/${
+        //     account ? account.name : ''
+        //   }`
+        // )
+        // mutate(`${settings.developer.api || prefix}/api/recent/comments`)
+        setDeleteLoading(false)
+        onClose()
+      })
+      .catch((error: Error) => {
+        console.error(error)
+        enqueueSnackbar('头像删除失败')
+        setDeleteLoading(false)
+      })
   }
 
   return (
@@ -151,7 +183,7 @@ export const EditAvatarModal = ({ open, onClose }: EditAvatarModalProps) => {
             <LoadingButton
               variant="contained"
               color="secondary"
-              loading={loading}
+              loading={uploadLoading}
               sx={{ py: 0.75 }}
               onClick={handleUpload}
             >
@@ -163,7 +195,7 @@ export const EditAvatarModal = ({ open, onClose }: EditAvatarModalProps) => {
             variant="body2"
             sx={{ mt: -0.5, px: 0.5, color: 'text.secondary' }}
           >
-            支持 JPG、PNG、WebP
+            清廉街支持 JPG、PNG、WebP
             等常见格式图片的上传，上传的图片会经过压缩处理，上传不合适的图片会被删除账号。
           </Typography>
         )}
@@ -176,6 +208,17 @@ export const EditAvatarModal = ({ open, onClose }: EditAvatarModalProps) => {
         >
           {image ? '重新选择图片' : '点击选择图片'}
         </Button>
+        {!image && (
+          <LoadingButton
+            variant="outlined"
+            color="secondary"
+            loading={deleteLoading}
+            sx={{ py: 0.75 }}
+            onClick={handleDelete}
+          >
+            恢复默认头像
+          </LoadingButton>
+        )}
       </Stack>
     </Modal>
   )

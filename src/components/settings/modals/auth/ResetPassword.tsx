@@ -55,7 +55,7 @@ export const AuthResetPassword = () => {
   const handleResetPassword = (e: FormEvent) => {
     e.preventDefault()
     setSubmitLoading(true)
-    ky.put(`${settings.developer.api || ninja}/auth/password/reset`, {
+    ky.put(`${settings.developer.api || ninja}/api/auth/password/reset/`, {
       json: {
         email: form.email,
         verify_code: form.captcha,
@@ -85,7 +85,7 @@ export const AuthResetPassword = () => {
     if (!form.email) enqueueSnackbar('请填写注册时使用的邮箱')
     else {
       setCaptchaLoading(true)
-      ky.post(`${settings.developer.api || ninja}/auth/password/reset`, {
+      ky.post(`${settings.developer.api || ninja}/api/auth/password/reset/`, {
         json: { email: form.email },
         credentials: 'include',
       })

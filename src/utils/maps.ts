@@ -8,13 +8,14 @@ import {
 import { removeEmpty } from './format'
 
 /**
- * Ninja API: `/api/auth/me`
+ * Ninja API: `/api/user/me/`
  */
 export interface UserResponse {
   id: number
   username: string
   email: string
   avatar: string
+  date_joined: string
 }
 
 export const accountResponseMap = (response: UserResponse) => ({
@@ -22,6 +23,7 @@ export const accountResponseMap = (response: UserResponse) => ({
   id: response.id,
   email: response.email,
   avatar: response.avatar,
+  created: response.date_joined,
 })
 
 export interface CourseResponse {

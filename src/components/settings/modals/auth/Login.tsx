@@ -36,9 +36,9 @@ export const AuthLogin = () => {
     setLoading(true)
     const isEmail = new RegExp(EmailRegex).test(form.name)
     ky.post(
-      `${settings.developer.api || ninja}/auth/login/${
+      `${settings.developer.api || ninja}/api/auth/login/${
         isEmail ? 'email' : 'username'
-      }`,
+      }/`,
       {
         json: isEmail
           ? { email: form.name, password: form.password }
@@ -50,7 +50,7 @@ export const AuthLogin = () => {
         enqueueSnackbar('登录成功')
         setModals({ ...modals, auth: false })
         setLoading(false)
-        mutate(`${settings.developer.api || ninja}/auth/me`)
+        mutate(`${settings.developer.api || ninja}/api/user/me/`)
       })
       .catch((error: HTTPError) => {
         console.error(error)
