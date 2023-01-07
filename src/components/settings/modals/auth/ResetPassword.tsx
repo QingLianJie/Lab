@@ -1,4 +1,5 @@
 import { VisibilityOffOutlined, VisibilityOutlined } from '@mui/icons-material'
+import { LoadingButton } from '@mui/lab'
 import {
   Button,
   IconButton,
@@ -6,10 +7,13 @@ import {
   Stack,
   TextField,
 } from '@mui/material'
-import { useAtom } from 'jotai'
+import { useAtom, useAtomValue } from 'jotai'
+import ky, { type HTTPError } from 'ky'
 import { enqueueSnackbar } from 'notistack'
 import { useEffect, useRef, useState, type FormEvent } from 'react'
+import { ninja } from '../../../../configs/site-info'
 import { modalsAtom } from '../../../../contexts/modals'
+import { settingsAtom } from '../../../../contexts/settings'
 import { PasswordRegex } from '../../../../utils/format'
 
 type ResetPasswordForm = {
@@ -18,11 +22,18 @@ type ResetPasswordForm = {
   password: string
 }
 
+let timer: number | null = null
+
 export const AuthResetPassword = () => {
-  const [modals, setModals] = useAtom(modalsAtom)
   const inputRef = useRef<HTMLInputElement>()
   const captchaRef = useRef<HTMLInputElement>()
 
+  const [modals, setModals] = useAtom(modalsAtom)
+  const settings = useAtomValue(settingsAtom)
+
+  const [submitLoading, setSubmitLoading] = useState(false)
+  const [captchaLoading, setCaptchaLoading] = useState(false)
+  const [captchaTime, setCaptchaTime] = useState(0)
   const [showPassword, setShowPassword] = useState(false)
   const [form, setForm] = useState<ResetPasswordForm>({
     captcha: '',
@@ -35,14 +46,67 @@ export const AuthResetPassword = () => {
     inputRef.current?.focus()
   }, [modals.auth])
 
+  useEffect(() => {
+    if (captchaTime === 60)
+      timer = setInterval(() => setCaptchaTime(time => time - 1), 1000)
+    else if (captchaTime === 0 && timer) clearInterval(timer)
+  }, [captchaTime])
+
   const handleResetPassword = (e: FormEvent) => {
     e.preventDefault()
-    enqueueSnackbar('这个功能还没做')
-    setModals({ ...modals, auth: false })
+    setSubmitLoading(true)
+    ky.put(`${settings.developer.api || ninja}/auth/password/reset`, {
+      json: {
+        email: form.email,
+        verify_code: form.captcha,
+        new_password: form.password,
+      },
+      credentials: 'include',
+    })
+      .then(() => {
+        enqueueSnackbar('成功重置密码，请重新登录')
+        setSubmitLoading(false)
+        setModals({ ...modals, auth: '登录' })
+      })
+      .catch((error: HTTPError) => {
+        console.error(error)
+        setSubmitLoading(false)
+        error.response
+          .json()
+          .then((messages: { [key: string]: string }) =>
+            Object.values(messages).forEach((message: string) =>
+              enqueueSnackbar(`重置密码失败 - ${message}`)
+            )
+          )
+      })
   }
 
   const handleSendCaptcha = () => {
-    enqueueSnackbar('这个功能还没做')
+    if (!form.email) enqueueSnackbar('请填写注册时使用的邮箱')
+    else {
+      setCaptchaLoading(true)
+      ky.post(`${settings.developer.api || ninja}/auth/password/reset`, {
+        json: { email: form.email },
+        credentials: 'include',
+      })
+        .then(() => {
+          enqueueSnackbar('已发送邮件，请输入邮件中的验证码')
+          setCaptchaTime(60)
+          setCaptchaLoading(false)
+        })
+        .catch((error: HTTPError) => {
+          console.error(error)
+          setCaptchaTime(60)
+          setCaptchaLoading(false)
+          error.response
+            .json()
+            .then((messages: { [key: string]: string }) =>
+              Object.values(messages).forEach((message: string) =>
+                enqueueSnackbar(`发送邮件失败 - ${message}`)
+              )
+            )
+        })
+    }
   }
 
   return (
@@ -62,19 +126,22 @@ export const AuthResetPassword = () => {
         autoComplete="email"
         fullWidth
         autoFocus
+        disabled={submitLoading || captchaLoading}
         value={form.email}
         onChange={e => setForm({ ...form, email: e.target.value })}
       />
 
       <Stack direction="row" sx={{ alignItems: 'center' }}>
-        <Button
+        <LoadingButton
           variant="outlined"
           color="primary"
           sx={{ width: '100%', mr: 1.5, py: 0.75 }}
+          loading={captchaLoading}
+          disabled={captchaTime > 0}
           onClick={handleSendCaptcha}
         >
-          发送验证码
-        </Button>
+          {captchaTime > 0 ? `已发送 ${captchaTime}s` : '发送验证码'}
+        </LoadingButton>
 
         <TextField
           inputRef={captchaRef}
@@ -86,6 +153,7 @@ export const AuthResetPassword = () => {
           fullWidth
           autoFocus
           value={form.captcha}
+          disabled={submitLoading || captchaLoading}
           onChange={e => setForm({ ...form, captcha: e.target.value })}
           sx={{ p: 0 }}
         />
@@ -101,6 +169,7 @@ export const AuthResetPassword = () => {
         autoComplete="new-password"
         fullWidth
         value={form.password}
+        disabled={submitLoading || captchaLoading}
         helperText="8 到 24 个字符，且不能为纯数字"
         onChange={e => setForm({ ...form, password: e.target.value })}
         InputProps={{
@@ -122,14 +191,15 @@ export const AuthResetPassword = () => {
         }}
       />
 
-      <Button
+      <LoadingButton
         type="submit"
         variant="contained"
         color="primary"
+        loading={submitLoading}
         sx={{ width: '100%', py: 0.75 }}
       >
         重置密码
-      </Button>
+      </LoadingButton>
     </Stack>
   )
 }

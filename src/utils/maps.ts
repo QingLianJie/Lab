@@ -7,20 +7,21 @@ import {
 } from '../index.d'
 import { removeEmpty } from './format'
 
+/**
+ * Ninja API: `/api/auth/me`
+ */
 export interface UserResponse {
-  pk: number
+  id: number
   username: string
-  image: string
-  self: boolean
-  heu_username: string
   email: string
+  avatar: string
 }
 
 export const accountResponseMap = (response: UserResponse) => ({
   name: response.username,
-  id: response.pk,
+  id: response.id,
   email: response.email,
-  avatar: response.image,
+  avatar: response.avatar,
 })
 
 export interface CourseResponse {

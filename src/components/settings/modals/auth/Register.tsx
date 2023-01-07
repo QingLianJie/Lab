@@ -12,7 +12,7 @@ import ky, { type HTTPError } from 'ky'
 import { enqueueSnackbar } from 'notistack'
 import { useEffect, useRef, useState, type FormEvent } from 'react'
 import { useSWRConfig } from 'swr'
-import { prefix } from '../../../../configs/site-info'
+import { ninja } from '../../../../configs/site-info'
 import { modalsAtom } from '../../../../contexts/modals'
 import { settingsAtom } from '../../../../contexts/settings'
 import { NameRegex, PasswordRegex } from '../../../../utils/format'
@@ -54,12 +54,11 @@ export const AuthRegister = () => {
     }
 
     setLoading(true)
-    ky.post(`${settings.developer.api || prefix}/rest-auth/registration/`, {
+    ky.post(`${settings.developer.api || ninja}/auth/register`, {
       json: {
         username: form.name,
         email: form.email,
-        password1: form.password1,
-        password2: form.password2,
+        password: form.password1,
       },
       credentials: 'include',
     })
@@ -67,7 +66,7 @@ export const AuthRegister = () => {
         enqueueSnackbar('注册成功')
         setModals({ ...modals, auth: false })
         setLoading(false)
-        mutate(`${settings.developer.api || prefix}/api/user`)
+        mutate(`${settings.developer.api || ninja}/auth/me`)
       })
       .catch((error: HTTPError) => {
         console.error(error)
@@ -100,6 +99,7 @@ export const AuthRegister = () => {
         fullWidth
         autoFocus
         value={form.name}
+        disabled={loading}
         helperText="独一无二的名字，3 到 16 个字符"
         onChange={e => setForm({ ...form, name: e.target.value })}
         InputProps={{
@@ -122,6 +122,7 @@ export const AuthRegister = () => {
         autoComplete="email"
         fullWidth
         value={form.email}
+        disabled={loading}
         onChange={e => setForm({ ...form, email: e.target.value })}
       />
 
@@ -135,6 +136,7 @@ export const AuthRegister = () => {
         fullWidth
         value={form.password1}
         autoComplete="new-password"
+        disabled={loading}
         helperText="8 到 24 个字符，且不能为纯数字"
         onChange={e => setForm({ ...form, password1: e.target.value })}
         InputProps={{
@@ -166,6 +168,7 @@ export const AuthRegister = () => {
         fullWidth
         value={form.password2}
         autoComplete="new-password"
+        disabled={loading}
         onChange={e => setForm({ ...form, password2: e.target.value })}
         InputProps={{
           endAdornment: (

@@ -1,13 +1,13 @@
-import { VisibilityOutlined, VisibilityOffOutlined } from '@mui/icons-material'
+import { VisibilityOffOutlined, VisibilityOutlined } from '@mui/icons-material'
 import { LoadingButton } from '@mui/lab'
-import { Stack, TextField, InputAdornment, IconButton } from '@mui/material'
+import { IconButton, InputAdornment, Stack, TextField } from '@mui/material'
 import { useAtom, useAtomValue } from 'jotai'
 import ky, { HTTPError } from 'ky'
 import { enqueueSnackbar } from 'notistack'
 import { FormEvent, useEffect, useRef, useState } from 'react'
 import { Helmet } from 'react-helmet-async'
 import { useSWRConfig } from 'swr'
-import { info, prefix } from '../../../configs/site-info'
+import { info, ninja } from '../../../configs/site-info'
 import { modalsAtom } from '../../../contexts/modals'
 import { accountAtom, settingsAtom } from '../../../contexts/settings'
 import { PasswordRegex } from '../../../utils/format'
@@ -64,11 +64,10 @@ export const ChangePasswordModal = ({
     }
 
     setLoading(true)
-    ky.post(`${settings.developer.api || prefix}/rest-auth/password/change/`, {
+    ky.post(`${settings.developer.api || ninja}/auth/password/change`, {
       json: {
         old_password: form.password0,
-        new_password1: form.password1,
-        new_password2: form.password2,
+        new_password: form.password1,
       },
       credentials: 'include',
     })
@@ -77,9 +76,9 @@ export const ChangePasswordModal = ({
         setLoading(false)
         setAccount(false)
 
-        ky.post(`${settings.developer.api || prefix}/rest-auth/logout/`, {
+        ky.delete(`${settings.developer.api || ninja}/auth/logout`, {
           credentials: 'include',
-        }).then(() => mutate(`${settings.developer.api || prefix}/api/user`))
+        }).then(() => mutate(`${settings.developer.api || ninja}/auth/me`))
 
         onClose()
         setModals(modals => ({ ...modals, auth: '登录' }))
@@ -131,6 +130,7 @@ export const ChangePasswordModal = ({
           value={form.password0}
           autoComplete="current-password"
           color="secondary"
+          disabled={loading}
           onChange={e => setForm({ ...form, password0: e.target.value })}
           InputProps={{
             endAdornment: (
@@ -163,6 +163,7 @@ export const ChangePasswordModal = ({
           autoComplete="new-password"
           helperText="8 到 24 个字符，且不能为纯数字"
           color="secondary"
+          disabled={loading}
           onChange={e => setForm({ ...form, password1: e.target.value })}
           InputProps={{
             endAdornment: (
@@ -194,6 +195,7 @@ export const ChangePasswordModal = ({
           value={form.password2}
           autoComplete="new-password"
           color="secondary"
+          disabled={loading}
           onChange={e => setForm({ ...form, password2: e.target.value })}
           InputProps={{
             endAdornment: (

@@ -18,7 +18,7 @@ import { enqueueSnackbar } from 'notistack'
 import { Fragment, Suspense, useState } from 'react'
 import { ErrorBoundary } from 'react-error-boundary'
 import { useSWRConfig } from 'swr'
-import { prefix, info } from '../../../configs/site-info'
+import { info, ninja, prefix } from '../../../configs/site-info'
 import { modalsAtom, type AuthModal } from '../../../contexts/modals'
 import { accountAtom, settingsAtom } from '../../../contexts/settings'
 import { Tooltip } from '../../base/styled/Tooltip'
@@ -40,11 +40,11 @@ export const SettingsAccount = () => {
   const { mutate } = useSWRConfig()
 
   const handleLogout = () => {
-    ky.post(`${settings.developer.api || prefix}/rest-auth/logout/`, {
+    ky.delete(`${settings.developer.api || ninja}/auth/logout`, {
       credentials: 'include',
     }).then(() => {
       enqueueSnackbar('已退出登录')
-      mutate(`${settings.developer.api || prefix}/api/user`)
+      mutate(`${settings.developer.api || ninja}/auth/me`)
       setAccount(false)
     })
   }

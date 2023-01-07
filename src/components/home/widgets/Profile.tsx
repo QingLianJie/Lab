@@ -21,7 +21,7 @@ import ky from 'ky'
 import { enqueueSnackbar } from 'notistack'
 import { useNavigate } from 'react-router-dom'
 import { useSWRConfig } from 'swr'
-import { prefix } from '../../../configs/site-info'
+import { ninja, prefix } from '../../../configs/site-info'
 import { modalsAtom } from '../../../contexts/modals'
 import { schedulesAtom } from '../../../contexts/schedules'
 import { scoresAtom } from '../../../contexts/scores'
@@ -40,11 +40,11 @@ export const HomeProfileWidget = () => {
   const settings = useAtomValue(settingsAtom)
 
   const handleLogout = () => {
-    ky.post(`${settings.developer.api || prefix}/rest-auth/logout/`, {
+    ky.delete(`${settings.developer.api || ninja}/auth/logout`, {
       credentials: 'include',
     }).then(() => {
       enqueueSnackbar('已退出登录')
-      mutate(`${settings.developer.api || prefix}/api/user`)
+      mutate(`${settings.developer.api || ninja}/auth/me`)
       setAccount(false)
     })
   }

@@ -4,7 +4,7 @@ import { Fragment, useEffect } from 'react'
 import { useMount } from 'react-use'
 import useSWR from 'swr'
 import { useRegisterSW } from 'virtual:pwa-register/react'
-import { prefix } from '../configs/site-info'
+import { ninja } from '../configs/site-info'
 import { bridgeAtom, fetcherAtom } from '../contexts/bridge'
 import { scoresAtom, scoresListAtom } from '../contexts/scores'
 import { accountAtom, settingsAtom } from '../contexts/settings'
@@ -16,7 +16,7 @@ export const Load = () => {
   const settings = useAtomValue(settingsAtom)
 
   const { data, error } = useSWR<UserResponse | false>(
-    `${settings.developer.api || prefix}/api/user`,
+    `${settings.developer.api || ninja}/auth/me`,
     slientFetcher,
     {
       onSuccess: (data: UserResponse | false) => {

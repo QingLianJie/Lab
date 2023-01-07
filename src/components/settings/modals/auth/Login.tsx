@@ -6,7 +6,7 @@ import ky, { type HTTPError } from 'ky'
 import { enqueueSnackbar } from 'notistack'
 import { useEffect, useRef, useState, type FormEvent } from 'react'
 import { useSWRConfig } from 'swr'
-import { prefix } from '../../../../configs/site-info'
+import { ninja } from '../../../../configs/site-info'
 import { modalsAtom } from '../../../../contexts/modals'
 import { settingsAtom } from '../../../../contexts/settings'
 import { EmailRegex } from '../../../../utils/format'
@@ -34,17 +34,23 @@ export const AuthLogin = () => {
   const handleLogin = (e: FormEvent) => {
     e.preventDefault()
     setLoading(true)
-    ky.post(`${settings.developer.api || prefix}/rest-auth/login/`, {
-      json: new RegExp(EmailRegex).test(form.name)
-        ? { email: form.name, password: form.password }
-        : { username: form.name, password: form.password },
-      credentials: 'include',
-    })
+    const isEmail = new RegExp(EmailRegex).test(form.name)
+    ky.post(
+      `${settings.developer.api || ninja}/auth/login/${
+        isEmail ? 'email' : 'username'
+      }`,
+      {
+        json: isEmail
+          ? { email: form.name, password: form.password }
+          : { username: form.name, password: form.password },
+        credentials: 'include',
+      }
+    )
       .then(() => {
         enqueueSnackbar('登录成功')
         setModals({ ...modals, auth: false })
         setLoading(false)
-        mutate(`${settings.developer.api || prefix}/api/user`)
+        mutate(`${settings.developer.api || ninja}/auth/me`)
       })
       .catch((error: HTTPError) => {
         console.error(error)
@@ -75,6 +81,7 @@ export const AuthLogin = () => {
         fullWidth
         autoComplete="username"
         autoFocus
+        disabled={loading}
         value={form.name}
         onChange={e => setForm({ ...form, name: e.target.value })}
       />
@@ -104,6 +111,7 @@ export const AuthLogin = () => {
         autoComplete="current-password"
         fullWidth
         value={form.password}
+        disabled={loading}
         onChange={e => setForm({ ...form, password: e.target.value })}
       />
 
